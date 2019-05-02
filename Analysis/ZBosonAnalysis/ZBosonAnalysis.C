@@ -43,7 +43,7 @@ void ZBosonAnalysis::SlaveBegin(TTree * )
 Bool_t ZBosonAnalysis::Process(Long64_t entry)
 {
   fChain->GetTree()->GetEntry(entry);
-  
+
   if(fChain->GetTree()->GetEntries()>0)
     {
       //Begin analysis
@@ -69,8 +69,8 @@ Bool_t ZBosonAnalysis::Process(Long64_t entry)
 	  
 	  for(unsigned int i=0; i<lep_n; i++)
 	    {
-
-	      //cout << i << "/" << lep_n << "==> isTightID: " << lep_isTightID->at(i) << ", pT: " <<  lep_pt->at(i)  << ", eta: " <<  lep_eta->at(i) << ", pTcone30: " << lep_ptcone30->at(i) << ", eTcone20: " << lep_etcone20->at(i) <<  ", iso: " << ( lep_ptcone30->at(i) / lep_pt->at(i) ) << ", iso2: " << ( lep_etcone20->at(i) / lep_pt->at(i) ) << ", type: " << lep_type->at(i) << endl;
+             //cout << eventNumber << " has " << lep_n << "leptons" << endl;
+	     // cout << i << "/" << lep_n << "==> isTightID: " << lep_isTightID->at(i) << ", pT: " <<  lep_pt->at(i)  << ", eta: " <<  lep_eta->at(i) << ", pTcone30: " << lep_ptcone30->at(i) << ", eTcone20: " << lep_etcone20->at(i) <<  ", iso: " << ( lep_ptcone30->at(i) / lep_pt->at(i) ) << ", iso2: " << ( lep_etcone20->at(i) / lep_pt->at(i) ) << ", type: " << lep_type->at(i) << ", charge: " << lep_charge->at(i) <<  endl;
               
 	      
 	      // is Tight
@@ -78,21 +78,21 @@ Bool_t ZBosonAnalysis::Process(Long64_t entry)
 		{
 		  // isolated using FixedCutLoose	https://twiki.cern.ch/twiki/bin/view/AtlasProtected/IsolationSelectionTool
 		  if( lep_pt->at(i) >25000. && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.15) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.15 ) )
-		    {
+		   {
 		      // electron or muon
 		      if ( lep_type->at(i)==11 ||  lep_type->at(i) ==13) {
 			goodlep_n = goodlep_n + 1;
 			goodlep_index[lep_index] = i;
 			lep_index++;
 		      }
-		    }
+		   }
 		}
-		
+	     }
 	      
 	      //exactly two good leptons
 	      if(goodlep_n==2)
 		{
-		  
+
 		  int goodlep1_index = goodlep_index[0];
 		  int goodlep2_index = goodlep_index[1];
 		  
@@ -109,7 +109,7 @@ Bool_t ZBosonAnalysis::Process(Long64_t entry)
 		  TLorentzVector     Lepton_12 = TLorentzVector();
 		  Lepton_12 = Lepton_1 + Lepton_2;
 		  float InvMass_Leptons = Lepton_12.Mag()/1000.;
-		  
+
 		  //Leptons of opposite charge
 		  if(lep_charge->at(goodlep1_index) * lep_charge->at(goodlep2_index)  < 0)
 		    {
@@ -118,10 +118,14 @@ Bool_t ZBosonAnalysis::Process(Long64_t entry)
 		      int type_two = lep_type->at(goodlep2_index);
 		      if(TMath::Abs(type_one) == TMath::Abs(type_two))
 			{
+
+		            float InvMass_Leptons_ee = 0.; if(type_one==11) InvMass_Leptons_ee = Lepton_12.Mag()/1000.;
+		  	  float InvMass_Leptons_mumu = 0.; if(type_one==13) InvMass_Leptons_mumu = Lepton_12.Mag()/1000.;
+			
 			  // m_ll - mZ < 20 GeV
-			  if(TMath::Abs(InvMass_Leptons - 91.18) < 20.)
+			  if(TMath::Abs(InvMass_Leptons - 91.18) < 25.)
 			    {
-			      
+			    
 			      //Preselection of good jets
 			      int goodjet_n = 0;
 			      int goodjet_index = 0;
@@ -144,7 +148,10 @@ Bool_t ZBosonAnalysis::Process(Long64_t entry)
                               }
 			      
 			      
-			      double names_of_global_variable[]={InvMass_Leptons, met_et/1000.};
+			      double names_of_global_variable[]={InvMass_Leptons, InvMass_Leptons_ee, InvMass_Leptons_mumu, met_et/1000.};
+               
+
+
 			      
 //			      double names_of_leadlep_variable[]={Lepton_1.Pt()/1000., Lepton_1.Eta(), Lepton_1.E()/1000., Lepton_1.Phi(), lep_charge->at(goodlep1_index), (double)lep_type->at(goodlep1_index), lep_ptcone30->at(goodlep1_index)/lep_pt->at(goodlep1_index), lep_etcone20->at(goodlep1_index)/lep_pt->at(goodlep1_index), lep_z0->at(goodlep1_index), lep_trackd0pvunbiased->at(goodlep1_index)};
 			      
@@ -154,7 +161,7 @@ Bool_t ZBosonAnalysis::Process(Long64_t entry)
 			      
 			      
 			      //Start to fill histograms : definitions of histogram names
-			      TString histonames_of_global_variable[]={"hist_mLL","hist_etmiss"};
+			      TString histonames_of_global_variable[]={"hist_mLL","hist_mLL_ee","hist_mLL_mumu","hist_etmiss"};
 			      
 //			      TString histonames_of_leadlep_variable[]={"hist_leadleptpt", "hist_leadlepteta", "hist_leadleptE", "hist_leadleptphi", "hist_leadleptch", "hist_leadleptID","hist_leadlept_ptc","hist_leadleptetc","hist_leadlepz0","hist_leadlepd0"};
 			      
@@ -196,7 +203,7 @@ Bool_t ZBosonAnalysis::Process(Long64_t entry)
 		}
 	    }
 	}
-    } 
+  //  } 
   
   
   

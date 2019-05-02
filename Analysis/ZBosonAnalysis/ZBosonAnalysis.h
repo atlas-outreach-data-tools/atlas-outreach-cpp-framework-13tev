@@ -21,7 +21,7 @@ class ZBosonAnalysis : public TSelector {
   TH1F *hist_etmiss       = 0;
   TH1F *hist_vxp_z        = 0;
   TH1F *hist_pvxp_n       = 0;
-  TH1F *hist_mLL         = 0;
+  TH1F *hist_mLL         = 0;  TH1F *hist_mLL_ee         = 0;  TH1F *hist_mLL_mumu         = 0;
 
   // Leading Lepton histograms
   TH1F *hist_leadleptpt   = 0;
@@ -58,7 +58,7 @@ class ZBosonAnalysis : public TSelector {
   //////////////////////////////////////////////////////////
   // Declaration of leaf types
 
- Int_t           runNumber;
+   Int_t           runNumber;
    Int_t           eventNumber;
    Int_t           channelNumber;
    Float_t         mcWeight;
@@ -85,7 +85,7 @@ class ZBosonAnalysis : public TSelector {
    vector<float>   *lep_phi;
    vector<float>   *lep_E;
    vector<float>   *lep_z0;
-   vector<float>   *lep_charge;
+   vector<int>     *lep_charge;
    vector<unsigned int> *lep_type;
    vector<bool>    *lep_isTightID;
    vector<float>   *lep_ptcone30;
@@ -113,6 +113,7 @@ class ZBosonAnalysis : public TSelector {
    vector<bool>    *photon_isTightID;
    vector<float>   *photon_ptcone30;
    vector<float>   *photon_etcone20;
+   vector<int>     *photon_convType;
    UInt_t          fatjet_n;
    vector<float>   *fatjet_pt;
    vector<float>   *fatjet_eta;

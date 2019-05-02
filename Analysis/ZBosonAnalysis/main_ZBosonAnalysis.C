@@ -4,12 +4,12 @@
 #include "TFile.h"
 #include "TProof.h"
 
-void main_ZBosonAnalysis(int proof)
+void main_ZBosonAnalysis(int proof = 0, int option= 1)
 {
   // path to your local directory *or* URL, please change the default one!
 
   /* Local path example */
-  TString path = "/afs/cern.ch/user/l/lserkin/Desktop/work/OUTREACH/Outreach/data/";
+  TString path = "/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/2lep/";
   
   /* The URL to the ATLAS Open Data website repository */
 //  TString path = "http://opendata.atlas.cern/release/samples/";
@@ -17,174 +17,150 @@ void main_ZBosonAnalysis(int proof)
   //////////////////////////////////////////////////////////////////////////////////////////
   // adding chains of all MC and data samples
 
+  if (option==1)
+  {
+  //data
+  TChain* chain_data = new TChain("mini");
+  chain_data->AddFile(path+"Data/dataA_2lep.root");
+  chain_data->AddFile(path+"Data/dataB_2lep.root");
+  chain_data->AddFile(path+"Data/dataC_2lep.root");
+  chain_data->AddFile(path+"Data/dataD_2lep.root");
+  chain_data->Process("ZBosonAnalysis.C+","data");
+  }
+
+  
+  //////////////////////  MC samples
+
+  if (option==2)   {
+
+  // Z+jets inclusive
   TChain* chain_Z_ee = new TChain("mini");
-  chain_Z_ee->AddFile(path+"Zee.root");
+  chain_Z_ee->AddFile(path+"MC/mc15_13TeV.361106.PwPy8EG_AZNLOCTEQ6L1_Zee.2lep_raw.root");
   chain_Z_ee->Process("ZBosonAnalysis.C+","Z_ee");
+  }
+
+  if (option==3)   {
+  TChain* chain_Z_mumu = new TChain("mini");
+  chain_Z_mumu->AddFile(path+"MC/mc15_13TeV.361107.PwPy8EG_AZNLOCTEQ6L1_Zmumu.2lep_raw.root");
+  chain_Z_mumu->Process("ZBosonAnalysis.C+","Z_mumu");
+  }
+
+  if (option==4)   {
+  TChain* chain_Z_tautau = new TChain("mini");
+  chain_Z_tautau->AddFile(path+"MC/mc15_13TeV.361108.PwPy8EG_AZNLOCTEQ6L1_Ztautau.2lep_raw.root");
+  chain_Z_tautau->Process("ZBosonAnalysis.C+","Z_tautau");
+  }
+
+  if (option==5)   {
+  // W+jets inclusive  
+  TChain* chain_Wplusenu = new TChain("mini");
+  chain_Wplusenu->AddFile(path+"MC/mc15_13TeV.361100.PwPy8EG_AZNLOCTEQ6L1_Wplusenu.2lep_raw.root");
+  chain_Wplusenu->Process("ZBosonAnalysis.C+","Wplusenu");
+
+  TChain* chain_Wplusmunu = new TChain("mini");
+  chain_Wplusmunu->AddFile(path+"MC/mc15_13TeV.361101.PwPy8EG_AZNLOCTEQ6L1_Wplusmunu.2lep_raw.root");
+  chain_Wplusmunu->Process("ZBosonAnalysis.C+","Wplusmunu");
+
+  TChain* chain_Wplustaunu = new TChain("mini");
+  chain_Wplustaunu->AddFile(path+"MC/mc15_13TeV.361102.PwPy8EG_AZNLOCTEQ6L1_Wplustaunu.2lep_raw.root");
+  chain_Wplustaunu->Process("ZBosonAnalysis.C+","Wplustaunu");
+
+  TChain* chain_Wminusenu = new TChain("mini");
+  chain_Wminusenu->AddFile(path+"MC/mc15_13TeV.361103.PwPy8EG_AZNLOCTEQ6L1_Wminusenu.2lep_raw.root");
+  chain_Wminusenu->Process("ZBosonAnalysis.C+","Wminusenu");
+
+  TChain* chain_Wminusmunu = new TChain("mini");
+  chain_Wminusmunu->AddFile(path+"MC/mc15_13TeV.361104.PwPy8EG_AZNLOCTEQ6L1_Wminusmunu.2lep_raw.root");
+  chain_Wminusmunu->Process("ZBosonAnalysis.C+","Wminusmunu");
+
+  TChain* chain_Wminustaunu = new TChain("mini");
+  chain_Wminustaunu->AddFile(path+"MC/mc15_13TeV.361105.PwPy8EG_AZNLOCTEQ6L1_Wminustaunu.2lep_raw.root");
+  chain_Wminustaunu->Process("ZBosonAnalysis.C+","Wminustaunu");
+
+
+  // diboson
+  TChain* chain_WWlvlv = new TChain("mini");
+  chain_WWlvlv->AddFile(path+"MC/mc15_13TeV.361600.PwPy8EG_CT10nloME_AZNLOCTEQ6L1_WWlvlv.2lep_raw.root");
+  chain_WWlvlv->Process("ZBosonAnalysis.C+","WWlvlv");
+
+  TChain* chain_WWlvqq = new TChain("mini");
+  chain_WWlvqq->AddFile(path+"MC/mc15_13TeV.361606.PwPy8EG_CT10nloME_AZNLOCTEQ6L1_WWlvqq.2lep_raw.root");
+  chain_WWlvqq->Process("ZBosonAnalysis.C+","WWlvqq");
+
+  TChain* chain_ZZllll = new TChain("mini");
+  chain_ZZllll->AddFile(path+"MC/mc15_13TeV.361603.PwPy8EG_CT10nloME_AZNLOCTEQ6L1_ZZllll_mll4.2lep_raw.root");
+  chain_ZZllll->Process("ZBosonAnalysis.C+","ZZllll");
+
+  TChain* chain_ZZvvll = new TChain("mini");
+  chain_ZZvvll->AddFile(path+"MC/mc15_13TeV.361604.PwPy8EG_CT10nloME_AZNLOCTEQ6L1_ZZvvll_mll4.2lep_raw.root");
+  chain_ZZvvll->Process("ZBosonAnalysis.C+","ZZvvll");
+
+  TChain* chain_ZZqqll = new TChain("mini");
+  chain_ZZqqll->AddFile(path+"MC/mc15_13TeV.361610.PwPy8EG_CT10nloME_AZNLOCTEQ6L1_ZZqqll_mqq20mll20.2lep_raw.root");
+  chain_ZZqqll->Process("ZBosonAnalysis.C+","ZZqqll");
+
+  TChain* chain_WZlvll = new TChain("mini");
+  chain_WZlvll->AddFile(path+"MC/mc15_13TeV.361601.PwPy8EG_CT10nloME_AZNLOCTEQ6L1_WZlvll_mll4.2lep_raw.root");
+  chain_WZlvll->Process("ZBosonAnalysis.C+","WZlvll");
+
+  TChain* chain_WZlvvv = new TChain("mini");
+  chain_WZlvvv->AddFile(path+"MC/mc15_13TeV.361602.PwPy8EG_CT10nloME_AZNLOCTEQ6L1_WZlvvv_mll4.2lep_raw.root");
+  chain_WZlvvv->Process("ZBosonAnalysis.C+","WZlvvv");
+
+  TChain* chain_WZqqll = new TChain("mini");
+  chain_WZqqll->AddFile(path+"MC/mc15_13TeV.361607.PwPy8EG_CT10nloME_AZNLOCTEQ6L1_WZqqll_mll20.2lep_raw.root");
+  chain_WZqqll->Process("ZBosonAnalysis.C+","WZqqll");
+
+  TChain* chain_WZlvqq = new TChain("mini");
+  chain_WZlvqq->AddFile(path+"MC/mc15_13TeV.361609.PwPy8EG_CT10nloME_AZNLOCTEQ6L1_WZlvqq_mqq20.2lep_raw.root");
+  chain_WZlvqq->Process("ZBosonAnalysis.C+","WZlvqq");
+
+
+  //single top
+
+  TChain* chain_single_top_tchan = new TChain("mini");
+  chain_single_top_tchan->AddFile(path+"MC/mc15_13TeV.410011.PwPyEG_P2012_singletop_tchan_lept_top.2lep_raw.root");
+  chain_single_top_tchan->Process("ZBosonAnalysis.C+","single_top_tchan");
+
+  TChain* chain_single_antitop_tchan = new TChain("mini");
+  chain_single_antitop_tchan->AddFile(path+"MC/mc15_13TeV.410012.PwPyEG_P2012_singletop_tchan_lept_antitop.2lep_raw.root");
+  chain_single_antitop_tchan->Process("ZBosonAnalysis.C+","single_antitop_tchan");
+
+  TChain* chain_single_top_schan = new TChain("mini");
+  chain_single_top_schan->AddFile(path+"MC/mc15_13TeV.410025.PwPyEG_P2012_SingleTopSchan_noAllHad_top.2lep_raw.root");
+  chain_single_top_schan->Process("ZBosonAnalysis.C+","single_top_schan");
+
+  TChain* chain_single_antitop_schan = new TChain("mini");
+  chain_single_antitop_schan->AddFile(path+"MC/mc15_13TeV.410026.PwPyEG_P2012_SingleTopSchan_noAllHad_antitop.2lep_raw.root");
+  chain_single_antitop_schan->Process("ZBosonAnalysis.C+","single_antitop_schan");
 
 /*
-  TChain* chain_WW = new TChain("mini");
-  chain_WW->AddFile(path+"MC/mc_105985.WW.root");
-  chain_WW->Process("ZBosonAnalysis.C+","WW");
+  TChain* chain_single_top_wtchan = new TChain("mini");
+  chain_single_top_wtchan->AddFile(path+"MC/mc15_13TeV.410013.PwPyEG_P2012_Wt_inclusive_top.2lep_raw.root");
+  chain_single_top_wtchan->Process("ZBosonAnalysis.C+","single_top_wtchan");
 
-  TChain* chain_ZZ = new TChain("mini");
-  chain_ZZ->AddFile(path+"MC/mc_105986.ZZ.root");
-  chain_ZZ->Process("ZBosonAnalysis.C+","ZZ");
-
-  TChain* chain_WZ = new TChain("mini");
-  chain_WZ->AddFile(path+"MC/mc_105987.WZ.root");
-  chain_WZ->Process("ZBosonAnalysis.C+","WZ");
-
-  TChain* chain_stop_tchan_top = new TChain("mini");
-  chain_stop_tchan_top->AddFile(path+"MC/mc_110090.stop_tchan_top.root");
-  chain_stop_tchan_top->Process("ZBosonAnalysis.C+","stop_tchan_top");
-
-  TChain* chain_stop_tchan_antitop = new TChain("mini");
-  chain_stop_tchan_antitop->AddFile(path+"MC/mc_110091.stop_tchan_antitop.root");
-  chain_stop_tchan_antitop->Process("ZBosonAnalysis.C+","stop_tchan_antitop");
-
-  TChain* chain_stop_schan = new TChain("mini");
-  chain_stop_schan->AddFile(path+"MC/mc_110119.stop_schan.root");
-  chain_stop_schan->Process("ZBosonAnalysis.C+","stop_schan");
-
-  TChain* chain_stop_wtchan = new TChain("mini");
-  chain_stop_wtchan->AddFile(path+"MC/mc_110140.stop_wtchan.root");
-  chain_stop_wtchan->Process("ZBosonAnalysis.C+","stop_wtchan");
-
-  TChain* chain_ZPrime1000 = new TChain("mini");
-  chain_ZPrime1000->AddFile(path+"MC/mc_110903.ZPrime1000.root");
-  chain_ZPrime1000->Process("ZBosonAnalysis.C+","ZPrime1000");
-
-  TChain* chain_ttbar_had = new TChain("mini");
-  chain_ttbar_had->AddFile(path+"MC/mc_117049.ttbar_had.root");
-  chain_ttbar_had->Process("ZBosonAnalysis.C+","ttbar_had");
+  TChain* chain_single_antitop_wtchan = new TChain("mini");
+  chain_single_antitop_wtchan->AddFile(path+"MC/mc15_13TeV.410014.PwPyEG_P2012_Wt_inclusive_antitop.2lep_raw.root");
+  chain_single_antitop_wtchan->Process("ZBosonAnalysis.C+","single_antitop_wtchan");
+*/
 
   TChain* chain_ttbar_lep = new TChain("mini");
-  chain_ttbar_lep->AddFile(path+"MC/mc_117050.ttbar_lep.root");
+  chain_ttbar_lep->AddFile(path+"MC/mc15_13TeV.410000.PwPyEG_P2012_ttbar_hdamp172p5_nonallhad.2lep_raw.root");
   chain_ttbar_lep->Process("ZBosonAnalysis.C+","ttbar_lep");
+  }
 
-  TChain* chain_Z_ee = new TChain("mini");
-  chain_Z_ee->AddFile(path+"MC/mc_147770.Zee.root");
-  chain_Z_ee->Process("ZBosonAnalysis.C+","Z_ee");
 
-  TChain* chain_Z_mumu = new TChain("mini");
-  chain_Z_mumu->AddFile(path+"MC/mc_147771.Zmumu.root");
-  chain_Z_mumu->Process("ZBosonAnalysis.C+","Z_mumu");
-
-  TChain* chain_Z_tautau = new TChain("mini");
-  chain_Z_tautau->AddFile(path+"MC/mc_147772.Ztautau.root");
-  chain_Z_tautau->Process("ZBosonAnalysis.C+","Z_tautau");
-
-  TChain* chain_ggH125_WW2lep = new TChain("mini");
-  chain_ggH125_WW2lep->AddFile(path+"MC/mc_161005.ggH125_WW2lep.root");
-  chain_ggH125_WW2lep->Process("ZBosonAnalysis.C+","ggH125_WW2lep");
-
-  TChain* chain_VBFH125_WW2lep = new TChain("mini");
-  chain_VBFH125_WW2lep->AddFile(path+"MC/mc_161055.VBFH125_WW2lep.root");
-  chain_VBFH125_WW2lep->Process("ZBosonAnalysis.C+","VBFH125_WW2lep");
-
-  TChain* chain_WenuWithB = new TChain("mini");
-  chain_WenuWithB->AddFile(path+"MC/mc_167740.WenuWithB.root");
-  chain_WenuWithB->Process("ZBosonAnalysis.C+","WenuWithB");
-
-  TChain* chain_WenuJetsBVeto = new TChain("mini");
-  chain_WenuJetsBVeto->AddFile(path+"MC/mc_167741.WenuJetsBVeto.root");
-  chain_WenuJetsBVeto->Process("ZBosonAnalysis.C+","WenuJetsBVeto");
-
-  TChain* chain_WenuNoJetsBVeto = new TChain("mini");
-  chain_WenuNoJetsBVeto->AddFile(path+"MC/mc_167742.WenuNoJetsBVeto.root");
-  chain_WenuNoJetsBVeto->Process("ZBosonAnalysis.C+","WenuNoJetsBVeto");
-
-  TChain* chain_WmunuWithB = new TChain("mini");
-  chain_WmunuWithB->AddFile(path+"MC/mc_167743.WmunuWithB.root");
-  chain_WmunuWithB->Process("ZBosonAnalysis.C+","WmunuWithB");
-
-  TChain* chain_WmunuJetsBVeto = new TChain("mini");
-  chain_WmunuJetsBVeto->AddFile(path+"MC/mc_167744.WmunuJetsBVeto.root");
-  chain_WmunuJetsBVeto->Process("ZBosonAnalysis.C+","WmunuJetsBVeto");
-
-  TChain* chain_WmunuNoJetsBVeto = new TChain("mini");
-  chain_WmunuNoJetsBVeto->AddFile(path+"MC/mc_167745.WmunuNoJetsBVeto.root");
-  chain_WmunuNoJetsBVeto->Process("ZBosonAnalysis.C+","WmunuNoJetsBVeto");
-
-  TChain* chain_WtaunuWithB = new TChain("mini");
-  chain_WtaunuWithB->AddFile(path+"MC/mc_167746.WtaunuWithB.root");
-  chain_WtaunuWithB->Process("ZBosonAnalysis.C+","WtaunuWithB");
-
-  TChain* chain_WtaunuJetsBVeto = new TChain("mini");
-  chain_WtaunuJetsBVeto->AddFile(path+"MC/mc_167747.WtaunuJetsBVeto.root");
-  chain_WtaunuJetsBVeto->Process("ZBosonAnalysis.C+","WtaunuJetsBVeto");
-
-  TChain* chain_WtaunuNoJetsBVeto = new TChain("mini");
-  chain_WtaunuNoJetsBVeto->AddFile(path+"MC/mc_167748.WtaunuNoJetsBVeto.root");
-  chain_WtaunuNoJetsBVeto->Process("ZBosonAnalysis.C+","WtaunuNoJetsBVeto");
-
-  TChain* chain_DYeeM08to15 = new TChain("mini");
-  chain_DYeeM08to15->AddFile(path+"MC/mc_173041.DYeeM08to15.root");
-  chain_DYeeM08to15->Process("ZBosonAnalysis.C+","DYeeM08to15");
-
-  TChain* chain_DYeeM15to40 = new TChain("mini");
-  chain_DYeeM15to40->AddFile(path+"MC/mc_173042.DYeeM15to40.root");
-  chain_DYeeM15to40->Process("ZBosonAnalysis.C+","DYeeM15to40");
-
-  TChain* chain_DYmumuM08to15 = new TChain("mini");
-  chain_DYmumuM08to15->AddFile(path+"MC/mc_173043.DYmumuM08to15.root");
-  chain_DYmumuM08to15->Process("ZBosonAnalysis.C+","DYmumuM08to15");
-
-  TChain* chain_DYmumuM15to40 = new TChain("mini");
-  chain_DYmumuM15to40->AddFile(path+"MC/mc_173044.DYmumuM15to40.root");
-  chain_DYmumuM15to40->Process("ZBosonAnalysis.C+","DYmumuM15to40");
-
-  TChain* chain_DYtautauM08to15 = new TChain("mini");
-  chain_DYtautauM08to15->AddFile(path+"MC/mc_173045.DYtautauM08to15.root");
-  chain_DYtautauM08to15->Process("ZBosonAnalysis.C+","DYtautauM08to15");
-
-  TChain* chain_DYtautauM15to40 = new TChain("mini");
-  chain_DYtautauM15to40->AddFile(path+"MC/mc_173046.DYtautauM15to40.root");
-  chain_DYtautauM15to40->Process("ZBosonAnalysis.C+","DYtautauM15to40");
-
-  TChain* chain_data = new TChain("mini");
-  chain_data->AddFile(path+"Data/DataEgamma.root");
-  chain_data->AddFile(path+"Data/DataMuons.root");
-  chain_data->Process("ZBosonAnalysis.C+","data");
-
-  // in case of usage of Proof
+/*
+// PROOF usage
   if (proof == 1)
   {
     TProof::Open("");
 
-    chain_WW->SetProof();
-    chain_WZ->SetProof();
-    chain_ZZ->SetProof();
-    chain_stop_tchan_top->SetProof();
-    chain_stop_tchan_antitop->SetProof();
-    chain_stop_schan->SetProof();
-    chain_stop_wtchan->SetProof();
-    chain_ZPrime1000->SetProof();
-    chain_ttbar_had->SetProof();
-    chain_ttbar_lep->SetProof();
-    chain_Z_ee->SetProof();
-    chain_Z_mumu->SetProof();
-    chain_Z_tautau->SetProof();
-    chain_ggH125_WW2lep->SetProof();
-    chain_VBFH125_WW2lep->SetProof();
-    chain_WenuWithB->SetProof();
-    chain_WenuJetsBVeto->SetProof();
-    chain_WenuNoJetsBVeto->SetProof();
-    chain_WmunuWithB->SetProof();
-    chain_WmunuJetsBVeto->SetProof();
-    chain_WmunuNoJetsBVeto->SetProof();
-    chain_WtaunuWithB->SetProof();
-    chain_WtaunuJetsBVeto->SetProof();
-    chain_WtaunuNoJetsBVeto->SetProof();
-    chain_DYeeM08to15->SetProof();
-    chain_DYeeM15to40->SetProof();
-    chain_DYmumuM08to15->SetProof();
-    chain_DYmumuM15to40->SetProof();
-    chain_DYtautauM08to15->SetProof();
-    chain_DYtautauM15to40->SetProof();
+  
     chain_data->SetProof();
 
   }
 */
+
 
 }

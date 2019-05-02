@@ -10,7 +10,10 @@ void ZBosonAnalysis::define_histograms()
   // HISTOGRAMS
   
   // Global variables histograms
-  hist_mLL         = new TH1F("hist_mLL",        "Mass of Dilepton System; m_{ll};Events", 30, 60, 120);
+  hist_mLL          = new TH1F("hist_mLL",         "Mass of Dilepton System; m_{ll} [GeV];Events", 30, 68, 114);
+  hist_mLL_ee          = new TH1F("hist_mLL_ee",      "Mass of Dilepton(ee) System; m_{ee} [GeV];Events", 30, 68, 114);
+  hist_mLL_mumu          = new TH1F("hist_mLL_mumu",    "Mass of Dilepton(#mu#mu) System; m_{#mu#mu} [GeV];Events", 30, 68, 114);
+      
   hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T,Miss} [GeV];Events", 20, 0,200);
   hist_vxp_z        = new TH1F("hist_vxp_z",       "Primary Vertex Position; z_{Vertex}; Events", 40, -200,200);
   hist_pvxp_n       = new TH1F("hist_pvxp_n",      "Number of Vertices; N_{vertex}; Events", 30, -0.5,29.5);
@@ -58,8 +61,7 @@ void ZBosonAnalysis::FillOutputList()
   GetOutputList()->Add(hist_etmiss);
   GetOutputList()->Add(hist_vxp_z);
   GetOutputList()->Add(hist_pvxp_n);
-  GetOutputList()->Add(hist_mLL);
-
+  GetOutputList()->Add(hist_mLL);   GetOutputList()->Add(hist_mLL_ee);  GetOutputList()->Add(hist_mLL_mumu);
   // Add Leading Lepton histograms
   GetOutputList()->Add(hist_leadleptpt);
   GetOutputList()->Add(hist_leadlepteta);
@@ -103,7 +105,7 @@ void ZBosonAnalysis::WriteHistograms()
   hist_etmiss->Write();
   hist_vxp_z->Write();
   hist_pvxp_n->Write();
-  hist_mLL->Write();
+  hist_mLL->Write();  hist_mLL_ee->Write();  hist_mLL_mumu->Write();
 
   //Write Leading Lepton histograms
   hist_leadleptpt->Write();
@@ -143,8 +145,7 @@ void ZBosonAnalysis::FillHistogramsGlobal( double m, float w , TString s)
 {
 
   //Fill Global histograms
-  if (s.Contains("hist_mLL")) hist_mLL->Fill(m,w);
-
+  if (s.Contains("hist_mLL")) hist_mLL->Fill(m,w);  if (s.Contains("hist_mLL_ee")) hist_mLL_ee->Fill(m,w);  if (s.Contains("hist_mLL_mumu")) hist_mLL_mumu->Fill(m,w);
   if (s.Contains("hist_etmiss")) hist_etmiss->Fill(m,w);
 
   if (s.Contains("hist_vxp_z")) hist_vxp_z->Fill(m,w);
