@@ -6,6 +6,8 @@ read choice
 
 if (( $choice == 1 )) ; then
   echo 'Creating the needed empty output directories in Analysis/NNAnalysis/** and in Plotting/histograms'
+  mkdir Analysis/HZZAnalysis/Output_HZZAnalysis
+  mkdir Analysis/HyyAnalysis/Output_HyyAnalysis
   mkdir Analysis/TTbarAnalysis/Output_TTbarAnalysis
   mkdir Analysis/WBosonAnalysis/Output_WBosonAnalysis
   mkdir Analysis/WZDiBosonAnalysis/Output_WZDiBosonAnalysis
@@ -14,6 +16,8 @@ if (( $choice == 1 )) ; then
   mkdir Plotting/histograms
 elif  (( $choice == 0 )) ; then
   echo 'Removing everything within directories Analysis/NNAnalysis/Output_NNAnalysis/* and in Plotting/histograms/*'
+  rm Analysis/HZZAnalysis/Output_HZZAnalysis/*
+  rm Analysis/HyyAnalysis/Output_HyyAnalysis/*
   rm Analysis/TTbarAnalysis/Output_TTbarAnalysis/*
   rm Analysis/WBosonAnalysis/Output_WBosonAnalysis/*
   rm Analysis/WZDiBosonAnalysis/Output_WZDiBosonAnalysis/*
