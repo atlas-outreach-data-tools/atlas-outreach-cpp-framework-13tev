@@ -1,0 +1,3 @@
+### name | cross-section | sum of weights | efficiency
+data|1|1|1
+ggH125_gamgam|0.102|55922617.6297|1
