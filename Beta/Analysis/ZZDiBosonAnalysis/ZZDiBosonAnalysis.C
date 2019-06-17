@@ -82,13 +82,13 @@ Bool_t ZZDiBosonAnalysis::Process(Long64_t entry)
 		  // Lepton is isolated and with at least 20 GeV
 		  if( lep_pt->at(i) >20000. && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.15) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.15 ) )
 		    {
-		      if ( lep_type->at(i)==11 && abs(lep_eta->at(i)<2.47) ) {
+		      if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i)<2.47) ) {
 			goodlep_n = goodlep_n + 1;
 			goodlep_index[lep_index] = i;
 			lep_index++;
 		      }
 		      // muon selection
-		      if ( lep_type->at(i) ==13 && abs(lep_eta->at(i)<2.7) ) {
+		      if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)<2.7) ) {
 			goodlep_n = goodlep_n + 1;
 			goodlep_index[lep_index] = i;
 			lep_index++;

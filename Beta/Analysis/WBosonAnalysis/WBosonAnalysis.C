@@ -92,13 +92,13 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
 		      if( lep_pt->at(i) >25000. && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.15) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.15 ) )
 			{
                 	  // electron selection in fiducial region excluding candidates in the transition region between the barrel and endcap electromagnetic calorimeters
-			  if ( lep_type->at(i)==11 && abs(lep_eta->at(i)<2.47) && ( abs(lep_eta->at(i) < 1.37) || abs(lep_eta->at(i) > 1.52) ) ) {
+			  if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i)<2.47) && ( TMath::Abs(lep_eta->at(i) < 1.37) || TMath::Abs(lep_eta->at(i) > 1.52) ) ) {
 			    goodlep_n = goodlep_n + 1;
 			    goodlep_index = i;
 			    lep_index++;
 			  }
 			  // muon selection
-			  if ( lep_type->at(i) ==13 && abs(lep_eta->at(i)<2.4) ) {
+			  if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)<2.4) ) {
 			    goodlep_n = goodlep_n + 1;
 			    goodlep_index = i;
 			    lep_index++;
@@ -139,11 +139,11 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
 			{
 			  for(unsigned int i=0; i<jet_n; i++)
 			    {
-			      if(jet_pt->at(i)>25000. && abs(jet_eta->at(i)) < 2.5)
+			      if(jet_pt->at(i)>25000. && TMath::Abs(jet_eta->at(i)) < 2.5)
 				{
 				  // JVT cleaning
 				  bool jvt_pass=true;
-				  if (jet_pt->at(i) < 60000. && abs(jet_eta->at(i)) < 2.4 && jet_jvt->at(i) < 0.59) jvt_pass=false;
+				  if (jet_pt->at(i) < 60000. && TMath::Abs(jet_eta->at(i)) < 2.4 && jet_jvt->at(i) < 0.59) jvt_pass=false;
 				  if (jvt_pass) {
 				    goodjet_n++;
 				    goodjet_index = i;
