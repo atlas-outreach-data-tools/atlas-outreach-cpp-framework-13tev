@@ -402,7 +402,7 @@ void Plotting::makePlots(){
   std::map<std::string,TH1F*> single_top_schan;
   std::map<std::string,TH1F*> single_antitop_schan;
   
-  std::map<std::string,TH1F*> ZPrime1000;
+  //std::map<std::string,TH1F*> ZPrime1000;
   
   
   // naming of the histos, must be the same as in Files.txt, and follow previous lines
@@ -491,7 +491,7 @@ void Plotting::makePlots(){
     TH1F* W_Z = new TH1F();
     TH1F* Z_Z = new TH1F();
     TH1F* Higgs = new TH1F();
-    TH1F* ZPrime = new TH1F();
+    //TH1F* ZPrime = new TH1F();
     
     // merge for W _Analysis
     if(option.find("WBosonAnalysis") != option.npos){
@@ -1019,15 +1019,15 @@ void Plotting::makePlots(){
     
     // add normalized signals
     TH1F* ZP_normsig = new TH1F();
-    if(option.find("ZPrimeAnalysis") != option.npos){
-      ZP_normsig = (TH1F*)ZPrime1000[fIter->first]->Clone(); 
-      ZP_normsig->Scale(histstack->Integral()/ZP_normsig->Integral());
-      ZP_normsig->SetLineColor(kRed);
-      ZP_normsig->SetFillStyle(0);
-      ZP_normsig->SetLineStyle(2);
-      ZP_normsig->SetFillColor(2);
-      ZP_normsig->SetLineWidth(2);
-    }
+    //if(option.find("ZPrimeAnalysis") != option.npos){
+    //  ZP_normsig = (TH1F*)ZPrime1000[fIter->first]->Clone(); 
+    //  ZP_normsig->Scale(histstack->Integral()/ZP_normsig->Integral());
+    //  ZP_normsig->SetLineColor(kRed);
+    //  ZP_normsig->SetFillStyle(0);
+    //  ZP_normsig->SetLineStyle(2);
+    //  ZP_normsig->SetFillColor(2);
+    //  ZP_normsig->SetLineWidth(2);
+    //}
    
     
     TH1F* Higgs_normsig = new TH1F();
