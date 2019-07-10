@@ -2,3 +2,5 @@
 *_C.so
 *_C_ACLiC_dict_rdict.pcm
 **/Output_*/*
+*.out
+*.o
