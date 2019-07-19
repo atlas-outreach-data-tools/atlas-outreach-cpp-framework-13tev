@@ -10,10 +10,10 @@ void main_HyyAnalysis(int proof = 0, int option= 0)
   // path to your local directory *or* URL, please change the default one!
 
   /* Local path example */
-  TString path = "/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/GamGam/";
+  //TString path = "/home/student/cpp-13tev/datasets-13-tev/Input/GammaGamma/";
   
   /* The URL to the ATLAS Open Data website repository */
-  //  TString path = "http://opendata.atlas.cern/release/samples/";
+  TString path = "http://opendata.atlas.cern/release/samples/2019/GamGam/";
 
   //////////////////////////////////////////////////////////////////////////////////////////
   if (option==1 || option==0)
