@@ -17,6 +17,9 @@
 #include <string>
 #include <math.h>
 
+#include <algorithm>    // std::sort
+#include <vector>       // std::vector
+
 #include <TH1.h>
 #include <TH2.h>
 #include <TStyle.h>
@@ -54,7 +57,7 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
   if(fChain->GetTree()->GetEntries()>0)
     {
       // **********************************************************************************************//
-      // Begin analysis selection, largely based on: ATLAS Collaboration, Phys. Lett. B 759 (2016) 601 //
+      // Begin simplified selection based on: ATLAS Collaboration, Phys. Lett. B 759 (2016) 601        //
       // **********************************************************************************************//
       
       //Scale factors
@@ -68,10 +71,10 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
       if (weight == 0.) weight = 1.;
       
       // Missing Et of the event in GeV
-      Float_t missingEt = met_et/1000.;
-      
-      //First cut : missing energy larger than 25 GeV
-      if(missingEt > 25.)
+      Float_t missingEt = met_et;
+
+      //First cut : missing energy larger than 30 GeV
+      if(missingEt > 30000)
 	{
 	  
 	  // Preselection cut for electron/muon trigger
@@ -88,17 +91,17 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
 		  // Lepton is Tight
 		  if( lep_isTightID->at(i) )
 		    {
-		      // Lepton is isolated and hard pT
-		      if( lep_pt->at(i) >25000. && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.15) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.15 ) )
+		      // Lepton is highly isolated and very hard pT to remove any multijet
+		      if( lep_pt->at(i) >35000. && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.1) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.1 ) )
 			{
                 	  // electron selection in fiducial region excluding candidates in the transition region between the barrel and endcap electromagnetic calorimeters
-			  if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i)<2.47) && ( TMath::Abs(lep_eta->at(i) < 1.37) || TMath::Abs(lep_eta->at(i) > 1.52) ) ) {
+			  if ( lep_type->at(i)==11 && abs(lep_eta->at(i)<2.47) && ( abs(lep_eta->at(i) < 1.37) || abs(lep_eta->at(i) > 1.52) ) ) {
 			    goodlep_n = goodlep_n + 1;
 			    goodlep_index = i;
 			    lep_index++;
 			  }
 			  // muon selection
-			  if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)<2.4) ) {
+			  if ( lep_type->at(i) ==13 && abs(lep_eta->at(i)<2.4) ) {
 			    goodlep_n = goodlep_n + 1;
 			    goodlep_index = i;
 			    lep_index++;
@@ -106,8 +109,8 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
 			}
 		    }
 		}
-	      
-	      //Exactly one good lepton
+	    
+             //Exactly one good lepton
 	      if(goodlep_n==1)
 		{
 		  
@@ -127,46 +130,20 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
 		  float mtw_munu=0.; 
 		  if(type_one==13) {mtw_munu = mtw; }
 		  
-		  //transverse mass larger than 50 GeV
-		  if(mtw > 50000.)
+		  //transverse mass larger than 60 GeV
+		  if(mtw > 60000.)
 		    {
-		      
-		      //Preselection of good jets
-		      int goodjet_n = 0;
-		      int goodjet_index = 0;
-		      
-		      if (jet_n > 0) 
-			{
-			  for(unsigned int i=0; i<jet_n; i++)
-			    {
-			      if(jet_pt->at(i)>25000. && TMath::Abs(jet_eta->at(i)) < 2.5)
-				{
-				  // JVT cleaning
-				  bool jvt_pass=true;
-				  if (jet_pt->at(i) < 60000. && TMath::Abs(jet_eta->at(i)) < 2.4 && jet_jvt->at(i) < 0.59) jvt_pass=false;
-				  if (jvt_pass) {
-				    goodjet_n++;
-				    goodjet_index = i;
-				    
-				  }
-				}
-			    }
-			}
-		      
-		      // To add: we are using a MC sample known to describe poorly large jet multiplicity, thus we cut on nJets<2 for lepton kinematics
-		      if(jet_n<1)
-			{
-			  
+                     
 			  //Start to fill histograms : definitions of x-axis variables
-			  double names_of_global_variable[]={missingEt, mtw/1000. , mtw_enu/1000., mtw_munu/1000.};
+			  double names_of_global_variable[]={missingEt/1000., mtw/1000. , mtw_enu/1000., mtw_munu/1000.};
 			  
-			  double names_of_leadlep_variable[]={Lepton_1.Pt()/1000., Lepton_1.Eta(), Lepton_1.E()/1000., Lepton_1.Phi(), (double)lep_charge->at(goodlep_index), (double)lep_type->at(goodlep_index), lep_ptcone30->at(goodlep_index)/lep_pt->at(goodlep_index), lep_etcone20->at(goodlep_index)/lep_pt->at(goodlep_index), lep_z0->at(goodlep_index), lep_trackd0pvunbiased->at(goodlep_index)};
+			  double names_of_leadlep_variable[]={Lepton_1.Pt()/1000., Lepton_1.Eta(), Lepton_1.E()/1000., Lepton_1.Phi(), (double)lep_charge->at(goodlep_index), (double)lep_type->at(goodlep_index)};
 			  
 			  
 			  //Start to fill histograms : definitions of histogram names
 			  TString histonames_of_global_variable[]={"hist_etmiss","hist_mtw","hist_mtw_enu","hist_mtw_munu"};
 			  
-			  TString histonames_of_leadlep_variable[]={"hist_leadleptpt", "hist_leadlepteta","hist_leadleptE","hist_leadleptphi","hist_leadleptch","hist_leadleptID","hist_leadlept_ptc","hist_leadleptetc","hist_leadlepz0","hist_leadlepd0"};
+			  TString histonames_of_leadlep_variable[]={"hist_leadleptpt", "hist_leadlepteta","hist_leadleptE","hist_leadleptphi","hist_leadleptch","hist_leadleptID"};
 			  
 			  //Start to fill histograms : find the histogram array length
 			  int length_global = sizeof(names_of_global_variable)/sizeof(names_of_global_variable[0]);
@@ -183,19 +160,20 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
 			      FillHistogramsLeadlept( names_of_leadlep_variable[i], weight, histonames_of_leadlep_variable[i]);
 			    }
 			
-			}//jet cut		    
-		      
-		      // fill jets
-		      if (jet_n > 0)
-			{
-			  double names_of_jet_variable[]={(double)jet_n, jet_pt->at(goodjet_index)/1000., jet_eta->at(goodjet_index)};
-			  TString histonames_of_jet_variable[]={"hist_n_jets","hist_leadjet_pt","hist_leadjet_eta"};
-			  int length_leadjet = sizeof(names_of_jet_variable)/sizeof(names_of_jet_variable[0]);
-			  for (int i=0; i<length_leadjet; i++)
-			    {
-			      FillHistogramsLeadJet( names_of_jet_variable[i], weight, histonames_of_jet_variable[i]);
-			    }
-			}
+			  // fill number of jets
+                          FillHistogramsLeadJet((double)jet_n, weight, "hist_n_jets");
+
+                          if (jet_n > 0)
+                            {
+                              double names_of_jet_variable[]={jet_pt->at(0)/1000., jet_eta->at(0)};
+                              TString histonames_of_jet_variable[]={"hist_leadjet_pt","hist_leadjet_eta"};
+                    
+                              int length_leadjet = sizeof(names_of_jet_variable)/sizeof(names_of_jet_variable[0]);
+                              for (int i=0; i<length_leadjet; i++)
+                                {
+                                  FillHistogramsLeadJet( names_of_jet_variable[i], weight, histonames_of_jet_variable[i]);
+                                }
+                            }
 		    }
 		}
 	    }
