@@ -86,7 +86,7 @@ Bool_t HyyAnalysis::Process(Long64_t entry)
 		{
 		  
          	  // photons with 25 GeV and excluding the transition region between the barrel and endcap calorimeters
-		  if( photon_pt->at(i) >25000. && abs(photon_eta->at(i)<2.37) && ( abs(photon_eta->at(i) < 1.37) || abs(photon_eta->at(i) > 1.52) ) )
+		  if( photon_pt->at(i) >25000. && TMath::Abs(photon_eta->at(i)<2.37) && ( TMath::Abs(photon_eta->at(i) < 1.37) || TMath::Abs(photon_eta->at(i) > 1.52) ) )
 		    {
 		      goodphoton_n = goodphoton_n + 1;
 		      goodphoton_index[photon_index] = i;

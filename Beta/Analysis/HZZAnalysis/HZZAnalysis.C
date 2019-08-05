@@ -79,10 +79,10 @@ Bool_t HZZAnalysis::Process(Long64_t entry)
 	    {
 	      
               // isolated and very loose pT
-	      if( lep_pt->at(i) >5000. && abs(lep_eta->at(i)<2.7) && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.15) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.15 ) )
+	      if( lep_pt->at(i) >5000. && TMath::Abs(lep_eta->at(i)<2.7) && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.15) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.15 ) )
 		{
 		  // electron
-		  if ( lep_type->at(i)==11 && lep_pt->at(i) >7000. && abs(lep_eta->at(i)<2.47) ) {
+		  if ( lep_type->at(i)==11 && lep_pt->at(i) >7000. && TMath::Abs(lep_eta->at(i)<2.47) ) {
 		    goodlep_n = goodlep_n + 1;
 		    goodlep_index[lep_index] = i;
 		    lep_index++;
@@ -235,7 +235,7 @@ Bool_t HZZAnalysis::Process(Long64_t entry)
 				    {
 				      for(unsigned int i=0; i<jet_n; i++)
 					{
-					  if(jet_pt->at(i)>30000. && abs(jet_eta->at(i)) < 4.4)
+					  if(jet_pt->at(i)>30000. && TMath::Abs(jet_eta->at(i)) < 4.4)
 					    {
 					      goodjet_n++;
 					      goodjet_index = i;
