@@ -3,7 +3,7 @@
 #include "TROOT.h"
 #include "TChain.h"
 #include "TFile.h"
-//#include "TProof.h"
+#include "TProof.h"
 
 void main_WBosonAnalysis(int proof = 0, int option= 0)
 {
@@ -52,35 +52,6 @@ void main_WBosonAnalysis(int proof = 0, int option= 0)
   //////////////////////  MC samples
 
   if (option==2 || option==0)   {
-  // W+jets inclusive  
-  TChain* chain_Wplusenu = new TChain("mini");
-  chain_Wplusenu->AddFile(path+"MC/mc15_13TeV.361100.PwPy8EG_AZNLOCTEQ6L1_Wplusenu.1lep_raw.root");
-  chain_Wplusenu->Process("WBosonAnalysis.C+","Wplusenu");
-
-  TChain* chain_Wplusmunu = new TChain("mini");
-  chain_Wplusmunu->AddFile(path+"MC/mc15_13TeV.361101.PwPy8EG_AZNLOCTEQ6L1_Wplusmunu.1lep_raw.root");
-  chain_Wplusmunu->Process("WBosonAnalysis.C+","Wplusmunu");
-
-  TChain* chain_Wplustaunu = new TChain("mini");
-  chain_Wplustaunu->AddFile(path+"MC/mc15_13TeV.361102.PwPy8EG_AZNLOCTEQ6L1_Wplustaunu.1lep_raw.root");
-  chain_Wplustaunu->Process("WBosonAnalysis.C+","Wplustaunu");
-  }
-
-  if (option==3 || option==0)   {
-  TChain* chain_Wminusenu = new TChain("mini");
-  chain_Wminusenu->AddFile(path+"MC/mc15_13TeV.361103.PwPy8EG_AZNLOCTEQ6L1_Wminusenu.1lep_raw.root");
-  chain_Wminusenu->Process("WBosonAnalysis.C+","Wminusenu");
-
-  TChain* chain_Wminusmunu = new TChain("mini");
-  chain_Wminusmunu->AddFile(path+"MC/mc15_13TeV.361104.PwPy8EG_AZNLOCTEQ6L1_Wminusmunu.1lep_raw.root");
-  chain_Wminusmunu->Process("WBosonAnalysis.C+","Wminusmunu");
-
-  TChain* chain_Wminustaunu = new TChain("mini");
-  chain_Wminustaunu->AddFile(path+"MC/mc15_13TeV.361105.PwPy8EG_AZNLOCTEQ6L1_Wminustaunu.1lep_raw.root");
-  chain_Wminustaunu->Process("WBosonAnalysis.C+","Wminustaunu");
-  }
-
-  if (option==4 || option==0)   {
   // diboson
   TChain* chain_WWlvlv = new TChain("mini");
   chain_WWlvlv->AddFile(path+"MC/mc15_13TeV.361600.PwPy8EG_CT10nloME_AZNLOCTEQ6L1_WWlvlv.1lep_raw.root");
@@ -130,9 +101,10 @@ void main_WBosonAnalysis(int proof = 0, int option= 0)
   TChain* chain_Z_tautau = new TChain("mini");
   chain_Z_tautau->AddFile(path+"MC/mc15_13TeV.361108.PwPy8EG_AZNLOCTEQ6L1_Ztautau.1lep_raw.root");
   chain_Z_tautau->Process("WBosonAnalysis.C+","Z_tautau");
+  
   }
 
-  if (option==5 || option==0)   {
+  if (option==3 || option==0)   {
   //single top
   TChain* chain_single_top_tchan = new TChain("mini");
   chain_single_top_tchan->AddFile(path+"MC/mc15_13TeV.410011.PwPyEG_P2012_singletop_tchan_lept_top.1lep_raw.root");
@@ -163,7 +135,156 @@ void main_WBosonAnalysis(int proof = 0, int option= 0)
   chain_ttbar_lep->AddFile(path+"MC/mc15_13TeV.410000.PwPyEG_P2012_ttbar_hdamp172p5_nonallhad.1lep_raw.root");
   chain_ttbar_lep->Process("WBosonAnalysis.C+","ttbar_lep");
 
-  } // option 5
+  } // option 3
+
+
+  // Sherpa W+jets sliced samples
+  if (option > 40 || option==0)   {
+
+TChain* chain_Wmunu_MAXHTPTV0_70_CVetoBVeto = new TChain("mini");
+TChain* chain_Wmunu_MAXHTPTV0_70_CFilterBVeto = new TChain("mini");
+TChain* chain_Wmunu_MAXHTPTV0_70_BFilter = new TChain("mini");
+TChain* chain_Wmunu_MAXHTPTV70_140_CVetoBVeto = new TChain("mini");
+TChain* chain_Wmunu_MAXHTPTV70_140_CFilterBVeto = new TChain("mini");
+TChain* chain_Wmunu_MAXHTPTV70_140_BFilter = new TChain("mini");
+TChain* chain_Wmunu_MAXHTPTV140_280_CVetoBVeto = new TChain("mini");
+TChain* chain_Wmunu_MAXHTPTV140_280_CFilterBVeto = new TChain("mini");
+TChain* chain_Wmunu_MAXHTPTV140_280_BFilter = new TChain("mini");
+TChain* chain_Wmunu_MAXHTPTV280_500_CVetoBVeto = new TChain("mini");
+TChain* chain_Wmunu_MAXHTPTV280_500_CFilterBVeto = new TChain("mini");
+TChain* chain_Wmunu_MAXHTPTV280_500_BFilter = new TChain("mini");
+TChain* chain_Wmunu_MAXHTPTV500_1000 = new TChain("mini");
+TChain* chain_Wmunu_MAXHTPTV1000_E_CMS = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV0_70_CVetoBVeto = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV0_70_CFilterBVeto = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV0_70_BFilter = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV70_140_CVetoBVeto = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV70_140_CFilterBVeto = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV70_140_BFilter = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV140_280_CVetoBVeto = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV140_280_CFilterBVeto = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV140_280_BFilter = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV280_500_CVetoBVeto = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV280_500_CFilterBVeto = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV280_500_BFilter = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV500_1000 = new TChain("mini");
+TChain* chain_Wenu_MAXHTPTV1000_E_CMS = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV0_70_CVetoBVeto = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV0_70_CFilterBVeto = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV0_70_BFilter = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV70_140_CVetoBVeto = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV70_140_CFilterBVeto = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV70_140_BFilter = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV140_280_CVetoBVeto = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV140_280_CFilterBVeto = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV140_280_BFilter = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV280_500_CVetoBVeto = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV280_500_CFilterBVeto = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV280_500_BFilter = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV500_1000 = new TChain("mini");
+TChain* chain_Wtaunu_MAXHTPTV1000_E_CM = new TChain("mini");
+
+	    
+chain_Wmunu_MAXHTPTV0_70_CVetoBVeto->AddFile(path+"MC/mc15_13TeV.364156.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV0_70_CVetoBVeto.1lep_raw.root");
+chain_Wmunu_MAXHTPTV0_70_CFilterBVeto->AddFile(path+"MC/mc15_13TeV.364157.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV0_70_CFilterBVeto.1lep_raw.root");
+chain_Wmunu_MAXHTPTV0_70_BFilter->AddFile(path+"MC/mc15_13TeV.364158.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV0_70_BFilter.1lep_raw.root");
+chain_Wmunu_MAXHTPTV70_140_CVetoBVeto->AddFile(path+"MC/mc15_13TeV.364159.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV70_140_CVetoBVeto.1lep_raw.root");
+chain_Wmunu_MAXHTPTV70_140_CFilterBVeto->AddFile(path+"MC/mc15_13TeV.364160.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV70_140_CFilterBVeto.1lep_raw.root");
+chain_Wmunu_MAXHTPTV70_140_BFilter->AddFile(path+"MC/mc15_13TeV.364161.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV70_140_BFilter.1lep_raw.root");
+chain_Wmunu_MAXHTPTV140_280_CVetoBVeto->AddFile(path+"MC/mc15_13TeV.364162.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV140_280_CVetoBVeto.1lep_raw.root");
+chain_Wmunu_MAXHTPTV140_280_CFilterBVeto->AddFile(path+"MC/mc15_13TeV.364163.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV140_280_CFilterBVeto.1lep_raw.root");
+chain_Wmunu_MAXHTPTV140_280_BFilter->AddFile(path+"MC/mc15_13TeV.364164.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV140_280_BFilter.1lep_raw.root");
+chain_Wmunu_MAXHTPTV280_500_CVetoBVeto->AddFile(path+"MC/mc15_13TeV.364165.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV280_500_CVetoBVeto.1lep_raw.root");
+chain_Wmunu_MAXHTPTV280_500_CFilterBVeto->AddFile(path+"MC/mc15_13TeV.364166.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV280_500_CFilterBVeto.1lep_raw.root");
+chain_Wmunu_MAXHTPTV280_500_BFilter->AddFile(path+"MC/mc15_13TeV.364167.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV280_500_BFilter.1lep_raw.root");
+chain_Wmunu_MAXHTPTV500_1000->AddFile(path+"MC/mc15_13TeV.364168.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV500_1000.1lep_raw.root");
+chain_Wmunu_MAXHTPTV1000_E_CMS->AddFile(path+"MC/mc15_13TeV.364169.Sh_221_NNPDF30NNLO_Wmunu_MAXHTPTV1000_E_CMS.1lep_raw.root");
+chain_Wenu_MAXHTPTV0_70_CVetoBVeto->AddFile(path+"MC/mc15_13TeV.364170.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV0_70_CVetoBVeto.1lep_raw.root");
+chain_Wenu_MAXHTPTV0_70_CFilterBVeto->AddFile(path+"MC/mc15_13TeV.364171.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV0_70_CFilterBVeto.1lep_raw.root");
+chain_Wenu_MAXHTPTV0_70_BFilter->AddFile(path+"MC/mc15_13TeV.364172.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV0_70_BFilter.1lep_raw.root");
+chain_Wenu_MAXHTPTV70_140_CVetoBVeto->AddFile(path+"MC/mc15_13TeV.364173.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV70_140_CVetoBVeto.1lep_raw.root");
+chain_Wenu_MAXHTPTV70_140_CFilterBVeto->AddFile(path+"MC/mc15_13TeV.364174.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV70_140_CFilterBVeto.1lep_raw.root");
+chain_Wenu_MAXHTPTV70_140_BFilter->AddFile(path+"MC/mc15_13TeV.364175.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV70_140_BFilter.1lep_raw.root");
+chain_Wenu_MAXHTPTV140_280_CVetoBVeto->AddFile(path+"MC/mc15_13TeV.364176.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV140_280_CVetoBVeto.1lep_raw.root");
+chain_Wenu_MAXHTPTV140_280_CFilterBVeto->AddFile(path+"MC/mc15_13TeV.364177.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV140_280_CFilterBVeto.1lep_raw.root");
+chain_Wenu_MAXHTPTV140_280_BFilter->AddFile(path+"MC/mc15_13TeV.364178.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV140_280_BFilter.1lep_raw.root");
+chain_Wenu_MAXHTPTV280_500_CVetoBVeto->AddFile(path+"MC/mc15_13TeV.364179.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV280_500_CVetoBVeto.1lep_raw.root");
+chain_Wenu_MAXHTPTV280_500_CFilterBVeto->AddFile(path+"MC/mc15_13TeV.364180.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV280_500_CFilterBVeto.1lep_raw.root");
+chain_Wenu_MAXHTPTV280_500_BFilter->AddFile(path+"MC/mc15_13TeV.364181.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV280_500_BFilter.1lep_raw.root");
+chain_Wenu_MAXHTPTV500_1000->AddFile(path+"MC/mc15_13TeV.364182.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV500_1000.1lep_raw.root");
+chain_Wenu_MAXHTPTV1000_E_CMS->AddFile(path+"MC/mc15_13TeV.364183.Sh_221_NNPDF30NNLO_Wenu_MAXHTPTV1000_E_CMS.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV0_70_CVetoBVeto->AddFile(path+"MC/mc15_13TeV.364184.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV0_70_CVetoBVeto.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV0_70_CFilterBVeto->AddFile(path+"MC/mc15_13TeV.364185.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV0_70_CFilterBVeto.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV0_70_BFilter->AddFile(path+"MC/mc15_13TeV.364186.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV0_70_BFilter.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV70_140_CVetoBVeto->AddFile(path+"MC/mc15_13TeV.364187.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV70_140_CVetoBVeto.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV70_140_CFilterBVeto->AddFile(path+"MC/mc15_13TeV.364188.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV70_140_CFilterBVeto.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV70_140_BFilter->AddFile(path+"MC/mc15_13TeV.364189.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV70_140_BFilter.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV140_280_CVetoBVeto->AddFile(path+"MC/mc15_13TeV.364190.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV140_280_CVetoBVeto.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV140_280_CFilterBVeto->AddFile(path+"MC/mc15_13TeV.364191.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV140_280_CFilterBVeto.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV140_280_BFilter->AddFile(path+"MC/mc15_13TeV.364192.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV140_280_BFilter.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV280_500_CVetoBVeto->AddFile(path+"MC/mc15_13TeV.364193.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV280_500_CVetoBVeto.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV280_500_CFilterBVeto->AddFile(path+"MC/mc15_13TeV.364194.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV280_500_CFilterBVeto.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV280_500_BFilter->AddFile(path+"MC/mc15_13TeV.364195.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV280_500_BFilter.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV500_1000->AddFile(path+"MC/mc15_13TeV.364196.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV500_1000.1lep_raw.root");
+chain_Wtaunu_MAXHTPTV1000_E_CM->AddFile(path+"MC/mc15_13TeV.364197.Sh_221_NNPDF30NNLO_Wtaunu_MAXHTPTV1000_E_CMS.1lep_raw.root");
+
+
+ if (option == 41 || option==0)   {
+chain_Wmunu_MAXHTPTV0_70_CVetoBVeto->Process("WBosonAnalysis.C+","Wmu0_70CVetoBVeto");
+chain_Wmunu_MAXHTPTV0_70_CFilterBVeto->Process("WBosonAnalysis.C+","Wmu0_70CFilterBVeto");
+chain_Wmunu_MAXHTPTV0_70_BFilter->Process("WBosonAnalysis.C+","Wmu0_70BFilter");
+chain_Wmunu_MAXHTPTV70_140_CVetoBVeto->Process("WBosonAnalysis.C+","Wmu70_140CVetoBVeto");
+chain_Wmunu_MAXHTPTV70_140_CFilterBVeto->Process("WBosonAnalysis.C+","Wmu70_140CFilterBVeto");
+chain_Wmunu_MAXHTPTV70_140_BFilter->Process("WBosonAnalysis.C+","Wmu70_140BFilter");
+chain_Wmunu_MAXHTPTV140_280_CVetoBVeto->Process("WBosonAnalysis.C+","Wmu140_280CVetoBVeto");
+chain_Wmunu_MAXHTPTV140_280_CFilterBVeto->Process("WBosonAnalysis.C+","Wmu140_280CFilterBVeto");
+chain_Wmunu_MAXHTPTV140_280_BFilter->Process("WBosonAnalysis.C+","Wmu140_280BFilter");
+chain_Wmunu_MAXHTPTV280_500_CVetoBVeto->Process("WBosonAnalysis.C+","Wmu280_500CVetoBVeto");
+ }
+
+ if (option == 42 || option==0)   {
+chain_Wmunu_MAXHTPTV280_500_CFilterBVeto->Process("WBosonAnalysis.C+","Wmu280_500CFilterBVeto");
+chain_Wmunu_MAXHTPTV280_500_BFilter->Process("WBosonAnalysis.C+","Wmu280_500BFilter");
+chain_Wmunu_MAXHTPTV500_1000->Process("WBosonAnalysis.C+","Wmu500_1000");
+chain_Wmunu_MAXHTPTV1000_E_CMS->Process("WBosonAnalysis.C+","Wmu1000");
+chain_Wenu_MAXHTPTV0_70_CVetoBVeto->Process("WBosonAnalysis.C+","We0_70CVetoBVeto");
+chain_Wenu_MAXHTPTV0_70_CFilterBVeto->Process("WBosonAnalysis.C+","We0_70CFilterBVeto");
+chain_Wenu_MAXHTPTV0_70_BFilter->Process("WBosonAnalysis.C+","We0_70BFilter");
+chain_Wenu_MAXHTPTV70_140_CVetoBVeto->Process("WBosonAnalysis.C+","We70_140CVetoBVeto");
+chain_Wenu_MAXHTPTV70_140_CFilterBVeto->Process("WBosonAnalysis.C+","We70_140CFilterBVeto");
+chain_Wenu_MAXHTPTV70_140_BFilter->Process("WBosonAnalysis.C+","We70_140BFilter");
+ }
+
+  if (option == 43 || option==0)   {
+chain_Wenu_MAXHTPTV140_280_CVetoBVeto->Process("WBosonAnalysis.C+","We140_280CVetoBVeto");
+chain_Wenu_MAXHTPTV140_280_CFilterBVeto->Process("WBosonAnalysis.C+","We140_280CFilterBVeto");
+chain_Wenu_MAXHTPTV140_280_BFilter->Process("WBosonAnalysis.C+","We140_280BFilter");
+chain_Wenu_MAXHTPTV280_500_CVetoBVeto->Process("WBosonAnalysis.C+","We280_500CVetoBVeto");
+chain_Wenu_MAXHTPTV280_500_CFilterBVeto->Process("WBosonAnalysis.C+","We280_500CFilterBVeto");
+chain_Wenu_MAXHTPTV280_500_BFilter->Process("WBosonAnalysis.C+","We280_500BFilter");
+chain_Wenu_MAXHTPTV500_1000->Process("WBosonAnalysis.C+","We500_1000");
+chain_Wenu_MAXHTPTV1000_E_CMS->Process("WBosonAnalysis.C+","We1000");
+chain_Wtaunu_MAXHTPTV0_70_CVetoBVeto->Process("WBosonAnalysis.C+","Wtau0_70CVetoBVeto");
+chain_Wtaunu_MAXHTPTV0_70_CFilterBVeto->Process("WBosonAnalysis.C+","Wtau0_70CFilterBVeto");
+  }
+
+   if (option == 44 || option==0)   {
+chain_Wtaunu_MAXHTPTV0_70_BFilter->Process("WBosonAnalysis.C+","Wtau0_70BFilter");
+chain_Wtaunu_MAXHTPTV70_140_CVetoBVeto->Process("WBosonAnalysis.C+","Wtau70_140CVetoBVeto");
+chain_Wtaunu_MAXHTPTV70_140_CFilterBVeto->Process("WBosonAnalysis.C+","Wtau70_140CFilterBVeto");
+chain_Wtaunu_MAXHTPTV70_140_BFilter->Process("WBosonAnalysis.C+","Wtau70_140BFilter");
+chain_Wtaunu_MAXHTPTV140_280_CVetoBVeto->Process("WBosonAnalysis.C+","Wtau140_280CVetoBVeto");
+chain_Wtaunu_MAXHTPTV140_280_CFilterBVeto->Process("WBosonAnalysis.C+","Wtau140_280CFilterBVeto");
+chain_Wtaunu_MAXHTPTV140_280_BFilter->Process("WBosonAnalysis.C+","Wtau140_280BFilter");
+chain_Wtaunu_MAXHTPTV280_500_CVetoBVeto->Process("WBosonAnalysis.C+","Wtau280_500CVetoBVeto");
+chain_Wtaunu_MAXHTPTV280_500_CFilterBVeto->Process("WBosonAnalysis.C+","Wtau280_500CFilterBVeto");
+chain_Wtaunu_MAXHTPTV280_500_BFilter->Process("WBosonAnalysis.C+","Wtau280_500BFilter");
+chain_Wtaunu_MAXHTPTV500_1000->Process("WBosonAnalysis.C+","Wtau500_1000");
+chain_Wtaunu_MAXHTPTV1000_E_CM->Process("WBosonAnalysis.C+","Wtau1000");
+   }
+
+  } // W+jets Sherpa
+
 
 
 /*

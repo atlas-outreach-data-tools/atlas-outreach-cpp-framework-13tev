@@ -11,9 +11,9 @@ void WBosonAnalysis::define_histograms()
 
   //Global variables
   hist_etmiss       = new TH1F("hist_etmiss",       "Missing Transverse Momentum;E_{T,Miss} [GeV];Events", 30, 0, 120);
-  hist_mtw          = new TH1F("hist_mtw",          "Transverse Mass; M^{W}_{T};Events", 40, 40, 150);
-  hist_mtw_enu      = new TH1F("hist_mtw_enu",      "Transverse Mass; M^{W #rightarrow e#nu}_{T};Events", 40, 40, 150);
-  hist_mtw_munu     = new TH1F("hist_mtw_munu",     "Transverse Mass; M^{W #rightarrow #mu#nu}_{T};Events", 40, 40, 150);
+  hist_mtw          = new TH1F("hist_mtw",          "Transverse Mass; M^{W}_{T} [GeV];Events", 40, 40, 150);
+  hist_mtw_enu      = new TH1F("hist_mtw_enu",      "Transverse Mass; M^{W #rightarrow e#nu}_{T} [GeV];Events", 40, 40, 150);
+  hist_mtw_munu     = new TH1F("hist_mtw_munu",     "Transverse Mass; M^{W #rightarrow #mu#nu}_{T} [GeV];Events", 40, 40, 150);
     
   // Jet variables
   hist_n_jets       = new TH1F("hist_n_jets",      "Number of Jets;N_{jets};Events", 6, -0.5, 5.5);
@@ -21,16 +21,16 @@ void WBosonAnalysis::define_histograms()
   hist_leadjet_eta  = new TH1F("hist_leadjet_eta", "Leading Jet Pseudorapidity; #eta^{jet}; Jets", 30, -3, 3);
 
   // Leading Lepton variables
-  hist_leadleptpt   = new TH1F("hist_leadleptpt",  "Leading Lepton Transverse Momentum;p_{T}^{leadlep} [GeV];Leptons", 20, 0, 200);
-  hist_leadlepteta  = new TH1F("hist_leadlepteta", "Leading Lepton Pseudorapidity; #eta^{leadlep}; Leptons", 30, -3, 3);
-  hist_leadleptE    = new TH1F("hist_leadleptE",   "Leading Lepton Energy; E^{leadlep} [GeV]; Leptons", 30, 0, 300);
-  hist_leadleptphi  = new TH1F("hist_leadleptphi", "Leading Lepton Azimuthal Angle ; #phi^{leadlep}; Leptons", 32, -3.2, 3.2);
-  hist_leadleptch   = new TH1F("hist_leadleptch",  "Leading Lepton Charge; Q^{leadlep}; Leptons", 7, -1.75, 1.75);
-  hist_leadleptID   = new TH1F("hist_leadleptID",  "Leading Lepton Absolute PDG ID; |PDG ID|^{leadlep}; Leptons",  15, 5.5, 20.5);
-  hist_leadlept_ptc  = new TH1F("hist_leadlept_ptc", "Leading Lepton Relative Transverse Momentum Isolation; ptconerel30^{leadlep}; Leptons", 20, -0.1, 0.2);
-  hist_leadleptetc  = new TH1F("hist_leadleptetc", "Leading Lepton Relative Transverse Energy Isolation; etconerel20^{leadlep}; Leptons", 20, -0.1, 0.2);
-  hist_leadlepz0    = new TH1F("hist_leadlepz0",   "Leading Lepton z0 impact parameter; z_{0}^{leadlep} [mm]; Leptons", 20, -1, 1);
-  hist_leadlepd0    = new TH1F("hist_leadlepd0",   "Leading Lepton d0 impact parameter; d_{0}^{leadlep} [mm]; Leptons", 20, -0.2, 0.2);
+  hist_leadleptpt   = new TH1F("hist_leadleptpt",  "Leading Lepton Transverse Momentum;p_{T}^{lep} [GeV];Events", 20, 0, 200);
+  hist_leadlepteta  = new TH1F("hist_leadlepteta", "Leading Lepton Pseudorapidity; #eta^{lep}; Events", 30, -3, 3);
+  hist_leadleptE    = new TH1F("hist_leadleptE",   "Leading Lepton Energy; E^{lep} [GeV]; Events", 30, 0, 300);
+  hist_leadleptphi  = new TH1F("hist_leadleptphi", "Leading Lepton Azimuthal Angle ; #phi^{lep}; Events", 32, -3.2, 3.2);
+  hist_leadleptch   = new TH1F("hist_leadleptch",  "Leading Lepton Charge; Q^{lep}; Events", 7, -1.75, 1.75);
+  hist_leadleptID   = new TH1F("hist_leadleptID",  "Leading Lepton Absolute PDG ID; |PDG ID|^{lep}; Events",  15, 5.5, 20.5);
+  hist_leadlept_ptc  = new TH1F("hist_leadlept_ptc", "Leading Lepton Relative Transverse Momentum Isolation; ptconerel30^{leadlep}; Events", 20, -0.1, 0.2);
+  hist_leadleptetc  = new TH1F("hist_leadleptetc", "Leading Lepton Relative Transverse Energy Isolation; etconerel20^{leadlep}; Events", 20, -0.1, 0.2);
+  hist_leadlepz0    = new TH1F("hist_leadlepz0",   "Leading Lepton z0 impact parameter; z_{0}^{leadlep} [mm]; Events", 20, -1, 1);
+  hist_leadlepd0    = new TH1F("hist_leadlepd0",   "Leading Lepton d0 impact parameter; d_{0}^{leadlep} [mm]; Events", 20, -0.2, 0.2);
 
 }
 

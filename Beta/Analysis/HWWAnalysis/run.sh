@@ -1,5 +1,5 @@
 ## small script to run the analysis
-analysis="main_HyyAnalysis"
+analysis="main_HWWAnalysis"
 ## for now, turn off Proof
 parallel=0
 
@@ -16,7 +16,7 @@ option=$varname
 echo "starting ROOT"
 ##
 root -l -b << EOF
-.L $analysis.C+
+.L $analysis.C
 $analysis($parallel,$option)
 EOF
 ##
