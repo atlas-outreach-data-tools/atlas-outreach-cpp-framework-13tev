@@ -43,33 +43,38 @@
 #include "TFrame.h"
 #include "TArrow.h"
 #include <TGaxis.h>
-
-// include main header
 #include "Plotting.h"
 
-// debugging flag, set to 1 for checks
-#define DEBUG 0
+
+
+// OPTIONS flag, set to 0 or 1 for 
+#define DEBUG 1 // debugging
+#define YIELDS 1 // printing yields
+#define HIGGSNORMSIG 0 // adding normalised Higgs signal
+
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[]){
   
   if(argc < 3){
-    std::cout<<"usage: ./plot [WBosonAnalysis,ZBosonAnalysis,TTbarAnalysis,WZDiBosonAnalysis,ZZDiBosonAnalysis,HZZAnalysis]  [location of OutputDir_AnalysisName]"<<std::endl;
+    std::cout<<"usage: ./plot [WBosonAnalysis, ZBosonAnalysis, TTbarAnalysis, WZDiBosonAnalysis, ZZDiBosonAnalysis, HWWAnalysis, HZZAnalysis, ZTauTauAnalysis, HyyAnalysis]  [location of OutputDir_AnalysisName]"<<std::endl;
     std::cout<<"output stored in a directory \'histograms\' " <<std::endl;
     exit(1);
   }
   
   Plotting* m = new Plotting();
   
-  m->SetLumi(10000); // luminosity set by hand to 10fb-1
+  m->SetLumi(10064); // luminosity set by hand to 10fb-1
   m->SetOption(argv[1]);
   m->SetInputLocation(argv[2]);
   
   string option = argv[1];
-  if(option.find("WBosonAnalysis") != option.npos ||  option.find("ZBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos || option.find("HWWAnalysis") != option.npos || option.find("ZPrimeAnalysis") != option.npos || option.find("HZZAnalysis") != option.npos) cout << "Analysis option found, proceeding..." << endl;
-  else { cout << "Analysis option not found! \n usage: ./plot [WBosonAnalysis,ZBosonAnalysis,TTbarAnalysis,WZDiBosonAnalysis,ZZDiBosonAnalysis,HWWAnalysis,ZPrimeAnalysis,HZZAnalysis]  [location of OutputDir_AnalysisName] \n " << endl; exit(1);}
-  
+  if(option.find("ZTauTauAnalysis") != option.npos ||  option.find("WBosonAnalysis") != option.npos ||  option.find("ZBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("HyyAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos || option.find("HWWAnalysis") != option.npos || option.find("HZZAnalysis") != option.npos) cout << "Analysis option found, proceeding..." << endl;
+  else { cout << "Analysis option not found! \n usage: ./plot [WBosonAnalysis, ZBosonAnalysis, TTbarAnalysis, HyyAnalysis, WZDiBosonAnalysis, ZZDiBosonAnalysis, HWWAnalysis, HZZAnalysis]  [location of OutputDir_AnalysisName] \n " << endl; exit(1);}
+ 
+
   m->run();
   
   delete m;
@@ -201,7 +206,11 @@ void Plotting::WhichFiles(){
 
   //options
   if(option.find("HZZAnalysis") != option.npos){   ifile = "Files_HZZ.txt";}
-    
+  if(option.find("HWWAnalysis") != option.npos){   ifile = "Files_HWW.txt";}
+  if(option.find("ZTauTauAnalysis") != option.npos){   ifile = "Files_ZTauTau.txt";}
+  if(option.find("WBosonAnalysis") != option.npos){   ifile = "Files_WBoson.txt";}
+
+ 
   ifstream input(ifile.c_str());
   std::string line;
   while(getline(input,line)){
@@ -228,14 +237,14 @@ void Plotting::readFiles(){
   if (option.find("WBosonAnalysis") != option.npos){
     std::cout<<"=====processing WBosonAnalysis====="<<std::endl;
   }
-  if (option.find("ZPrimeAnalysis") != option.npos){
-    std::cout<<"===== NOT supported yet!!! ====="<<std::endl;
-  }
   if (option.find("ZBosonAnalysis") != option.npos){
     std::cout<<"=====processing ZBosonAnalysis====="<<std::endl;
   }
   if (option.find("TTbarAnalysis") != option.npos){
     std::cout<<"=====processing TTbarAnalysis====="<<std::endl;
+  }
+  if (option.find("HyyAnalysis") != option.npos){
+    std::cout<<"=====processing HyyAnalysis====="<<std::endl;
   }
   if (option.find("WZDiBosonAnalysis") != option.npos){
     std::cout<<"=====processing WZDiBosonAnalysis====="<<std::endl;
@@ -244,12 +253,16 @@ void Plotting::readFiles(){
     std::cout<<"=====processing ZZDiBosonAnalysis====="<<std::endl;
   }
   if (option.find("HWWAnalysis") != option.npos){
-    std::cout<<"===== NOT supported yet!!! ====="<<std::endl;
+    std::cout<<"=====processing HWWAnalysis====="<<std::endl;
   }
   if (option.find("HZZAnalysis") != option.npos){
     std::cout<<"=====processing HZZAnalysis====="<<std::endl;
   }
-  
+  if (option.find("ZTauTauAnalysis") != option.npos){
+    std::cout<<"=====processing ZTauTauAnalysis====="<<std::endl;
+  }
+
+
   std::map<std::string,std::pair<double,double> >::const_iterator SFiter;
   for(SFiter = SF.begin(); SFiter != SF.end(); SFiter++){
     std::string readme = readname + "/" + SFiter->first + ".root";
@@ -268,9 +281,8 @@ void Plotting::readFiles(){
         std::map<std::string,TH1F*>::const_iterator lIter = histo[v_n[i]].end();
         double scf = 1;
         scf = (lumi *  SFiter->second.first) / SFiter->second.second ; 
-        if (DEBUG) cout << " SF is: " << scf << endl;
         for(; fIter!=lIter;++fIter){
-	  if (DEBUG) std::cout<<"Scaling histogram: "<< fIter->first << std::endl;
+	  if (DEBUG) std::cout<<"Scaling histogram: "<< fIter->first << " by a factor of: " << scf << std::endl;
 	  fIter->second->Scale(scf);
         }
       }
@@ -402,8 +414,12 @@ void Plotting::makePlots(){
   std::map<std::string,TH1F*> single_top_schan;
   std::map<std::string,TH1F*> single_antitop_schan;
   
-  //std::map<std::string,TH1F*> ZPrime1000;
-  
+ 
+  // sliced V+jets samples
+  std::map<std::string,TH1F*>  We0_70BFilter; std::map<std::string,TH1F*>  We0_70CFilterBVeto; std::map<std::string,TH1F*>  We0_70CVetoBVeto; std::map<std::string,TH1F*>  We1000; std::map<std::string,TH1F*>  We140_280BFilter; std::map<std::string,TH1F*>  We140_280CFilterBVeto; std::map<std::string,TH1F*>  We140_280CVetoBVeto; std::map<std::string,TH1F*>  We280_500BFilter; std::map<std::string,TH1F*>  We280_500CFilterBVeto; std::map<std::string,TH1F*>  We280_500CVetoBVeto; std::map<std::string,TH1F*> We500_1000; std::map<std::string,TH1F*>  We70_140BFilter; std::map<std::string,TH1F*>  We70_140CFilterBVeto; std::map<std::string,TH1F*>  We70_140CVetoBVeto; std::map<std::string,TH1F*>  Wmu0_70BFilter; std::map<std::string,TH1F*>  Wmu0_70CFilterBVeto; std::map<std::string,TH1F*> Wmu0_70CVetoBVeto; std::map<std::string,TH1F*>  Wmu1000; std::map<std::string,TH1F*>  Wmu140_280BFilter; std::map<std::string,TH1F*>  Wmu140_280CFilterBVeto; std::map<std::string,TH1F*>  Wmu140_280CVetoBVeto; std::map<std::string,TH1F*>  Wmu280_500BFilter; std::map<std::string,TH1F*> Wmu280_500CFilterBVeto; std::map<std::string,TH1F*>  Wmu280_500CVetoBVeto; std::map<std::string,TH1F*>  Wmu500_1000; std::map<std::string,TH1F*>  Wmu70_140BFilter; std::map<std::string,TH1F*>  Wmu70_140CFilterBVeto; std::map<std::string,TH1F*> Wmu70_140CVetoBVeto; std::map<std::string,TH1F*>  Wtau0_70BFilter; std::map<std::string,TH1F*>  Wtau0_70CFilterBVeto; std::map<std::string,TH1F*>  Wtau0_70CVetoBVeto; std::map<std::string,TH1F*>  Wtau1000; std::map<std::string,TH1F*>  Wtau140_280BFilter; std::map<std::string,TH1F*> Wtau140_280CFilterBVeto; std::map<std::string,TH1F*>  Wtau140_280CVetoBVeto; std::map<std::string,TH1F*>  Wtau280_500BFilter; std::map<std::string,TH1F*>  Wtau280_500CFilterBVeto; std::map<std::string,TH1F*>  Wtau280_500CVetoBVeto; std::map<std::string,TH1F*> Wtau500_1000; std::map<std::string,TH1F*>  Wtau70_140BFilter; std::map<std::string,TH1F*>  Wtau70_140CFilterBVeto; std::map<std::string,TH1F*>  Wtau70_140CVetoBVeto; std::map<std::string,TH1F*>  Zee0_70BFilter; std::map<std::string,TH1F*>  Zee0_70CFilterBVeto; std::map<std::string,TH1F*> Zee0_70CVetoBVeto; std::map<std::string,TH1F*>  Zee1000; std::map<std::string,TH1F*>  Zee140_280BFilter; std::map<std::string,TH1F*>  Zee140_280CFilterBVeto; std::map<std::string,TH1F*>  Zee140_280CVetoBVeto; std::map<std::string,TH1F*>  Zee280_500BFilter; std::map<std::string,TH1F*> Zee280_500CFilterBVeto; std::map<std::string,TH1F*>  Zee280_500CVetoBVeto; std::map<std::string,TH1F*>  Zee500_1000; std::map<std::string,TH1F*>  Zee70_140BFilter; std::map<std::string,TH1F*>  Zee70_140CFilterBVeto; std::map<std::string,TH1F*> Zee70_140CVetoBVeto; std::map<std::string,TH1F*>  Zmumu0_70BFilter; std::map<std::string,TH1F*>  Zmumu0_70CFilterBVeto; std::map<std::string,TH1F*>  Zmumu0_70CVetoBVeto; std::map<std::string,TH1F*>  Zmumu1000; std::map<std::string,TH1F*>  Zmumu140_280BFilter; std::map<std::string,TH1F*> Zmumu140_280CFilterBVeto; std::map<std::string,TH1F*>  Zmumu140_280CVetoBVeto; std::map<std::string,TH1F*>  Zmumu280_500BFilter; std::map<std::string,TH1F*>  Zmumu280_500CFilterBVeto; std::map<std::string,TH1F*> Zmumu280_500CVetoBVeto; std::map<std::string,TH1F*>  Zmumu500_1000; std::map<std::string,TH1F*>  Zmumu70_140BFilter; std::map<std::string,TH1F*>  Zmumu70_140CFilterBVeto; std::map<std::string,TH1F*>  Zmumu70_140CVetoBVeto; std::map<std::string,TH1F*> Ztautau0_70BFilter; std::map<std::string,TH1F*>  Ztautau0_70CFilterBVeto; std::map<std::string,TH1F*>  Ztautau0_70CVetoBVeto; std::map<std::string,TH1F*>  Ztautau1000; std::map<std::string,TH1F*>  Ztautau140_280BFilter; std::map<std::string,TH1F*> Ztautau140_280CFilterBVeto; std::map<std::string,TH1F*>  Ztautau140_280CVetoBVeto; std::map<std::string,TH1F*>  Ztautau280_500BFilter; std::map<std::string,TH1F*>  Ztautau280_500CFilterBVeto; std::map<std::string,TH1F*> Ztautau280_500CVetoBVeto; std::map<std::string,TH1F*>  Ztautau500_1000; std::map<std::string,TH1F*>  Ztautau70_140BFilter; std::map<std::string,TH1F*>  Ztautau70_140CFilterBVeto; std::map<std::string,TH1F*>  Ztautau70_140CVetoBVeto;
+
+
+
   
   // naming of the histos, must be the same as in Files.txt, and follow previous lines
   data = histo["data"];
@@ -417,22 +433,124 @@ void Plotting::makePlots(){
 
   
   if(option.find("HWWAnalysis") != option.npos){
-   ggH125_WW2lep = histo["ggH125_WW2lep"];
+    ggH125_WW2lep = histo["ggH125_WW2lep"];
     VBFH125_WW2lep = histo["VBFH125_WW2lep"];
   }
   
   ttbar_lep = histo["ttbar_lep"];
+
  
   Zee = histo["Zee"];
   Zmumu = histo["Zmumu"];
   Ztautau = histo["Ztautau"];
 
+
+  // inclusive Powheg W+jets samples are used for all the analyses but ZTaTau and WBoson 
+  if( option.find("ZBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos || option.find("HWWAnalysis") != option.npos || option.find("HZZAnalysis") != option.npos) 
+  {
   Wplusenu = histo["Wplusenu"];
   Wplusmunu= histo["Wplusmunu"];
   Wplustaunu= histo["Wplustaunu"];  
   Wminusenu= histo["Wminusenu"];
   Wminusmunu= histo["Wminusmunu"];
   Wminustaunu= histo["Wminustaunu"];
+  }
+
+  // slices Sherpa W+jets samples are used for ZTaTau and WBoson analyses
+  if(option.find("ZTauTauAnalysis") != option.npos ||   option.find("WBosonAnalysis") != option.npos )
+  {
+  
+We0_70BFilter = histo["We0_70BFilter"];
+We0_70CFilterBVeto = histo["We0_70CFilterBVeto"];
+We0_70CVetoBVeto = histo["We0_70CVetoBVeto"];
+We1000 = histo["We1000"];
+We140_280BFilter = histo["We140_280BFilter"];
+We140_280CFilterBVeto = histo["We140_280CFilterBVeto"];
+We140_280CVetoBVeto = histo["We140_280CVetoBVeto"];
+We280_500BFilter = histo["We280_500BFilter"];
+We280_500CFilterBVeto = histo["We280_500CFilterBVeto"];
+We280_500CVetoBVeto = histo["We280_500CVetoBVeto"];
+We500_1000 = histo["We500_1000"];
+We70_140BFilter = histo["We70_140BFilter"];
+We70_140CFilterBVeto = histo["We70_140CFilterBVeto"];
+We70_140CVetoBVeto = histo["We70_140CVetoBVeto"];
+Wmu0_70BFilter = histo["Wmu0_70BFilter"];
+Wmu0_70CFilterBVeto = histo["Wmu0_70CFilterBVeto"];
+Wmu0_70CVetoBVeto = histo["Wmu0_70CVetoBVeto"];
+Wmu1000 = histo["Wmu1000"];
+Wmu140_280BFilter = histo["Wmu140_280BFilter"];
+Wmu140_280CFilterBVeto = histo["Wmu140_280CFilterBVeto"];
+Wmu140_280CVetoBVeto = histo["Wmu140_280CVetoBVeto"];
+Wmu280_500BFilter = histo["Wmu280_500BFilter"];
+Wmu280_500CFilterBVeto = histo["Wmu280_500CFilterBVeto"];
+Wmu280_500CVetoBVeto = histo["Wmu280_500CVetoBVeto"];
+Wmu500_1000 = histo["Wmu500_1000"];
+Wmu70_140BFilter = histo["Wmu70_140BFilter"];
+Wmu70_140CFilterBVeto = histo["Wmu70_140CFilterBVeto"];
+Wmu70_140CVetoBVeto = histo["Wmu70_140CVetoBVeto"];
+Wtau0_70BFilter = histo["Wtau0_70BFilter"];
+Wtau0_70CFilterBVeto = histo["Wtau0_70CFilterBVeto"];
+Wtau0_70CVetoBVeto = histo["Wtau0_70CVetoBVeto"];
+Wtau1000 = histo["Wtau1000"];
+Wtau140_280BFilter = histo["Wtau140_280BFilter"];
+Wtau140_280CFilterBVeto = histo["Wtau140_280CFilterBVeto"];
+Wtau140_280CVetoBVeto = histo["Wtau140_280CVetoBVeto"];
+Wtau280_500BFilter = histo["Wtau280_500BFilter"];
+Wtau280_500CFilterBVeto = histo["Wtau280_500CFilterBVeto"];
+Wtau280_500CVetoBVeto = histo["Wtau280_500CVetoBVeto"];
+Wtau500_1000 = histo["Wtau500_1000"];
+Wtau70_140BFilter = histo["Wtau70_140BFilter"];
+Wtau70_140CFilterBVeto = histo["Wtau70_140CFilterBVeto"];
+Wtau70_140CVetoBVeto = histo["Wtau70_140CVetoBVeto"];
+  }
+
+  // slices Sherpa Z+jets samples are used for ZTaTau analyses
+ if(option.find("ZTauTauAnalysis") != option.npos)
+   {
+Zee0_70BFilter = histo["Zee0_70BFilter"];
+Zee0_70CFilterBVeto = histo["Zee0_70CFilterBVeto"];
+Zee0_70CVetoBVeto = histo["Zee0_70CVetoBVeto"];
+Zee1000 = histo["Zee1000"];
+Zee140_280BFilter = histo["Zee140_280BFilter"];
+Zee140_280CFilterBVeto = histo["Zee140_280CFilterBVeto"];
+Zee140_280CVetoBVeto = histo["Zee140_280CVetoBVeto"];
+Zee280_500BFilter = histo["Zee280_500BFilter"];
+Zee280_500CFilterBVeto = histo["Zee280_500CFilterBVeto"];
+Zee280_500CVetoBVeto = histo["Zee280_500CVetoBVeto"];
+Zee500_1000 = histo["Zee500_1000"];
+Zee70_140BFilter = histo["Zee70_140BFilter"];
+Zee70_140CFilterBVeto = histo["Zee70_140CFilterBVeto"];
+Zee70_140CVetoBVeto = histo["Zee70_140CVetoBVeto"];
+Zmumu0_70BFilter = histo["Zmumu0_70BFilter"];
+Zmumu0_70CFilterBVeto = histo["Zmumu0_70CFilterBVeto"];
+Zmumu0_70CVetoBVeto = histo["Zmumu0_70CVetoBVeto"];
+Zmumu1000 = histo["Zmumu1000"];
+Zmumu140_280BFilter = histo["Zmumu140_280BFilter"];
+Zmumu140_280CFilterBVeto = histo["Zmumu140_280CFilterBVeto"];
+Zmumu140_280CVetoBVeto = histo["Zmumu140_280CVetoBVeto"];
+Zmumu280_500BFilter = histo["Zmumu280_500BFilter"];
+Zmumu280_500CFilterBVeto = histo["Zmumu280_500CFilterBVeto"];
+Zmumu280_500CVetoBVeto = histo["Zmumu280_500CVetoBVeto"];
+Zmumu500_1000 = histo["Zmumu500_1000"];
+Zmumu70_140BFilter = histo["Zmumu70_140BFilter"];
+Zmumu70_140CFilterBVeto = histo["Zmumu70_140CFilterBVeto"];
+Zmumu70_140CVetoBVeto = histo["Zmumu70_140CVetoBVeto"];
+Ztautau0_70BFilter = histo["Ztautau0_70BFilter"];
+Ztautau0_70CFilterBVeto = histo["Ztautau0_70CFilterBVeto"];
+Ztautau0_70CVetoBVeto = histo["Ztautau0_70CVetoBVeto"];
+Ztautau1000 = histo["Ztautau1000"];
+Ztautau140_280BFilter = histo["Ztautau140_280BFilter"];
+Ztautau140_280CFilterBVeto = histo["Ztautau140_280CFilterBVeto"];
+Ztautau140_280CVetoBVeto = histo["Ztautau140_280CVetoBVeto"];
+Ztautau280_500BFilter = histo["Ztautau280_500BFilter"];
+Ztautau280_500CFilterBVeto = histo["Ztautau280_500CFilterBVeto"];
+Ztautau280_500CVetoBVeto = histo["Ztautau280_500CVetoBVeto"];
+Ztautau500_1000 = histo["Ztautau500_1000"];
+Ztautau70_140BFilter = histo["Ztautau70_140BFilter"];
+Ztautau70_140CFilterBVeto = histo["Ztautau70_140CFilterBVeto"];
+Ztautau70_140CVetoBVeto = histo["Ztautau70_140CVetoBVeto"];
+}
+
 
   ZqqZll= histo["ZqqZll"];  
   WqqZll= histo["WqqZll"];
@@ -453,10 +571,6 @@ void Plotting::makePlots(){
   single_top_schan= histo["single_top_schan"];
   single_antitop_schan= histo["single_antitop_schan"];  
  
-
-  /*
-  ZPrime1000 = histo["ZPrime1000"];
-  */
 
   ///////////////////////////////////////////////////////////////////////
   //begin plotting
@@ -491,8 +605,11 @@ void Plotting::makePlots(){
     TH1F* W_Z = new TH1F();
     TH1F* Z_Z = new TH1F();
     TH1F* Higgs = new TH1F();
-    //TH1F* ZPrime = new TH1F();
     
+    TH1F* Zee = new TH1F();
+    TH1F* Zmumu = new TH1F();
+    TH1F* Ztautau = new TH1F();
+
     // merge for W _Analysis
     if(option.find("WBosonAnalysis") != option.npos){
       
@@ -507,13 +624,50 @@ void Plotting::makePlots(){
       diboson->Add(WplvWmqq[fIter->first]);
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
-      
-      W = (TH1F*)Wplusenu[fIter->first]->Clone();
-      W->Add(Wplusmunu[fIter->first]);
-      W->Add(Wplustaunu[fIter->first]);
-      W->Add(Wminusenu[fIter->first]);
-      W->Add(Wminusmunu[fIter->first]);
-      W->Add(Wminustaunu[fIter->first]);
+  
+      // sliced W+jets samples
+      W = (TH1F*)We0_70BFilter[fIter->first]->Clone();
+      W->Add(We0_70CFilterBVeto[fIter->first]);
+      W->Add(We0_70CVetoBVeto[fIter->first]);
+      W->Add(We1000[fIter->first]);
+      W->Add(We140_280BFilter[fIter->first]);
+      W->Add(We140_280CFilterBVeto[fIter->first]);
+      W->Add(We140_280CVetoBVeto[fIter->first]);
+      W->Add(We280_500BFilter[fIter->first]);
+      W->Add(We280_500CFilterBVeto[fIter->first]);
+      W->Add(We280_500CVetoBVeto[fIter->first]);
+      W->Add(We500_1000[fIter->first]);
+      W->Add(We70_140BFilter[fIter->first]);
+      W->Add(We70_140CFilterBVeto[fIter->first]);
+      W->Add(We70_140CVetoBVeto[fIter->first]);
+      W->Add(Wmu0_70BFilter[fIter->first]);
+      W->Add(Wmu0_70CFilterBVeto[fIter->first]);
+      W->Add(Wmu0_70CVetoBVeto[fIter->first]);
+      W->Add(Wmu1000[fIter->first]);
+      W->Add(Wmu140_280BFilter[fIter->first]);
+      W->Add(Wmu140_280CFilterBVeto[fIter->first]);
+      W->Add(Wmu140_280CVetoBVeto[fIter->first]);
+      W->Add(Wmu280_500BFilter[fIter->first]);
+      W->Add(Wmu280_500CFilterBVeto[fIter->first]);
+      W->Add(Wmu280_500CVetoBVeto[fIter->first]);
+      W->Add(Wmu500_1000[fIter->first]);
+      W->Add(Wmu70_140BFilter[fIter->first]);
+      W->Add(Wmu70_140CFilterBVeto[fIter->first]);
+      W->Add(Wmu70_140CVetoBVeto[fIter->first]);
+      W->Add(Wtau0_70BFilter[fIter->first]);
+      W->Add(Wtau0_70CFilterBVeto[fIter->first]);
+      W->Add(Wtau0_70CVetoBVeto[fIter->first]);
+      W->Add(Wtau1000[fIter->first]);
+      W->Add(Wtau140_280BFilter[fIter->first]);
+      W->Add(Wtau140_280CFilterBVeto[fIter->first]);
+      W->Add(Wtau140_280CVetoBVeto[fIter->first]);
+      W->Add(Wtau280_500BFilter[fIter->first]);
+      W->Add(Wtau280_500CFilterBVeto[fIter->first]);
+      W->Add(Wtau280_500CVetoBVeto[fIter->first]);
+      W->Add(Wtau500_1000[fIter->first]);
+      W->Add(Wtau70_140BFilter[fIter->first]);
+      W->Add(Wtau70_140CFilterBVeto[fIter->first]);
+      W->Add(Wtau70_140CVetoBVeto[fIter->first]);
       W->SetFillColor(kGreen-3);
       W->SetLineWidth(0);
       
@@ -522,22 +676,20 @@ void Plotting::makePlots(){
       Z->Add(Zee[fIter->first]);
       Z->SetFillColor(kPink+9);
       Z->SetLineWidth(0);
-      
+     
       ttbar = (TH1F*)ttbar_lep[fIter->first]->Clone();
       ttbar->SetFillColor(kOrange-3);
       ttbar->SetLineWidth(0);
      
-      stop = (TH1F*)single_top_wtchan[fIter->first]->Clone();
+      stop = (TH1F*)single_top_tchan[fIter->first]->Clone();
+      stop->Add(single_antitop_tchan[fIter->first]);
+      stop->Add(single_top_wtchan[fIter->first]);
       stop->Add(single_antitop_wtchan[fIter->first]);
-      //stop->Add(single_top_tchan[fIter->first]);
-      //stop->Add(single_antitop_tchan[fIter->first]);
-      //stop->Add(single_top_wtchan[fIter->first]);
-      //stop->Add(single_antitop_wtchan[fIter->first]);
+      stop->Add(single_top_schan[fIter->first]);
+      stop->Add(single_antitop_schan[fIter->first]);
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
 
-
-      
     }
 
     // merge for Z _Analysis
@@ -574,12 +726,12 @@ void Plotting::makePlots(){
       ttbar->SetFillColor(kOrange-3);
       ttbar->SetLineWidth(0);
 
-      stop = (TH1F*)single_top_schan[fIter->first]->Clone();
-      stop->Add(single_antitop_schan[fIter->first]);
-      //stop->Add(single_top_tchan[fIter->first]);
-      //stop->Add(single_antitop_tchan[fIter->first]);
+      stop = (TH1F*)single_top_tchan[fIter->first]->Clone();
+      stop->Add(single_antitop_tchan[fIter->first]);
       stop->Add(single_top_wtchan[fIter->first]);
       stop->Add(single_antitop_wtchan[fIter->first]);
+      stop->Add(single_top_schan[fIter->first]);
+      stop->Add(single_antitop_schan[fIter->first]);
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
 
@@ -625,9 +777,6 @@ void Plotting::makePlots(){
       Z_Z->SetLineWidth(0);
       //Z_Z->Scale(1.1); //change by hand the normalisation as the qq->ZZ is not used yet
     
-      ttbar = (TH1F*)ttbar_lep[fIter->first]->Clone();
-      ttbar->SetFillColor(kOrange-3);
-      ttbar->SetLineWidth(0);
     }
 
     // merge for WZ _Analysis
@@ -648,13 +797,13 @@ void Plotting::makePlots(){
       ttbar = (TH1F*)ttbar_lep[fIter->first]->Clone();
       ttbar->SetFillColor(kOrange-3);
       ttbar->SetLineWidth(0);
-      
-      stop = (TH1F*)single_top_schan[fIter->first]->Clone();
-      stop->Add(single_antitop_schan[fIter->first]);
-      stop->Add(single_top_tchan[fIter->first]);
+     
+      stop = (TH1F*)single_top_tchan[fIter->first]->Clone();
       stop->Add(single_antitop_tchan[fIter->first]);
       stop->Add(single_top_wtchan[fIter->first]);
       stop->Add(single_antitop_wtchan[fIter->first]);
+      stop->Add(single_top_schan[fIter->first]);
+      stop->Add(single_antitop_schan[fIter->first]);
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
 
@@ -672,15 +821,13 @@ void Plotting::makePlots(){
       W_Z->Add(lvvv[fIter->first]);  
       W_Z->SetFillColor(kRed-7);
       W_Z->SetLineWidth(0);
-      cout << "INFO: scaling WZ by 1.18" <<endl;
       W_Z->Scale(1.18); //normalisation scaled by a global factor of 1.18 to match the measured inclusive WZ cross section
  
     }
     
-
     
     // merge for Top _Analysis
-    if(option.find("TTbarAnalysis") != option.npos){
+    if(option.find("TTbar") != option.npos){
       
       ttbar = (TH1F*)ttbar_lep[fIter->first]->Clone();
       ttbar->SetFillColor(kOrange-3);
@@ -697,13 +844,13 @@ void Plotting::makePlots(){
       diboson->Add(WplvWmqq[fIter->first]);
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
-     
-      stop = (TH1F*)single_top_wtchan[fIter->first]->Clone();
+   
+      stop = (TH1F*)single_top_tchan[fIter->first]->Clone();
+      stop->Add(single_antitop_tchan[fIter->first]);
+      stop->Add(single_top_wtchan[fIter->first]);
       stop->Add(single_antitop_wtchan[fIter->first]);
-//      stop->Add(single_top_tchan[fIter->first]);
-//      stop->Add(single_antitop_tchan[fIter->first]);
-//      stop->Add(single_top_schan[fIter->first]);
-//      stop->Add(single_antitop_schan[fIter->first]);
+      stop->Add(single_top_schan[fIter->first]);
+      stop->Add(single_antitop_schan[fIter->first]);
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
 
@@ -748,8 +895,7 @@ void Plotting::makePlots(){
       Z_Z->Add(llvv[fIter->first]);
       Z_Z->SetFillColor(kAzure+8);
       Z_Z->SetLineWidth(0);
-      cout << "INFO: scaling ZZ by 1.4" <<endl;
-      Z_Z->Scale(1.4); //change by hand the normalisation as the qq->ZZ is not used yet
+      Z_Z->Scale(1.4); //change by hand the normalisation to include qq->ZZ
 
       Higgs = (TH1F*)ggH125_ZZ4lep[fIter->first]->Clone();
       Higgs->Add(ZH125_ZZ4lep[fIter->first]);
@@ -758,9 +904,6 @@ void Plotting::makePlots(){
       Higgs->SetFillColor(kRed);
       Higgs->SetLineWidth(0);
     }
-
-    
-    /*
    
     
     // merge for HWW _Analysis
@@ -770,95 +913,178 @@ void Plotting::makePlots(){
       Higgs->Add(VBFH125_WW2lep[fIter->first]);
       Higgs->SetFillColor(kRed);
       Higgs->SetLineWidth(0);
-      
-      diboson = (TH1F*)WW[fIter->first]->Clone();
-      diboson->Add(WZ[fIter->first]);
-      diboson->Add(ZZ[fIter->first]);
-      diboson->SetFillColor(kBlue-6);
-      diboson->SetLineWidth(0);
-      
-      V = (TH1F*)Wenu_PTVnuWithB[fIter->first]->Clone();
-      V->Add(Wenu_PTVnuJetsBVeto[fIter->first]);
-      V->Add(Wenu_PTVnuNoJetsBVeto[fIter->first]);
-      V->Add(Wmunu_PTVnuWithB[fIter->first]);
-      V->Add(Wmunu_PTVnuJetsBVeto[fIter->first]);
-      V->Add(Wmunu_PTVnuNoJetsBVeto[fIter->first]);
-      V->Add(Wtaunu_PTVnuWithB[fIter->first]);
-      V->Add(Wtaunu_PTVnuJetsBVeto[fIter->first]);
-      V->Add(Wtaunu_PTVnuNoJetsBVeto[fIter->first]);
-      V->Add(DYeeM08to15[fIter->first]);
-      V->Add(DYeeM15to40[fIter->first]);
-      V->Add(DYmumuM08to15[fIter->first]);
-      V->Add(DYmumuM15to40[fIter->first]);
-      V->Add(DYtautauM08to15[fIter->first]);
-      V->Add(DYtautauM15to40[fIter->first]);
-      V->Add(Zmumu[fIter->first]);
-      V->Add(Ztautau[fIter->first]);
-      V->Add(Zee[fIter->first]);
-      V->SetFillColor(kGreen-3);
-      V->SetLineWidth(0);
-      
+
       ttbar = (TH1F*)ttbar_lep[fIter->first]->Clone();
-      ttbar->Add(ttbar_had[fIter->first]);
       ttbar->SetFillColor(kOrange-3);
       ttbar->SetLineWidth(0);
-      
-      stop = (TH1F*)stop_wtchan[fIter->first]->Clone();
-      //stop->Add(stop_tchan_top[fIter->first]);
-      //stop->Add(stop_tchan_antitop[fIter->first]);
-      stop->Add(stop_schan[fIter->first]);
-      stop->SetFillColor(kAzure+8);
-      stop->SetLineWidth(0);
-    }
-    
-    // merge for ZPrime _Analysis
-    if(option.find("ZPrimeAnalysis") != option.npos){
-      
-      ZPrime = (TH1F*)ZPrime1000[fIter->first]->Clone();
-      ZPrime->SetFillColor(kRed);
-      ZPrime->SetLineWidth(0);
-      
-      ttbar = (TH1F*)ttbar_lep[fIter->first]->Clone();
-      ttbar->Add(ttbar_had[fIter->first]);
-      ttbar->SetFillColor(kOrange-3);
-      ttbar->SetLineWidth(0);
-      ttbar->Scale(0.94); //change by hand the ttbar normalisation as the b-tagging scale factor is not applied
-      
-      V = (TH1F*)Wenu_PTVnuWithB[fIter->first]->Clone();
-      V->Add(Wenu_PTVnuJetsBVeto[fIter->first]);
-      V->Add(Wenu_PTVnuNoJetsBVeto[fIter->first]);
-      V->Add(Wmunu_PTVnuWithB[fIter->first]);
-      V->Add(Wmunu_PTVnuJetsBVeto[fIter->first]);
-      V->Add(Wmunu_PTVnuNoJetsBVeto[fIter->first]);
-      V->Add(Wtaunu_PTVnuWithB[fIter->first]);
-      V->Add(Wtaunu_PTVnuJetsBVeto[fIter->first]);
-      V->Add(Wtaunu_PTVnuNoJetsBVeto[fIter->first]);
-      V->Add(DYeeM08to15[fIter->first]);
-      V->Add(DYeeM15to40[fIter->first]);
-      V->Add(DYmumuM08to15[fIter->first]);
-      V->Add(DYmumuM15to40[fIter->first]);
-      V->Add(DYtautauM08to15[fIter->first]);
-      V->Add(DYtautauM15to40[fIter->first]);
-      V->Add(Zmumu[fIter->first]);
-      V->Add(Ztautau[fIter->first]);
-      V->Add(Zee[fIter->first]);
-      V->SetFillColor(kGreen-3);
-      V->SetLineWidth(0);
-      
-      stop = (TH1F*)stop_wtchan[fIter->first]->Clone();
-      //stop->Add(stop_tchan_top[fIter->first]);
-      //stop->Add(stop_tchan_antitop[fIter->first]);
-      stop->Add(stop_schan[fIter->first]);
-      stop->SetFillColor(kAzure+8);
-      stop->SetLineWidth(0);
-      
-      diboson = (TH1F*)WW[fIter->first]->Clone();
-      diboson->Add(WZ[fIter->first]);
-      diboson->Add(ZZ[fIter->first]);
+
+      diboson = (TH1F*)WWlvlv[fIter->first]->Clone();
+      diboson->Add(WWlvqq[fIter->first]);
+      diboson->Add(WZlvll[fIter->first]);
+      diboson->Add(WZlvvv[fIter->first]);
+      diboson->Add(WZqqll[fIter->first]);
+      diboson->Add(WZlvqq[fIter->first]);
+      diboson->Add(ZZqqll[fIter->first]);
+      diboson->Add(ZZllll[fIter->first]);
+      diboson->Add(ZZvvll[fIter->first]);
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
+      diboson->Scale(1.4); //normalisation scaled by a global factor 
+
+      V = (TH1F*)Wplusenu[fIter->first]->Clone();
+      V->Add(Wplusmunu[fIter->first]);
+      V->Add(Wplustaunu[fIter->first]);
+      V->Add(Wminusenu[fIter->first]);
+      V->Add(Wminusmunu[fIter->first]);
+      V->Add(Wminustaunu[fIter->first]);
+      V->Add(Z_tautau[fIter->first]);
+      V->Add(Z_ee[fIter->first]);
+      V->Add(Z_mumu[fIter->first]);
+      V->SetFillColor(kGreen-3);
+      V->SetLineWidth(0);
+
+      stop = (TH1F*)single_top_tchan[fIter->first]->Clone();
+      stop->Add(single_antitop_tchan[fIter->first]);
+      stop->Add(single_top_wtchan[fIter->first]);
+      stop->Add(single_antitop_wtchan[fIter->first]);
+      stop->Add(single_top_schan[fIter->first]);
+      stop->Add(single_antitop_schan[fIter->first]);
+      stop->SetFillColor(kAzure+8);
+      stop->SetLineWidth(0);
+
     }
-    */
+
+ // merge for ZTauTauAnalysis
+    if(option.find("ZTauTauAnalysis") != option.npos){
+
+/* not there for now
+      diboson = (TH1F*)WWlvlv[fIter->first]->Clone();
+      diboson->Add(WWlvqq[fIter->first]);
+      diboson->Add(WZlvll[fIter->first]);
+      diboson->Add(WZlvvv[fIter->first]);
+      diboson->Add(WZqqll[fIter->first]);
+      diboson->Add(WZlvqq[fIter->first]);
+      diboson->Add(ZZqqll[fIter->first]);
+      diboson->Add(ZZllll[fIter->first]);
+      diboson->Add(ZZvvll[fIter->first]);
+      diboson->SetFillColor(kBlue-6);
+      diboson->SetLineWidth(0);
+*/
+W = (TH1F*)We0_70BFilter[fIter->first]->Clone();
+W->Add(We0_70CFilterBVeto[fIter->first]);
+W->Add(We0_70CVetoBVeto[fIter->first]);
+W->Add(We1000[fIter->first]);
+W->Add(We140_280BFilter[fIter->first]);
+W->Add(We140_280CFilterBVeto[fIter->first]);
+W->Add(We140_280CVetoBVeto[fIter->first]);
+W->Add(We280_500BFilter[fIter->first]);
+W->Add(We280_500CFilterBVeto[fIter->first]);
+W->Add(We280_500CVetoBVeto[fIter->first]);
+W->Add(We500_1000[fIter->first]);
+W->Add(We70_140BFilter[fIter->first]);
+W->Add(We70_140CFilterBVeto[fIter->first]);
+W->Add(We70_140CVetoBVeto[fIter->first]);
+W->Add(Wmu0_70BFilter[fIter->first]);
+W->Add(Wmu0_70CFilterBVeto[fIter->first]);
+W->Add(Wmu0_70CVetoBVeto[fIter->first]);
+W->Add(Wmu1000[fIter->first]);
+W->Add(Wmu140_280BFilter[fIter->first]);
+W->Add(Wmu140_280CFilterBVeto[fIter->first]);
+W->Add(Wmu140_280CVetoBVeto[fIter->first]);
+W->Add(Wmu280_500BFilter[fIter->first]);
+W->Add(Wmu280_500CFilterBVeto[fIter->first]);
+W->Add(Wmu280_500CVetoBVeto[fIter->first]);
+W->Add(Wmu500_1000[fIter->first]);
+W->Add(Wmu70_140BFilter[fIter->first]);
+W->Add(Wmu70_140CFilterBVeto[fIter->first]);
+W->Add(Wmu70_140CVetoBVeto[fIter->first]);
+W->Add(Wtau0_70BFilter[fIter->first]);
+W->Add(Wtau0_70CFilterBVeto[fIter->first]);
+W->Add(Wtau0_70CVetoBVeto[fIter->first]);
+W->Add(Wtau1000[fIter->first]);
+W->Add(Wtau140_280BFilter[fIter->first]);
+W->Add(Wtau140_280CFilterBVeto[fIter->first]);
+W->Add(Wtau140_280CVetoBVeto[fIter->first]);
+W->Add(Wtau280_500BFilter[fIter->first]);
+W->Add(Wtau280_500CFilterBVeto[fIter->first]);
+W->Add(Wtau280_500CVetoBVeto[fIter->first]);
+W->Add(Wtau500_1000[fIter->first]);
+W->Add(Wtau70_140BFilter[fIter->first]);
+W->Add(Wtau70_140CFilterBVeto[fIter->first]);
+W->Add(Wtau70_140CVetoBVeto[fIter->first]);
+
+W->SetFillColor(kGreen-3);
+W->SetLineWidth(0);
+
+Zee = (TH1F*)Zee0_70BFilter[fIter->first]->Clone();
+Zee->Add(Zee0_70CFilterBVeto[fIter->first]);
+Zee->Add(Zee0_70CVetoBVeto[fIter->first]);
+Zee->Add(Zee1000[fIter->first]);
+Zee->Add(Zee140_280BFilter[fIter->first]);
+Zee->Add(Zee140_280CFilterBVeto[fIter->first]);
+Zee->Add(Zee140_280CVetoBVeto[fIter->first]);
+Zee->Add(Zee280_500BFilter[fIter->first]);
+Zee->Add(Zee280_500CFilterBVeto[fIter->first]);
+Zee->Add(Zee280_500CVetoBVeto[fIter->first]);
+Zee->Add(Zee500_1000[fIter->first]);
+Zee->Add(Zee70_140BFilter[fIter->first]);
+Zee->Add(Zee70_140CFilterBVeto[fIter->first]);
+Zee->Add(Zee70_140CVetoBVeto[fIter->first]);
+Zee->SetFillColor(kBlue-6);
+Zee->SetLineWidth(0);
+
+Zmumu = (TH1F*)Zmumu0_70BFilter[fIter->first]->Clone();
+Zmumu->Add(Zmumu0_70CFilterBVeto[fIter->first]);
+Zmumu->Add(Zmumu0_70CVetoBVeto[fIter->first]);
+Zmumu->Add(Zmumu1000[fIter->first]);
+Zmumu->Add(Zmumu140_280BFilter[fIter->first]);
+Zmumu->Add(Zmumu140_280CFilterBVeto[fIter->first]);
+Zmumu->Add(Zmumu140_280CVetoBVeto[fIter->first]);
+Zmumu->Add(Zmumu280_500BFilter[fIter->first]);
+Zmumu->Add(Zmumu280_500CFilterBVeto[fIter->first]);
+Zmumu->Add(Zmumu280_500CVetoBVeto[fIter->first]);
+Zmumu->Add(Zmumu500_1000[fIter->first]);
+Zmumu->Add(Zmumu70_140BFilter[fIter->first]);
+Zmumu->Add(Zmumu70_140CFilterBVeto[fIter->first]);
+Zmumu->Add(Zmumu70_140CVetoBVeto[fIter->first]);
+Zmumu->SetFillColor(kPink+9);
+Zmumu->SetLineWidth(0);
+
+
+Ztautau = (TH1F*)Ztautau0_70BFilter[fIter->first]->Clone();
+Ztautau->Add(Ztautau0_70CFilterBVeto[fIter->first]);
+Ztautau->Add(Ztautau0_70CVetoBVeto[fIter->first]);
+Ztautau->Add(Ztautau1000[fIter->first]);
+Ztautau->Add(Ztautau140_280BFilter[fIter->first]);
+Ztautau->Add(Ztautau140_280CFilterBVeto[fIter->first]);
+Ztautau->Add(Ztautau140_280CVetoBVeto[fIter->first]);
+Ztautau->Add(Ztautau280_500BFilter[fIter->first]);
+Ztautau->Add(Ztautau280_500CFilterBVeto[fIter->first]);
+Ztautau->Add(Ztautau280_500CVetoBVeto[fIter->first]);
+Ztautau->Add(Ztautau500_1000[fIter->first]);
+Ztautau->Add(Ztautau70_140BFilter[fIter->first]);
+Ztautau->Add(Ztautau70_140CFilterBVeto[fIter->first]);
+Ztautau->Add(Ztautau70_140CVetoBVeto[fIter->first]);
+Ztautau->SetFillColor(kRed);
+Ztautau->SetLineWidth(0);
+
+      ttbar = (TH1F*)ttbar_lep[fIter->first]->Clone();
+      ttbar->SetFillColor(kOrange-3);
+      ttbar->SetLineWidth(0);
+
+      stop = (TH1F*)single_top_tchan[fIter->first]->Clone();
+      stop->Add(single_antitop_tchan[fIter->first]);
+      stop->Add(single_top_wtchan[fIter->first]);
+      stop->Add(single_antitop_wtchan[fIter->first]);
+      stop->Add(single_top_schan[fIter->first]);
+      stop->Add(single_antitop_schan[fIter->first]);
+      stop->SetFillColor(kAzure+8);
+      stop->SetLineWidth(0);
+
+    }
+
+
+
     
     ////////////////////////////////////////////////////////////////////////////////////////////////
     
@@ -884,8 +1110,6 @@ void Plotting::makePlots(){
 
 
     if(option.find("ZZDiBosonAnalysis") != option.npos){
-      stack->Add(stop);
-      stack->Add(ttbar);
       stack->Add(V);
       stack->Add(diboson);
       stack->Add(Z_Z);
@@ -900,20 +1124,23 @@ void Plotting::makePlots(){
     }
 
     
-    if(option.find("TTbarAnalysis") != option.npos){
+    if(option.find("TTbar") != option.npos){
       stack->Add(diboson);
       stack->Add(stop);
       stack->Add(V);
       stack->Add(ttbar);
     }
 
+
     if(option.find("HZZAnalysis") != option.npos){
+      stack->Add(stop);
+
       stack->Add(V);
       stack->Add(Z_Z);
       stack->Add(Higgs);
     }
     
-    /*   
+       
     
     if(option.find("HWWAnalysis") != option.npos){
       stack->Add(stop);
@@ -922,17 +1149,22 @@ void Plotting::makePlots(){
       stack->Add(diboson);
       stack->Add(Higgs);
     }
-    
-    if(option.find("ZPrimeAnalysis") != option.npos){
-      stack->Add(diboson);
+  
+
+    if(option.find("ZTauTauAnalysis") != option.npos){
       stack->Add(stop);
-      stack->Add(V);
       stack->Add(ttbar);
-      //  stack->Add(ZPrime);
+      //stack->Add(diboson);
+      stack->Add(W);
+      stack->Add(Zee);
+      stack->Add(Zmumu);
+      stack->Add(Ztautau);
     }
-    */
+
+
+
     
-    // statistical error histogram, ttbar is by default taken
+    // statistical error histogram
     TH1F* histstack = new TH1F();
 
     if(option.find("ZBosonAnalysis") != option.npos){
@@ -952,10 +1184,8 @@ void Plotting::makePlots(){
     }
 
     if(option.find("ZZDiBosonAnalysis") != option.npos){
-      histstack = (TH1F*)ttbar_lep[fIter->first]->Clone();
-      histstack->Add(stop);
+      histstack = (TH1F*)diboson->Clone();
       histstack->Add(V);
-      histstack->Add(diboson);
       histstack->Add(Z_Z);
     }
 
@@ -967,7 +1197,7 @@ void Plotting::makePlots(){
       histstack->Add(W_Z);
     }
   
-    if(option.find("TTbarAnalysis") != option.npos){
+    if(option.find("TTbar") != option.npos){
       histstack = (TH1F*)ttbar_lep[fIter->first]->Clone();
       histstack->Add(stop);
       histstack->Add(diboson);
@@ -979,24 +1209,30 @@ void Plotting::makePlots(){
       histstack->Add(Z_Z);
       histstack->Add(Higgs);
     }
-    
-      /*
-  
-    
      
     if(option.find("HWWAnalysis") != option.npos){
-      histstack->Add(V);
-      histstack->Add(Z);
-      histstack->Add(stop);
-    }
-    
-    if(option.find("ZPrimeAnalysis") != option.npos){
-      histstack->Add(Z);
+      histstack = (TH1F*)ttbar_lep[fIter->first]->Clone();
+      histstack->Add(diboson);
       histstack->Add(V);
       histstack->Add(stop);
+      histstack->Add(Higgs);
     }
-    */
-    
+ 
+  if(option.find("ZTauTauAnalysis") != option.npos){
+      histstack = (TH1F*)ttbar_lep[fIter->first]->Clone();
+   //   histstack->Add(diboson);
+      histstack->Add(W);
+      histstack->Add(stop);
+      histstack->Add(Zee);
+      histstack->Add(Zmumu);
+      histstack->Add(Ztautau);
+    }
+
+
+
+//////////
+
+
     histstack->SetFillStyle(3454);
     histstack->SetFillColor(kBlue+2);
     histstack->SetLineColor(kBlack);
@@ -1012,19 +1248,7 @@ void Plotting::makePlots(){
       histstack->SetBinError(i_bin, err );
     }
     
-    // add normalized signals
-    TH1F* ZP_normsig = new TH1F();
-    //if(option.find("ZPrimeAnalysis") != option.npos){
-    //  ZP_normsig = (TH1F*)ZPrime1000[fIter->first]->Clone(); 
-    //  ZP_normsig->Scale(histstack->Integral()/ZP_normsig->Integral());
-    //  ZP_normsig->SetLineColor(kRed);
-    //  ZP_normsig->SetFillStyle(0);
-    //  ZP_normsig->SetLineStyle(2);
-    //  ZP_normsig->SetFillColor(2);
-    //  ZP_normsig->SetLineWidth(2);
-    //}
-   
-    
+    // calculate normalized signals
     TH1F* Higgs_normsig = new TH1F();
     if(option.find("HZZAnalysis") != option.npos){
       Higgs_normsig = (TH1F*)ggH125_ZZ4lep[fIter->first]->Clone();
@@ -1038,11 +1262,23 @@ void Plotting::makePlots(){
       Higgs_normsig->SetFillColor(2);
       Higgs_normsig->SetLineWidth(2);
     }
-   
+  
+    if(option.find("HWWAnalysis") != option.npos){
+      Higgs_normsig = (TH1F*)ggH125_WW2lep[fIter->first]->Clone();
+      Higgs_normsig->Scale(histstack->Integral()/Higgs_normsig->Integral());
+      Higgs_normsig->SetLineColor(kRed);
+      Higgs_normsig->SetFillStyle(0);
+      Higgs_normsig->SetLineStyle(2);
+      Higgs_normsig->SetFillColor(2);
+      Higgs_normsig->SetLineWidth(2);
+    }
+
+
+
 
     // set Yaxis maximum
     float yMaxScale = 2.;
-    fIter->second->SetMaximum(yMaxScale*TMath::Max( TMath::Max(fIter->second->GetMaximum(),histstack->GetMaximum()), ZP_normsig->GetMaximum() ) );
+    fIter->second->SetMaximum(yMaxScale*TMath::Max( TMath::Max(fIter->second->GetMaximum(),histstack->GetMaximum()), Higgs_normsig->GetMaximum() ) );
     
     
     // latex options 
@@ -1052,14 +1288,14 @@ void Plotting::makePlots(){
     l.SetTextFont(42);
     l.SetTextSize(0.04);
     
-    if(option.find("WBosonAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"W #rightarrow l#nu ");}
-    if(option.find("ZBosonAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"Z #rightarrow ll");}
-    if(option.find("TTbarAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"t#bar{t} #rightarrow l#nub q#bar{q}b ");}
-    if(option.find("WZDiBosonAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"WZ #rightarrow l#nu ll");}
-    if(option.find("ZZDiBosonAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"ZZ #rightarrow l^{+}l^{-} l^{+}l^{-}");}
-    if(option.find("HWWAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"H #rightarrow WW #rightarrow l#nu l#nu + 0 jet ");}
-    if(option.find("ZPrimeAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"Z' (1TeV) #rightarrow l#nub q#bar{q}b ");}
+    if(option.find("WBosonAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"W \\rightarrow \\ell\\nu");}
+    if(option.find("ZBosonAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"Z \\rightarrow \\ell\\ell");}
+    if(option.find("TTbarAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"t#bar{t} #rightarrow l#nub q#bar{q}b resolved");}
+    if(option.find("WZDiBosonAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"WZ \\rightarrow \\ell\\nu \\ell\\ell");}
+    if(option.find("ZZDiBosonAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"ZZ \\rightarrow \\ell^{+}\\ell^{-} \\ell^{+}\\ell^{-}");}
+    if(option.find("HWWAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"H #rightarrow WW^{*} #rightarrow e#nu #mu#nu, N_{jet} #leq 1");}
     if(option.find("HZZAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"H #rightarrow ZZ^{*} #rightarrow 4l");}
+    if(option.find("ZTauTauAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"Z #rightarrow #tau_{l}#tau_{h}");}
 
     
     TLatex l2;
@@ -1095,21 +1331,31 @@ void Plotting::makePlots(){
 
     if(option.find("WBosonAnalysis") != option.npos){
       leg-> AddEntry(data[fIter->first] , "Data" ,"lep");
-      leg-> AddEntry(W,  "W #rightarrow l#nu", "f");
-      leg-> AddEntry(Z,  "Z #rightarrow ll", "f");
+      leg-> AddEntry(W,  "W \\rightarrow \\ell\\nu", "f");
+      leg-> AddEntry(Z,  "Z \\rightarrow \\ell\\ell", "f");
       leg-> AddEntry(diboson , "Diboson", "f");
       leg-> AddEntry(ttbar, "t#bar{t}", "f");
       leg-> AddEntry(stop, "Single top", "f");
       leg-> AddEntry(histstack,"Stat. unc.","f");
+    
+      if(YIELDS){
+              cout << "Yields:" << "Data: " << data[fIter->first]->Integral() <<
+              ",  W: " << W->Integral()  <<
+              ",  Z: " << Z->Integral()  <<
+              ",  diboson: " << diboson->Integral()  <<
+              ",  ttbar: " << ttbar ->Integral()  <<
+              ",  stop: " <<  stop->Integral()  <<
+              ",  Total pred.: "<< diboson->Integral() + W->Integral() + Z->Integral() + ttbar ->Integral() + stop->Integral() <<
+       	       endl;
+      }
+
     }
 
     if(option.find("ZZDiBosonAnalysis") != option.npos){
       leg-> AddEntry(data[fIter->first] , "Data" ,"lep");
       leg-> AddEntry(Z_Z , "ZZ", "f");
       leg-> AddEntry(diboson , "WW,WZ", "f");
-      leg-> AddEntry(V,  "W/Z", "f");
-      leg-> AddEntry(ttbar, "t#bar{t}", "f");
-      leg-> AddEntry(stop, "Single top", "f");
+      leg-> AddEntry(V,  "Other", "f");
       leg-> AddEntry(histstack,"Stat. unc.","f");
     }
 
@@ -1123,7 +1369,7 @@ void Plotting::makePlots(){
       leg-> AddEntry(histstack,"Stat. unc.","f");
     }
   
-    if(option.find("TTbarAnalysis") != option.npos){
+    if(option.find("TTbar") != option.npos){
       leg-> AddEntry(data[fIter->first] , "Data" ,"lep");
       leg-> AddEntry(ttbar, "t#bar{t}", "f");
       leg-> AddEntry(V,  "V+jets", "f");
@@ -1132,18 +1378,29 @@ void Plotting::makePlots(){
       leg-> AddEntry(histstack,"Stat. unc.","f");
     }
 
-
    if(option.find("HZZAnalysis") != option.npos){
       leg-> AddEntry(data[fIter->first] , "Data" ,"lep");
       leg-> AddEntry(Higgs , "Higgs", "f");
       leg-> AddEntry(Z_Z , "ZZ", "f");
       leg-> AddEntry(V,  "Other", "f");
       leg-> AddEntry(histstack,"Stat. unc.","f");
- //     leg-> AddEntry(Higgs_normsig, "Higgs (norm)" ,"l");
+      if(HIGGSNORMSIG) leg-> AddEntry(Higgs_normsig, "Higgs_{norm}" ,"l");
+
+      if(YIELDS){
+              cout << "Yields:" << "Data: " << data[fIter->first]->Integral() <<
+              ",  Higgs: " << Higgs->Integral()  <<
+              ",  ZZ: " << Z_Z->Integral()  <<
+              ",  Other: " << V->Integral()  <<
+              ",  Total pred.: "<< V->Integral() + Z_Z->Integral()  <<
+               endl;
+      }
+
+
+
+
    }
     
      
-/*     
     if(option.find("HWWAnalysis") != option.npos){
       leg-> AddEntry(data[fIter->first] , "Data" ,"lep");
       leg-> AddEntry(Higgs , "Higgs", "f");
@@ -1152,26 +1409,44 @@ void Plotting::makePlots(){
       leg-> AddEntry(ttbar, "t#bar{t}", "f");
       leg-> AddEntry(stop, "Single top", "f");
       leg-> AddEntry(histstack,"Stat. unc.","f");
-    }
-    
-    if(option.find("ZPrimeAnalysis") != option.npos){
+      if(HIGGSNORMSIG) leg-> AddEntry(Higgs_normsig, "Higgs_{norm}" ,"l");
+
+      // print yields
+      if(YIELDS){
+      cout << "Number of events:" << "Data: " << data[fIter->first]->Integral() << 
+	      ",  Higgs: " << Higgs->Integral()  << 
+	      ",  WW: " << diboson->Integral()  <<
+              ",  V+jets: " << V->Integral()  <<
+	      ",  ttbar: " << ttbar ->Integral()  <<
+	      ",  stop: " <<  stop->Integral()  <<
+	      ",  Total pred.: "<< diboson->Integral() + V->Integral() + ttbar ->Integral() + stop->Integral() << 
+	      endl;
+      }
+   }
+
+   if(option.find("ZTauTauAnalysis") != option.npos){
       leg-> AddEntry(data[fIter->first] , "Data" ,"lep");
+      leg-> AddEntry(Ztautau,  "Z #rightarrow #tau#tau", "f");
+      leg-> AddEntry(Zmumu,  "Z #rightarrow #mu#mu", "f");
+      leg-> AddEntry(Zee,  "Z #rightarrow ee", "f");
+//      leg-> AddEntry(diboson , "Diboson", "f");
+      leg-> AddEntry(W,  "W+jets", "f");
       leg-> AddEntry(ttbar, "t#bar{t}", "f");
-      leg-> AddEntry(V , "V+jets", "f");
       leg-> AddEntry(stop, "Single top", "f");
-      leg-> AddEntry(diboson , "Diboson", "f");
       leg-> AddEntry(histstack,"Stat. unc.","f");
-      leg-> AddEntry(ZP_normsig, "Z' (norm)" ,"l");
     }
-    */
+
     
     // draw everything 
     stack->Draw("HISTsame");
     histstack->Draw("e2same");
     fIter->second->Draw("sameE1");
-  
-    if(option.find("ZPrimeAnalysis") != option.npos){ZP_normsig->Draw("HISTsame");}
- //   if(option.find("HZZAnalysis") != option.npos){Higgs_normsig->Draw("HISTsame");}
+ 
+    // draw the normalised signal in the plots
+    if(HIGGSNORMSIG){
+      if(option.find("HZZAnalysis") != option.npos){Higgs_normsig->Draw("HISTsame");}
+      if(option.find("HWWAnalysis") != option.npos){Higgs_normsig->Draw("HISTsame");}
+    }
 
     leg->Draw("same");
     
@@ -1190,7 +1465,6 @@ void Plotting::makePlots(){
     h_ratio->GetYaxis()->SetTitle("Data / Pred      ");
 
 
-  
     // add a line in 1
     TLine *hline;
     hline = new TLine(h_ratio->GetXaxis()->GetXmin(),1,h_ratio->GetXaxis()->GetXmax(),1);
@@ -1231,6 +1505,13 @@ void Plotting::makePlots(){
     Ay1->SetLabelSize(0);
     Ay1->SetTitleSize(0);
 
+    if(option.find("WBosonAnalysis") != option.npos){
+      pad0->SetLogy(1);
+      fIter->second->SetMinimum(100);
+      fIter->second->SetMaximum(1e12);
+    }
+
+
     if(option.find("ZBosonAnalysis") != option.npos){
      pad0->SetLogy(1);
      fIter->second->SetMinimum(100);
@@ -1244,6 +1525,7 @@ void Plotting::makePlots(){
      fIter->second->SetMaximum(1e8);
      }
     }
+
 
 
 
@@ -1286,10 +1568,12 @@ void Plotting::getHistoSettings(){
   if(option.find("TTbarAnalysis") != option.npos){ifile = "list_histos/HistoList_TTbarAnalysis.txt";}
   if(option.find("WZDiBosonAnalysis") != option.npos){ifile = "list_histos/HistoList_WZDiBosonAnalysis.txt";}
   if(option.find("ZZDiBosonAnalysis") != option.npos){ifile = "list_histos/HistoList_ZZDiBosonAnalysis.txt";}
-  if(option.find("HWWAnalysis") != option.npos){ifile = "list_histos/HistoList_HWW.txt";}
-  if(option.find("ZPrimeAnalysis") != option.npos){ifile = "list_histos/HistoList_ZPrime.txt";}
+  if(option.find("HWWAnalysis") != option.npos){ifile = "list_histos/HistoList_HWWAnalysis.txt";}
   if(option.find("HZZAnalysis") != option.npos){ifile = "list_histos/HistoList_HZZAnalysis.txt";}
-    
+  if(option.find("ZTauTauAnalysis") != option.npos){ifile = "list_histos/HistoList_ZTauTauAnalysis.txt";}
+  
+
+  
   ifstream input(ifile.c_str());
   std::string line;
   while(getline(input,line)){
