@@ -356,9 +356,9 @@ void Plotting::makePlots(){
   std::map<std::string,TH1F*> ttbar_had;
   
   //Z+jets
-  std::map<std::string,TH1F*> Z_ee;
-  std::map<std::string,TH1F*> Z_mumu;
-  std::map<std::string,TH1F*> Z_tautau;
+  std::map<std::string,TH1F*> Zee;
+  std::map<std::string,TH1F*> Zmumu;
+  std::map<std::string,TH1F*> Ztautau;
   std::map<std::string,TH1F*> DYeeM08to15;
   std::map<std::string,TH1F*> DYeeM15to40;
   std::map<std::string,TH1F*> DYmumuM08to15;
@@ -372,15 +372,15 @@ void Plotting::makePlots(){
   std::map<std::string,TH1F*> ZZ;
   
   //W+jets
-  std::map<std::string,TH1F*> WenuWithB;
-  std::map<std::string,TH1F*> WenuJetsBVeto;
-  std::map<std::string,TH1F*> WenuNoJetsBVeto;
-  std::map<std::string,TH1F*> WmunuWithB;
-  std::map<std::string,TH1F*> WmunuJetsBVeto;
-  std::map<std::string,TH1F*> WmunuNoJetsBVeto;
-  std::map<std::string,TH1F*> WtaunuWithB;
-  std::map<std::string,TH1F*> WtaunuJetsBVeto;
-  std::map<std::string,TH1F*> WtaunuNoJetsBVeto;
+  std::map<std::string,TH1F*> Wenu_PTVnuWithB;
+  std::map<std::string,TH1F*> Wenu_PTVnuJetsBVeto;
+  std::map<std::string,TH1F*> Wenu_PTVnuNoJetsBVeto;
+  std::map<std::string,TH1F*> Wmunu_PTVnuWithB;
+  std::map<std::string,TH1F*> Wmunu_PTVnuJetsBVeto;
+  std::map<std::string,TH1F*> Wmunu_PTVnuNoJetsBVeto;
+  std::map<std::string,TH1F*> Wtaunu_PTVnuWithB;
+  std::map<std::string,TH1F*> Wtaunu_PTVnuJetsBVeto;
+  std::map<std::string,TH1F*> Wtaunu_PTVnuNoJetsBVeto;
   
   //std::map<std::string,TH1F*> stop_tchan_top;
   //std::map<std::string,TH1F*> stop_tchan_antitop;
@@ -399,9 +399,9 @@ void Plotting::makePlots(){
   ttbar_lep = histo["ttbar_lep"];
   ttbar_had = histo["ttbar_had"];
   
-  Z_ee = histo["Z_ee"];
-  Z_mumu = histo["Z_mumu"];
-  Z_tautau = histo["Z_tautau"];
+  Zee = histo["Zee"];
+  Zmumu = histo["Zmumu"];
+  Ztautau = histo["Ztautau"];
   DYeeM08to15 = histo["DYeeM08to15"];
   DYeeM15to40 = histo["DYeeM15to40"];
   DYmumuM08to15 = histo["DYmumuM08to15"];
@@ -413,15 +413,15 @@ void Plotting::makePlots(){
   WZ = histo["WZ"];
   ZZ = histo["ZZ"];
 
-  WenuWithB = histo["WenuWithB"];
-  WenuJetsBVeto = histo["WenuJetsBVeto"];
-  WenuNoJetsBVeto = histo["WenuNoJetsBVeto"];
-  WmunuWithB = histo["WmunuWithB"];
-  WmunuJetsBVeto = histo["WmunuJetsBVeto"];
-  WmunuNoJetsBVeto = histo["WmunuNoJetsBVeto"];
-  WtaunuWithB = histo["WtaunuWithB"];
-  WtaunuJetsBVeto = histo["WtaunuJetsBVeto"];
-  WtaunuNoJetsBVeto = histo["WtaunuNoJetsBVeto"];
+  Wenu_PTVnuWithB = histo["Wenu_PTVnuWithB"];
+  Wenu_PTVnuJetsBVeto = histo["Wenu_PTVnuJetsBVeto"];
+  Wenu_PTVnuNoJetsBVeto = histo["Wenu_PTVnuNoJetsBVeto"];
+  Wmunu_PTVnuWithB = histo["Wmunu_PTVnuWithB"];
+  Wmunu_PTVnuJetsBVeto = histo["Wmunu_PTVnuJetsBVeto"];
+  Wmunu_PTVnuNoJetsBVeto = histo["Wmunu_PTVnuNoJetsBVeto"];
+  Wtaunu_PTVnuWithB = histo["Wtaunu_PTVnuWithB"];
+  Wtaunu_PTVnuJetsBVeto = histo["Wtaunu_PTVnuJetsBVeto"];
+  Wtaunu_PTVnuNoJetsBVeto = histo["Wtaunu_PTVnuNoJetsBVeto"];
   
   //stop_tchan_top = histo["stop_tchan_top"];
   //stop_tchan_antitop = histo["stop_tchan_antitop"];
@@ -475,21 +475,21 @@ void Plotting::makePlots(){
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
       
-      W = (TH1F*)WenuWithB[fIter->first]->Clone();
-      W->Add(WenuJetsBVeto[fIter->first]);
-      W->Add(WenuNoJetsBVeto[fIter->first]);
-      W->Add(WmunuWithB[fIter->first]);
-      W->Add(WmunuJetsBVeto[fIter->first]);
-      W->Add(WmunuNoJetsBVeto[fIter->first]);
-      W->Add(WtaunuWithB[fIter->first]);
-      W->Add(WtaunuJetsBVeto[fIter->first]);
-      W->Add(WtaunuNoJetsBVeto[fIter->first]);
+      W = (TH1F*)Wenu_PTVnuWithB[fIter->first]->Clone();
+      W->Add(Wenu_PTVnuJetsBVeto[fIter->first]);
+      W->Add(Wenu_PTVnuNoJetsBVeto[fIter->first]);
+      W->Add(Wmunu_PTVnuWithB[fIter->first]);
+      W->Add(Wmunu_PTVnuJetsBVeto[fIter->first]);
+      W->Add(Wmunu_PTVnuNoJetsBVeto[fIter->first]);
+      W->Add(Wtaunu_PTVnuWithB[fIter->first]);
+      W->Add(Wtaunu_PTVnuJetsBVeto[fIter->first]);
+      W->Add(Wtaunu_PTVnuNoJetsBVeto[fIter->first]);
       W->SetFillColor(kGreen-3);
       W->SetLineWidth(0);
       
-      Z = (TH1F*)Z_mumu[fIter->first]->Clone();
-      Z->Add(Z_tautau[fIter->first]);
-      Z->Add(Z_ee[fIter->first]);
+      Z = (TH1F*)Zmumu[fIter->first]->Clone();
+      Z->Add(Ztautau[fIter->first]);
+      Z->Add(Zee[fIter->first]);
       Z->Add(DYeeM08to15[fIter->first]);
       Z->Add(DYeeM15to40[fIter->first]);
       Z->Add(DYmumuM08to15[fIter->first]);
@@ -523,21 +523,21 @@ void Plotting::makePlots(){
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
       
-      W = (TH1F*)WenuWithB[fIter->first]->Clone();
-      W->Add(WenuJetsBVeto[fIter->first]);
-      W->Add(WenuNoJetsBVeto[fIter->first]);
-      W->Add(WmunuWithB[fIter->first]);
-      W->Add(WmunuJetsBVeto[fIter->first]);
-      W->Add(WmunuNoJetsBVeto[fIter->first]);
-      W->Add(WtaunuWithB[fIter->first]);
-      W->Add(WtaunuJetsBVeto[fIter->first]);
-      W->Add(WtaunuNoJetsBVeto[fIter->first]);
+      W = (TH1F*)Wenu_PTVnuWithB[fIter->first]->Clone();
+      W->Add(Wenu_PTVnuJetsBVeto[fIter->first]);
+      W->Add(Wenu_PTVnuNoJetsBVeto[fIter->first]);
+      W->Add(Wmunu_PTVnuWithB[fIter->first]);
+      W->Add(Wmunu_PTVnuJetsBVeto[fIter->first]);
+      W->Add(Wmunu_PTVnuNoJetsBVeto[fIter->first]);
+      W->Add(Wtaunu_PTVnuWithB[fIter->first]);
+      W->Add(Wtaunu_PTVnuJetsBVeto[fIter->first]);
+      W->Add(Wtaunu_PTVnuNoJetsBVeto[fIter->first]);
       W->SetFillColor(kGreen-3);
       W->SetLineWidth(0);
       
-      Z = (TH1F*)Z_mumu[fIter->first]->Clone();
-      Z->Add(Z_tautau[fIter->first]);
-      Z->Add(Z_ee[fIter->first]);
+      Z = (TH1F*)Zmumu[fIter->first]->Clone();
+      Z->Add(Ztautau[fIter->first]);
+      Z->Add(Zee[fIter->first]);
       Z->Add(DYeeM08to15[fIter->first]);
       Z->Add(DYeeM15to40[fIter->first]);
       Z->Add(DYmumuM08to15[fIter->first]);
@@ -582,24 +582,24 @@ void Plotting::makePlots(){
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
       
-      V = (TH1F*)WenuWithB[fIter->first]->Clone();
-      V->Add(WenuJetsBVeto[fIter->first]);
-      V->Add(WenuNoJetsBVeto[fIter->first]);
-      V->Add(WmunuWithB[fIter->first]);
-      V->Add(WmunuJetsBVeto[fIter->first]);
-      V->Add(WmunuNoJetsBVeto[fIter->first]);
-      V->Add(WtaunuWithB[fIter->first]);
-      V->Add(WtaunuJetsBVeto[fIter->first]);
-      V->Add(WtaunuNoJetsBVeto[fIter->first]);
+      V = (TH1F*)Wenu_PTVnuWithB[fIter->first]->Clone();
+      V->Add(Wenu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wenu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuWithB[fIter->first]);
+      V->Add(Wmunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuWithB[fIter->first]);
+      V->Add(Wtaunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuNoJetsBVeto[fIter->first]);
       V->Add(DYeeM08to15[fIter->first]);
       V->Add(DYeeM15to40[fIter->first]);
       V->Add(DYmumuM08to15[fIter->first]);
       V->Add(DYmumuM15to40[fIter->first]);
       V->Add(DYtautauM08to15[fIter->first]);
       V->Add(DYtautauM15to40[fIter->first]);
-      V->Add(Z_mumu[fIter->first]);
-      V->Add(Z_tautau[fIter->first]);
-      V->Add(Z_ee[fIter->first]);
+      V->Add(Zmumu[fIter->first]);
+      V->Add(Ztautau[fIter->first]);
+      V->Add(Zee[fIter->first]);
       V->SetFillColor(kGreen-3);
       V->SetLineWidth(0);
     }
@@ -607,24 +607,24 @@ void Plotting::makePlots(){
     // merge for WZ _Analysis
     if(option.find("WZDiBosonAnalysis") != option.npos){
       
-      V = (TH1F*)WenuWithB[fIter->first]->Clone();
-      V->Add(WenuJetsBVeto[fIter->first]);
-      V->Add(WenuNoJetsBVeto[fIter->first]);
-      V->Add(WmunuWithB[fIter->first]);
-      V->Add(WmunuJetsBVeto[fIter->first]);
-      V->Add(WmunuNoJetsBVeto[fIter->first]);
-      V->Add(WtaunuWithB[fIter->first]);
-      V->Add(WtaunuJetsBVeto[fIter->first]);
-      V->Add(WtaunuNoJetsBVeto[fIter->first]);
+      V = (TH1F*)Wenu_PTVnuWithB[fIter->first]->Clone();
+      V->Add(Wenu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wenu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuWithB[fIter->first]);
+      V->Add(Wmunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuWithB[fIter->first]);
+      V->Add(Wtaunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuNoJetsBVeto[fIter->first]);
       V->Add(DYeeM08to15[fIter->first]);
       V->Add(DYeeM15to40[fIter->first]);
       V->Add(DYmumuM08to15[fIter->first]);
       V->Add(DYmumuM15to40[fIter->first]);
       V->Add(DYtautauM08to15[fIter->first]);
       V->Add(DYtautauM15to40[fIter->first]);
-      V->Add(Z_mumu[fIter->first]);
-      V->Add(Z_tautau[fIter->first]);
-      V->Add(Z_ee[fIter->first]);
+      V->Add(Zmumu[fIter->first]);
+      V->Add(Ztautau[fIter->first]);
+      V->Add(Zee[fIter->first]);
       V->SetFillColor(kGreen-3);
       V->SetLineWidth(0);
       
@@ -653,24 +653,24 @@ void Plotting::makePlots(){
     // merge for ZZ_Analysis
     if(option.find("ZZDiBosonAnalysis") != option.npos){
       
-      V = (TH1F*)WenuWithB[fIter->first]->Clone();
-      V->Add(WenuJetsBVeto[fIter->first]);
-      V->Add(WenuNoJetsBVeto[fIter->first]);
-      V->Add(WmunuWithB[fIter->first]);
-      V->Add(WmunuJetsBVeto[fIter->first]);
-      V->Add(WmunuNoJetsBVeto[fIter->first]);
-      V->Add(WtaunuWithB[fIter->first]);
-      V->Add(WtaunuJetsBVeto[fIter->first]);
-      V->Add(WtaunuNoJetsBVeto[fIter->first]);
+      V = (TH1F*)Wenu_PTVnuWithB[fIter->first]->Clone();
+      V->Add(Wenu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wenu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuWithB[fIter->first]);
+      V->Add(Wmunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuWithB[fIter->first]);
+      V->Add(Wtaunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuNoJetsBVeto[fIter->first]);
       V->Add(DYeeM08to15[fIter->first]);
       V->Add(DYeeM15to40[fIter->first]);
       V->Add(DYmumuM08to15[fIter->first]);
       V->Add(DYmumuM15to40[fIter->first]);
       V->Add(DYtautauM08to15[fIter->first]);
       V->Add(DYtautauM15to40[fIter->first]);
-      V->Add(Z_mumu[fIter->first]);
-      V->Add(Z_tautau[fIter->first]);
-      V->Add(Z_ee[fIter->first]);
+      V->Add(Zmumu[fIter->first]);
+      V->Add(Ztautau[fIter->first]);
+      V->Add(Zee[fIter->first]);
       V->SetFillColor(kGreen-3);
       V->SetLineWidth(0);
       
@@ -711,24 +711,24 @@ void Plotting::makePlots(){
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
       
-      V = (TH1F*)WenuWithB[fIter->first]->Clone();
-      V->Add(WenuJetsBVeto[fIter->first]);
-      V->Add(WenuNoJetsBVeto[fIter->first]);
-      V->Add(WmunuWithB[fIter->first]);
-      V->Add(WmunuJetsBVeto[fIter->first]);
-      V->Add(WmunuNoJetsBVeto[fIter->first]);
-      V->Add(WtaunuWithB[fIter->first]);
-      V->Add(WtaunuJetsBVeto[fIter->first]);
-      V->Add(WtaunuNoJetsBVeto[fIter->first]);
+      V = (TH1F*)Wenu_PTVnuWithB[fIter->first]->Clone();
+      V->Add(Wenu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wenu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuWithB[fIter->first]);
+      V->Add(Wmunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuWithB[fIter->first]);
+      V->Add(Wtaunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuNoJetsBVeto[fIter->first]);
       V->Add(DYeeM08to15[fIter->first]);
       V->Add(DYeeM15to40[fIter->first]);
       V->Add(DYmumuM08to15[fIter->first]);
       V->Add(DYmumuM15to40[fIter->first]);
       V->Add(DYtautauM08to15[fIter->first]);
       V->Add(DYtautauM15to40[fIter->first]);
-      V->Add(Z_mumu[fIter->first]);
-      V->Add(Z_tautau[fIter->first]);
-      V->Add(Z_ee[fIter->first]);
+      V->Add(Zmumu[fIter->first]);
+      V->Add(Ztautau[fIter->first]);
+      V->Add(Zee[fIter->first]);
       V->SetFillColor(kGreen-3);
       V->SetLineWidth(0);
       
@@ -758,24 +758,24 @@ void Plotting::makePlots(){
       ttbar->SetLineWidth(0);
       ttbar->Scale(0.94); //change by hand the ttbar normalisation as the b-tagging scale factor is not applied
       
-      V = (TH1F*)WenuWithB[fIter->first]->Clone();
-      V->Add(WenuJetsBVeto[fIter->first]);
-      V->Add(WenuNoJetsBVeto[fIter->first]);
-      V->Add(WmunuWithB[fIter->first]);
-      V->Add(WmunuJetsBVeto[fIter->first]);
-      V->Add(WmunuNoJetsBVeto[fIter->first]);
-      V->Add(WtaunuWithB[fIter->first]);
-      V->Add(WtaunuJetsBVeto[fIter->first]);
-      V->Add(WtaunuNoJetsBVeto[fIter->first]);
+      V = (TH1F*)Wenu_PTVnuWithB[fIter->first]->Clone();
+      V->Add(Wenu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wenu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuWithB[fIter->first]);
+      V->Add(Wmunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuWithB[fIter->first]);
+      V->Add(Wtaunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuNoJetsBVeto[fIter->first]);
       V->Add(DYeeM08to15[fIter->first]);
       V->Add(DYeeM15to40[fIter->first]);
       V->Add(DYmumuM08to15[fIter->first]);
       V->Add(DYmumuM15to40[fIter->first]);
       V->Add(DYtautauM08to15[fIter->first]);
       V->Add(DYtautauM15to40[fIter->first]);
-      V->Add(Z_mumu[fIter->first]);
-      V->Add(Z_tautau[fIter->first]);
-      V->Add(Z_ee[fIter->first]);
+      V->Add(Zmumu[fIter->first]);
+      V->Add(Ztautau[fIter->first]);
+      V->Add(Zee[fIter->first]);
       V->SetFillColor(kGreen-3);
       V->SetLineWidth(0);
       

@@ -57,17 +57,17 @@ void main_ZPrimeAnalysis(int proof)
   chain_ttbar_lep->AddFile(path+"MC/mc_117050.ttbar_lep.root");
   chain_ttbar_lep->Process("ZPrimeAnalysis.C+","ttbar_lep");
 
-  TChain* chain_Z_ee = new TChain("mini");
-  chain_Z_ee->AddFile(path+"MC/mc_147770.Zee.root");
-  chain_Z_ee->Process("ZPrimeAnalysis.C+","Z_ee");
+  TChain* chain_Zee = new TChain("mini");
+  chain_Zee->AddFile(path+"MC/mc_147770.Zee.root");
+  chain_Zee->Process("ZPrimeAnalysis.C+","Zee");
 
-  TChain* chain_Z_mumu = new TChain("mini");
-  chain_Z_mumu->AddFile(path+"MC/mc_147771.Zmumu.root");
-  chain_Z_mumu->Process("ZPrimeAnalysis.C+","Z_mumu");
+  TChain* chain_Zmumu = new TChain("mini");
+  chain_Zmumu->AddFile(path+"MC/mc_147771.Zmumu.root");
+  chain_Zmumu->Process("ZPrimeAnalysis.C+","Zmumu");
 
-  TChain* chain_Z_tautau = new TChain("mini");
-  chain_Z_tautau->AddFile(path+"MC/mc_147772.Ztautau.root");
-  chain_Z_tautau->Process("ZPrimeAnalysis.C+","Z_tautau");
+  TChain* chain_Ztautau = new TChain("mini");
+  chain_Ztautau->AddFile(path+"MC/mc_147772.Ztautau.root");
+  chain_Ztautau->Process("ZPrimeAnalysis.C+","Ztautau");
 
   TChain* chain_ggH125_WW2lep = new TChain("mini");
   chain_ggH125_WW2lep->AddFile(path+"MC/mc_161005.ggH125_WW2lep.root");
@@ -77,41 +77,41 @@ void main_ZPrimeAnalysis(int proof)
   chain_VBFH125_WW2lep->AddFile(path+"MC/mc_161055.VBFH125_WW2lep.root");
   chain_VBFH125_WW2lep->Process("ZPrimeAnalysis.C+","VBFH125_WW2lep");
 
-  TChain* chain_WenuWithB = new TChain("mini");
-  chain_WenuWithB->AddFile(path+"MC/mc_167740.WenuWithB.root");
-  chain_WenuWithB->Process("ZPrimeAnalysis.C+","WenuWithB");
+  TChain* chain_Wenu_PTVnuWithB = new TChain("mini");
+  chain_Wenu_PTVnuWithB->AddFile(path+"MC/mc_167740.Wenu_PTVnuWithB.root");
+  chain_Wenu_PTVnuWithB->Process("ZPrimeAnalysis.C+","Wenu_PTVnuWithB");
 
-  TChain* chain_WenuJetsBVeto = new TChain("mini");
-  chain_WenuJetsBVeto->AddFile(path+"MC/mc_167741.WenuJetsBVeto.root");
-  chain_WenuJetsBVeto->Process("ZPrimeAnalysis.C+","WenuJetsBVeto");
+  TChain* chain_Wenu_PTVnuJetsBVeto = new TChain("mini");
+  chain_Wenu_PTVnuJetsBVeto->AddFile(path+"MC/mc_167741.Wenu_PTVnuJetsBVeto.root");
+  chain_Wenu_PTVnuJetsBVeto->Process("ZPrimeAnalysis.C+","Wenu_PTVnuJetsBVeto");
 
-  TChain* chain_WenuNoJetsBVeto = new TChain("mini");
-  chain_WenuNoJetsBVeto->AddFile(path+"MC/mc_167742.WenuNoJetsBVeto.root");
-  chain_WenuNoJetsBVeto->Process("ZPrimeAnalysis.C+","WenuNoJetsBVeto");
+  TChain* chain_Wenu_PTVnuNoJetsBVeto = new TChain("mini");
+  chain_Wenu_PTVnuNoJetsBVeto->AddFile(path+"MC/mc_167742.Wenu_PTVnuNoJetsBVeto.root");
+  chain_Wenu_PTVnuNoJetsBVeto->Process("ZPrimeAnalysis.C+","Wenu_PTVnuNoJetsBVeto");
 
-  TChain* chain_WmunuWithB = new TChain("mini");
-  chain_WmunuWithB->AddFile(path+"MC/mc_167743.WmunuWithB.root");
-  chain_WmunuWithB->Process("ZPrimeAnalysis.C+","WmunuWithB");
+  TChain* chain_Wmunu_PTVnuWithB = new TChain("mini");
+  chain_Wmunu_PTVnuWithB->AddFile(path+"MC/mc_167743.Wmunu_PTVnuWithB.root");
+  chain_Wmunu_PTVnuWithB->Process("ZPrimeAnalysis.C+","Wmunu_PTVnuWithB");
 
-  TChain* chain_WmunuJetsBVeto = new TChain("mini");
-  chain_WmunuJetsBVeto->AddFile(path+"MC/mc_167744.WmunuJetsBVeto.root");
-  chain_WmunuJetsBVeto->Process("ZPrimeAnalysis.C+","WmunuJetsBVeto");
+  TChain* chain_Wmunu_PTVnuJetsBVeto = new TChain("mini");
+  chain_Wmunu_PTVnuJetsBVeto->AddFile(path+"MC/mc_167744.Wmunu_PTVnuJetsBVeto.root");
+  chain_Wmunu_PTVnuJetsBVeto->Process("ZPrimeAnalysis.C+","Wmunu_PTVnuJetsBVeto");
 
-  TChain* chain_WmunuNoJetsBVeto = new TChain("mini");
-  chain_WmunuNoJetsBVeto->AddFile(path+"MC/mc_167745.WmunuNoJetsBVeto.root");
-  chain_WmunuNoJetsBVeto->Process("ZPrimeAnalysis.C+","WmunuNoJetsBVeto");
+  TChain* chain_Wmunu_PTVnuNoJetsBVeto = new TChain("mini");
+  chain_Wmunu_PTVnuNoJetsBVeto->AddFile(path+"MC/mc_167745.Wmunu_PTVnuNoJetsBVeto.root");
+  chain_Wmunu_PTVnuNoJetsBVeto->Process("ZPrimeAnalysis.C+","Wmunu_PTVnuNoJetsBVeto");
 
-  TChain* chain_WtaunuWithB = new TChain("mini");
-  chain_WtaunuWithB->AddFile(path+"MC/mc_167746.WtaunuWithB.root");
-  chain_WtaunuWithB->Process("ZPrimeAnalysis.C+","WtaunuWithB");
+  TChain* chain_Wtaunu_PTVnuWithB = new TChain("mini");
+  chain_Wtaunu_PTVnuWithB->AddFile(path+"MC/mc_167746.Wtaunu_PTVnuWithB.root");
+  chain_Wtaunu_PTVnuWithB->Process("ZPrimeAnalysis.C+","Wtaunu_PTVnuWithB");
 
-  TChain* chain_WtaunuJetsBVeto = new TChain("mini");
-  chain_WtaunuJetsBVeto->AddFile(path+"MC/mc_167747.WtaunuJetsBVeto.root");
-  chain_WtaunuJetsBVeto->Process("ZPrimeAnalysis.C+","WtaunuJetsBVeto");
+  TChain* chain_Wtaunu_PTVnuJetsBVeto = new TChain("mini");
+  chain_Wtaunu_PTVnuJetsBVeto->AddFile(path+"MC/mc_167747.Wtaunu_PTVnuJetsBVeto.root");
+  chain_Wtaunu_PTVnuJetsBVeto->Process("ZPrimeAnalysis.C+","Wtaunu_PTVnuJetsBVeto");
 
-  TChain* chain_WtaunuNoJetsBVeto = new TChain("mini");
-  chain_WtaunuNoJetsBVeto->AddFile(path+"MC/mc_167748.WtaunuNoJetsBVeto.root");
-  chain_WtaunuNoJetsBVeto->Process("ZPrimeAnalysis.C+","WtaunuNoJetsBVeto");
+  TChain* chain_Wtaunu_PTVnuNoJetsBVeto = new TChain("mini");
+  chain_Wtaunu_PTVnuNoJetsBVeto->AddFile(path+"MC/mc_167748.Wtaunu_PTVnuNoJetsBVeto.root");
+  chain_Wtaunu_PTVnuNoJetsBVeto->Process("ZPrimeAnalysis.C+","Wtaunu_PTVnuNoJetsBVeto");
 
   TChain* chain_DYeeM08to15 = new TChain("mini");
   chain_DYeeM08to15->AddFile(path+"MC/mc_173041.DYeeM08to15.root");
@@ -157,20 +157,20 @@ void main_ZPrimeAnalysis(int proof)
     chain_ZPrimeAnalysis1000->SetProof();
     chain_ttbar_had->SetProof();
     chain_ttbar_lep->SetProof();
-    chain_Z_ee->SetProof();
-    chain_Z_mumu->SetProof();
-    chain_Z_tautau->SetProof();
+    chain_Zee->SetProof();
+    chain_Zmumu->SetProof();
+    chain_Ztautau->SetProof();
     chain_ggH125_WW2lep->SetProof();
     chain_VBFH125_WW2lep->SetProof();
-    chain_WenuWithB->SetProof();
-    chain_WenuJetsBVeto->SetProof();
-    chain_WenuNoJetsBVeto->SetProof();
-    chain_WmunuWithB->SetProof();
-    chain_WmunuJetsBVeto->SetProof();
-    chain_WmunuNoJetsBVeto->SetProof();
-    chain_WtaunuWithB->SetProof();
-    chain_WtaunuJetsBVeto->SetProof();
-    chain_WtaunuNoJetsBVeto->SetProof();
+    chain_Wenu_PTVnuWithB->SetProof();
+    chain_Wenu_PTVnuJetsBVeto->SetProof();
+    chain_Wenu_PTVnuNoJetsBVeto->SetProof();
+    chain_Wmunu_PTVnuWithB->SetProof();
+    chain_Wmunu_PTVnuJetsBVeto->SetProof();
+    chain_Wmunu_PTVnuNoJetsBVeto->SetProof();
+    chain_Wtaunu_PTVnuWithB->SetProof();
+    chain_Wtaunu_PTVnuJetsBVeto->SetProof();
+    chain_Wtaunu_PTVnuNoJetsBVeto->SetProof();
     chain_DYeeM08to15->SetProof();
     chain_DYeeM15to40->SetProof();
     chain_DYmumuM08to15->SetProof();

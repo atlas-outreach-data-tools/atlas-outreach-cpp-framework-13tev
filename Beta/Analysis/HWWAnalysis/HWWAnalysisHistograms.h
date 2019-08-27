@@ -24,7 +24,7 @@ void HWWAnalysis::define_histograms()
   histF_dPhi_LL      = new TH1F("histF_dPhi_LL",   "dPhi_LL Dilepton System; #Delta#phi (ll);Events", 20, 0, 3.2);
   histF_dPhiLLmet    = new TH1F("histF_dPhiLLmet", "dPhiLLmet Dilepton System; #Delta#phi (ll,E_{T,Miss});Events", 30, 0, 3.2);
   histF_etmiss       = new TH1F("histF_etmiss",    "Missing Transverse Momentum;E_{T,Miss} [GeV];Events", 20, 0,200);
-  histF_mt           = new TH1F("histF_mt",        "Dilepton System Transverse Mass; m_{T};Events", 15, 50, 200);
+  histF_mt           = new TH1F("histF_mt",        "Dilepton System Transverse Mass; m_{T} [GeV];Events", 15, 50, 200);
   histF_n_jets       = new TH1F("histF_n_jets",    "Number of Jets;N_{jets};Events", 5, -0.5, 4.5);
   histF_n_bjets      = new TH1F("histF_n_bjets",   "Number of b-Jets;N_{b-jets};Events", 3, -0.5, 2.5);
 
