@@ -62,7 +62,7 @@ int main(int argc, char *argv[]){
   
   Plotting* m = new Plotting();
   
-  m->SetLumi(8837); // luminosity set by hand to 10fb-1
+  m->SetLumi(10000); // luminosity set by hand to 10fb-1
   m->SetOption(argv[1]);
   m->SetInputLocation(argv[2]);
   
@@ -368,22 +368,22 @@ void Plotting::makePlots(){
   std::map<std::string,TH1F*> ttbar_lep;   
   
   //Z+jets
-  std::map<std::string,TH1F*> Z_ee;
-  std::map<std::string,TH1F*> Z_mumu;
-  std::map<std::string,TH1F*> Z_tautau;
+  std::map<std::string,TH1F*> Zee;
+  std::map<std::string,TH1F*> Zmumu;
+  std::map<std::string,TH1F*> Ztautau;
   
   // diboson
-  std::map<std::string,TH1F*> WWlvlv;
-  std::map<std::string,TH1F*> WWlvqq;
+  std::map<std::string,TH1F*> ZqqZll;
+  std::map<std::string,TH1F*> WqqZll;
 
-  std::map<std::string,TH1F*> ZZllll;
-  std::map<std::string,TH1F*> ZZvvll;
-  std::map<std::string,TH1F*> ZZqqll;
+  std::map<std::string,TH1F*> WpqqWmlv;
+  std::map<std::string,TH1F*> WplvWmqq;
+  std::map<std::string,TH1F*> WlvZqq;
   
-  std::map<std::string,TH1F*> WZlvll;
-  std::map<std::string,TH1F*> WZlvvv;
-  std::map<std::string,TH1F*> WZqqll;
-  std::map<std::string,TH1F*> WZlvqq;
+  std::map<std::string,TH1F*> llll;
+  std::map<std::string,TH1F*> lllv;
+  std::map<std::string,TH1F*> llvv;
+  std::map<std::string,TH1F*> lvvv;
 
   
   //W+jets
@@ -447,15 +447,15 @@ void Plotting::makePlots(){
     
     if(option.find("WBosonAnalysis") != option.npos){
       
-      diboson = (TH1F*)WWlvlv[fIter->first]->Clone();
-      diboson->Add(WWlvqq[fIter->first]);
-      diboson->Add(WZlvll[fIter->first]);
-      diboson->Add(WZlvvv[fIter->first]);
-      diboson->Add(WZqqll[fIter->first]);
-      diboson->Add(WZlvqq[fIter->first]);
-      diboson->Add(ZZqqll[fIter->first]); 
-      diboson->Add(ZZllll[fIter->first]);
-      diboson->Add(ZZvvll[fIter->first]);
+      diboson = (TH1F*)ZqqZll[fIter->first]->Clone();
+      diboson->Add(WqqZll[fIter->first]);
+      diboson->Add(llll[fIter->first]);
+      diboson->Add(lllv[fIter->first]);
+      diboson->Add(llvv[fIter->first]);
+      diboson->Add(lvvv[fIter->first]);
+      diboson->Add(WlvZqq[fIter->first]); 
+      diboson->Add(WpqqWmlv[fIter->first]);
+      diboson->Add(WplvWmqq[fIter->first]);
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
       
@@ -468,9 +468,9 @@ void Plotting::makePlots(){
       W->SetFillColor(kGreen-3);
       W->SetLineWidth(0);
       
-      Z = (TH1F*)Z_mumu[fIter->first]->Clone();
-      Z->Add(Z_tautau[fIter->first]);
-      Z->Add(Z_ee[fIter->first]);
+      Z = (TH1F*)Zmumu[fIter->first]->Clone();
+      Z->Add(Ztautau[fIter->first]);
+      Z->Add(Zee[fIter->first]);
       Z->SetFillColor(kPink+9);
       Z->SetLineWidth(0);
       
@@ -491,15 +491,15 @@ void Plotting::makePlots(){
     // merge for Z _Analysis
     if(option.find("ZBosonAnalysis") != option.npos){
   	    
-      diboson = (TH1F*)WWlvlv[fIter->first]->Clone();
-      diboson->Add(WWlvqq[fIter->first]);
-      diboson->Add(WZlvll[fIter->first]);
-      diboson->Add(WZlvvv[fIter->first]);
-      diboson->Add(WZqqll[fIter->first]);
-      diboson->Add(WZlvqq[fIter->first]);
-      diboson->Add(ZZqqll[fIter->first]); 
-      diboson->Add(ZZllll[fIter->first]);
-      diboson->Add(ZZvvll[fIter->first]);
+      diboson = (TH1F*)ZqqZll[fIter->first]->Clone();
+      diboson->Add(WqqZll[fIter->first]);
+      diboson->Add(llll[fIter->first]);
+      diboson->Add(lllv[fIter->first]);
+      diboson->Add(llvv[fIter->first]);
+      diboson->Add(lvvv[fIter->first]);
+      diboson->Add(WlvZqq[fIter->first]); 
+      diboson->Add(WpqqWmlv[fIter->first]);
+      diboson->Add(WplvWmqq[fIter->first]);
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
       
@@ -512,9 +512,9 @@ void Plotting::makePlots(){
       W->SetFillColor(kGreen-3);
       W->SetLineWidth(0);
     
-      Z = (TH1F*)Z_mumu[fIter->first]->Clone();
-      Z->Add(Z_tautau[fIter->first]);
-      Z->Add(Z_ee[fIter->first]);
+      Z = (TH1F*)Zmumu[fIter->first]->Clone();
+      Z->Add(Ztautau[fIter->first]);
+      Z->Add(Zee[fIter->first]);
       Z->SetFillColor(kPink+9);
       Z->SetLineWidth(0);
 
@@ -541,9 +541,9 @@ void Plotting::makePlots(){
       V->Add(Wminusenu[fIter->first]);
       V->Add(Wminusmunu[fIter->first]);
       V->Add(Wminustaunu[fIter->first]);
-      V->Add(Z_tautau[fIter->first]);
-      V->Add(Z_ee[fIter->first]);
-      V->Add(Z_mumu[fIter->first]);
+      V->Add(Ztautau[fIter->first]);
+      V->Add(Zee[fIter->first]);
+      V->Add(Zmumu[fIter->first]);
       V->SetFillColor(kGreen-3);
       V->SetLineWidth(0);
       
@@ -554,19 +554,19 @@ void Plotting::makePlots(){
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
       
-      diboson = (TH1F*)WWlvlv[fIter->first]->Clone();
-      diboson->Add(WWlvqq[fIter->first]);
-      diboson->Add(WZlvll[fIter->first]);
-      diboson->Add(WZlvvv[fIter->first]);
-      diboson->Add(WZqqll[fIter->first]);
-      diboson->Add(WZlvqq[fIter->first]);
+      diboson = (TH1F*)ZqqZll[fIter->first]->Clone();
+      diboson->Add(WqqZll[fIter->first]);
+      diboson->Add(llll[fIter->first]);
+      diboson->Add(lllv[fIter->first]);
+      diboson->Add(llvv[fIter->first]);
+      diboson->Add(lvvv[fIter->first]);
       diboson->SetFillColor(kRed-7);
       diboson->SetLineWidth(0);
   
 
-      Z_Z = (TH1F*)ZZllll[fIter->first]->Clone();
-      Z_Z->Add(ZZqqll[fIter->first]); 
-      Z_Z->Add(ZZvvll[fIter->first]);
+      Z_Z = (TH1F*)WpqqWmlv[fIter->first]->Clone();
+      Z_Z->Add(WlvZqq[fIter->first]); 
+      Z_Z->Add(WplvWmqq[fIter->first]);
       Z_Z->SetFillColor(kBlue-6);
       Z_Z->SetLineWidth(0);
 
@@ -584,9 +584,9 @@ void Plotting::makePlots(){
       V->Add(Wminusenu[fIter->first]);
       V->Add(Wminusmunu[fIter->first]);
       V->Add(Wminustaunu[fIter->first]);
-      V->Add(Z_tautau[fIter->first]);
-      V->Add(Z_ee[fIter->first]);
-      V->Add(Z_mumu[fIter->first]);
+      V->Add(Ztautau[fIter->first]);
+      V->Add(Zee[fIter->first]);
+      V->Add(Zmumu[fIter->first]);
       V->SetFillColor(kGreen-3);
       V->SetLineWidth(0);
       
@@ -601,18 +601,18 @@ void Plotting::makePlots(){
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
 
-      diboson = (TH1F*)WWlvlv[fIter->first]->Clone();
-      diboson->Add(WWlvqq[fIter->first]);
-      diboson->Add(ZZqqll[fIter->first]); 
-      diboson->Add(ZZllll[fIter->first]);
-      diboson->Add(ZZvvll[fIter->first]);   
+      diboson = (TH1F*)ZqqZll[fIter->first]->Clone();
+      diboson->Add(WqqZll[fIter->first]);
+      diboson->Add(WlvZqq[fIter->first]); 
+      diboson->Add(WpqqWmlv[fIter->first]);
+      diboson->Add(WplvWmqq[fIter->first]);   
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
       
-      W_Z = (TH1F*)WZlvll[fIter->first]->Clone();
-      W_Z->Add(WZlvvv[fIter->first]);
-      W_Z->Add(WZqqll[fIter->first]);
-      W_Z->Add(WZlvqq[fIter->first]);  
+      W_Z = (TH1F*)llll[fIter->first]->Clone();
+      W_Z->Add(lllv[fIter->first]);
+      W_Z->Add(llvv[fIter->first]);
+      W_Z->Add(lvvv[fIter->first]);  
       W_Z->SetFillColor(kRed-7);
       W_Z->SetLineWidth(0);
     }
@@ -627,15 +627,15 @@ void Plotting::makePlots(){
       ttbar->SetLineWidth(0);
 //      ttbar->Scale(0.94); //change by hand the ttbar normalisation as the b-tagging scale factor is not applied
       
-      diboson = (TH1F*)WWlvlv[fIter->first]->Clone();
-      diboson->Add(WWlvqq[fIter->first]);
-      diboson->Add(WZlvll[fIter->first]);
-      diboson->Add(WZlvvv[fIter->first]);
-      diboson->Add(WZqqll[fIter->first]);
-      diboson->Add(WZlvqq[fIter->first]);
-      diboson->Add(ZZqqll[fIter->first]); 
-      diboson->Add(ZZllll[fIter->first]);
-      diboson->Add(ZZvvll[fIter->first]);
+      diboson = (TH1F*)ZqqZll[fIter->first]->Clone();
+      diboson->Add(WqqZll[fIter->first]);
+      diboson->Add(llll[fIter->first]);
+      diboson->Add(lllv[fIter->first]);
+      diboson->Add(llvv[fIter->first]);
+      diboson->Add(lvvv[fIter->first]);
+      diboson->Add(WlvZqq[fIter->first]); 
+      diboson->Add(WpqqWmlv[fIter->first]);
+      diboson->Add(WplvWmqq[fIter->first]);
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
       
@@ -652,9 +652,9 @@ void Plotting::makePlots(){
       V->Add(Wminusenu[fIter->first]);
       V->Add(Wminusmunu[fIter->first]);
       V->Add(Wminustaunu[fIter->first]);
-      V->Add(Z_tautau[fIter->first]);
-      V->Add(Z_ee[fIter->first]);
-      V->Add(Z_mumu[fIter->first]);
+      V->Add(Ztautau[fIter->first]);
+      V->Add(Zee[fIter->first]);
+      V->Add(Zmumu[fIter->first]);
       V->SetFillColor(kGreen-3);
       V->SetLineWidth(0);
      
@@ -668,26 +668,26 @@ void Plotting::makePlots(){
       V->Add(Wminusenu[fIter->first]);
       V->Add(Wminusmunu[fIter->first]);
       V->Add(Wminustaunu[fIter->first]);
-      V->Add(Z_tautau[fIter->first]);
-      V->Add(Z_ee[fIter->first]);
-      V->Add(Z_mumu[fIter->first]);
+      V->Add(Ztautau[fIter->first]);
+      V->Add(Zee[fIter->first]);
+      V->Add(Zmumu[fIter->first]);
       V->Add(single_top_schan[fIter->first]);
       V->Add(single_antitop_schan[fIter->first]);
       V->Add(single_top_tchan[fIter->first]);
       V->Add(single_antitop_tchan[fIter->first]);
-      V->Add(WWlvlv[fIter->first]);
-      V->Add(WWlvqq[fIter->first]);
-      V->Add(WZlvll[fIter->first]);
-      V->Add(WZlvvv[fIter->first]);
-      V->Add(WZqqll[fIter->first]);
-      V->Add(WZlvqq[fIter->first]);
+      V->Add(ZqqZll[fIter->first]);
+      V->Add(WqqZll[fIter->first]);
+      V->Add(llll[fIter->first]);
+      V->Add(lllv[fIter->first]);
+      V->Add(llvv[fIter->first]);
+      V->Add(lvvv[fIter->first]);
       V->Add(ttbar_lep[fIter->first]);
       V->SetFillColor(kBlue-6);
       V->SetLineWidth(0);
 
-      Z_Z = (TH1F*)ZZllll[fIter->first]->Clone();
-      Z_Z->Add(ZZqqll[fIter->first]); 
-      Z_Z->Add(ZZvvll[fIter->first]);
+      Z_Z = (TH1F*)WpqqWmlv[fIter->first]->Clone();
+      Z_Z->Add(WlvZqq[fIter->first]); 
+      Z_Z->Add(WplvWmqq[fIter->first]);
       Z_Z->SetFillColor(kAzure+8);
       Z_Z->SetLineWidth(0);
 
@@ -727,24 +727,24 @@ void Plotting::makePlots(){
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
       
-      V = (TH1F*)WenuWithB[fIter->first]->Clone();
-      V->Add(WenuJetsBVeto[fIter->first]);
-      V->Add(WenuNoJetsBVeto[fIter->first]);
-      V->Add(WmunuWithB[fIter->first]);
-      V->Add(WmunuJetsBVeto[fIter->first]);
-      V->Add(WmunuNoJetsBVeto[fIter->first]);
-      V->Add(WtaunuWithB[fIter->first]);
-      V->Add(WtaunuJetsBVeto[fIter->first]);
-      V->Add(WtaunuNoJetsBVeto[fIter->first]);
+      V = (TH1F*)Wenu_PTVnuWithB[fIter->first]->Clone();
+      V->Add(Wenu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wenu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuWithB[fIter->first]);
+      V->Add(Wmunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuWithB[fIter->first]);
+      V->Add(Wtaunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuNoJetsBVeto[fIter->first]);
       V->Add(DYeeM08to15[fIter->first]);
       V->Add(DYeeM15to40[fIter->first]);
       V->Add(DYmumuM08to15[fIter->first]);
       V->Add(DYmumuM15to40[fIter->first]);
       V->Add(DYtautauM08to15[fIter->first]);
       V->Add(DYtautauM15to40[fIter->first]);
-      V->Add(Z_mumu[fIter->first]);
-      V->Add(Z_tautau[fIter->first]);
-      V->Add(Z_ee[fIter->first]);
+      V->Add(Zmumu[fIter->first]);
+      V->Add(Ztautau[fIter->first]);
+      V->Add(Zee[fIter->first]);
       V->SetFillColor(kGreen-3);
       V->SetLineWidth(0);
       
@@ -774,24 +774,24 @@ void Plotting::makePlots(){
       ttbar->SetLineWidth(0);
       ttbar->Scale(0.94); //change by hand the ttbar normalisation as the b-tagging scale factor is not applied
       
-      V = (TH1F*)WenuWithB[fIter->first]->Clone();
-      V->Add(WenuJetsBVeto[fIter->first]);
-      V->Add(WenuNoJetsBVeto[fIter->first]);
-      V->Add(WmunuWithB[fIter->first]);
-      V->Add(WmunuJetsBVeto[fIter->first]);
-      V->Add(WmunuNoJetsBVeto[fIter->first]);
-      V->Add(WtaunuWithB[fIter->first]);
-      V->Add(WtaunuJetsBVeto[fIter->first]);
-      V->Add(WtaunuNoJetsBVeto[fIter->first]);
+      V = (TH1F*)Wenu_PTVnuWithB[fIter->first]->Clone();
+      V->Add(Wenu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wenu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuWithB[fIter->first]);
+      V->Add(Wmunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wmunu_PTVnuNoJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuWithB[fIter->first]);
+      V->Add(Wtaunu_PTVnuJetsBVeto[fIter->first]);
+      V->Add(Wtaunu_PTVnuNoJetsBVeto[fIter->first]);
       V->Add(DYeeM08to15[fIter->first]);
       V->Add(DYeeM15to40[fIter->first]);
       V->Add(DYmumuM08to15[fIter->first]);
       V->Add(DYmumuM15to40[fIter->first]);
       V->Add(DYtautauM08to15[fIter->first]);
       V->Add(DYtautauM15to40[fIter->first]);
-      V->Add(Z_mumu[fIter->first]);
-      V->Add(Z_tautau[fIter->first]);
-      V->Add(Z_ee[fIter->first]);
+      V->Add(Zmumu[fIter->first]);
+      V->Add(Ztautau[fIter->first]);
+      V->Add(Zee[fIter->first]);
       V->SetFillColor(kGreen-3);
       V->SetLineWidth(0);
       

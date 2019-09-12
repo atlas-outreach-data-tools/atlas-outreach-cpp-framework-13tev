@@ -34,21 +34,21 @@ void main_ZBosonAnalysis(int proof = 0, int option= 1)
   if (option==2)   {
 
   // Z+jets inclusive
-  TChain* chain_Z_ee = new TChain("mini");
-  chain_Z_ee->AddFile(path+"MC/mc15_13TeV.361106.PwPy8EG_AZNLOCTEQ6L1_Zee.2lep_raw.root");
-  chain_Z_ee->Process("ZBosonAnalysis.C+","Z_ee");
+  TChain* chain_Zee = new TChain("mini");
+  chain_Zee->AddFile(path+"MC/mc15_13TeV.361106.PwPy8EG_AZNLOCTEQ6L1_Zee.2lep_raw.root");
+  chain_Zee->Process("ZBosonAnalysis.C+","Zee");
   }
 
   if (option==3)   {
-  TChain* chain_Z_mumu = new TChain("mini");
-  chain_Z_mumu->AddFile(path+"MC/mc15_13TeV.361107.PwPy8EG_AZNLOCTEQ6L1_Zmumu.2lep_raw.root");
-  chain_Z_mumu->Process("ZBosonAnalysis.C+","Z_mumu");
+  TChain* chain_Zmumu = new TChain("mini");
+  chain_Zmumu->AddFile(path+"MC/mc15_13TeV.361107.PwPy8EG_AZNLOCTEQ6L1_Zmumu.2lep_raw.root");
+  chain_Zmumu->Process("ZBosonAnalysis.C+","Zmumu");
   }
 
   if (option==4)   {
-  TChain* chain_Z_tautau = new TChain("mini");
-  chain_Z_tautau->AddFile(path+"MC/mc15_13TeV.361108.PwPy8EG_AZNLOCTEQ6L1_Ztautau.2lep_raw.root");
-  chain_Z_tautau->Process("ZBosonAnalysis.C+","Z_tautau");
+  TChain* chain_Ztautau = new TChain("mini");
+  chain_Ztautau->AddFile(path+"MC/mc15_13TeV.361108.PwPy8EG_AZNLOCTEQ6L1_Ztautau.2lep_raw.root");
+  chain_Ztautau->Process("ZBosonAnalysis.C+","Ztautau");
   }
 
   if (option==5)   {

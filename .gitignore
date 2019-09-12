@@ -1,8 +1,8 @@
-*_C.d
-*_C.so
-*_C_ACLiC_dict_rdict.pcm
-**/Output_*/*
-**.out
-**.o
-**.png
-**plot
+*.d
+*.so
+*.pcm
+*.o
+*.out
+Output_*/
+histograms*/
+plot

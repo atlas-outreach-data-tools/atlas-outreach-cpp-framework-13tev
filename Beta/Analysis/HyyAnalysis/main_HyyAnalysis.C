@@ -13,17 +13,18 @@ void main_HyyAnalysis(int proof = 0, int option= 0)
   //TString path = "/home/student/cpp-13tev/datasets-13-tev/Input/GammaGamma/";
   
   /* The URL to the ATLAS Open Data website repository */
-  TString path = "http://opendata.atlas.cern/release/samples/2019/GamGam/";
+  //TString path = "http://opendata.atlas.cern/release/samples/2019/GamGam/";
+  TString path = "/eos/user/t/thsteven/OpenData/opentuplepostprocess/renamed/GamGam/";
 
   //////////////////////////////////////////////////////////////////////////////////////////
   if (option==1 || option==0)
   {
   //data
   TChain* chain_data = new TChain("mini");
-  chain_data->AddFile(path+"Data/dataA_yy.root");
-  chain_data->AddFile(path+"Data/dataB_yy.root");
-  chain_data->AddFile(path+"Data/dataC_yy.root");
-  chain_data->AddFile(path+"Data/data302737-303338_yy.root");
+  chain_data->AddFile(path+"Data/data_A.yy.root");
+  chain_data->AddFile(path+"Data/data_B.yy.root");
+  chain_data->AddFile(path+"Data/data_C.yy.root");
+  chain_data->AddFile(path+"Data/data_D.yy.root");
   chain_data->Process("HyyAnalysis.C+","data");
   }
 
@@ -31,7 +32,7 @@ void main_HyyAnalysis(int proof = 0, int option= 0)
   //////////////////////  MC samples
   if (option==2 || option==0)   {
   TChain* chain_ggH = new TChain("mini");
-  chain_ggH->AddFile(path+"MC/mc15_13TeV.343981.PwPy8EG_NNLOPS_nnlo_30_ggH125_gamgam.gamgam_raw.root");
+  chain_ggH->AddFile(path+"MC/mc_343981.ggH125_gamgam.gamgam.root");
   chain_ggH->Process("HyyAnalysis.C+","ggH125_gamgam");
 
   // need to add other production modes
