@@ -61,6 +61,7 @@ class Plotting{
   void SetInputLocation(string loc);
 
 
+
  private:
   void Disclaimer();
   void getHistoSettings();
