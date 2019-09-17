@@ -610,7 +610,7 @@ void Plotting::makePlots(){
       stop->SetLineWidth(0);
 
       diboson = (TH1F*)WqqZll[fIter->first]->Clone();
-      diboson->Add(WpqqWmlv[fIter->first]->Clone();
+      diboson->Add(WpqqWmlv[fIter->first]);
       diboson->Add(WlvZqq[fIter->first]);
       diboson->Add(WplvWmqq[fIter->first]);
       diboson->Add(lllv[fIter->first]);
@@ -659,7 +659,7 @@ void Plotting::makePlots(){
       stop->SetLineWidth(0);
 
       diboson = (TH1F*)ZqqZll[fIter->first]->Clone();
-      diboson->Add(llll[fIter->first]->Clone();
+      diboson->Add(llll[fIter->first]);
       diboson->Add(llvv[fIter->first]);
       diboson->Add(WpqqWmlv[fIter->first]);
       diboson->Add(WplvWmqq[fIter->first]);   
