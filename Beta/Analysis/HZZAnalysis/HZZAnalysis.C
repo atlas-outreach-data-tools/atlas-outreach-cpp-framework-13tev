@@ -146,7 +146,7 @@ Bool_t HZZAnalysis::Process(Long64_t entry)
 		    {
 		      
 		      
-		      int sum_types  = lep_type->at(goodlep1_index) + lep_type->at(goodlep1_index) + lep_type->at(goodlep3_index) + lep_type->at(goodlep4_index) ;
+		      int sum_types  = lep_type->at(goodlep1_index) + lep_type->at(goodlep2_index) + lep_type->at(goodlep3_index) + lep_type->at(goodlep4_index) ;
 		      
 		      // type e=11, mu=13
 		      // begin case e+e-e+e- or mu+mu-mu+mu-
