@@ -1,11 +1,13 @@
- -> remove photon / fatjet / tau reading from ntuples in analysis.h where it is not needed
+-> remove photon / fatjet / tau reading from ntuples in analysis.h where it is not needed
 
- -> adapt running script adding PROOF
+-> add do/zo cuts on leptons
 
- -> re-check all plots axis
+-> adapt running script adding PROOF
 
- -> add 'Event / bin' in all plots
+-> re-check all plots axis
 
- -> merge 2 Plotting codes
+-> add 'Event / bin' in all plots
 
- -> add protection because leptons are not pT-ordered
+-> merge 2 Plotting codes
+
+-> change all plotting to diboson Sherpa
