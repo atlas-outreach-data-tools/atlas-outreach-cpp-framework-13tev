@@ -1,5 +1,5 @@
 ## small script to run the analysis
-analysis="main_WBosonAnalysis"
+analysis="main_SingleTopAnalysis"
 
 ##OPTION
 echo Which option should I run? 

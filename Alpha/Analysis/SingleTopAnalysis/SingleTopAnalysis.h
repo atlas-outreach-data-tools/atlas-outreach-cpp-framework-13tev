@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
-#ifndef TTbarAnalysis_h
-#define TTbarAnalysis_h
+#ifndef SingleTopAnalysis_h
+#define SingleTopAnalysis_h
 
 #include "TROOT.h"
 #include "TChain.h"
@@ -10,53 +10,44 @@
 // Headers needed by this particular selector
 #include "vector"
 
-class TTbarAnalysis : public TSelector {
+class SingleTopAnalysis : public TSelector {
   public :
   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
 
   //////////////////////////////////////////////////////////
   // histograms
 
-  // Global variables histograms
-  TH1F *hist_etmiss       = 0;
-  TH1F *hist_mtw          = 0;
-  TH1F *hist_syst_etmiss  = 0;
-  TH1F *hist_syst_mtw     = 0;
-  TH1F *hist_Topmass      = 0;
-  TH1F *hist_Wmass      = 0;
+  // Global histograms
+  TH1F *hist_etmiss   = 0;
+  TH1F *hist_mtw      = 0;
+  TH1F *hist_deltaeta = 0;
+  TH1F *hist_HT       = 0;
+  TH1F *hist_Mlb    = 0;
 
 
   // Leading Lepton histograms
-  TH1F *hist_leadleptpt      = 0;
-  TH1F *hist_syst_leadleptpt = 0;
-
+  TH1F *hist_leadleptpt   = 0;
   TH1F *hist_leadlepteta  = 0;
   TH1F *hist_leadleptE    = 0;
   TH1F *hist_leadleptphi  = 0;
   TH1F *hist_leadleptch   = 0;
   TH1F *hist_leadleptID   = 0;
-  TH1F *hist_leadlept_ptc = 0;
+  TH1F *hist_leadlept_ptc  = 0;
   TH1F *hist_leadleptetc  = 0;
   TH1F *hist_leadlepz0    = 0;
   TH1F *hist_leadlepd0    = 0;
 
-  // Jet variables histograms
-  TH1F *hist_n_jets         = 0;
-  TH1F *hist_leadjet_pt     = 0;
-  TH1F *hist_syst_leadjet_pt= 0;
+  // Jet variables
+  TH1F *hist_n_jets       = 0;
+  TH1F *hist_leadjet_pt       = 0;
+  TH1F *hist_leadjet_eta      = 0;
 
-
-  TH1F *hist_leadjet_eta    = 0;
   TH1F *hist_n_bjets        = 0;
   TH1F *hist_leadbjet_pt    = 0;
   TH1F *hist_leadbjet_eta   = 0;
 
 
-
-
   //////////////////////////////////////////////////////////
-  // Declaration of leaf types
- 
    Int_t           runNumber;
    Int_t           eventNumber;
    Int_t           channelNumber;
@@ -84,7 +75,7 @@ class TTbarAnalysis : public TSelector {
    vector<float>   *lep_phi;
    vector<float>   *lep_E;
    vector<float>   *lep_z0;
-   vector<int>   *lep_charge;
+   vector<int>     *lep_charge;
    vector<unsigned int> *lep_type;
    vector<bool>    *lep_isTightID;
    vector<float>   *lep_ptcone30;
@@ -156,9 +147,8 @@ class TTbarAnalysis : public TSelector {
    TBranch        *b_met_et_syst;   //!
    TBranch        *b_jet_pt_syst;   //!
 
-
-  TTbarAnalysis(TTree * =0) : fChain(0) { }
-  virtual ~TTbarAnalysis() { }
+  SingleTopAnalysis(TTree * =0) : fChain(0) { }
+  virtual ~SingleTopAnalysis() { }
   virtual Int_t   Version() const { return 2; }
   virtual void    Begin(TTree *tree);
   virtual void    SlaveBegin(TTree *tree);
@@ -170,11 +160,9 @@ class TTbarAnalysis : public TSelector {
   virtual void    SetOption(const char *option) { fOption = option; }
   virtual void    SetObject(TObject *obj) { fObject = obj; }
   virtual void    SetInputList(TList *input) { fInput = input; }
-
   virtual void    FillHistogramsGlobal( double m, float w , TString s);
   virtual void    FillHistogramsLeadlept( double m, float w , TString s);
   virtual void    FillHistogramsLeadJet( double m, float w , TString s);
-  virtual void    FillHistogramsTTbar( double m, float w , TString s);
 
   // Get Output List t osave our histograms in the output file
   virtual TList  *GetOutputList() const { return fOutput; }
@@ -187,23 +175,21 @@ class TTbarAnalysis : public TSelector {
 
   virtual void    SlaveTerminate();
   virtual void    Terminate();
-
+  
 
   int nEvents;
 
 
-
-
-  ClassDef(TTbarAnalysis,0);
+  ClassDef(SingleTopAnalysis,0);
 };
 
 #endif
 
-#ifdef TTbarAnalysis_cxx
-void TTbarAnalysis::Init(TTree *tree)
+#ifdef SingleTopAnalysis_cxx
+void SingleTopAnalysis::Init(TTree *tree)
 {
-
-  lep_truthMatched = 0;
+ 
+ lep_truthMatched = 0;
    lep_trigMatched = 0;
    lep_pt = 0;
    lep_eta = 0;
@@ -233,7 +219,6 @@ void TTbarAnalysis::Init(TTree *tree)
   if (!tree) return;
   fChain = tree;
   fChain->SetMakeClass(1);
-
 
    fChain->SetBranchAddress("runNumber", &runNumber, &b_runNumber);
    fChain->SetBranchAddress("eventNumber", &eventNumber, &b_eventNumber);
@@ -284,12 +269,9 @@ void TTbarAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("met_et_syst", &met_et_syst, &b_met_et_syst);
    fChain->SetBranchAddress("jet_pt_syst", &jet_pt_syst, &b_jet_pt_syst);
 
-
- 
-
 }
 
-Bool_t TTbarAnalysis::Notify()
+Bool_t SingleTopAnalysis::Notify()
 {
   // The Notify() function is called when a new file is opened. This
   // can be either for a new TTree in a TChain or when when a new TTree
@@ -300,4 +282,4 @@ Bool_t TTbarAnalysis::Notify()
   return kTRUE;
 }
 
-#endif // #ifdef TTbarAnalysis_cxx
+#endif // #ifdef HWSingleTopAnalysis_cxx

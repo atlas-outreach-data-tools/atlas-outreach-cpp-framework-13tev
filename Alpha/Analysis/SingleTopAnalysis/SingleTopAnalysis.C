@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////////////////
-//// WBosonAnalysis code
+//// SingleTopAnalysis code
 //// Author: ATLAS Collaboration (2019)
 ////
 ////
@@ -8,10 +8,10 @@
 //// Under no circumstances does it qualify to reproduce actual ATLAS analysis results or produce publishable results!
 /////////////////////////////////////////////////////////////
 
-#define WBosonAnalysis_cxx
+#define SingleTopAnalysis_cxx
 
-#include "WBosonAnalysis.h"
-#include "WBosonAnalysisHistograms.h"
+#include "SingleTopAnalysis.h"
+#include "SingleTopAnalysisHistograms.h"
 #include <iostream>
 #include <cstring>
 #include <string>
@@ -28,14 +28,14 @@
 
 string name;
 
-void WBosonAnalysis::Begin(TTree * )
+void SingleTopAnalysis::Begin(TTree * )
 {
   
   nEvents=0;
   
 }
 
-void WBosonAnalysis::SlaveBegin(TTree * )
+void SingleTopAnalysis::SlaveBegin(TTree * )
 {
   TString option = GetOption();
   printf("Starting analysis with process option: %s \n", option.Data());
@@ -47,7 +47,7 @@ void WBosonAnalysis::SlaveBegin(TTree * )
   FillOutputList();
 }
 
-Bool_t WBosonAnalysis::Process(Long64_t entry)
+Bool_t SingleTopAnalysis::Process(Long64_t entry)
 {
   
   fChain->GetTree()->GetEntry(entry);
@@ -56,19 +56,19 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
   
   if(fChain->GetTree()->GetEntries()>0)
     {
-      // **********************************************************************************************//
-      // Begin simplified selection based on: ATLAS Collaboration, Phys. Lett. B 759 (2016) 601        //
-      // **********************************************************************************************//
- 
+      // ***************************************************************************************************//
+      // Begin simplified selection based on: ATLAS Collaboration, JHEP04 (2017) 086  and JHEP04 (2017) 124 //
+      // ***************************************************************************************************//
+
       //Scale factors
       Float_t scaleFactor = scaleFactor_ELE*scaleFactor_MUON*scaleFactor_LepTRIGGER;
       //Event weight
-      Float_t eventWeight = (mcWeight/TMath::Abs(mcWeight))*scaleFactor_PILEUP;
+      Float_t eventWeight = (mcWeight/TMath::Abs(mcWeight))*scaleFactor_PILEUP*scaleFactor_BTAG;
       //Total weight
       Float_t weight = scaleFactor*eventWeight;
-      
+    
       // Make difference between data and MC
-      TString option = GetOption(); 
+      TString option = GetOption();
       if(option.Contains("data")) {  weight = 1.; }  
       
       // Missing Et of the event in GeV
@@ -127,7 +127,43 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
              //Exactly one good lepton
 	      if(goodlep_n==1)
 		{
-		  
+		 
+                      //Preselection of good jets
+                      int goodjet_n = 0;
+                      int goodbjet_n = 0;
+                      int goodljet_n = 0;
+
+                      int goodjet_index[jet_n];
+                      int jet_index = 0;
+
+                      int goodbjet_index[jet_n];
+                      int bjet_index = 0;
+
+
+                      for(unsigned int i=0; i<jet_n; i++)
+                        {
+                          if(jet_pt->at(i) > 30000. && TMath::Abs(jet_eta->at(i)) < 2.5)
+                            {
+                              // JVT cleaning
+                              bool jvt_pass=true;
+                              if (jet_pt->at(i) < 60000. && TMath::Abs(jet_eta->at(i)) < 2.4 && jet_jvt->at(i) < 0.59) jvt_pass=false;
+                              if (jvt_pass)
+                                {
+                                  goodjet_n++;
+                                  goodjet_index[jet_index] = i;
+                                  jet_index++;
+
+                                  // cut on 0.8244273 is 70% WP
+                                  if (jet_MV2c10->at(i) >0.8244273       )
+                                    {
+                                      goodbjet_n++;
+                                      goodbjet_index[bjet_index] = i;
+                                      bjet_index++;
+                                    }
+                                }
+                            }
+                        }
+
 		  // TLorentzVector definitions
 		  TLorentzVector Lepton_1  = TLorentzVector();
 		  TLorentzVector      MeT  = TLorentzVector();
@@ -138,24 +174,56 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
 		  //Calculation of the W-boson transverse mass
 		  float mtw = sqrt(2*Lepton_1.Pt()*MeT.Et()*(1-cos(Lepton_1.DeltaPhi(MeT))));
 		  
-		  int type_one = lep_type->at(goodlep_index);
-		  float mtw_enu=0.; 
-		  if(type_one==11)  {mtw_enu = mtw;  }
-		  float mtw_munu=0.; 
-		  if(type_one==13) {mtw_munu = mtw; }
 		  
-		  //transverse mass larger than 60 GeV
+                  //transverse mass larger than 60 GeV
 		  if(mtw > 60000.)
 		    {
-                     
+                  
+                      // exactly two good jets
+                      if(goodjet_n == 2)
+                        {
+
+                          int goodjet1_index = goodjet_index[0]; // leading jet
+                          int goodjet2_index = goodjet_index[1]; // second jet
+
+                          //exactly one b-tagged jets
+                          if(goodbjet_n == 1)
+                            {
+                              int taggedjet_index = goodbjet_index[0]; // b-jet
+                              int untagged_index = -999;
+			      if (goodjet1_index==taggedjet_index) untagged_index =goodjet2_index; 
+                              if (goodjet2_index==taggedjet_index) untagged_index =goodjet1_index;
+
+                              //the spectator quark tends to be produced in the forward direction in the t-channel process.
+			      if ( TMath::Abs(jet_eta->at(untagged_index)) > 1.5 ) 
+  			        {
+                              
+//separation in  between the untagged jet and the b-tagged jet must be larger than 1.5, to reduce the contribution from tt background events.
+                              float deltaeta = TMath::Abs( jet_eta->at(untagged_index) - jet_eta->at(taggedjet_index) );		
+			if (deltaeta > 1.5)
+			{
+
+//The scalar sum of the pT of the lepton, the pT of the jets and MET  must be larger than 195 GeV
+			     float HT = Lepton_1.Pt()/1000. +  jet_pt->at(untagged_index)/1000. + jet_pt->at(taggedjet_index)/1000. + missingEt/1000.;
+			if (HT > 195)
+					{
+// mass of reconstructed top quark (lepton, neutrino, b) cut
+                             TLorentzVector bjet  = TLorentzVector(); bjet.SetPtEtaPhiE(jet_pt->at(taggedjet_index), jet_eta->at(taggedjet_index), jet_phi->at(taggedjet_index),jet_E->at(taggedjet_index));
+
+			     float Mlb = ( bjet + Lepton_1 ).M()/1000.; 
+
+				if (Mlb < 150)
+					{	
+
+
 			  //Start to fill histograms : definitions of x-axis variables
-			  double names_of_global_variable[]={missingEt/1000., mtw/1000. , mtw_enu/1000., mtw_munu/1000.};
+			  double names_of_global_variable[]={missingEt/1000., mtw/1000. , deltaeta, HT, Mlb};
 			  
 			  double names_of_leadlep_variable[]={Lepton_1.Pt()/1000., Lepton_1.Eta(), Lepton_1.E()/1000., Lepton_1.Phi(), (double)lep_charge->at(goodlep_index), (double)lep_type->at(goodlep_index)};
 			  
 
 			  //Start to fill histograms : definitions of histogram names
-			  TString histonames_of_global_variable[]={"hist_etmiss","hist_mtw","hist_mtw_enu","hist_mtw_munu"};
+			  TString histonames_of_global_variable[]={"hist_etmiss","hist_mtw","hist_deltaeta","hist_HT", "hist_Mlb"};
 			  
 			  TString histonames_of_leadlep_variable[]={"hist_leadleptpt", "hist_leadlepteta","hist_leadleptE","hist_leadleptphi","hist_leadleptch","hist_leadleptID"};
 			  
@@ -174,21 +242,24 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
 			      FillHistogramsLeadlept( names_of_leadlep_variable[i], weight, histonames_of_leadlep_variable[i]);
 			    }
 			
-			  // fill number of jets
-                          FillHistogramsLeadJet((double)jet_n, weight, "hist_n_jets");
+			  // fill jets
+                          double names_of_jet_variable[]={(double)goodjet_n, jet_pt->at(untagged_index)/1000.,jet_eta->at(untagged_index),(double)goodbjet_n, jet_pt->at(taggedjet_index)/1000.,jet_eta->at(taggedjet_index)};
 
-                          if (jet_n > 0)
-                            {
-                              double names_of_jet_variable[]={jet_pt->at(0)/1000., jet_eta->at(0)};
-                              TString histonames_of_jet_variable[]={"hist_leadjet_pt","hist_leadjet_eta"};
-                    
-                              int length_leadjet = sizeof(names_of_jet_variable)/sizeof(names_of_jet_variable[0]);
-                              for (int i=0; i<length_leadjet; i++)
-                                {
-                                  FillHistogramsLeadJet( names_of_jet_variable[i], weight, histonames_of_jet_variable[i]);
-                                }
-                            }
-		    }
+		    
+ TString histonames_of_jet_variable[]={"hist_n_jets","hist_leadjet_pt","hist_leadjet_eta","hist_n_bjets","hist_leadbjet_pt","hist_leadbjet_eta"};
+                                  int length_leadjet = sizeof(names_of_jet_variable)/sizeof(names_of_jet_variable[0]);
+ for (int i=0; i<length_leadjet; i++)
+                                    {
+                                      FillHistogramsLeadJet( names_of_jet_variable[i], weight, histonames_of_jet_variable[i]);
+                                    }
+}
+}
+}
+}
+}
+}
+
+			}
 		}
 	    }
 	}
@@ -197,21 +268,21 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
   return kTRUE;
 }
 
-void WBosonAnalysis::SlaveTerminate()
+void SingleTopAnalysis::SlaveTerminate()
 {
 }
 
-void WBosonAnalysis::Terminate()
+void SingleTopAnalysis::Terminate()
 {
 
   // creating the output file
   TString filename_option = GetOption();
   printf("Writting with name option: %s \n", filename_option.Data());
-  TString output_name="Output_WBosonAnalysis/"+filename_option+".root";
+  TString output_name="Output_SingleTopAnalysis/"+filename_option+".root";
   const char* filename = output_name;
 
-  TFile physicsoutput_W(filename,"recreate");
+  TFile physicsoutput(filename,"recreate");
   WriteHistograms();
-  physicsoutput_W.Close();
+  physicsoutput.Close();
   
 }

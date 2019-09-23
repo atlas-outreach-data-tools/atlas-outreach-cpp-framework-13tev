@@ -5,7 +5,7 @@
 #include "TFile.h"
 #include "TProof.h"
 
-void main_WBosonAnalysis(int proof = 0, int option= 0)
+void main_SingleTopAnalysis(int proof = 0, int option= 0)
 {
   // path to your local directory *or* URL, please change the default one!
   /* Local path example */
@@ -27,28 +27,28 @@ void main_WBosonAnalysis(int proof = 0, int option= 0)
     TChain* chain_dataA = new TChain("mini");
     chain_dataA->AddFile(path+"Data/data_A.1lep.root");
     if (proof == 1)  chain_dataA->SetProof();
-    chain_dataA->Process("WBosonAnalysis.C+","dataA");
+    chain_dataA->Process("SingleTopAnalysis.C+","dataA");
   }
   
   if (option==12 || option==0){
     TChain* chain_dataB = new TChain("mini");
     chain_dataB->AddFile(path+"Data/data_B.1lep.root");
     if (proof == 1)  chain_dataB->SetProof();
-    chain_dataB->Process("WBosonAnalysis.C+","dataB");
+    chain_dataB->Process("SingleTopAnalysis.C+","dataB");
   }
   
   if (option==13 || option==0){
     TChain* chain_dataC = new TChain("mini");
     chain_dataC->AddFile(path+"Data/data_C.1lep.root");
     if (proof == 1)  chain_dataC->SetProof();
-    chain_dataC->Process("WBosonAnalysis.C+","dataC");
+    chain_dataC->Process("SingleTopAnalysis.C+","dataC");
   }
   
   if (option==14 || option==0){
     TChain* chain_dataD = new TChain("mini");
     chain_dataD->AddFile(path+"Data/data_D.1lep.root");
     if (proof == 1)  chain_dataD->SetProof();
-    chain_dataD->Process("WBosonAnalysis.C+","dataD");
+    chain_dataD->Process("SingleTopAnalysis.C+","dataD");
   }
    
   
@@ -60,64 +60,64 @@ void main_WBosonAnalysis(int proof = 0, int option= 0)
     TChain* chain_ZqqZll = new TChain("mini");
     chain_ZqqZll->AddFile(path+"MC/mc_363356.ZqqZll.1lep.root");
     if (proof == 1)  chain_ZqqZll->SetProof();
-    chain_ZqqZll->Process("WBosonAnalysis.C+","ZqqZll");
+    chain_ZqqZll->Process("SingleTopAnalysis.C+","ZqqZll");
     
     TChain* chain_WqqZll = new TChain("mini");
     chain_WqqZll->AddFile(path+"MC/mc_363358.WqqZll.1lep.root");
     if (proof == 1)  chain_WqqZll->SetProof();
-    chain_WqqZll->Process("WBosonAnalysis.C+","WqqZll");
+    chain_WqqZll->Process("SingleTopAnalysis.C+","WqqZll");
     
     TChain* chain_WpqqWmlv = new TChain("mini");
     chain_WpqqWmlv->AddFile(path+"MC/mc_363359.WpqqWmlv.1lep.root");
     if (proof == 1)  chain_WpqqWmlv->SetProof();
-    chain_WpqqWmlv->Process("WBosonAnalysis.C+","WpqqWmlv");
+    chain_WpqqWmlv->Process("SingleTopAnalysis.C+","WpqqWmlv");
     
     TChain* chain_WplvWmqq = new TChain("mini");
     chain_WplvWmqq->AddFile(path+"MC/mc_363360.WplvWmqq.1lep.root");
     if (proof == 1)  chain_WplvWmqq->SetProof();
-    chain_WplvWmqq->Process("WBosonAnalysis.C+","WplvWmqq");
+    chain_WplvWmqq->Process("SingleTopAnalysis.C+","WplvWmqq");
     
     TChain* chain_WlvZqq = new TChain("mini");
     chain_WlvZqq->AddFile(path+"MC/mc_363489.WlvZqq.1lep.root");
     if (proof == 1)  chain_WlvZqq->SetProof();
-    chain_WlvZqq->Process("WBosonAnalysis.C+","WlvZqq");
+    chain_WlvZqq->Process("SingleTopAnalysis.C+","WlvZqq");
     
     TChain* chain_llll = new TChain("mini");
     chain_llll->AddFile(path+"MC/mc_363490.llll.1lep.root");
     if (proof == 1)  chain_llll->SetProof();
-    chain_llll->Process("WBosonAnalysis.C+","llll");
+    chain_llll->Process("SingleTopAnalysis.C+","llll");
     
     TChain* chain_lllv = new TChain("mini");
     chain_lllv->AddFile(path+"MC/mc_363491.lllv.1lep.root");
     if (proof == 1)  chain_lllv->SetProof();
-    chain_lllv->Process("WBosonAnalysis.C+","lllv");
+    chain_lllv->Process("SingleTopAnalysis.C+","lllv");
     
     TChain* chain_llvv = new TChain("mini");
     chain_llvv->AddFile(path+"MC/mc_363492.llvv.1lep.root");
     if (proof == 1)  chain_llvv->SetProof();
-    chain_llvv->Process("WBosonAnalysis.C+","llvv");
+    chain_llvv->Process("SingleTopAnalysis.C+","llvv");
     
     TChain* chain_lvvv = new TChain("mini");
     chain_lvvv->AddFile(path+"MC/mc_363493.lvvv.1lep.root");
     if (proof == 1)  chain_lvvv->SetProof();
-    chain_lvvv->Process("WBosonAnalysis.C+","lvvv");
+    chain_lvvv->Process("SingleTopAnalysis.C+","lvvv");
     
     
     // Z+jets inclusive
     TChain* chain_Zee = new TChain("mini");
     chain_Zee->AddFile(path+"MC/mc_361106.Zee.1lep.root");
     if (proof == 1)  chain_Zee->SetProof();
-    chain_Zee->Process("WBosonAnalysis.C+","Zee");
+    chain_Zee->Process("SingleTopAnalysis.C+","Zee");
     
     TChain* chain_Zmumu = new TChain("mini");
     chain_Zmumu->AddFile(path+"MC/mc_361107.Zmumu.1lep.root");
     if (proof == 1)  chain_Zmumu->SetProof();
-    chain_Zmumu->Process("WBosonAnalysis.C+","Zmumu");
+    chain_Zmumu->Process("SingleTopAnalysis.C+","Zmumu");
     
     TChain* chain_Ztautau = new TChain("mini");
     chain_Ztautau->AddFile(path+"MC/mc_361108.Ztautau.1lep.root");
     if (proof == 1)  chain_Ztautau->SetProof();
-    chain_Ztautau->Process("WBosonAnalysis.C+","Ztautau");
+    chain_Ztautau->Process("SingleTopAnalysis.C+","Ztautau");
     
   }// option 2
   
@@ -126,39 +126,40 @@ void main_WBosonAnalysis(int proof = 0, int option= 0)
     TChain* chain_single_top_tchan = new TChain("mini");
     chain_single_top_tchan->AddFile(path+"MC/mc_410011.single_top_tchan.1lep.root");
     if (proof == 1)  chain_single_top_tchan->SetProof();
-    chain_single_top_tchan->Process("WBosonAnalysis.C+","single_top_tchan");
+    chain_single_top_tchan->Process("SingleTopAnalysis.C+","single_top_tchan");
     
     TChain* chain_single_antitop_tchan = new TChain("mini");
     chain_single_antitop_tchan->AddFile(path+"MC/mc_410012.single_antitop_tchan.1lep.root");
     if (proof == 1)  chain_single_antitop_tchan->SetProof();
-    chain_single_antitop_tchan->Process("WBosonAnalysis.C+","single_antitop_tchan");
+    chain_single_antitop_tchan->Process("SingleTopAnalysis.C+","single_antitop_tchan");
     
     TChain* chain_single_top_schan = new TChain("mini");
     chain_single_top_schan->AddFile(path+"MC/mc_410025.single_top_schan.1lep.root");
     if (proof == 1)  chain_single_top_schan->SetProof();
-    chain_single_top_schan->Process("WBosonAnalysis.C+","single_top_schan");
+    chain_single_top_schan->Process("SingleTopAnalysis.C+","single_top_schan");
     
     TChain* chain_single_antitop_schan = new TChain("mini");
     chain_single_antitop_schan->AddFile(path+"MC/mc_410026.single_antitop_schan.1lep.root");
     if (proof == 1)  chain_single_antitop_schan->SetProof();
-    chain_single_antitop_schan->Process("WBosonAnalysis.C+","single_antitop_schan");
-    
+    chain_single_antitop_schan->Process("SingleTopAnalysis.C+","single_antitop_schan");
+  
     TChain* chain_single_top_wtchan = new TChain("mini");
     chain_single_top_wtchan->AddFile(path+"MC/mc_410013.single_top_wtchan.1lep.root");
     if (proof == 1)  chain_single_top_wtchan->SetProof();
-    chain_single_top_wtchan->Process("WBosonAnalysis.C+","single_top_wtchan");
+    chain_single_top_wtchan->Process("SingleTopAnalysis.C+","single_top_wtchan");
     
     TChain* chain_single_antitop_wtchan = new TChain("mini");
     chain_single_antitop_wtchan->AddFile(path+"MC/mc_410014.single_antitop_wtchan.1lep.root");
     if (proof == 1)  chain_single_antitop_wtchan->SetProof();
-    chain_single_antitop_wtchan->Process("WBosonAnalysis.C+","single_antitop_wtchan");
-    
+    chain_single_antitop_wtchan->Process("SingleTopAnalysis.C+","single_antitop_wtchan");
+   
     //ttbar
     TChain* chain_ttbar_lep = new TChain("mini");
     chain_ttbar_lep->AddFile(path+"MC/mc_410000.ttbar_lep.1lep.root");
     if (proof == 1)  chain_ttbar_lep->SetProof();
-    chain_ttbar_lep->Process("WBosonAnalysis.C+","ttbar_lep");
+    chain_ttbar_lep->Process("SingleTopAnalysis.C+","ttbar_lep");
     
+
   } // option 3
   
   
@@ -303,57 +304,57 @@ void main_WBosonAnalysis(int proof = 0, int option= 0)
     
     
     if (option == 41 || option==0)   {
-      chain_Wmunu_PTV0_70_CVetoBVeto->Process("WBosonAnalysis.C+","Wmunu_PTV0_70_CVetoBVeto");
-      chain_Wmunu_PTV0_70_CFilterBVeto->Process("WBosonAnalysis.C+","Wmunu_PTV0_70_CFilterBVeto");
-      chain_Wmunu_PTV0_70_BFilter->Process("WBosonAnalysis.C+","Wmunu_PTV0_70_BFilter");
-      chain_Wmunu_PTV70_140_CVetoBVeto->Process("WBosonAnalysis.C+","Wmunu_PTV70_140_CVetoBVeto");
-      chain_Wmunu_PTV70_140_CFilterBVeto->Process("WBosonAnalysis.C+","Wmunu_PTV70_140_CFilterBVeto");
-      chain_Wmunu_PTV70_140_BFilter->Process("WBosonAnalysis.C+","Wmunu_PTV70_140_BFilter");
-      chain_Wmunu_PTV140_280_CVetoBVeto->Process("WBosonAnalysis.C+","Wmunu_PTV140_280_CVetoBVeto");
-      chain_Wmunu_PTV140_280_CFilterBVeto->Process("WBosonAnalysis.C+","Wmunu_PTV140_280_CFilterBVeto");
-      chain_Wmunu_PTV140_280_BFilter->Process("WBosonAnalysis.C+","Wmunu_PTV140_280_BFilter");
-      chain_Wmunu_PTV280_500_CVetoBVeto->Process("WBosonAnalysis.C+","Wmunu_PTV280_500_CVetoBVeto");
+      chain_Wmunu_PTV0_70_CVetoBVeto->Process("SingleTopAnalysis.C+","Wmunu_PTV0_70_CVetoBVeto");
+      chain_Wmunu_PTV0_70_CFilterBVeto->Process("SingleTopAnalysis.C+","Wmunu_PTV0_70_CFilterBVeto");
+      chain_Wmunu_PTV0_70_BFilter->Process("SingleTopAnalysis.C+","Wmunu_PTV0_70_BFilter");
+      chain_Wmunu_PTV70_140_CVetoBVeto->Process("SingleTopAnalysis.C+","Wmunu_PTV70_140_CVetoBVeto");
+      chain_Wmunu_PTV70_140_CFilterBVeto->Process("SingleTopAnalysis.C+","Wmunu_PTV70_140_CFilterBVeto");
+      chain_Wmunu_PTV70_140_BFilter->Process("SingleTopAnalysis.C+","Wmunu_PTV70_140_BFilter");
+      chain_Wmunu_PTV140_280_CVetoBVeto->Process("SingleTopAnalysis.C+","Wmunu_PTV140_280_CVetoBVeto");
+      chain_Wmunu_PTV140_280_CFilterBVeto->Process("SingleTopAnalysis.C+","Wmunu_PTV140_280_CFilterBVeto");
+      chain_Wmunu_PTV140_280_BFilter->Process("SingleTopAnalysis.C+","Wmunu_PTV140_280_BFilter");
+      chain_Wmunu_PTV280_500_CVetoBVeto->Process("SingleTopAnalysis.C+","Wmunu_PTV280_500_CVetoBVeto");
     }
     
     if (option == 42 || option==0)   {
-      chain_Wmunu_PTV280_500_CFilterBVeto->Process("WBosonAnalysis.C+","Wmunu_PTV280_500_CFilterBVeto");
-      chain_Wmunu_PTV280_500_BFilter->Process("WBosonAnalysis.C+","Wmunu_PTV280_500_BFilter");
-      chain_Wmunu_PTV500_1000->Process("WBosonAnalysis.C+","Wmunu_PTV500_1000");
-      chain_Wmunu_PTV1000_E_CMS->Process("WBosonAnalysis.C+","Wmunu_PTV1000");
-      chain_Wenu_PTV0_70_CVetoBVeto->Process("WBosonAnalysis.C+","Wenu_PTV0_70_CVetoBVeto");
-      chain_Wenu_PTV0_70_CFilterBVeto->Process("WBosonAnalysis.C+","Wenu_PTV0_70_CFilterBVeto");
-      chain_Wenu_PTV0_70_BFilter->Process("WBosonAnalysis.C+","Wenu_PTV0_70_BFilter");
-      chain_Wenu_PTV70_140_CVetoBVeto->Process("WBosonAnalysis.C+","Wenu_PTV70_140_CVetoBVeto");
-      chain_Wenu_PTV70_140_CFilterBVeto->Process("WBosonAnalysis.C+","Wenu_PTV70_140_CFilterBVeto");
-      chain_Wenu_PTV70_140_BFilter->Process("WBosonAnalysis.C+","Wenu_PTV70_140_BFilter");
+      chain_Wmunu_PTV280_500_CFilterBVeto->Process("SingleTopAnalysis.C+","Wmunu_PTV280_500_CFilterBVeto");
+      chain_Wmunu_PTV280_500_BFilter->Process("SingleTopAnalysis.C+","Wmunu_PTV280_500_BFilter");
+      chain_Wmunu_PTV500_1000->Process("SingleTopAnalysis.C+","Wmunu_PTV500_1000");
+      chain_Wmunu_PTV1000_E_CMS->Process("SingleTopAnalysis.C+","Wmunu_PTV1000");
+      chain_Wenu_PTV0_70_CVetoBVeto->Process("SingleTopAnalysis.C+","Wenu_PTV0_70_CVetoBVeto");
+      chain_Wenu_PTV0_70_CFilterBVeto->Process("SingleTopAnalysis.C+","Wenu_PTV0_70_CFilterBVeto");
+      chain_Wenu_PTV0_70_BFilter->Process("SingleTopAnalysis.C+","Wenu_PTV0_70_BFilter");
+      chain_Wenu_PTV70_140_CVetoBVeto->Process("SingleTopAnalysis.C+","Wenu_PTV70_140_CVetoBVeto");
+      chain_Wenu_PTV70_140_CFilterBVeto->Process("SingleTopAnalysis.C+","Wenu_PTV70_140_CFilterBVeto");
+      chain_Wenu_PTV70_140_BFilter->Process("SingleTopAnalysis.C+","Wenu_PTV70_140_BFilter");
     }
     
     if (option == 43 || option==0)   {
-      chain_Wenu_PTV140_280_CVetoBVeto->Process("WBosonAnalysis.C+","Wenu_PTV140_280_CVetoBVeto");
-      chain_Wenu_PTV140_280_CFilterBVeto->Process("WBosonAnalysis.C+","Wenu_PTV140_280_CFilterBVeto");
-      chain_Wenu_PTV140_280_BFilter->Process("WBosonAnalysis.C+","Wenu_PTV140_280_BFilter");
-      chain_Wenu_PTV280_500_CVetoBVeto->Process("WBosonAnalysis.C+","Wenu_PTV280_500_CVetoBVeto");
-      chain_Wenu_PTV280_500_CFilterBVeto->Process("WBosonAnalysis.C+","Wenu_PTV280_500_CFilterBVeto");
-      chain_Wenu_PTV280_500_BFilter->Process("WBosonAnalysis.C+","Wenu_PTV280_500_BFilter");
-      chain_Wenu_PTV500_1000->Process("WBosonAnalysis.C+","Wenu_PTV500_1000");
-      chain_Wenu_PTV1000_E_CMS->Process("WBosonAnalysis.C+","Wenu_PTV1000");
-      chain_Wtaunu_PTV0_70_CVetoBVeto->Process("WBosonAnalysis.C+","Wtaunu_PTV0_70_CVetoBVeto");
-      chain_Wtaunu_PTV0_70_CFilterBVeto->Process("WBosonAnalysis.C+","Wtaunu_PTV0_70_CFilterBVeto");
+      chain_Wenu_PTV140_280_CVetoBVeto->Process("SingleTopAnalysis.C+","Wenu_PTV140_280_CVetoBVeto");
+      chain_Wenu_PTV140_280_CFilterBVeto->Process("SingleTopAnalysis.C+","Wenu_PTV140_280_CFilterBVeto");
+      chain_Wenu_PTV140_280_BFilter->Process("SingleTopAnalysis.C+","Wenu_PTV140_280_BFilter");
+      chain_Wenu_PTV280_500_CVetoBVeto->Process("SingleTopAnalysis.C+","Wenu_PTV280_500_CVetoBVeto");
+      chain_Wenu_PTV280_500_CFilterBVeto->Process("SingleTopAnalysis.C+","Wenu_PTV280_500_CFilterBVeto");
+      chain_Wenu_PTV280_500_BFilter->Process("SingleTopAnalysis.C+","Wenu_PTV280_500_BFilter");
+      chain_Wenu_PTV500_1000->Process("SingleTopAnalysis.C+","Wenu_PTV500_1000");
+      chain_Wenu_PTV1000_E_CMS->Process("SingleTopAnalysis.C+","Wenu_PTV1000");
+      chain_Wtaunu_PTV0_70_CVetoBVeto->Process("SingleTopAnalysis.C+","Wtaunu_PTV0_70_CVetoBVeto");
+      chain_Wtaunu_PTV0_70_CFilterBVeto->Process("SingleTopAnalysis.C+","Wtaunu_PTV0_70_CFilterBVeto");
     }
     
     if (option == 44 || option==0)   {
-      chain_Wtaunu_PTV0_70_BFilter->Process("WBosonAnalysis.C+","Wtaunu_PTV0_70_BFilter");
-      chain_Wtaunu_PTV70_140_CVetoBVeto->Process("WBosonAnalysis.C+","Wtaunu_PTV70_140_CVetoBVeto");
-      chain_Wtaunu_PTV70_140_CFilterBVeto->Process("WBosonAnalysis.C+","Wtaunu_PTV70_140_CFilterBVeto");
-      chain_Wtaunu_PTV70_140_BFilter->Process("WBosonAnalysis.C+","Wtaunu_PTV70_140_BFilter");
-      chain_Wtaunu_PTV140_280_CVetoBVeto->Process("WBosonAnalysis.C+","Wtaunu_PTV140_280_CVetoBVeto");
-      chain_Wtaunu_PTV140_280_CFilterBVeto->Process("WBosonAnalysis.C+","Wtaunu_PTV140_280_CFilterBVeto");
-      chain_Wtaunu_PTV140_280_BFilter->Process("WBosonAnalysis.C+","Wtaunu_PTV140_280_BFilter");
-      chain_Wtaunu_PTV280_500_CVetoBVeto->Process("WBosonAnalysis.C+","Wtaunu_PTV280_500_CVetoBVeto");
-      chain_Wtaunu_PTV280_500_CFilterBVeto->Process("WBosonAnalysis.C+","Wtaunu_PTV280_500_CFilterBVeto");
-      chain_Wtaunu_PTV280_500_BFilter->Process("WBosonAnalysis.C+","Wtaunu_PTV280_500_BFilter");
-      chain_Wtaunu_PTV500_1000->Process("WBosonAnalysis.C+","Wtaunu_PTV500_1000");
-      chain_Wtaunu_PTV1000_E_CM->Process("WBosonAnalysis.C+","Wtaunu_PTV1000");
+      chain_Wtaunu_PTV0_70_BFilter->Process("SingleTopAnalysis.C+","Wtaunu_PTV0_70_BFilter");
+      chain_Wtaunu_PTV70_140_CVetoBVeto->Process("SingleTopAnalysis.C+","Wtaunu_PTV70_140_CVetoBVeto");
+      chain_Wtaunu_PTV70_140_CFilterBVeto->Process("SingleTopAnalysis.C+","Wtaunu_PTV70_140_CFilterBVeto");
+      chain_Wtaunu_PTV70_140_BFilter->Process("SingleTopAnalysis.C+","Wtaunu_PTV70_140_BFilter");
+      chain_Wtaunu_PTV140_280_CVetoBVeto->Process("SingleTopAnalysis.C+","Wtaunu_PTV140_280_CVetoBVeto");
+      chain_Wtaunu_PTV140_280_CFilterBVeto->Process("SingleTopAnalysis.C+","Wtaunu_PTV140_280_CFilterBVeto");
+      chain_Wtaunu_PTV140_280_BFilter->Process("SingleTopAnalysis.C+","Wtaunu_PTV140_280_BFilter");
+      chain_Wtaunu_PTV280_500_CVetoBVeto->Process("SingleTopAnalysis.C+","Wtaunu_PTV280_500_CVetoBVeto");
+      chain_Wtaunu_PTV280_500_CFilterBVeto->Process("SingleTopAnalysis.C+","Wtaunu_PTV280_500_CFilterBVeto");
+      chain_Wtaunu_PTV280_500_BFilter->Process("SingleTopAnalysis.C+","Wtaunu_PTV280_500_BFilter");
+      chain_Wtaunu_PTV500_1000->Process("SingleTopAnalysis.C+","Wtaunu_PTV500_1000");
+      chain_Wtaunu_PTV1000_E_CM->Process("SingleTopAnalysis.C+","Wtaunu_PTV1000");
     }
     
   } // W+jets Sherpa
