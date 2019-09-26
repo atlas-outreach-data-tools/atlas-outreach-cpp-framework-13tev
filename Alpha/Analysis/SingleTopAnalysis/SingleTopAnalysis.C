@@ -61,14 +61,19 @@ Bool_t SingleTopAnalysis::Process(Long64_t entry)
       // ***************************************************************************************************//
 
       //Scale factors
-      Float_t scaleFactor = scaleFactor_ELE*scaleFactor_MUON*scaleFactor_LepTRIGGER;
-      //Event weight
-      Float_t eventWeight = (mcWeight/TMath::Abs(mcWeight))*scaleFactor_PILEUP*scaleFactor_BTAG;
+      Float_t scaleFactor = scaleFactor_ELE*scaleFactor_MUON*scaleFactor_LepTRIGGER*scaleFactor_PILEUP*scaleFactor_BTAG;
+
+      //MC weight
+      Float_t m_mcWeight = mcWeight;
+
+      // read input option
+      TString option = GetOption();
+      if(option.Contains("single")) { m_mcWeight = (mcWeight/TMath::Abs(mcWeight)); } // set to 1 or -1 for single top MCs
+
       //Total weight
-      Float_t weight = scaleFactor*eventWeight;
+      Float_t weight = scaleFactor*m_mcWeight;
     
       // Make difference between data and MC
-      TString option = GetOption();
       if(option.Contains("data")) {  weight = 1.; }  
       
       // Missing Et of the event in GeV

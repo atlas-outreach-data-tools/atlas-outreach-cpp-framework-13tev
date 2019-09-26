@@ -52,24 +52,26 @@ Bool_t ZPrimeBoostedAnalysis::Process(Long64_t entry)
   
   if(fChain->GetTree()->GetEntries()>0)
   {
-      // ***********************************************************************************************//
-      // Begin analysis selection, largely based on: ATLAS Collaboration, Eur. Phys. J. C 78 (2018) 565 //
-      // ***********************************************************************************************//
+      // **********************************************************************************************************************//
+      // Begin analysis selection, largely based on: ATLAS Collaboration, Eur. Phys. J. C 78 (2018) 565 and JHEP 11 (2017) 191 //
+      // **********************************************************************************************************************//
       
-      
-      //Scale factors
-      Float_t scaleFactor = scaleFactor_ELE*scaleFactor_MUON*scaleFactor_LepTRIGGER;
-      
-      //Event weight (adding btag SF corresponding to 70% working point)
-      Float_t eventWeight = (mcWeight/TMath::Abs(mcWeight))*scaleFactor_PILEUP*scaleFactor_BTAG;
-      
-      //Total weight
-      Float_t weight = scaleFactor*eventWeight;
-      
-      // Make difference between data and MC
+      //Scale factors (adding b-tagging as it is used)
+      Float_t scaleFactor = scaleFactor_ELE*scaleFactor_MUON*scaleFactor_LepTRIGGER*scaleFactor_PILEUP*scaleFactor_BTAG;
+
+      //MC weight
+      Float_t m_mcWeight = mcWeight;
+
+      // read input option
       TString option = GetOption();
-      if(option.Contains("data")) weight = 1.;
-      
+      if(option.Contains("single")) { m_mcWeight = (mcWeight/TMath::Abs(mcWeight)); } // set to 1 or -1 for single top MCs
+
+      //Total weight
+      Float_t weight = scaleFactor*m_mcWeight;
+
+      // Make difference between data and MC
+      if(option.Contains("data")) {  weight = 1.; }
+
       // cut inmediately on at least one large-R jet
       if (fatjet_n >= 1)
 	{

@@ -56,20 +56,22 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
       // Begin analysis selection, largely based on: ATLAS Collaboration, JHEP 11 (2017) 191           //
       // **********************************************************************************************//
       
-      
-      //Scale factors
-      Float_t scaleFactor = scaleFactor_ELE*scaleFactor_MUON*scaleFactor_LepTRIGGER;
-      
-      //Event weight (adding btag SF corresponding to 70% working point)
-      Float_t eventWeight = (mcWeight/TMath::Abs(mcWeight))*scaleFactor_PILEUP*scaleFactor_BTAG;
-      
-      //Total weight
-      Float_t weight = scaleFactor*eventWeight;
-      
-      // Make difference between data and MC
-      TString option = GetOption(); 
-      if(option.Contains("data")) weight = 1.;
+      //Scale factors (adding b-tagging as it is used)
+      Float_t scaleFactor = scaleFactor_ELE*scaleFactor_MUON*scaleFactor_LepTRIGGER*scaleFactor_PILEUP*scaleFactor_BTAG;
 
+      //MC weight
+      Float_t m_mcWeight = mcWeight;
+
+      // read input option
+      TString option = GetOption();
+      if(option.Contains("single")) { m_mcWeight = (mcWeight/TMath::Abs(mcWeight)); } // set to 1 or -1 for single top MCs
+
+      //Total weight
+      Float_t weight = scaleFactor*m_mcWeight;
+
+      // Make difference between data and MC
+      if(option.Contains("data")) {  weight = 1.; }
+      
       // cut on at least 4 jets
       if (jet_n > 3)
 	{
