@@ -122,7 +122,7 @@ Bool_t HyyAnalysis::Process(Long64_t entry)
 		      Photon_2.SetPtEtaPhiE(photon_pt->at(goodphoton2_index), photon_eta->at(goodphoton2_index), photon_phi->at(goodphoton2_index),photon_E->at(goodphoton2_index));
 		      
 		      // calculate dPhi(photon-photon)
-		      float dPhi_yy = fabs(photon_phi->at(goodphoton1_index) - photon_phi->at(goodphoton2_index) );
+		      float dPhi_yy = TMath::Abs(photon_phi->at(goodphoton1_index) - photon_phi->at(goodphoton2_index) );
 		      dPhi_yy       = dPhi_yy < TMath::Pi() ? dPhi_yy : 2*TMath::Pi() - dPhi_yy;
 		      
 		      // diphoton mass

@@ -94,7 +94,7 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 		  // standard lepton isolation requirement => strict isolation
 		  if( lep_pt->at(i) >15000. && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.1) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.1 ) )
 		    {
-		      if ( lep_type->at(i)==11 && abs(lep_eta->at(i)<2.47) && ( abs(lep_eta->at(i) < 1.37) || abs(lep_eta->at(i) > 1.52) ) ) {
+		      if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i)<2.47) && ( TMath::Abs(lep_eta->at(i) < 1.37) || TMath::Abs(lep_eta->at(i) > 1.52) ) ) {
 			if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 5 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {
 			  goodlep_n = goodlep_n + 1;
 			  goodlep_index[lep_index] = i;
@@ -102,7 +102,7 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 			}
 		      }
 		      // muon selection
-		      if ( lep_type->at(i) ==13 && abs(lep_eta->at(i)<2.5) ) {
+		      if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)<2.5) ) {
 			if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 3 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {
 			  goodlep_n = goodlep_n + 1;
 			  goodlep_index[lep_index] = i;
@@ -145,12 +145,12 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 			  float mLL       = Lepton_12.Mag()/1000.;
 			  float ptLL      = Lepton_12.Pt()/1000.;
 			  
-			  float dPhi_LL  = fabs(lep_phi->at(goodlep1_index) - lep_phi->at(goodlep2_index) );
+			  float dPhi_LL  = TMath::Abs(lep_phi->at(goodlep1_index) - lep_phi->at(goodlep2_index) );
 			  dPhi_LL        = dPhi_LL < TMath::Pi() ? dPhi_LL : 2*TMath::Pi() - dPhi_LL;
 			  
 			  Float_t MET = met_et/1000.;
 			  
-			  float dPhiLLmet = fabs( Lepton_12.Phi() - MeT.Phi() );
+			  float dPhiLLmet = TMath::Abs( Lepton_12.Phi() - MeT.Phi() );
 			  dPhiLLmet    = dPhiLLmet < TMath::Pi() ? dPhiLLmet : 2*TMath::Pi() - dPhiLLmet;
 			  
 			  float mt    = sqrt(2*Lepton_12.Pt()*MeT.Et()*(1-cos(Lepton_12.DeltaPhi(MeT))))/1000.;
@@ -168,16 +168,16 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 			  
 			  for(unsigned int i=0; i<jet_n; i++)
 			    {
-			      if(jet_pt->at(i)>20000. && abs(jet_eta->at(i)) < 2.5)
+			      if(jet_pt->at(i)>20000. && TMath::Abs(jet_eta->at(i)) < 2.5)
 				{
 				  // JVT cleaning
 				  bool jvt_pass=true;
-				  if (jet_pt->at(i) < 60000. && abs(jet_eta->at(i)) < 2.4 && jet_jvt->at(i) < 0.59) jvt_pass=false;
+				  if (jet_pt->at(i) < 60000. && TMath::Abs(jet_eta->at(i)) < 2.4 && jet_jvt->at(i) < 0.59) jvt_pass=false;
 				  if (jvt_pass)
 				    {
 				      
 				      // cut on 85% WP
-				      if ( jet_MV2c10->at(i) > 0.1758475  && abs(jet_eta->at(i)) < 2.5 )
+				      if ( jet_MV2c10->at(i) > 0.1758475  && TMath::Abs(jet_eta->at(i)) < 2.5 )
 					{
 					  goodbjet_n++;
 					  goodbjet_index[bjet_index] = i;

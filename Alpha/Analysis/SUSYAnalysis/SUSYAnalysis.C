@@ -98,8 +98,8 @@ Bool_t SUSYAnalysis::Process(Long64_t entry)
       leptemp.SetPtEtaPhiE(lep_pt->at(i)/1000., lep_eta->at(i), lep_phi->at(i), lep_E->at(i)/1000.);
 
       if(leptemp.Pt() <= 10)continue;
-      if(fabs(lep_type->at(i))==11 && fabs(leptemp.Eta()) >= 2.47)continue;
-      if(fabs(lep_type->at(i))==13 && fabs(leptemp.Eta()) >= 2.7)continue;
+      if(TMath::Abs(lep_type->at(i))==11 && TMath::Abs(leptemp.Eta()) >= 2.47)continue;
+      if(TMath::Abs(lep_type->at(i))==13 && TMath::Abs(leptemp.Eta()) >= 2.7)continue;
 
       double dR;
       bool removeLep = false;
@@ -110,22 +110,22 @@ Bool_t SUSYAnalysis::Process(Long64_t entry)
 	if(std::find(remove_jet.begin(), remove_jet.end(), j) != remove_jet.end())continue;
 	removeJet = false;
 	if(jet_pt->at(j) < 20000)continue;
-	if(fabs(jet_eta->at(j)) >= 4.5)continue;
-	if(jet_pt->at(j) < 60000 && fabs(jet_eta->at(j)) < 2.4){
-	  if(fabs(jet_jvt->at(j))<=0.59)continue;
+	if(TMath::Abs(jet_eta->at(j)) >= 4.5)continue;
+	if(jet_pt->at(j) < 60000 && TMath::Abs(jet_eta->at(j)) < 2.4){
+	  if(TMath::Abs(jet_jvt->at(j))<=0.59)continue;
 	}
 
 	jettemp.SetPtEtaPhiE(jet_pt->at(j)/1000., jet_eta->at(j), jet_phi->at(j), jet_E->at(j)/1000.); 
 	dR = jettemp.DeltaR(leptemp);
 	if(jet_MV2c10->at(j)>0.1758475){
-	  if(fabs(lep_type->at(i))==11 && dR < 0.2)removeLep = true;
-	  if(fabs(lep_type->at(i))==13 && dR < 0.4)removeLep = true;
+	  if(TMath::Abs(lep_type->at(i))==11 && dR < 0.2)removeLep = true;
+	  if(TMath::Abs(lep_type->at(i))==13 && dR < 0.4)removeLep = true;
 	}else{
-	  if(fabs(lep_type->at(i))==11 && dR < 0.2)removeJet = true;
-	  if(fabs(lep_type->at(i))==13 && dR < 0.4)removeLep = true;
+	  if(TMath::Abs(lep_type->at(i))==11 && dR < 0.2)removeJet = true;
+	  if(TMath::Abs(lep_type->at(i))==13 && dR < 0.4)removeLep = true;
 	}
 	if(!removeJet){
-	  if(fabs(lep_type->at(i))==11 && dR < 0.4)removeLep = true;
+	  if(TMath::Abs(lep_type->at(i))==11 && dR < 0.4)removeLep = true;
 	}else{
 	  remove_jet.push_back(j);
 	}
@@ -134,17 +134,17 @@ Bool_t SUSYAnalysis::Process(Long64_t entry)
       if(removeLep) continue;
 
       // Impact parameter cuts  
-      if(fabs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) > 0.5) continue; 
+      if(TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) > 0.5) continue; 
 
       // Isolation cuts
       if( lep_etcone20->at(i)/lep_pt->at(i) > 0.15 ) continue;
       if( lep_ptcone30->at(i)/lep_pt->at(i) > 0.15 ) continue;
 
-      if( fabs(lep_type->at(i)) == 11 ){
-	if(fabs(lep_trackd0pvunbiased->at(0))/lep_tracksigd0pvunbiased->at(0) > 5) continue;  
+      if( TMath::Abs(lep_type->at(i)) == 11 ){
+	if(TMath::Abs(lep_trackd0pvunbiased->at(0))/lep_tracksigd0pvunbiased->at(0) > 5) continue;  
       }
-      if( fabs(lep_type->at(i)) == 13 ){
-	if(fabs(lep_trackd0pvunbiased->at(0))/lep_tracksigd0pvunbiased->at(0) > 3) continue;  
+      if( TMath::Abs(lep_type->at(i)) == 13 ){
+	if(TMath::Abs(lep_trackd0pvunbiased->at(0))/lep_tracksigd0pvunbiased->at(0) > 3) continue;  
       }
 
       n_lep++; // Count "good" leptons 
@@ -175,20 +175,20 @@ Bool_t SUSYAnalysis::Process(Long64_t entry)
     if(l2.Pt() < 20) return kTRUE; 
 
     // Identify the leptons 
-    if(fabs(lep_type->at(l1_i))==11){ leptons = "ee";} // Electrons  
-    if(fabs(lep_type->at(l1_i))==13){ leptons = "mumu";} // Muons 
+    if(TMath::Abs(lep_type->at(l1_i))==11){ leptons = "ee";} // Electrons  
+    if(TMath::Abs(lep_type->at(l1_i))==13){ leptons = "mumu";} // Muons 
       
     if(leptons == "ee"){
       // Electron eta cut
-      if(fabs(l1.Eta()) > 2.47){return kTRUE;}
-      if(fabs(l2.Eta()) > 2.47){return kTRUE;}
+      if(TMath::Abs(l1.Eta()) > 2.47){return kTRUE;}
+      if(TMath::Abs(l2.Eta()) > 2.47){return kTRUE;}
       // Electron trigger
       if(trigE != 1){return kTRUE;}
     }
     if(leptons == "mumu"){
       // Muon eta cut
-      if(fabs(l1.Eta()) > 2.4){return kTRUE;}
-      if(fabs(l2.Eta()) > 2.4){return kTRUE;}
+      if(TMath::Abs(l1.Eta()) > 2.4){return kTRUE;}
+      if(TMath::Abs(l2.Eta()) > 2.4){return kTRUE;}
       // Muon trigger 
       if(trigM != 1){return kTRUE;}
     }
