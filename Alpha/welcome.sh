@@ -1,33 +1,45 @@
-echo 'Welcome to ATLAS Open Data C++ framework'
+#######################################################
+#                                                     # 
+# Welcome to ATLAS 13 TeV Open Data C++ framework !!! #
+#                                                     #   
+#######################################################
+
+echo 'Welcome to ATLAS 13 TeV Open Data C++ framework!!!'
 echo 'Input your option now'
-echo '1 = creates all output directories (recommended to do at the very beginning once)'
-echo '0 = removes everything within those directories (in case you want to clean all outputs)'
+echo '1 = create all output directories (do it at the very beginning just once)'
+echo '0 = remove all output directories (in case you want to clean and begin from zero)'
 read choice
 
+# names of 12 analyses
+analysisCollection=("WBosonAnalysis" "ZBosonAnalysis" "TTbarAnalysis" "SingleTopAnalysis" "WZDiBosonAnalysis" "ZZDiBosonAnalysis" "HWWAnalysis" "HZZAnalysis" "ZTauTauAnalysis" "HyyAnalysis" "SUSYAnalysis" "ZPrimeBoostedAnalysis")
+
+# creating the output directory for the Analyses codes
 if (( $choice == 1 )) ; then
-  echo 'Creating the needed empty output directories in Analysis/NNAnalysis/** and in Plotting/histograms'
-  mkdir Analysis/HZZAnalysis/Output_HZZAnalysis
-  mkdir Analysis/HyyAnalysis/Output_HyyAnalysis
-  mkdir Analysis/TTbarAnalysis/Output_TTbarAnalysis
-  mkdir Analysis/WBosonAnalysis/Output_WBosonAnalysis
-  mkdir Analysis/WZDiBosonAnalysis/Output_WZDiBosonAnalysis
-  mkdir Analysis/ZBosonAnalysis/Output_ZBosonAnalysis
-  mkdir Analysis/ZZDiBosonAnalysis/Output_ZZDiBosonAnalysis
+  for i in {0..11} ; do
+    analysisName=${analysisCollection[$i]}
+    echo "Creating the directory: Analysis/${analysisName}/Output_${analysisName}"
+    mkdir Analysis/${analysisName}/Output_${analysisName}
+  done
+
+  echo "creating the output directory for the Plotting code: Plotting/histograms"
   mkdir Plotting/histograms
+
+# removing everything within directories
 elif  (( $choice == 0 )) ; then
-  echo 'Removing everything within directories Analysis/NNAnalysis/Output_NNAnalysis/* and in Plotting/histograms/*'
-  rm Analysis/HZZAnalysis/Output_HZZAnalysis/*
-  rm Analysis/HyyAnalysis/Output_HyyAnalysis/*
-  rm Analysis/TTbarAnalysis/Output_TTbarAnalysis/*
-  rm Analysis/WBosonAnalysis/Output_WBosonAnalysis/*
-  rm Analysis/WZDiBosonAnalysis/Output_WZDiBosonAnalysis/*
-  rm Analysis/ZBosonAnalysis/Output_ZBosonAnalysis/*
-  rm Analysis/ZZDiBosonAnalysis/Output_ZZDiBosonAnalysis/*
-  rm Plotting/histograms/*
+  for i in {0..11} ; do
+    analysisName=${analysisCollection[$i]}
+    echo "Removing the directory: Analysis/${analysisName}/Output_${analysisName}"
+    rm -rf Analysis/${analysisName}/Output_${analysisName}
+  done
+
+  echo "Removing the output directory for the Plotting code: Plotting/histograms"
+  rm -rf Plotting/histograms
+
 else
      echo "Invalid choice!"
 fi
 
+########################
 
 
 

@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////////////////
 //// TTbarAnalysis code
-//// Author: ATLAS Collaboration (2018)
+//// Author: ATLAS Collaboration (2019)
 ////
 ////
 //// DISCLAIMER:

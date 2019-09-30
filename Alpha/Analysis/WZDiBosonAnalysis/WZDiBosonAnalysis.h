@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
-#ifndef HWWAnalysis_h
-#define HWWAnalysis_h
+#ifndef WZDiBosonAnalysis_h
+#define WZDiBosonAnalysis_h
 
 #include "TROOT.h"
 #include "TChain.h"
@@ -10,7 +10,7 @@
 // Headers needed by this particular selector
 #include "vector"
 
-class HWWAnalysis : public TSelector {
+class WZDiBosonAnalysis : public TSelector {
   public :
   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
 
@@ -19,65 +19,26 @@ class HWWAnalysis : public TSelector {
 
   // Global variables histograms
   TH1F *hist_etmiss      = 0;
-  TH1F *hist_mLL         = 0; 
-  TH1F *hist_ptLL        = 0;  
-  TH1F *hist_dPhi_LL      = 0;
-  TH1F *hist_mt          = 0;
-  TH1F *hist_dPhiLLmet      = 0;
-
-  TH1F *histI_etmiss      = 0;
-  TH1F *histI_mLL         = 0;
-  TH1F *histI_ptLL        = 0;
-  TH1F *histI_dPhi_LL      = 0;
-  TH1F *histI_mt          = 0;
-  TH1F *histI_dPhiLLmet      = 0;
-
-
-
-
+  TH1F *hist_mLL         = 0;
+  TH1F *hist_mtw         = 0;
+  TH1F *hist_ptLL        = 0;
 
   // Leading Lepton histograms
-  TH1F *hist_leadleptpt   = 0;
-  TH1F *hist_leadlepteta  = 0;
-  TH1F *hist_leadleptE    = 0;
-  TH1F *hist_leadleptphi  = 0;
-  TH1F *hist_leadleptch   = 0;
-  TH1F *hist_leadleptID   = 0;
-  TH1F *hist_leadlept_ptc  = 0;
-  TH1F *hist_leadleptetc  = 0;
-  TH1F *hist_leadlepz0    = 0;
-  TH1F *hist_leadlepd0    = 0;
+  TH1F *hist_threeleptpt   = 0;
+  TH1F *hist_threelepteta  = 0;
+  TH1F *hist_threeleptE    = 0;
+  TH1F *hist_threeleptphi  = 0;
+  TH1F *hist_threeleptch   = 0;
+  TH1F *hist_threeleptID   = 0;
+  TH1F *hist_threelept_ptc  = 0;
+  TH1F *hist_threeleptetc  = 0;
+  TH1F *hist_threelepz0    = 0;
+  TH1F *hist_threelepd0    = 0;
 
-  // Subleading Lepton histograms
-  TH1F *hist_subleadleptpt  = 0;
-  TH1F *hist_subleadlepteta = 0;
-  TH1F *hist_subleadleptE   = 0;
-  TH1F *hist_subleadleptphi = 0;
-  TH1F *hist_subleadleptch  = 0;
-  TH1F *hist_subleadleptID  = 0;
-  TH1F *hist_subleadlept_ptc = 0;
-  TH1F *hist_subleadleptetc = 0;
-  TH1F *hist_subleadlepz0   = 0;
-  TH1F *hist_subleadlepd0   = 0;
-
-  // Jet variables histograms
-  TH1F *hist_n_jets       = 0;
-  TH1F *hist_n_bjets       = 0;
-
-  TH1F *histI_n_jets       = 0;
-  TH1F *histI_n_bjets       = 0;
-
-
-
-
-
-  TH1F *hist_leadjet_pt       = 0;
-  TH1F *hist_leadjet_eta      = 0;
 
   //////////////////////////////////////////////////////////
   // Declaration of leaf types
-
-   Int_t           runNumber;
+  Int_t           runNumber;
    Int_t           eventNumber;
    Int_t           channelNumber;
    Float_t         mcWeight;
@@ -104,7 +65,7 @@ class HWWAnalysis : public TSelector {
    vector<float>   *lep_phi;
    vector<float>   *lep_E;
    vector<float>   *lep_z0;
-   vector<int>     *lep_charge;
+   vector<int>   *lep_charge;
    vector<unsigned int> *lep_type;
    vector<bool>    *lep_isTightID;
    vector<float>   *lep_ptcone30;
@@ -132,7 +93,6 @@ class HWWAnalysis : public TSelector {
    vector<bool>    *photon_isTightID;
    vector<float>   *photon_ptcone30;
    vector<float>   *photon_etcone20;
-   vector<int>     *photon_convType;
    UInt_t          fatjet_n;
    vector<float>   *fatjet_pt;
    vector<float>   *fatjet_eta;
@@ -165,8 +125,9 @@ class HWWAnalysis : public TSelector {
    vector<float>   *fatjet_pt_syst;
    vector<float>   *tau_pt_syst;
 
+
   // List of branches
- TBranch        *b_runNumber;   //!
+  TBranch        *b_runNumber;   //!
    TBranch        *b_eventNumber;   //!
    TBranch        *b_channelNumber;   //!
    TBranch        *b_mcWeight;   //!
@@ -254,8 +215,8 @@ class HWWAnalysis : public TSelector {
    TBranch        *b_tau_pt_syst;   //!
 
 
-  HWWAnalysis(TTree * =0) : fChain(0) { }
-  virtual ~HWWAnalysis() { }
+  WZDiBosonAnalysis(TTree * =0) : fChain(0) { }
+  virtual ~WZDiBosonAnalysis() { }
   virtual Int_t   Version() const { return 2; }
   virtual void    Begin(TTree *tree);
   virtual void    SlaveBegin(TTree *tree);
@@ -269,8 +230,6 @@ class HWWAnalysis : public TSelector {
   virtual void    SetInputList(TList *input) { fInput = input; }
   virtual void    FillHistogramsGlobal( double m, float w , TString s);
   virtual void    FillHistogramsLeadlept( double m, float w , TString s);
-  virtual void    FillHistogramsSubleadlept( double m, float w , TString s);
-  //virtual void    FillHistogramsLeadJet( double m, float w , TString s);
 
   // Get Output List t osave our histograms in the output file
   virtual TList  *GetOutputList() const { return fOutput; }
@@ -284,25 +243,19 @@ class HWWAnalysis : public TSelector {
   virtual void    SlaveTerminate();
   virtual void    Terminate();
 
+
   int nEvents;
 
-  ClassDef(HWWAnalysis,0);
+
+  ClassDef(WZDiBosonAnalysis,0);
 };
 
 #endif
 
-#ifdef HWWAnalysis_cxx
-void HWWAnalysis::Init(TTree *tree)
+#ifdef WZDiBosonAnalysis_cxx
+void WZDiBosonAnalysis::Init(TTree *tree)
 {
-  // The Init() function is called when the selector needs to initialize
-  // a new tree or chain. Typically here the reader is initialized.
-  // It is normally not necessary to make changes to the generated
-  // code, but the routine can be extended by the user if needed.
-  // Init() will be called many times when running on PROOF
-  // (once per file to be processed).
-
-
-   lep_truthMatched = 0;
+ lep_truthMatched = 0;
    lep_trigMatched = 0;
    lep_pt = 0;
    lep_eta = 0;
@@ -361,14 +314,12 @@ void HWWAnalysis::Init(TTree *tree)
    fatjet_pt_syst = 0;
    tau_pt_syst = 0;
 
-
   // Set branch addresses and branch pointers
   if (!tree) return;
   fChain = tree;
   fChain->SetMakeClass(1);
 
-
-   fChain->SetBranchAddress("runNumber", &runNumber, &b_runNumber);
+fChain->SetBranchAddress("runNumber", &runNumber, &b_runNumber);
    fChain->SetBranchAddress("eventNumber", &eventNumber, &b_eventNumber);
    fChain->SetBranchAddress("channelNumber", &channelNumber, &b_channelNumber);
    fChain->SetBranchAddress("mcWeight", &mcWeight, &b_mcWeight);
@@ -456,9 +407,10 @@ void HWWAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("tau_pt_syst", &tau_pt_syst, &b_tau_pt_syst);
 
 
+
 }
 
-Bool_t HWWAnalysis::Notify()
+Bool_t WZDiBosonAnalysis::Notify()
 {
   // The Notify() function is called when a new file is opened. This
   // can be either for a new TTree in a TChain or when when a new TTree
@@ -469,4 +421,4 @@ Bool_t HWWAnalysis::Notify()
   return kTRUE;
 }
 
-#endif // #ifdef HWWAnalysis_cxx
+#endif // #ifdef WZDiBosonAnalysis_cxx

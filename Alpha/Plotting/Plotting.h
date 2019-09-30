@@ -10,8 +10,6 @@
 #include <map>
 #include <algorithm>
 #include <math.h>
-
-
 #include <TF1.h>
 #include <TH1.h>
 #include <TLegend.h>
@@ -73,7 +71,6 @@ class Plotting{
   void createHistogram(TFile* file, std::string hname,  std::string proc);
   void makePlots();
   void PrintCanvas(TCanvas* c1, string title);
-  
 
   std::vector<std::string> filename;
   std::map<std::string,std::pair<double,double> > SF;
@@ -85,9 +82,12 @@ class Plotting{
 
   // histogram settings
   std::vector<HistoHandler*> hset;
-  
+
+  // fitting
+  TF1* bgd; 
+  TF1* fit;
+  TH1F* h_ratio2;
+
 };
 
-
 #endif
-

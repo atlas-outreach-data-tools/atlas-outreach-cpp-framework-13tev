@@ -1,5 +1,5 @@
 ## small script to run the analysis
-analysis="main_ZPrimeBoostedAnalysis"
+analysis="main_WZDiBosonAnalysis"
 
 ##OPTION
 echo Which option should I run? 

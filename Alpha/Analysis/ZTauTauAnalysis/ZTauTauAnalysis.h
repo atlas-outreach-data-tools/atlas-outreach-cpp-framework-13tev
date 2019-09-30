@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
-#ifndef HWWAnalysis_h
-#define HWWAnalysis_h
+#ifndef ZTauTauAnalysis_h
+#define ZTauTauAnalysis_h
 
 #include "TROOT.h"
 #include "TChain.h"
@@ -10,7 +10,7 @@
 // Headers needed by this particular selector
 #include "vector"
 
-class HWWAnalysis : public TSelector {
+class ZTauTauAnalysis : public TSelector {
   public :
   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
 
@@ -18,23 +18,13 @@ class HWWAnalysis : public TSelector {
   // histograms
 
   // Global variables histograms
-  TH1F *hist_etmiss      = 0;
-  TH1F *hist_mLL         = 0; 
-  TH1F *hist_ptLL        = 0;  
-  TH1F *hist_dPhi_LL      = 0;
-  TH1F *hist_mt          = 0;
-  TH1F *hist_dPhiLLmet      = 0;
-
-  TH1F *histI_etmiss      = 0;
-  TH1F *histI_mLL         = 0;
-  TH1F *histI_ptLL        = 0;
-  TH1F *histI_dPhi_LL      = 0;
-  TH1F *histI_mt          = 0;
-  TH1F *histI_dPhiLLmet      = 0;
-
-
-
-
+  TH1F *hist_etmiss    = 0;
+  TH1F *hist_mLL    = 0;
+  TH1F *hist_MMC_etau    = 0;
+  TH1F *hist_MMC_mutau    = 0;
+  TH1F *hist_mt_etau    = 0;
+  TH1F *hist_mt_mutau    = 0;
+  TH1F *hist_sum_dPhi   = 0;
 
   // Leading Lepton histograms
   TH1F *hist_leadleptpt   = 0;
@@ -48,29 +38,20 @@ class HWWAnalysis : public TSelector {
   TH1F *hist_leadlepz0    = 0;
   TH1F *hist_leadlepd0    = 0;
 
-  // Subleading Lepton histograms
-  TH1F *hist_subleadleptpt  = 0;
-  TH1F *hist_subleadlepteta = 0;
-  TH1F *hist_subleadleptE   = 0;
-  TH1F *hist_subleadleptphi = 0;
-  TH1F *hist_subleadleptch  = 0;
-  TH1F *hist_subleadleptID  = 0;
-  TH1F *hist_subleadlept_ptc = 0;
-  TH1F *hist_subleadleptetc = 0;
-  TH1F *hist_subleadlepz0   = 0;
-  TH1F *hist_subleadlepd0   = 0;
+  // Tau histograms
+
+  TH1F *hist_taupt    = 0;
+  TH1F *hist_taueta    = 0;
+  TH1F *hist_tauE    = 0;
+  TH1F *hist_tauphi    = 0;
+
+  TH1F *hist_tau_nTracks    = 0;
+  TH1F *hist_tau_BDTid    = 0;
+
+  TH1F *hist_syst_taupt    = 0;
 
   // Jet variables histograms
   TH1F *hist_n_jets       = 0;
-  TH1F *hist_n_bjets       = 0;
-
-  TH1F *histI_n_jets       = 0;
-  TH1F *histI_n_bjets       = 0;
-
-
-
-
-
   TH1F *hist_leadjet_pt       = 0;
   TH1F *hist_leadjet_eta      = 0;
 
@@ -147,6 +128,7 @@ class HWWAnalysis : public TSelector {
    vector<float>   *tau_eta;
    vector<float>   *tau_phi;
    vector<float>   *tau_E;
+   vector<int>     *tau_charge;
    vector<bool>    *tau_isTightID;
    vector<bool>    *tau_truthMatched;
    vector<bool>    *tau_trigMatched;
@@ -235,6 +217,7 @@ class HWWAnalysis : public TSelector {
    TBranch        *b_tau_eta;   //!
    TBranch        *b_tau_phi;   //!
    TBranch        *b_tau_E;   //!
+   TBranch        *b_tau_charge;   //!
    TBranch        *b_tau_isTightID;   //!
    TBranch        *b_tau_truthMatched;   //!
    TBranch        *b_tau_trigMatched;   //!
@@ -254,8 +237,8 @@ class HWWAnalysis : public TSelector {
    TBranch        *b_tau_pt_syst;   //!
 
 
-  HWWAnalysis(TTree * =0) : fChain(0) { }
-  virtual ~HWWAnalysis() { }
+  ZTauTauAnalysis(TTree * =0) : fChain(0) { }
+  virtual ~ZTauTauAnalysis() { }
   virtual Int_t   Version() const { return 2; }
   virtual void    Begin(TTree *tree);
   virtual void    SlaveBegin(TTree *tree);
@@ -269,8 +252,8 @@ class HWWAnalysis : public TSelector {
   virtual void    SetInputList(TList *input) { fInput = input; }
   virtual void    FillHistogramsGlobal( double m, float w , TString s);
   virtual void    FillHistogramsLeadlept( double m, float w , TString s);
-  virtual void    FillHistogramsSubleadlept( double m, float w , TString s);
-  //virtual void    FillHistogramsLeadJet( double m, float w , TString s);
+  virtual void    FillHistogramsTau( double m, float w , TString s);
+  virtual void    FillHistogramsLeadJet( double m, float w , TString s);
 
   // Get Output List t osave our histograms in the output file
   virtual TList  *GetOutputList() const { return fOutput; }
@@ -284,15 +267,17 @@ class HWWAnalysis : public TSelector {
   virtual void    SlaveTerminate();
   virtual void    Terminate();
 
+
   int nEvents;
 
-  ClassDef(HWWAnalysis,0);
+
+  ClassDef(ZTauTauAnalysis,0);
 };
 
 #endif
 
-#ifdef HWWAnalysis_cxx
-void HWWAnalysis::Init(TTree *tree)
+#ifdef ZTauTauAnalysis_cxx
+void ZTauTauAnalysis::Init(TTree *tree)
 {
   // The Init() function is called when the selector needs to initialize
   // a new tree or chain. Typically here the reader is initialized.
@@ -345,6 +330,7 @@ void HWWAnalysis::Init(TTree *tree)
    tau_eta = 0;
    tau_phi = 0;
    tau_E = 0;
+   tau_charge = 0;
    tau_isTightID = 0;
    tau_truthMatched = 0;
    tau_trigMatched = 0;
@@ -437,6 +423,7 @@ void HWWAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("tau_eta", &tau_eta, &b_tau_eta);
    fChain->SetBranchAddress("tau_phi", &tau_phi, &b_tau_phi);
    fChain->SetBranchAddress("tau_E", &tau_E, &b_tau_E);
+   fChain->SetBranchAddress("tau_charge", &tau_charge, &b_tau_charge);
    fChain->SetBranchAddress("tau_isTightID", &tau_isTightID, &b_tau_isTightID);
    fChain->SetBranchAddress("tau_truthMatched", &tau_truthMatched, &b_tau_truthMatched);
    fChain->SetBranchAddress("tau_trigMatched", &tau_trigMatched, &b_tau_trigMatched);
@@ -458,7 +445,7 @@ void HWWAnalysis::Init(TTree *tree)
 
 }
 
-Bool_t HWWAnalysis::Notify()
+Bool_t ZTauTauAnalysis::Notify()
 {
   // The Notify() function is called when a new file is opened. This
   // can be either for a new TTree in a TChain or when when a new TTree
@@ -469,4 +456,4 @@ Bool_t HWWAnalysis::Notify()
   return kTRUE;
 }
 
-#endif // #ifdef HWWAnalysis_cxx
+#endif // #ifdef ZTauTauAnalysis_cxx

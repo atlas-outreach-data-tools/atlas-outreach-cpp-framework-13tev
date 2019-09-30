@@ -27,7 +27,7 @@ string name;
 void HWWAnalysis::Begin(TTree * )
 {
 
-  nEvent=0;
+  nEvents=0;
 
 }
 
@@ -45,9 +45,10 @@ void HWWAnalysis::SlaveBegin(TTree * )
 
 Bool_t HWWAnalysis::Process(Long64_t entry)
 {
+
   fChain->GetTree()->GetEntry(entry);
-  nEvent++;
-  if (nEvent % 50000 == 0) std::cout << "Analysed a total of: " << nEvent << " events out of " << fChain->GetTree()->GetEntries() << " in this sample" << std::endl;
+  nEvents++;
+  if (nEvents % 50000 == 0) std::cout << "Analysed a total of: " << nEvents << " events out of " << fChain->GetTree()->GetEntries() << " in this sample" << std::endl;
   
   if(fChain->GetTree()->GetEntries()>0)
     {

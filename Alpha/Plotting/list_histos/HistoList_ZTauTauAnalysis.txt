@@ -7,6 +7,7 @@ hist_mt_etau
 hist_mt_mutau
 hist_sum_dPhi
 hist_taupt
+hist_syst_taupt
 hist_taueta
 hist_tauE
 hist_tauphi

@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
-#ifndef HWWAnalysis_h
-#define HWWAnalysis_h
+#ifndef HZZAnalysis_h
+#define HZZAnalysis_h
 
 #include "TROOT.h"
 #include "TChain.h"
@@ -10,7 +10,7 @@
 // Headers needed by this particular selector
 #include "vector"
 
-class HWWAnalysis : public TSelector {
+class HZZAnalysis : public TSelector {
   public :
   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
 
@@ -18,66 +18,33 @@ class HWWAnalysis : public TSelector {
   // histograms
 
   // Global variables histograms
-  TH1F *hist_etmiss      = 0;
-  TH1F *hist_mLL         = 0; 
-  TH1F *hist_ptLL        = 0;  
-  TH1F *hist_dPhi_LL      = 0;
-  TH1F *hist_mt          = 0;
-  TH1F *hist_dPhiLLmet      = 0;
+  TH1F *hist_mLL1         = 0;
+  TH1F *hist_mLL2         = 0;
 
-  TH1F *histI_etmiss      = 0;
-  TH1F *histI_mLL         = 0;
-  TH1F *histI_ptLL        = 0;
-  TH1F *histI_dPhi_LL      = 0;
-  TH1F *histI_mt          = 0;
-  TH1F *histI_dPhiLLmet      = 0;
+  TH1F *hist_fourlepsys_pt  = 0;
+  TH1F *hist_fourlepsys_y   = 0;
 
+  TH1F *mass_four_lep      = 0;
+  TH1F *mass_ext_four_lep  = 0;
 
-
-
+  TH1F *hist_n_jets        = 0;
 
   // Leading Lepton histograms
-  TH1F *hist_leadleptpt   = 0;
-  TH1F *hist_leadlepteta  = 0;
-  TH1F *hist_leadleptE    = 0;
-  TH1F *hist_leadleptphi  = 0;
-  TH1F *hist_leadleptch   = 0;
-  TH1F *hist_leadleptID   = 0;
-  TH1F *hist_leadlept_ptc  = 0;
-  TH1F *hist_leadleptetc  = 0;
-  TH1F *hist_leadlepz0    = 0;
-  TH1F *hist_leadlepd0    = 0;
+  TH1F *hist_fourleptpt   = 0;
+  TH1F *hist_fourlepteta  = 0;
+  TH1F *hist_fourleptE    = 0;
+  TH1F *hist_fourleptphi  = 0;
+  TH1F *hist_fourleptch   = 0;
+  TH1F *hist_fourleptID   = 0;
+  TH1F *hist_fourlept_ptc  = 0;
+  TH1F *hist_fourleptetc  = 0;
+  TH1F *hist_fourlepz0    = 0;
+  TH1F *hist_fourlepd0    = 0;
 
-  // Subleading Lepton histograms
-  TH1F *hist_subleadleptpt  = 0;
-  TH1F *hist_subleadlepteta = 0;
-  TH1F *hist_subleadleptE   = 0;
-  TH1F *hist_subleadleptphi = 0;
-  TH1F *hist_subleadleptch  = 0;
-  TH1F *hist_subleadleptID  = 0;
-  TH1F *hist_subleadlept_ptc = 0;
-  TH1F *hist_subleadleptetc = 0;
-  TH1F *hist_subleadlepz0   = 0;
-  TH1F *hist_subleadlepd0   = 0;
-
-  // Jet variables histograms
-  TH1F *hist_n_jets       = 0;
-  TH1F *hist_n_bjets       = 0;
-
-  TH1F *histI_n_jets       = 0;
-  TH1F *histI_n_bjets       = 0;
-
-
-
-
-
-  TH1F *hist_leadjet_pt       = 0;
-  TH1F *hist_leadjet_eta      = 0;
 
   //////////////////////////////////////////////////////////
   // Declaration of leaf types
-
-   Int_t           runNumber;
+  Int_t           runNumber;
    Int_t           eventNumber;
    Int_t           channelNumber;
    Float_t         mcWeight;
@@ -122,51 +89,14 @@ class HWWAnalysis : public TSelector {
    vector<int>     *jet_trueflav;
    vector<bool>    *jet_truthMatched;
    vector<float>   *jet_MV2c10;
-   UInt_t          photon_n;
-   vector<bool>    *photon_truthMatched;
-   vector<bool>    *photon_trigMatched;
-   vector<float>   *photon_pt;
-   vector<float>   *photon_eta;
-   vector<float>   *photon_phi;
-   vector<float>   *photon_E;
-   vector<bool>    *photon_isTightID;
-   vector<float>   *photon_ptcone30;
-   vector<float>   *photon_etcone20;
-   vector<int>     *photon_convType;
-   UInt_t          fatjet_n;
-   vector<float>   *fatjet_pt;
-   vector<float>   *fatjet_eta;
-   vector<float>   *fatjet_phi;
-   vector<float>   *fatjet_E;
-   vector<float>   *fatjet_m;
-   vector<int>     *fatjet_truthMatched;
-   vector<float>   *fatjet_D2;
-   vector<float>   *fatjet_tau32;
-   UInt_t          tau_n;
-   vector<float>   *tau_pt;
-   vector<float>   *tau_eta;
-   vector<float>   *tau_phi;
-   vector<float>   *tau_E;
-   vector<bool>    *tau_isTightID;
-   vector<bool>    *tau_truthMatched;
-   vector<bool>    *tau_trigMatched;
-   vector<int>     *tau_nTracks;
-   vector<float>   *tau_BDTid;
-   Float_t         ditau_m;
-   vector<float>   *truth_pt;
-   vector<float>   *truth_eta;
-   vector<float>   *truth_phi;
-   vector<float>   *truth_E;
-   vector<int>     *truth_pdgid;
    vector<float>   *lep_pt_syst;
    Float_t         met_et_syst;
    vector<float>   *jet_pt_syst;
-   vector<float>   *photon_pt_syst;
-   vector<float>   *fatjet_pt_syst;
-   vector<float>   *tau_pt_syst;
+
 
   // List of branches
- TBranch        *b_runNumber;   //!
+
+  TBranch        *b_runNumber;   //!
    TBranch        *b_eventNumber;   //!
    TBranch        *b_channelNumber;   //!
    TBranch        *b_mcWeight;   //!
@@ -211,51 +141,13 @@ class HWWAnalysis : public TSelector {
    TBranch        *b_jet_trueflav;   //!
    TBranch        *b_jet_truthMatched;   //!
    TBranch        *b_jet_MV2c10;   //!
-   TBranch        *b_photon_n;   //!
-   TBranch        *b_photon_truthMatched;   //!
-   TBranch        *b_photon_trigMatched;   //!
-   TBranch        *b_photon_pt;   //!
-   TBranch        *b_photon_eta;   //!
-   TBranch        *b_photon_phi;   //!
-   TBranch        *b_photon_E;   //!
-   TBranch        *b_photon_isTightID;   //!
-   TBranch        *b_photon_ptcone30;   //!
-   TBranch        *b_photon_etcone20;   //!
-   TBranch        *b_fatjet_n;   //!
-   TBranch        *b_fatjet_pt;   //!
-   TBranch        *b_fatjet_eta;   //!
-   TBranch        *b_fatjet_phi;   //!
-   TBranch        *b_fatjet_E;   //!
-   TBranch        *b_fatjet_m;   //!
-   TBranch        *b_fatjet_truthMatched;   //!
-   TBranch        *b_fatjet_D2;   //!
-   TBranch        *b_fatjet_tau32;   //!
-   TBranch        *b_tau_n;   //!
-   TBranch        *b_tau_pt;   //!
-   TBranch        *b_tau_eta;   //!
-   TBranch        *b_tau_phi;   //!
-   TBranch        *b_tau_E;   //!
-   TBranch        *b_tau_isTightID;   //!
-   TBranch        *b_tau_truthMatched;   //!
-   TBranch        *b_tau_trigMatched;   //!
-   TBranch        *b_tau_nTracks;   //!
-   TBranch        *b_tau_BDTid;   //!
-   TBranch        *b_ditau_m;   //!
-   TBranch        *b_truth_pt;   //!
-   TBranch        *b_truth_eta;   //!
-   TBranch        *b_truth_phi;   //!
-   TBranch        *b_truth_E;   //!
-   TBranch        *b_truth_pdgid;   //!
    TBranch        *b_lep_pt_syst;   //!
    TBranch        *b_met_et_syst;   //!
    TBranch        *b_jet_pt_syst;   //!
-   TBranch        *b_photon_pt_syst;   //!
-   TBranch        *b_fatjet_pt_syst;   //!
-   TBranch        *b_tau_pt_syst;   //!
 
 
-  HWWAnalysis(TTree * =0) : fChain(0) { }
-  virtual ~HWWAnalysis() { }
+  HZZAnalysis(TTree * =0) : fChain(0) { }
+  virtual ~HZZAnalysis() { }
   virtual Int_t   Version() const { return 2; }
   virtual void    Begin(TTree *tree);
   virtual void    SlaveBegin(TTree *tree);
@@ -269,8 +161,6 @@ class HWWAnalysis : public TSelector {
   virtual void    SetInputList(TList *input) { fInput = input; }
   virtual void    FillHistogramsGlobal( double m, float w , TString s);
   virtual void    FillHistogramsLeadlept( double m, float w , TString s);
-  virtual void    FillHistogramsSubleadlept( double m, float w , TString s);
-  //virtual void    FillHistogramsLeadJet( double m, float w , TString s);
 
   // Get Output List t osave our histograms in the output file
   virtual TList  *GetOutputList() const { return fOutput; }
@@ -286,21 +176,16 @@ class HWWAnalysis : public TSelector {
 
   int nEvents;
 
-  ClassDef(HWWAnalysis,0);
+
+  ClassDef(HZZAnalysis,0);
 };
 
 #endif
 
-#ifdef HWWAnalysis_cxx
-void HWWAnalysis::Init(TTree *tree)
+#ifdef HZZAnalysis_cxx
+void HZZAnalysis::Init(TTree *tree)
 {
-  // The Init() function is called when the selector needs to initialize
-  // a new tree or chain. Typically here the reader is initialized.
-  // It is normally not necessary to make changes to the generated
-  // code, but the routine can be extended by the user if needed.
-  // Init() will be called many times when running on PROOF
-  // (once per file to be processed).
-
+  
 
    lep_truthMatched = 0;
    lep_trigMatched = 0;
@@ -324,49 +209,14 @@ void HWWAnalysis::Init(TTree *tree)
    jet_trueflav = 0;
    jet_truthMatched = 0;
    jet_MV2c10 = 0;
-   photon_truthMatched = 0;
-   photon_trigMatched = 0;
-   photon_pt = 0;
-   photon_eta = 0;
-   photon_phi = 0;
-   photon_E = 0;
-   photon_isTightID = 0;
-   photon_ptcone30 = 0;
-   photon_etcone20 = 0;
-   fatjet_pt = 0;
-   fatjet_eta = 0;
-   fatjet_phi = 0;
-   fatjet_E = 0;
-   fatjet_m = 0;
-   fatjet_truthMatched = 0;
-   fatjet_D2 = 0;
-   fatjet_tau32 = 0;
-   tau_pt = 0;
-   tau_eta = 0;
-   tau_phi = 0;
-   tau_E = 0;
-   tau_isTightID = 0;
-   tau_truthMatched = 0;
-   tau_trigMatched = 0;
-   tau_nTracks = 0;
-   tau_BDTid = 0;
-   truth_pt = 0;
-   truth_eta = 0;
-   truth_phi = 0;
-   truth_E = 0;
-   truth_pdgid = 0;
    lep_pt_syst = 0;
    jet_pt_syst = 0;
-   photon_pt_syst = 0;
-   fatjet_pt_syst = 0;
-   tau_pt_syst = 0;
 
-
+   
   // Set branch addresses and branch pointers
   if (!tree) return;
   fChain = tree;
   fChain->SetMakeClass(1);
-
 
    fChain->SetBranchAddress("runNumber", &runNumber, &b_runNumber);
    fChain->SetBranchAddress("eventNumber", &eventNumber, &b_eventNumber);
@@ -413,52 +263,13 @@ void HWWAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("jet_trueflav", &jet_trueflav, &b_jet_trueflav);
    fChain->SetBranchAddress("jet_truthMatched", &jet_truthMatched, &b_jet_truthMatched);
    fChain->SetBranchAddress("jet_MV2c10", &jet_MV2c10, &b_jet_MV2c10);
-   fChain->SetBranchAddress("photon_n", &photon_n, &b_photon_n);
-   fChain->SetBranchAddress("photon_truthMatched", &photon_truthMatched, &b_photon_truthMatched);
-   fChain->SetBranchAddress("photon_trigMatched", &photon_trigMatched, &b_photon_trigMatched);
-   fChain->SetBranchAddress("photon_pt", &photon_pt, &b_photon_pt);
-   fChain->SetBranchAddress("photon_eta", &photon_eta, &b_photon_eta);
-   fChain->SetBranchAddress("photon_phi", &photon_phi, &b_photon_phi);
-   fChain->SetBranchAddress("photon_E", &photon_E, &b_photon_E);
-   fChain->SetBranchAddress("photon_isTightID", &photon_isTightID, &b_photon_isTightID);
-   fChain->SetBranchAddress("photon_ptcone30", &photon_ptcone30, &b_photon_ptcone30);
-   fChain->SetBranchAddress("photon_etcone20", &photon_etcone20, &b_photon_etcone20);
-   fChain->SetBranchAddress("fatjet_n", &fatjet_n, &b_fatjet_n);
-   fChain->SetBranchAddress("fatjet_pt", &fatjet_pt, &b_fatjet_pt);
-   fChain->SetBranchAddress("fatjet_eta", &fatjet_eta, &b_fatjet_eta);
-   fChain->SetBranchAddress("fatjet_phi", &fatjet_phi, &b_fatjet_phi);
-   fChain->SetBranchAddress("fatjet_E", &fatjet_E, &b_fatjet_E);
-   fChain->SetBranchAddress("fatjet_m", &fatjet_m, &b_fatjet_m);
-   fChain->SetBranchAddress("fatjet_truthMatched", &fatjet_truthMatched, &b_fatjet_truthMatched);
-   fChain->SetBranchAddress("fatjet_D2", &fatjet_D2, &b_fatjet_D2);
-   fChain->SetBranchAddress("fatjet_tau32", &fatjet_tau32, &b_fatjet_tau32);
-   fChain->SetBranchAddress("tau_n", &tau_n, &b_tau_n);
-   fChain->SetBranchAddress("tau_pt", &tau_pt, &b_tau_pt);
-   fChain->SetBranchAddress("tau_eta", &tau_eta, &b_tau_eta);
-   fChain->SetBranchAddress("tau_phi", &tau_phi, &b_tau_phi);
-   fChain->SetBranchAddress("tau_E", &tau_E, &b_tau_E);
-   fChain->SetBranchAddress("tau_isTightID", &tau_isTightID, &b_tau_isTightID);
-   fChain->SetBranchAddress("tau_truthMatched", &tau_truthMatched, &b_tau_truthMatched);
-   fChain->SetBranchAddress("tau_trigMatched", &tau_trigMatched, &b_tau_trigMatched);
-   fChain->SetBranchAddress("tau_nTracks", &tau_nTracks, &b_tau_nTracks);
-   fChain->SetBranchAddress("tau_BDTid", &tau_BDTid, &b_tau_BDTid);
-   fChain->SetBranchAddress("ditau_m", &ditau_m, &b_ditau_m);
-   fChain->SetBranchAddress("truth_pt", &truth_pt, &b_truth_pt);
-   fChain->SetBranchAddress("truth_eta", &truth_eta, &b_truth_eta);
-   fChain->SetBranchAddress("truth_phi", &truth_phi, &b_truth_phi);
-   fChain->SetBranchAddress("truth_E", &truth_E, &b_truth_E);
-   fChain->SetBranchAddress("truth_pdgid", &truth_pdgid, &b_truth_pdgid);
    fChain->SetBranchAddress("lep_pt_syst", &lep_pt_syst, &b_lep_pt_syst);
    fChain->SetBranchAddress("met_et_syst", &met_et_syst, &b_met_et_syst);
    fChain->SetBranchAddress("jet_pt_syst", &jet_pt_syst, &b_jet_pt_syst);
-   fChain->SetBranchAddress("photon_pt_syst", &photon_pt_syst, &b_photon_pt_syst);
-   fChain->SetBranchAddress("fatjet_pt_syst", &fatjet_pt_syst, &b_fatjet_pt_syst);
-   fChain->SetBranchAddress("tau_pt_syst", &tau_pt_syst, &b_tau_pt_syst);
-
 
 }
 
-Bool_t HWWAnalysis::Notify()
+Bool_t HZZAnalysis::Notify()
 {
   // The Notify() function is called when a new file is opened. This
   // can be either for a new TTree in a TChain or when when a new TTree
@@ -469,4 +280,4 @@ Bool_t HWWAnalysis::Notify()
   return kTRUE;
 }
 
-#endif // #ifdef HWWAnalysis_cxx
+#endif // #ifdef HZZAnalysis_cxx

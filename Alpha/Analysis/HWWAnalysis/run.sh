@@ -28,7 +28,7 @@ parallel=$proofvarname
 echo "starting ROOT"
 ##
 root -l -b << EOF
-.L $analysis.C
+.L $analysis.C+
 $analysis($parallel,$option)
 EOF
 ##

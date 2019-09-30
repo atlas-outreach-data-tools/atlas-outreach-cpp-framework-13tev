@@ -1,5 +1,5 @@
 ## small script to run the analysis
-analysis="main_ZPrimeBoostedAnalysis"
+analysis="main_HZZAnalysis"
 
 ##OPTION
 echo Which option should I run? 

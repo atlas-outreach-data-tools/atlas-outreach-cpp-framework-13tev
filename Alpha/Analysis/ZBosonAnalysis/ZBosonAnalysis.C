@@ -104,7 +104,7 @@ Bool_t ZBosonAnalysis::Process(Long64_t entry)
 		         }
                       }
 		      // muon selection 
-		      if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)<2.4) ) { 
+		      if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)<2.5) ) { 
                         if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 3 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {		
 	                   goodlep_n = goodlep_n + 1;
 			   goodlep_index[lep_index] = i;

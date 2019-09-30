@@ -9,7 +9,3 @@ hist_threeleptE
 hist_threeleptphi
 hist_threeleptch
 hist_threeleptID
-hist_threelept_ptc
-hist_threeleptetc
-hist_threelepz0
-hist_threelepd0

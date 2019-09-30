@@ -10,7 +10,3 @@ hist_fourleptE
 hist_fourleptphi
 hist_fourleptch
 hist_fourleptID
-hist_fourlept_ptc
-hist_fourleptetc
-hist_fourlepz0
-hist_fourlepd0
