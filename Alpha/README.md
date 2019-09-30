@@ -18,7 +18,7 @@ For now, the analysis code can be run using samples located in eos:
 ## Analysis Code
 The analysis code is located in the **Analysis** folder. It is used to make the selection and  create histograms for each individual input file, and those are then used by the plotting code.
 
-Currently, 12 different analyses named "NNAnalysis" are supported, where NN = WBoson, ZBoson, TTbar, SingleTop, WZDiBoson, ZZDiBoson, HZZ, HWW, Hyy, ZPrimeBoosted, ZTauTau and SUSY
+Currently, **12** different analyses named "NNAnalysis" are supported, where **NN = WBoson, ZBoson, TTbar, SingleTop, WZDiBoson, ZZDiBoson, HZZ, HWW, Hyy, ZPrimeBoosted, ZTauTau and SUSY**
 
 Each analysis code contains: 
 - the analysis header (*NNAnalysis.h*) which defines the histograms and provides access to the variables stored in the input samples
