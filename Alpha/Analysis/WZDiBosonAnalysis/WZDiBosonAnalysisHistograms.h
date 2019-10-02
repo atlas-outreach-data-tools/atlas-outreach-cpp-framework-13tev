@@ -16,7 +16,7 @@ void WZDiBosonAnalysis::define_histograms()
   hist_ptLL          = new TH1F("hist_ptLL",         "Transverse momentum of Dilepton System; p^{ll}_{T};Events / bin", 20, 0, 400);
 
   // Lepton histograms
-  hist_threeleptpt   = new TH1F("hist_threeleptpt",  " Lepton Transverse Momentum;p_{T}^{lep} [GeV];Events / bin", 10, 0, 200);
+  hist_threeleptpt   = new TH1F("hist_threeleptpt",  " Lepton Transverse Momentum;p_{T}^{lep} [GeV];Events / bin", 10, 25, 200);
   hist_threelepteta  = new TH1F("hist_threelepteta", " Lepton Pseudorapidity; #eta^{lep}; Events / bin", 15, -3, 3);
   hist_threeleptE    = new TH1F("hist_threeleptE",   " Lepton Energy; E^{lep} [GeV]; Events / bin", 15, 0, 300);
   hist_threeleptphi  = new TH1F("hist_threeleptphi", " Lepton Azimuthal Angle ; #phi^{lep}; Events / bin", 16, -3.2, 3.2);

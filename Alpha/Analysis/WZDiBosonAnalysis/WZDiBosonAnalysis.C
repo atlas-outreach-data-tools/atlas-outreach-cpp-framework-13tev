@@ -89,8 +89,8 @@ Bool_t WZDiBosonAnalysis::Process(Long64_t entry)
 	      // Lepton is Tight
 	      if( lep_isTightID->at(i) )
 		{
-		  //  Lepton is isolated and with at least 15 GeV
-		  if( lep_pt->at(i) > 20000. && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.15) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.15 ) )
+		  //  Lepton is isolated and with at least 20 GeV
+		  if( lep_pt->at(i) > 20000. && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.15) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.15) )
 		    {
 		      if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i)<2.47) && ( TMath::Abs(lep_eta->at(i) < 1.37) || TMath::Abs(lep_eta->at(i) > 1.52) ) ) {
                       if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 5 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {
@@ -243,9 +243,9 @@ Bool_t WZDiBosonAnalysis::Process(Long64_t entry)
 	      // cut: m_ll - m(Z) < 10
 	      if(tmp < 10.)
 		{
-		  //mtw > 30 GeV, pT of lepton from W > 20 GeV, at least one with pT > 25 GeV
-		  if(mtw > 30000. && lepW > 20. && (lep_pt->at(goodlep1_index)/1000. > 25 || lep_pt->at(goodlep2_index)/1000. > 25 || lep_pt->at(goodlep3_index)/1000. > 25) )
-		    {
+		  // mtw > 30 GeV, at least one lepton with pT > 25 GeV 
+		  if( mtw > 30000. && met_et > 30000. && (lep_pt->at(goodlep1_index)/1000. > 25 || lep_pt->at(goodlep2_index)/1000. > 25 || lep_pt->at(goodlep3_index)/1000. > 25) )
+		  {
 		      
 		      //Start to fill histograms : definitions of x-axis variables
 		      
