@@ -205,9 +205,6 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 		  // visible mass window of 35 - 75 GeV cut applied to increase the Z->tautau signal purity and maximize the separation from Z->ll background
 		  if ( VisibleMass_LepTau > 35 && VisibleMass_LepTau < 75 && mt < 30000 && sum_dPhi < 3.5 ) {
 		 
-		    // Given that no estimation of multijet background (typically composed of a jet misidentified as a tau-candidate, and estimated using data-driven methods) is done, only muon-tau final states are studied
-//		   if(type_one==13) { 
-		    
 		    //Start to fill histograms: definitions of variables
 		    double names_of_global_variable[]      ={VisibleMass_LepTau, MMC_mass, met_et/1000.,  mt_etau,        mt_mutau, sum_dPhi, (double)jet_n };
 		    TString histonames_of_global_variable[]={"hist_mLL",      "hist_MMC",   "hist_etmiss", "hist_mt_etau", "hist_mt_mutau", "hist_sum_dPhi", "hist_n_jets"};
@@ -262,7 +259,6 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 			    FillHistogramsLeadJet( names_of_jet_variable[i], weight, histonames_of_jet_variable[i]);
 			  }
 		      } // jet_n 
-//		    } // only muon-tau
  		   }
 		} 
 	    }
