@@ -51,13 +51,13 @@
 //######################### F L A G S ###############################//
 
 // debugging flag, set to 1 for checks
-#define DEBUG 0
+#define DEBUG 1
 
 // yields flag, set to 1 top print data and MC yields
 #define YIELDS 0
 
 // normalised signal flag, set to 1 to add normalised signal to the plots (can be used for Higgs, SingleTop, ZPrime, SUSY)
-#define NORMSIG 0
+#define NORMSIG 1
 
 // save to pdf flag, by default plots saved as png
 #define SAVEPDF 0
@@ -689,10 +689,10 @@ void Plotting::makePlots(){
       // diboson samples 
       diboson = (TH1F*)WlvZqq[fIter->first]->Clone();
       diboson->Add(WplvWmqq[fIter->first]);
-      diboson->Add(WpqqWmlv[fIter->first]);
+      if(!(option.find("ZPrimeBoostedAnalysis") != option.npos))  diboson->Add(WpqqWmlv[fIter->first]);
       diboson->Add(ZqqZll[fIter->first]); 
       diboson->Add(WqqZll[fIter->first]);
-      diboson->Add(llll[fIter->first]); 
+      if(!(option.find("ZPrimeBoostedAnalysis") != option.npos))  diboson->Add(llll[fIter->first]); 
       diboson->Add(lllv[fIter->first]);
       diboson->Add(llvv[fIter->first]);
       diboson->Add(lvvv[fIter->first]);
@@ -804,10 +804,10 @@ void Plotting::makePlots(){
       ZVV->Add(Zee[fIter->first]);
       ZVV->Add(WlvZqq[fIter->first]);
       ZVV->Add(WplvWmqq[fIter->first]);
-      ZVV->Add(WpqqWmlv[fIter->first]);
+      if(!(option.find("ZPrimeBoostedAnalysis") != option.npos))  ZVV->Add(WpqqWmlv[fIter->first]);
       ZVV->Add(ZqqZll[fIter->first]);
       ZVV->Add(WqqZll[fIter->first]);
-      ZVV->Add(llll[fIter->first]);
+      if(!(option.find("ZPrimeBoostedAnalysis") != option.npos))  ZVV->Add(llll[fIter->first]);
       ZVV->Add(lllv[fIter->first]);
       ZVV->Add(llvv[fIter->first]);
       ZVV->Add(lvvv[fIter->first]);
@@ -854,7 +854,6 @@ void Plotting::makePlots(){
       W_Z->Add(WlvZqq[fIter->first]);  // W->lv Z->qq
       W_Z->SetFillColor(kRed-7);
       W_Z->SetLineWidth(0);
-      //      W_Z->Scale(1.09); // In the 3 lepton cotrol region for WZ, one can see that MC prediction underestimates the WZ cross section, thus one would need to scale WZ by 9%
 
 
       // split diboson into WW+WZ
@@ -993,7 +992,6 @@ void Plotting::makePlots(){
       diboson->Add(lvvv[fIter->first]);
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
-      diboson->Scale(1.3); //normalisation scaling, from WW and WZ cross sections 
  
       W = (TH1F*)Wplusenu[fIter->first]->Clone();
       W->Add(Wplusmunu[fIter->first]);
@@ -1971,7 +1969,7 @@ void Plotting::makePlots(){
         fIter->second->SetMinimum(100);
         fIter->second->SetMaximum(1e11);
       }
-      if(fIter->first.find("SR2") != option.npos){
+      if(fIter->first.find("SR") != option.npos){
         pad0->SetLogy(1);
         fIter->second->SetMinimum(0.01);
         fIter->second->SetMaximum(1e5);

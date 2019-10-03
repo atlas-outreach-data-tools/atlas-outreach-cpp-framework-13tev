@@ -66,24 +66,58 @@ void SUSYAnalysis::FillOutputList(vector<TString> channels)
 void SUSYAnalysis::WriteHistograms(vector<TString> channels)
 {
   // histograms
+  TString histname; 
+
   for(const auto & ch:channels){
     // Write Global histograms
+    histname = "hist_etmiss_"+ch; 
+    hist_etmiss[ch] = (TH1F*) GetOutputList()->FindObject(histname.Data()); 
     hist_etmiss[ch]->Write();
+
+    histname = "hist_mLL_"+ch; 
+    hist_mLL[ch] = (TH1F*) GetOutputList()->FindObject(histname.Data()); 
     hist_mLL[ch]->Write();
+
+    histname = "hist_mt2_"+ch; 
+    hist_mt2[ch] = (TH1F*) GetOutputList()->FindObject(histname.Data()); 
     hist_mt2[ch]->Write(); 
+
+    histname = "hist_rebin_etmiss_"+ch;
+    hist_rebin_etmiss[ch] = (TH1F*) GetOutputList()->FindObject(histname.Data());
     hist_rebin_etmiss[ch]->Write();
 
     // Write Leading Lepton histograms
+    histname = "hist_leadleptpt_"+ch; 
+    hist_leadleptpt[ch] = (TH1F*) GetOutputList()->FindObject(histname.Data()); 
     hist_leadleptpt[ch]->Write();
+
+    histname = "hist_leadlepteta_"+ch; 
+    hist_leadlepteta[ch] = (TH1F*) GetOutputList()->FindObject(histname.Data()); 
     hist_leadlepteta[ch]->Write();
+
+    histname = "hist_leadleptE_"+ch; 
+    hist_leadleptE[ch] = (TH1F*) GetOutputList()->FindObject(histname.Data()); 
     hist_leadleptE[ch]->Write();
+
+    histname = "hist_leadleptphi_"+ch; 
+    hist_leadleptphi[ch] = (TH1F*) GetOutputList()->FindObject(histname.Data()); 
     hist_leadleptphi[ch]->Write();
 
-   
     // Write Subleading Lepton histograms
+    histname = "hist_subleadleptpt_"+ch; 
+    hist_subleadleptpt[ch] = (TH1F*) GetOutputList()->FindObject(histname.Data()); 
     hist_subleadleptpt[ch]->Write();
+
+    histname = "hist_subleadlepteta_"+ch; 
+    hist_subleadlepteta[ch] = (TH1F*) GetOutputList()->FindObject(histname.Data()); 
     hist_subleadlepteta[ch]->Write();
+
+    histname = "hist_subleadleptE_"+ch; 
+    hist_subleadleptE[ch] = (TH1F*) GetOutputList()->FindObject(histname.Data()); 
     hist_subleadleptE[ch]->Write();
+
+    histname = "hist_subleadleptphi_"+ch; 
+    hist_subleadleptphi[ch] = (TH1F*) GetOutputList()->FindObject(histname.Data()); 
     hist_subleadleptphi[ch]->Write();
 
 

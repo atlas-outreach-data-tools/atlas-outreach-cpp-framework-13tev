@@ -19,6 +19,7 @@
 #include <string>
 #include <stdio.h> 
 #include <math.h>
+#include <cstdlib>
 
 #include <TH1.h>
 #include <TH2.h>
@@ -98,8 +99,8 @@ Bool_t SUSYAnalysis::Process(Long64_t entry)
       leptemp.SetPtEtaPhiE(lep_pt->at(i)/1000., lep_eta->at(i), lep_phi->at(i), lep_E->at(i)/1000.);
 
       if(leptemp.Pt() <= 10)continue;
-      if(TMath::Abs(lep_type->at(i))==11 && TMath::Abs(leptemp.Eta()) >= 2.47)continue;
-      if(TMath::Abs(lep_type->at(i))==13 && TMath::Abs(leptemp.Eta()) >= 2.7)continue;
+      if(TMath::Abs((int)lep_type->at(i))==11 && TMath::Abs(leptemp.Eta()) >= 2.47)continue;
+      if(TMath::Abs((int)lep_type->at(i))==13 && TMath::Abs(leptemp.Eta()) >= 2.7)continue;
 
       double dR;
       bool removeLep = false;
@@ -118,14 +119,14 @@ Bool_t SUSYAnalysis::Process(Long64_t entry)
 	jettemp.SetPtEtaPhiE(jet_pt->at(j)/1000., jet_eta->at(j), jet_phi->at(j), jet_E->at(j)/1000.); 
 	dR = jettemp.DeltaR(leptemp);
 	if(jet_MV2c10->at(j)>0.1758475){
-	  if(TMath::Abs(lep_type->at(i))==11 && dR < 0.2)removeLep = true;
-	  if(TMath::Abs(lep_type->at(i))==13 && dR < 0.4)removeLep = true;
+	  if(TMath::Abs((int)lep_type->at(i))==11 && dR < 0.2)removeLep = true;
+	  if(TMath::Abs((int)lep_type->at(i))==13 && dR < 0.4)removeLep = true;
 	}else{
-	  if(TMath::Abs(lep_type->at(i))==11 && dR < 0.2)removeJet = true;
-	  if(TMath::Abs(lep_type->at(i))==13 && dR < 0.4)removeLep = true;
+	  if(TMath::Abs((int)lep_type->at(i))==11 && dR < 0.2)removeJet = true;
+	  if(TMath::Abs((int)lep_type->at(i))==13 && dR < 0.4)removeLep = true;
 	}
 	if(!removeJet){
-	  if(TMath::Abs(lep_type->at(i))==11 && dR < 0.4)removeLep = true;
+	  if(TMath::Abs((int)lep_type->at(i))==11 && dR < 0.4)removeLep = true;
 	}else{
 	  remove_jet.push_back(j);
 	}
@@ -140,10 +141,10 @@ Bool_t SUSYAnalysis::Process(Long64_t entry)
       if( lep_etcone20->at(i)/lep_pt->at(i) > 0.15 ) continue;
       if( lep_ptcone30->at(i)/lep_pt->at(i) > 0.15 ) continue;
 
-      if( TMath::Abs(lep_type->at(i)) == 11 ){
+      if( TMath::Abs((int)lep_type->at(i)) == 11 ){
 	if(TMath::Abs(lep_trackd0pvunbiased->at(0))/lep_tracksigd0pvunbiased->at(0) > 5) continue;  
       }
-      if( TMath::Abs(lep_type->at(i)) == 13 ){
+      if( TMath::Abs((int)lep_type->at(i)) == 13 ){
 	if(TMath::Abs(lep_trackd0pvunbiased->at(0))/lep_tracksigd0pvunbiased->at(0) > 3) continue;  
       }
 
@@ -175,8 +176,8 @@ Bool_t SUSYAnalysis::Process(Long64_t entry)
     if(l2.Pt() < 20) return kTRUE; 
 
     // Identify the leptons 
-    if(TMath::Abs(lep_type->at(l1_i))==11){ leptons = "ee";} // Electrons  
-    if(TMath::Abs(lep_type->at(l1_i))==13){ leptons = "mumu";} // Muons 
+    if(TMath::Abs((int)lep_type->at(l1_i))==11){ leptons = "ee";} // Electrons  
+    if(TMath::Abs((int)lep_type->at(l1_i))==13){ leptons = "mumu";} // Muons 
       
     if(leptons == "ee"){
       // Electron eta cut

@@ -392,7 +392,4 @@ void main_SUSYAnalysis(int proof = 0, int option= 0)
     
   } // option 50
   
-  
-  
-  
 }
