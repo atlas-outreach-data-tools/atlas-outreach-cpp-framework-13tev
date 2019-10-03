@@ -57,8 +57,9 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
   
   if(fChain->GetTree()->GetEntries()>0)
     {
+
       // ****************************************************************************************************************************//
-      //  Begin simplified selection based on: ATLAS Collaboration, Eur. Phys. J. C 78 (2018) 163 and Phys. Rev. D 99, 072001 (2019) // 
+      //  Begin simplified selection based on: ATLAS Collaboration, Eur. Phys. J. C 78 (2018) 163 and Phys. Rev. D 99, 072001 (2019) //
       // ****************************************************************************************************************************//
       
       //Scale factors (adding the one for tau)
@@ -99,7 +100,7 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 		  if( lep_pt->at(i) >30000. && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.1) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.1 ) )
 		    {
 		      // electron selection in fiducial region excluding candidates in the transition region between the barrel and endcap electromagnetic calorimeters
-		      if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i)<2.47) && ( TMath::Abs(lep_eta->at(i) < 1.37) || TMath::Abs(lep_eta->at(i) > 1.52) ) ) {
+		      if ( lep_type->at(i)==11 && abs(lep_eta->at(i)<2.47) && ( abs(lep_eta->at(i) < 1.37) || abs(lep_eta->at(i) > 1.52) ) ) {
 			if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 5 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {
 			  goodlep_n = goodlep_n + 1;
 			  goodlep_index = i;
@@ -107,7 +108,7 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 			}
 		      }
 		      // muon selection 
-		      if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)<2.5) ) {
+		      if ( lep_type->at(i) ==13 && abs(lep_eta->at(i)<2.5) ) {
                         if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 3 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {
    			  goodlep_n = goodlep_n + 1;
 			  goodlep_index = i;
@@ -130,7 +131,7 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
               if( tau_isTightID->at(i) )
                 {
                   // tau pT and eta requirements
-                  if( tau_pt->at(i) >25000. && TMath::Abs(tau_eta->at(i)<2.5)  )
+                  if( tau_pt->at(i) >25000. && abs(tau_eta->at(i)<2.5)  )
                     {
 		      goodtau_n = goodtau_n + 1;
 		      goodtau_index = i;
@@ -167,13 +168,11 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 		  float VisibleMass_LepTau = Lepton_12.Mag()/1000.; //  visible mass is defined as the invariant mass of the lepton and the hadronic tau candidate.
 		  
 		  float MMC_mass = ditau_m; // The ditau invariant mass is determined using the missing-mass calculator (MMC) [Nucl. Instrum. Meth. A 654 (2011) 481,]
-		  float MMC_mass_etau=0.;   if(type_one==11)  {MMC_mass_etau = MMC_mass;  }
-		  float MMC_mass_mutau=0.;  if(type_one==13)  {MMC_mass_mutau= MMC_mass;  }
 		  
-		  float dPhi_tau_MET  = TMath::Abs(tau_phi->at(goodtau_index) - MeT.Phi() );
+		  float dPhi_tau_MET  = fabs(tau_phi->at(goodtau_index) - MeT.Phi() );
 		  dPhi_tau_MET        = dPhi_tau_MET < TMath::Pi() ? dPhi_tau_MET : 2*TMath::Pi() - dPhi_tau_MET;
 		  
-		  float dPhi_lep_MET = TMath::Abs( Lepton.Phi() - MeT.Phi() );
+		  float dPhi_lep_MET = fabs( Lepton.Phi() - MeT.Phi() );
 		  dPhi_lep_MET       = dPhi_lep_MET < TMath::Pi() ? dPhi_lep_MET : 2*TMath::Pi() - dPhi_lep_MET;
 		  
 		  float sum_dPhi = dPhi_tau_MET  + dPhi_lep_MET;
@@ -187,11 +186,11 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 		    {
 		      for(unsigned int i=0; i<jet_n; i++)
 			{
-			  if(jet_pt->at(i)>25000. && TMath::Abs(jet_eta->at(i)) < 2.5)
+			  if(jet_pt->at(i)>25000. && abs(jet_eta->at(i)) < 2.5)
 			    {
 			      // JVT cleaning
 			      bool jvt_pass=true;
-			      if (jet_pt->at(i) < 60000. && TMath::Abs(jet_eta->at(i)) < 2.4 && jet_jvt->at(i) < 0.59) jvt_pass=false;
+			      if (jet_pt->at(i) < 60000. && abs(jet_eta->at(i)) < 2.4 && jet_jvt->at(i) < 0.59) jvt_pass=false;
 			      if (jvt_pass) {
 				goodjet_n++;
 				goodjet_index = i;
@@ -210,8 +209,8 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 //		   if(type_one==13) { 
 		    
 		    //Start to fill histograms: definitions of variables
-		    double names_of_global_variable[]      ={VisibleMass_LepTau, MMC_mass_etau, MMC_mass_mutau, met_et/1000.,  mt_etau,        mt_mutau, sum_dPhi, (double)jet_n };
-		    TString histonames_of_global_variable[]={"hist_mLL",      "hist_MMC_etau",  "hist_MMC_mutau",    "hist_etmiss", "hist_mt_etau", "hist_mt_mutau", "hist_sum_dPhi", "hist_n_jets"};
+		    double names_of_global_variable[]      ={VisibleMass_LepTau, MMC_mass, met_et/1000.,  mt_etau,        mt_mutau, sum_dPhi, (double)jet_n };
+		    TString histonames_of_global_variable[]={"hist_mLL",      "hist_MMC",   "hist_etmiss", "hist_mt_etau", "hist_mt_mutau", "hist_sum_dPhi", "hist_n_jets"};
 		    
 		    double names_of_leadlep_variable[]={Lepton.Pt()/1000., Lepton.Eta(), Lepton.E()/1000., Lepton.Phi(), (double)lep_charge->at(goodlep_index), (double)lep_type->at(goodlep_index)};
 		    TString histonames_of_leadlep_variable[]={"hist_leadleptpt", "hist_leadlepteta", "hist_leadleptE", "hist_leadleptphi", "hist_leadleptch", "hist_leadleptID"};

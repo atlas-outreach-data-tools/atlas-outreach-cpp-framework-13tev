@@ -20,8 +20,7 @@ class ZTauTauAnalysis : public TSelector {
   // Global variables histograms
   TH1F *hist_etmiss    = 0;
   TH1F *hist_mLL    = 0;
-  TH1F *hist_MMC_etau    = 0;
-  TH1F *hist_MMC_mutau    = 0;
+  TH1F *hist_MMC    = 0;
   TH1F *hist_mt_etau    = 0;
   TH1F *hist_mt_mutau    = 0;
   TH1F *hist_sum_dPhi   = 0;

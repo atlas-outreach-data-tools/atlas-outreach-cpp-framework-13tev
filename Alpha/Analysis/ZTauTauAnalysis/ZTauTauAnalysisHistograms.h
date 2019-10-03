@@ -11,8 +11,7 @@ void ZTauTauAnalysis::define_histograms()
   
   // Global variables histograms
   hist_mLL          = new TH1F("hist_mLL",         "Visible mass; m_{vis} [GeV];Events / bin", 30, 20, 100);
-  hist_MMC_etau     = new TH1F("hist_MMC_etau",    "Invariant mass (MMC); m^{MMC}_{e,#tau_{h}} [GeV];Events / bin",   20, 68, 114);
-  hist_MMC_mutau    = new TH1F("hist_MMC_mutau",   "Invariant mass (MMC); m^{MMC}_{#mu,#tau_{h}} [GeV];Events / bin", 20, 68, 114);
+  hist_MMC          = new TH1F("hist_MMC",          "Invariant mass (MMC); m^{MMC}_{#tau#tau} [GeV];Events / bin", 15, 50, 200);
   hist_mt_etau      = new TH1F("hist_mt_etau",      "Transverse Mass; m_{T}(e,E_{T,Miss}) [GeV];Events / bin"  , 30, 1, 150);
   hist_mt_mutau     = new TH1F("hist_mt_mutau",     "Transverse Mass; m_{T}(#mu,E_{T,Miss}) [GeV];Events / bin", 30, 1, 150);
   hist_sum_dPhi     = new TH1F("hist_sum_dPhi",     "sum dPhi; #Sigma#Delta#phi;Events / bin", 30, 0, 6.3);
@@ -58,8 +57,7 @@ void ZTauTauAnalysis::FillOutputList()
   GetOutputList()->Add(hist_sum_dPhi);
 
   GetOutputList()->Add(hist_mLL);   
-  GetOutputList()->Add(hist_MMC_etau);  
-  GetOutputList()->Add(hist_MMC_mutau);
+  GetOutputList()->Add(hist_MMC);  
 
   GetOutputList()->Add(hist_mt_etau);
   GetOutputList()->Add(hist_mt_mutau);
@@ -106,8 +104,7 @@ void ZTauTauAnalysis::WriteHistograms()
   hist_sum_dPhi->Write();
   
   hist_mLL->Write();
-  hist_MMC_etau->Write();
-  hist_MMC_mutau->Write();
+  hist_MMC->Write();
 
   hist_mt_etau->Write();
   hist_mt_mutau->Write();
@@ -151,8 +148,7 @@ void ZTauTauAnalysis::FillHistogramsGlobal( double m, float w , TString s)
   if (s.Contains("hist_etmiss")) hist_etmiss->Fill(m,w);
   if (s.Contains("hist_sum_dPhi")) hist_sum_dPhi->Fill(m,w);
   if (s.Contains("hist_mLL")) hist_mLL->Fill(m,w);
-  if (s.Contains("hist_MMC_etau")) hist_MMC_etau->Fill(m,w);
-  if (s.Contains("hist_MMC_mutau")) hist_MMC_mutau->Fill(m,w);
+  if (s.Contains("hist_MMC")) hist_MMC->Fill(m,w);
   if (s.Contains("hist_mt_etau")) hist_mt_etau->Fill(m,w);
   if (s.Contains("hist_mt_mutau")) hist_mt_mutau->Fill(m,w);
   if (s.Contains("hist_n_jets")) hist_n_jets->Fill(m,w);
