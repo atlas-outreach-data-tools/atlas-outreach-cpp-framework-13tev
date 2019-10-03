@@ -60,7 +60,7 @@
 #define NORMSIG 1
 
 // save to pdf flag, by default plots saved as png
-#define SAVEPDF 0
+#define SAVEPDF 1
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -1494,13 +1494,19 @@ void Plotting::makePlots(){
     if(option.find("ZPrimeBoostedAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"Z' #rightarrow t#bar{t} (boosted)");}
     if(option.find("ZBosonAnalysis")    != option.npos){l.DrawLatex(0.18,0.71,"Z #rightarrow l^{+}l^{-}");}
     if(option.find("HWWAnalysis")       != option.npos){l.DrawLatex(0.18,0.71,"H #rightarrow WW* #rightarrow e#nu #mu#nu, N_{jet} #leq 1");}
-    if(option.find("SUSYAnalysis")      != option.npos){l.DrawLatex(0.18,0.71,"2l + 0 jets");}
     if(option.find("WZDiBosonAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"WZ #rightarrow l#nu ll");}
     if(option.find("ZZDiBosonAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"ZZ #rightarrow l^{+}l^{-} l^{+}l^{-}");}
     if(option.find("HZZAnalysis")       != option.npos){l.DrawLatex(0.18,0.71,"H #rightarrow ZZ* #rightarrow 4l");}
     if(option.find("ZTauTauAnalysis")   != option.npos){l.DrawLatex(0.18,0.71,"Z #rightarrow #tau_{l}#tau_{h}");}
     if(option.find("HyyAnalysis")       != option.npos){l.DrawLatex(0.18,0.71,"H #rightarrow #gamma #gamma");}
- 
+
+    if(option.find("SUSYAnalysis")      != option.npos){
+        if(fIter->first.find("SR_loose") != option.npos) l.DrawLatex(0.18,0.71,"2l + 0 jets, SR loose");
+	else if(fIter->first.find("SR_tight") != option.npos) l.DrawLatex(0.18,0.71,"2l + 0 jets, SR tight");
+	else l.DrawLatex(0.18,0.71,"2l + 0 jets");
+    }
+
+
     TLatex l2;
     l2.SetNDC();
     l2.SetTextSize(0.04);  
@@ -1966,7 +1972,7 @@ void Plotting::makePlots(){
     if(option.find("SUSYAnalysis") != option.npos){
       if(fIter->first.find("SFOS") != option.npos){
         pad0->SetLogy(1);
-        fIter->second->SetMinimum(100);
+        fIter->second->SetMinimum(10);
         fIter->second->SetMaximum(1e11);
       }
       if(fIter->first.find("SR") != option.npos){

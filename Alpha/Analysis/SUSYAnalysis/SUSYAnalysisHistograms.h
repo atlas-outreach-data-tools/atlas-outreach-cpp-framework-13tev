@@ -16,15 +16,14 @@ void SUSYAnalysis::define_histograms(vector<TString> channels)
     hist_rebin_etmiss[ch] = new TH1F("hist_rebin_etmiss_"+ch, "Missing Transverse Momentum;E_{T,Miss} [GeV];Events / bin", 10, 0, 300);
 
     // Leading Lepton histograms
-    hist_leadleptpt[ch]  = new TH1F("hist_leadleptpt_"+ch,  "Leading Lepton Transverse Momentum;p_{T}^{leadlep} [GeV];Events / bin", 30, 0, 1500);
+    hist_leadleptpt[ch]  = new TH1F("hist_leadleptpt_"+ch,  "Leading Lepton Transverse Momentum;p_{T}^{leadlep} [GeV];Events / bin", 30, 0, 500);
     hist_leadlepteta[ch] = new TH1F("hist_leadlepteta_"+ch, "Leading Lepton Pseudorapidity; #eta^{leadlep}; Events / bin", 40, -3, 3);
     hist_leadleptE[ch]   = new TH1F("hist_leadleptE_"+ch,   "Leading Lepton Energy; E^{leadlep} [GeV]; Events / bin", 30, 0, 1500);
     hist_leadleptphi[ch] = new TH1F("hist_leadleptphi_"+ch, "Leading Lepton Azimuthal Angle ; #phi^{leadlep}; Events / bin", 40, -3.2, 3.2);
 
 
-
     // Subleading Lepton histograms
-    hist_subleadleptpt[ch] = new TH1F("hist_subleadleptpt_"+ch, "Subleading Lepton Transverse Momentum;p_{T}^{traillep} [GeV];Events / bin", 30, 0, 1500);
+    hist_subleadleptpt[ch] = new TH1F("hist_subleadleptpt_"+ch, "Subleading Lepton Transverse Momentum;p_{T}^{traillep} [GeV];Events / bin", 30, 0, 500);
     hist_subleadlepteta[ch] = new TH1F("hist_subleadlepteta_"+ch, "Subleading Lepton Pseudorapidity; #eta^{traillep}; Events / bin", 40, -3, 3);
     hist_subleadleptE[ch] = new TH1F("hist_subleadleptE_"+ch,  "Subleading Lepton Energy; E^{traillep} [GeV]; Events / bin", 30, 0, 1500);
     hist_subleadleptphi[ch] = new TH1F("hist_subleadleptphi_"+ch,"Subleading Lepton Azimuthal Angle ; #phi^{traillep}; Events / bin", 20, -3.2, 3.2);
