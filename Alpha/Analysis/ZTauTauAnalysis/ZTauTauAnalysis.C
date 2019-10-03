@@ -57,9 +57,9 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
   
   if(fChain->GetTree()->GetEntries()>0)
     {
-      // *************************************************************************************************************************//
-      //  Begin simplified selection based on: ATLAS Collaboration, ATLAS-CONF-2012-006 (2012) and Phys. Rev. D 99, 072001 (2019) // 
-      // *************************************************************************************************************************//
+      // ****************************************************************************************************************************//
+      //  Begin simplified selection based on: ATLAS Collaboration, Eur. Phys. J. C 78 (2018) 163 and Phys. Rev. D 99, 072001 (2019) // 
+      // ****************************************************************************************************************************//
       
       //Scale factors (adding the one for tau)
       Float_t scaleFactor = scaleFactor_ELE*scaleFactor_MUON*scaleFactor_LepTRIGGER*scaleFactor_PILEUP*scaleFactor_TAU;
