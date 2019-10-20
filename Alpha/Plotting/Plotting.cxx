@@ -54,7 +54,7 @@
 #define DEBUG 1
 
 // yields flag, set to 1 top print data and MC yields
-#define YIELDS 0
+#define YIELDS 1
 
 // normalised signal flag, set to 1 to add normalised signal to the plots (can be used for Higgs, SingleTop, ZPrime, SUSY)
 #define NORMSIG 1
@@ -491,7 +491,7 @@ void Plotting::makePlots(){
     }
   
   // reading Powheg W+jets samples, used in HZZ, HWW, ZZDiBoson, WZDiBoson, TTbar, ZBoson, SUSY ... analyses 
-  if( option.find("SUSYAnalysis") != option.npos || option.find("ZBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos || option.find("HWWAnalysis") != option.npos || option.find("HZZAnalysis") != option.npos) 
+  if( option.find("ZBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos || option.find("HWWAnalysis") != option.npos || option.find("HZZAnalysis") != option.npos) 
     {
       Wplusenu = histo["Wplusenu"];
       Wplusmunu= histo["Wplusmunu"];
@@ -502,7 +502,7 @@ void Plotting::makePlots(){
     }
   
   // reading Sherpa W+jets samples, used in WBoson, ZTauTau, SingleTop, ZPrimeBoosted ... analyses
-  if( option.find("ZPrimeBoostedAnalysis") != option.npos || option.find("SingleTopAnalysis") != option.npos || option.find("ZTauTauAnalysis") != option.npos ||   option.find("WBosonAnalysis") != option.npos )
+  if( option.find("SUSYAnalysis") != option.npos || option.find("ZPrimeBoostedAnalysis") != option.npos || option.find("SingleTopAnalysis") != option.npos || option.find("ZTauTauAnalysis") != option.npos ||   option.find("WBosonAnalysis") != option.npos )
     {
       Wenu_PTV0_70_BFilter = histo["Wenu_PTV0_70_BFilter"];
       Wenu_PTV0_70_CFilterBVeto = histo["Wenu_PTV0_70_CFilterBVeto"];
@@ -993,12 +993,49 @@ void Plotting::makePlots(){
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
  
-      W = (TH1F*)Wplusenu[fIter->first]->Clone();
-      W->Add(Wplusmunu[fIter->first]);
-      W->Add(Wplustaunu[fIter->first]);
-      W->Add(Wminusenu[fIter->first]);
-      W->Add(Wminusmunu[fIter->first]);
-      W->Add(Wminustaunu[fIter->first]);
+      // sliced W+jets samples
+      W = (TH1F*)Wenu_PTV0_70_BFilter[fIter->first]->Clone();
+      W->Add(Wenu_PTV0_70_CFilterBVeto[fIter->first]);
+      W->Add(Wenu_PTV0_70_CVetoBVeto[fIter->first]);
+      W->Add(Wenu_PTV1000[fIter->first]);
+      W->Add(Wenu_PTV140_280_BFilter[fIter->first]);
+      W->Add(Wenu_PTV140_280_CFilterBVeto[fIter->first]);
+      W->Add(Wenu_PTV140_280_CVetoBVeto[fIter->first]);
+      W->Add(Wenu_PTV280_500_BFilter[fIter->first]);
+      W->Add(Wenu_PTV280_500_CFilterBVeto[fIter->first]);
+      W->Add(Wenu_PTV280_500_CVetoBVeto[fIter->first]);
+      W->Add(Wenu_PTV500_1000[fIter->first]);
+      W->Add(Wenu_PTV70_140_BFilter[fIter->first]);
+      W->Add(Wenu_PTV70_140_CFilterBVeto[fIter->first]);
+      W->Add(Wenu_PTV70_140_CVetoBVeto[fIter->first]);
+      W->Add(Wmunu_PTV0_70_BFilter[fIter->first]);
+      W->Add(Wmunu_PTV0_70_CFilterBVeto[fIter->first]);
+      W->Add(Wmunu_PTV0_70_CVetoBVeto[fIter->first]);
+      W->Add(Wmunu_PTV1000[fIter->first]);
+      W->Add(Wmunu_PTV140_280_BFilter[fIter->first]);
+      W->Add(Wmunu_PTV140_280_CFilterBVeto[fIter->first]);
+      W->Add(Wmunu_PTV140_280_CVetoBVeto[fIter->first]);
+      W->Add(Wmunu_PTV280_500_BFilter[fIter->first]);
+      W->Add(Wmunu_PTV280_500_CFilterBVeto[fIter->first]);
+      W->Add(Wmunu_PTV280_500_CVetoBVeto[fIter->first]);
+      W->Add(Wmunu_PTV500_1000[fIter->first]);
+      W->Add(Wmunu_PTV70_140_BFilter[fIter->first]);
+      W->Add(Wmunu_PTV70_140_CFilterBVeto[fIter->first]);
+      W->Add(Wmunu_PTV70_140_CVetoBVeto[fIter->first]);
+      W->Add(Wtaunu_PTV0_70_BFilter[fIter->first]);
+      W->Add(Wtaunu_PTV0_70_CFilterBVeto[fIter->first]);
+      W->Add(Wtaunu_PTV0_70_CVetoBVeto[fIter->first]);
+      W->Add(Wtaunu_PTV1000[fIter->first]);
+      W->Add(Wtaunu_PTV140_280_BFilter[fIter->first]);
+      W->Add(Wtaunu_PTV140_280_CFilterBVeto[fIter->first]);
+      W->Add(Wtaunu_PTV140_280_CVetoBVeto[fIter->first]);
+      W->Add(Wtaunu_PTV280_500_BFilter[fIter->first]);
+      W->Add(Wtaunu_PTV280_500_CFilterBVeto[fIter->first]);
+      W->Add(Wtaunu_PTV280_500_CVetoBVeto[fIter->first]);
+      W->Add(Wtaunu_PTV500_1000[fIter->first]);
+      W->Add(Wtaunu_PTV70_140_BFilter[fIter->first]);
+      W->Add(Wtaunu_PTV70_140_CFilterBVeto[fIter->first]);
+      W->Add(Wtaunu_PTV70_140_CVetoBVeto[fIter->first]);
       W->SetFillColor(kGreen-3);
       W->SetLineWidth(0);
  
