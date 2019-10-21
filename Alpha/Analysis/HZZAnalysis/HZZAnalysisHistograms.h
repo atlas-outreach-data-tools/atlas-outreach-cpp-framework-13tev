@@ -10,8 +10,8 @@ void HZZAnalysis::define_histograms()
   // HISTOGRAMS
 
   // Global histograms variables
-  hist_mLL1         = new TH1F("hist_mLL1",        "Mass of Dilepton System; m_{Z1} [GeV];Events / bin", 30, 50, 106);
-  hist_mLL2         = new TH1F("hist_mLL2",        "Mass of Dilepton System; m_{Z2} [GeV];Events / bin", 30, 12, 115);
+  hist_mLL1         = new TH1F("hist_mLL1",        "Mass of Dilepton System; m_{ll,1} [GeV];Events / bin", 30, 50, 106);
+  hist_mLL2         = new TH1F("hist_mLL2",        "Mass of Dilepton System; m_{ll,2} [GeV];Events / bin", 30, 12, 115);
 
   hist_fourlepsys_pt        = new TH1F("hist_fourlepsys_pt",        "Transverse Momentum of four-lepton system; p_{T,4l} [GeV];Events / bin", 20, 0, 200);
   hist_fourlepsys_y         = new TH1F("hist_fourlepsys_y",         "Rapidity of four-lepton system; y_{4l} ;Events / bin", 20, -3, 3);
@@ -25,17 +25,17 @@ void HZZAnalysis::define_histograms()
 
 
   // Lepton histograms
-  hist_fourleptpt   = new TH1F("hist_fourleptpt",  " Leptons Transverse Momentum;p_{T}^{all lep} [GeV];Events / bin", 5, 0, 200);
-  hist_fourlepteta  = new TH1F("hist_fourlepteta", " Leptons Pseudorapidity; #eta^{all lep}; Events / bin", 10, -3, 3);
-  hist_fourleptE    = new TH1F("hist_fourleptE",   " Leptons Energy; E^{all lep} [GeV]; Events / bin", 10, 0, 300);
-  hist_fourleptphi  = new TH1F("hist_fourleptphi", " Leptons Azimuthal Angle ; #phi^{all lep}; Events / bin", 8, -3.2, 3.2);
-  hist_fourleptch   = new TH1F("hist_fourleptch",  " Leptons Charge; Q^{all lep}; Events / bin", 7, -1.75, 1.75);
-  hist_fourleptID   = new TH1F("hist_fourleptID",  " Leptons Absolute PDG ID; |PDG ID|^{all lep}; Events / bin",  15, 5.5, 20.5);
+  hist_fourleptpt   = new TH1F("hist_fourleptpt",  " Leptons Transverse Momentum;p_{T}^{all lep} [GeV];Leptons / bin", 5, 0, 200);
+  hist_fourlepteta  = new TH1F("hist_fourlepteta", " Leptons Pseudorapidity; #eta^{all lep}; Leptons / bin", 10, -3, 3);
+  hist_fourleptE    = new TH1F("hist_fourleptE",   " Leptons Energy; E^{all lep} [GeV]; Leptons / bin", 10, 0, 300);
+  hist_fourleptphi  = new TH1F("hist_fourleptphi", " Leptons Azimuthal Angle ; #phi^{all lep}; Leptons / bin", 8, -3.2, 3.2);
+  hist_fourleptch   = new TH1F("hist_fourleptch",  " Leptons Charge; Q^{all lep}; Leptons / bin", 7, -1.75, 1.75);
+  hist_fourleptID   = new TH1F("hist_fourleptID",  " Leptons Absolute PDG ID; |PDG ID|^{all lep}; Leptons / bin",  15, 5.5, 20.5);
 
-  hist_fourlept_ptc  = new TH1F("hist_fourlept_ptc", " Leptons Relative Transverse Momentum Isolation; ptconerel30^{all lep}; Events / bin", 10, -0.1, 0.4);
-  hist_fourleptetc  = new TH1F("hist_fourleptetc", " Lepton Relative Transverse Energy Isolation; etconerel20^{all lep}; Events / bin", 10, -0.1, 0.4);
-  hist_fourlepz0    = new TH1F("hist_fourlepz0",   " Lepton z0 impact parameter; z_{0}^{all lep} [mm]; Events / bin", 20, -1, 1);
-  hist_fourlepd0    = new TH1F("hist_fourlepd0",   " Lepton d0 impact parameter; d_{0}^{all lep} [mm]; Events / bin", 20, -1, 1);
+  hist_fourlept_ptc  = new TH1F("hist_fourlept_ptc", " Leptons Relative Transverse Momentum Isolation; ptconerel30^{all lep}; Leptons / bin", 10, -0.1, 0.4);
+  hist_fourleptetc  = new TH1F("hist_fourleptetc", " Lepton Relative Transverse Energy Isolation; etconerel20^{all lep}; Leptons / bin", 10, -0.1, 0.4);
+  hist_fourlepz0    = new TH1F("hist_fourlepz0",   " Lepton z0 impact parameter; z_{0}^{all lep} [mm]; Leptons / bin", 20, -1, 1);
+  hist_fourlepd0    = new TH1F("hist_fourlepd0",   " Lepton d0 impact parameter; d_{0}^{all lep} [mm]; Leptons / bin", 20, -1, 1);
 
 }
 

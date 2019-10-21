@@ -1451,7 +1451,7 @@ void Plotting::makePlots(){
     int nbin = histstack->GetNbinsX();
     for(int i_bin=0;i_bin<=nbin;i_bin++){
       err = histstack->GetBinError(i_bin);
-      histstack->SetBinError(i_bin, err );
+      histstack->SetBinError(i_bin, err ); 
     }
     
     // calculate normalized signals

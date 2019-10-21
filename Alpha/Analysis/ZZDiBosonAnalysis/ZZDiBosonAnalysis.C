@@ -246,7 +246,11 @@ Bool_t ZZDiBosonAnalysis::Process(Long64_t entry)
 		      InvMassZ1_min = InvMassZ1;
 		      InvMassZ2_min = InvMassZ2;
 		    } // eemumu over
-		  
+		 
+                  // at least one lepton with pT > 25 GeV 
+		  if( lep_pt->at(goodlep1_index)/1000. > 25 || lep_pt->at(goodlep2_index)/1000. > 25 || lep_pt->at(goodlep3_index)/1000. > 25 || lep_pt->at(goodlep4_index)/1000. > 25 )
+		  {
+
 		  // final selection, each lepton pair must have an invariant mass in the range 66–116 GeV, sum of differences < 50 GeV
 		  if ( (sum_types == 44 || sum_types == 52 || sum_types == 48) && sum_ZZ_fin < 50 )
 		    {
@@ -291,6 +295,7 @@ Bool_t ZZDiBosonAnalysis::Process(Long64_t entry)
 			  FillHistogramsLeadlept( names_of_fourlep_variable[i], weight, histonames_of_lep_variable[i]);
 			}
 		    }
+                  }
 		}
 	    }
 	}

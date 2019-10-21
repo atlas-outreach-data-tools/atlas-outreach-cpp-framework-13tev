@@ -16,16 +16,16 @@ void WZDiBosonAnalysis::define_histograms()
   hist_ptLL          = new TH1F("hist_ptLL",         "Transverse momentum of Dilepton System; p^{ll}_{T};Events / bin", 20, 0, 400);
 
   // Lepton histograms
-  hist_threeleptpt   = new TH1F("hist_threeleptpt",  " Lepton Transverse Momentum;p_{T}^{lep} [GeV];Events / bin", 10, 25, 200);
-  hist_threelepteta  = new TH1F("hist_threelepteta", " Lepton Pseudorapidity; #eta^{lep}; Events / bin", 15, -3, 3);
-  hist_threeleptE    = new TH1F("hist_threeleptE",   " Lepton Energy; E^{lep} [GeV]; Events / bin", 15, 0, 300);
-  hist_threeleptphi  = new TH1F("hist_threeleptphi", " Lepton Azimuthal Angle ; #phi^{lep}; Events / bin", 16, -3.2, 3.2);
-  hist_threeleptch   = new TH1F("hist_threeleptch",  " Lepton Charge; Q^{lep}; Events / bin", 7, -1.75, 1.75);
-  hist_threeleptID   = new TH1F("hist_threeleptID",  " Lepton Absolute PDG ID; |PDG ID|^{lep}; Events / bin",  15, 5.5, 20.5);
-  hist_threelept_ptc  = new TH1F("hist_threelept_ptc", " Lepton Relative Transverse Momentum Isolation; ptconerel30^{lep}; Events / bin", 10, -0.1, 0.2);
-  hist_threeleptetc  = new TH1F("hist_threeleptetc", " Lepton Relative Transverse Energy Isolation; etconerel20^{lep}; Events / bin", 10, -0.1, 0.2);
-  hist_threelepz0    = new TH1F("hist_threelepz0",   " Lepton z0 impact parameter; z_{0}^{lep} [mm]; Events / bin", 10, -1, 1);
-  hist_threelepd0    = new TH1F("hist_threelepd0",   " Lepton d0 impact parameter; d_{0}^{lep} [mm]; Events / bin", 10, -0.2, 0.2);
+  hist_threeleptpt   = new TH1F("hist_threeleptpt",  " Lepton Transverse Momentum;p_{T}^{all lep} [GeV]; Leptons / bin", 10, 25, 200);
+  hist_threelepteta  = new TH1F("hist_threelepteta", " Lepton Pseudorapidity; #eta^{all lep}; Leptons / bin", 15, -3, 3);
+  hist_threeleptE    = new TH1F("hist_threeleptE",   " Lepton Energy; E^{all lep} [GeV]; Leptons / bin", 15, 0, 300);
+  hist_threeleptphi  = new TH1F("hist_threeleptphi", " Lepton Azimuthal Angle ; #phi^{all lep}; Leptons / bin", 16, -3.2, 3.2);
+  hist_threeleptch   = new TH1F("hist_threeleptch",  " Lepton Charge; Q^{all lep}; Leptons / bin", 7, -1.75, 1.75);
+  hist_threeleptID   = new TH1F("hist_threeleptID",  " Lepton Absolute PDG ID; |PDG ID|^{all lep}; Leptons / bin",  15, 5.5, 20.5);
+  hist_threelept_ptc  = new TH1F("hist_threelept_ptc", " Lepton Relative Transverse Momentum Isolation; ptconerel30^{all lep}; Leptons / bin", 10, -0.1, 0.2);
+  hist_threeleptetc  = new TH1F("hist_threeleptetc", " Lepton Relative Transverse Energy Isolation; etconerel20^{all lep}; Leptons / bin", 10, -0.1, 0.2);
+  hist_threelepz0    = new TH1F("hist_threelepz0",   " Lepton z0 impact parameter; z_{0}^{all lep} [mm]; Leptons / bin", 10, -1, 1);
+  hist_threelepd0    = new TH1F("hist_threelepd0",   " Lepton d0 impact parameter; d_{0}^{all lep} [mm]; Leptons / bin", 10, -0.2, 0.2);
 
 }
 

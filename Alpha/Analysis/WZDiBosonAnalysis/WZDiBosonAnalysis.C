@@ -278,9 +278,9 @@ Bool_t WZDiBosonAnalysis::Process(Long64_t entry)
 		      
 		      for (int i=0; i<length_leadlep; i++)
 			{
-			  FillHistogramsLeadlept( names_of_leadlep_variable[i], weight, histonames_of_lep_variable[i]); // plot only leading
-			  //FillHistogramsLeadlept( names_of_secondlep_variable[i], weight, histonames_of_lep_variable[i]);
-			  //FillHistogramsLeadlept( names_of_thirdlep_variable[i], weight, histonames_of_lep_variable[i]);
+			  FillHistogramsLeadlept( names_of_leadlep_variable[i], weight, histonames_of_lep_variable[i]); 
+			  FillHistogramsLeadlept( names_of_secondlep_variable[i], weight, histonames_of_lep_variable[i]);
+			  FillHistogramsLeadlept( names_of_thirdlep_variable[i], weight, histonames_of_lep_variable[i]);
 			}
 		    }
 		}

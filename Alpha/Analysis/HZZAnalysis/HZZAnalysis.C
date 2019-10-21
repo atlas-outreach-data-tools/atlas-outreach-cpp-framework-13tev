@@ -116,8 +116,8 @@ Bool_t HZZAnalysis::Process(Long64_t entry)
 	      int goodlep3_index = goodlep_index[2];
 	      int goodlep4_index = goodlep_index[3];
 	      
-	      //first lepton pT > 20 GeV, second > 15 GeV and third > 10 GeV		      
-	      if (lep_pt->at(goodlep1_index) > 20000. && lep_pt->at(goodlep2_index) > 15000. && lep_pt->at(goodlep3_index) > 10000. ) 
+	      //first lepton pT > 25 GeV, second > 15 GeV and third > 10 GeV		      
+	      if (lep_pt->at(goodlep1_index) > 25000. && lep_pt->at(goodlep2_index) > 15000. && lep_pt->at(goodlep3_index) > 10000. ) 
 		{ 		     
 		  
 		  
