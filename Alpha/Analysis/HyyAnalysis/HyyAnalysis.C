@@ -142,9 +142,14 @@ Bool_t HyyAnalysis::Process(Long64_t entry)
 			    {
 
                               FillHistogramsGlobal( m_yy, weight, "hist_mYY_bin1"); // 30 bins
-			      FillHistogramsGlobal( m_yy, weight, "hist_mYY_bin2"); // 55 bins
 
 			      nEvent6++; // counter 
+
+			      // unconverted central category 
+			      if ( TMath::Abs(photon_eta->at(goodphoton1_index)) < 0.75 && TMath::Abs(photon_eta->at(goodphoton2_index)) < 0.75 && photon_convType->at(goodphoton1_index)==0 && photon_convType->at(goodphoton2_index)==0 )
+			      {
+                                FillHistogramsGlobal( m_yy, weight, "hist_mYY_cat_bin1"); // 30 bins
+			      }
 
 			    }
 			}

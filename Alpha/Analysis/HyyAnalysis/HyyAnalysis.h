@@ -20,6 +20,9 @@ class HyyAnalysis : public TSelector {
   // Global variables histograms
   TH1F *hist_mYY_bin1        = 0;
   TH1F *hist_mYY_bin2        = 0;
+  TH1F *hist_mYY_cat_bin1        = 0;
+  TH1F *hist_mYY_cat_bin2        = 0;
+
 
 
   //////////////////////////////////////////////////////////
@@ -79,6 +82,7 @@ class HyyAnalysis : public TSelector {
    vector<bool>    *photon_isTightID;
    vector<float>   *photon_ptcone30;
    vector<float>   *photon_etcone20;
+   vector<int>     *photon_convType; // 0=unconverted photon, 1=one track only, with Si hits, 2=one track only, no Si hits (TRT only), 3=two tracks, both with Si hits, 4=two tracks, none with Si hits (TRT only), 5=two tracks, only one with Si hits
    UInt_t          fatjet_n;
    vector<float>   *fatjet_pt;
    vector<float>   *fatjet_eta;
@@ -169,6 +173,7 @@ class HyyAnalysis : public TSelector {
    TBranch        *b_photon_isTightID;   //!
    TBranch        *b_photon_ptcone30;   //!
    TBranch        *b_photon_etcone20;   //!
+   TBranch        *b_photon_convType;   //! 
    TBranch        *b_fatjet_n;   //!
    TBranch        *b_fatjet_pt;   //!
    TBranch        *b_fatjet_eta;   //!
@@ -280,6 +285,7 @@ void HyyAnalysis::Init(TTree *tree)
    photon_isTightID = 0;
    photon_ptcone30 = 0;
    photon_etcone20 = 0;
+   photon_convType = 0;
    fatjet_pt = 0;
    fatjet_eta = 0;
    fatjet_phi = 0;
@@ -369,6 +375,7 @@ void HyyAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("photon_isTightID", &photon_isTightID, &b_photon_isTightID);
    fChain->SetBranchAddress("photon_ptcone30", &photon_ptcone30, &b_photon_ptcone30);
    fChain->SetBranchAddress("photon_etcone20", &photon_etcone20, &b_photon_etcone20);
+   fChain->SetBranchAddress("photon_convType", &photon_convType, &b_photon_convType);
    fChain->SetBranchAddress("fatjet_n", &fatjet_n, &b_fatjet_n);
    fChain->SetBranchAddress("fatjet_pt", &fatjet_pt, &b_fatjet_pt);
    fChain->SetBranchAddress("fatjet_eta", &fatjet_eta, &b_fatjet_eta);

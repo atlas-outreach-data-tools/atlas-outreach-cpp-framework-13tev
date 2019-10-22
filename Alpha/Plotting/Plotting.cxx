@@ -54,13 +54,13 @@
 #define DEBUG 0
 
 // yields flag, set to 1 top print data and MC yields
-#define YIELDS 0
+#define YIELDS 1
 
 // normalised signal flag, set to 1 to add normalised signal to the plots (can be used for Higgs, SingleTop, ZPrime, SUSY)
 #define NORMSIG 0
 
 // save to pdf flag, by default plots saved as png
-#define SAVEPDF 0
+#define SAVEPDF 1
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -1535,7 +1535,6 @@ void Plotting::makePlots(){
     if(option.find("ZZDiBosonAnalysis") != option.npos){l.DrawLatex(0.18,0.71,"ZZ #rightarrow l^{+}l^{-} l^{+}l^{-}");}
     if(option.find("HZZAnalysis")       != option.npos){l.DrawLatex(0.18,0.71,"H #rightarrow ZZ* #rightarrow 4l");}
     if(option.find("ZTauTauAnalysis")   != option.npos){l.DrawLatex(0.18,0.71,"Z #rightarrow #tau_{l}#tau_{h}");}
-    if(option.find("HyyAnalysis")       != option.npos){l.DrawLatex(0.18,0.71,"H #rightarrow #gamma #gamma");}
 
     if(option.find("SUSYAnalysis")      != option.npos){
         if(fIter->first.find("SR_loose") != option.npos) l.DrawLatex(0.18,0.71,"2l + 0 jets, SR loose");
@@ -1543,6 +1542,10 @@ void Plotting::makePlots(){
 	else l.DrawLatex(0.18,0.71,"2l + 0 jets");
     }
 
+    if(option.find("HyyAnalysis")       != option.npos){
+        if(fIter->first.find("_cat_") != option.npos) l.DrawLatex(0.18,0.71,"H #rightarrow #gamma #gamma, unconv. central");
+        else l.DrawLatex(0.18,0.71,"H #rightarrow #gamma #gamma");
+    }
 
     TLatex l2;
     l2.SetNDC();
@@ -1827,14 +1830,27 @@ void Plotting::makePlots(){
       // We set the values of the fitted parameters from Gaussian fit
       fit->FixParameter(5,125.0); // always fixed to 125 GeV
 
-      if(fIter->first.find("bin1") != option.npos){
+      if(fIter->first.find("mYY_bin1") != option.npos){
         fit->FixParameter(4,119.1); // this value was obtained from the Gaussian fit
         fit->FixParameter(6,2.39);  // this value was obtained from the Gaussian fit
       }
-      if(fIter->first.find("bin2") != option.npos){
+      if(fIter->first.find("mYY_bin2") != option.npos){
         fit->FixParameter(4,66.5);  // this value was obtained from the Gaussian fit
         fit->FixParameter(6,2.31);  // this value was obtained from the Gaussian fit
       }
+
+      if(fIter->first.find("mYY_cat_bin1") != option.npos){
+        fit->FixParameter(4,23.2); // this value was obtained from the Gaussian fit
+        fit->FixParameter(6,1.83);  // this value was obtained from the Gaussian fit
+      }
+      if(fIter->first.find("mYY_cat_bin2") != option.npos){
+        fit->FixParameter(4,13.1);  // this value was obtained from the Gaussian fit
+        fit->FixParameter(6,1.76);  // this value was obtained from the Gaussian fit
+      }
+
+
+
+
 
       // here we are finally fitting 
       data[fIter->first]->Fit("fit","","same:e",105.,160.);
@@ -1938,8 +1954,8 @@ void Plotting::makePlots(){
     h_ratio->SetMinimum(0);
     h_ratio->SetMaximum(2);
     if(option.find("HyyAnalysis") != option.npos){
-      h_ratio->SetMinimum(-100);
-      h_ratio->SetMaximum(200);
+        if(fIter->first.find("_cat_") != option.npos){ h_ratio->SetMinimum(-30);      h_ratio->SetMaximum(60); }
+	else{    h_ratio->SetMinimum(-125);      h_ratio->SetMaximum(250); }
     }
 
     h_ratio->GetXaxis()->SetTitle(  fIter->second->GetXaxis()->GetTitle()  );
@@ -2028,8 +2044,14 @@ void Plotting::makePlots(){
     }
 
     if(option.find("HyyAnalysis") != option.npos){
-      if(fIter->first.find("bin1") != option.npos) fIter->second->SetMaximum(8e3);
-      if(fIter->first.find("bin2") != option.npos) fIter->second->SetMaximum(4500);
+      if(fIter->first.find("bin1") != option.npos) { 
+        if(fIter->first.find("_cat_") != option.npos){ fIter->second->SetMaximum(1000);}
+	else fIter->second->SetMaximum(8e3);
+      }
+      if(fIter->first.find("bin2") != option.npos) {
+	     if(fIter->first.find("_cat_") != option.npos){fIter->second->SetMaximum(500);}
+	     else 	      fIter->second->SetMaximum(4500);
+      }
     }
 
 
