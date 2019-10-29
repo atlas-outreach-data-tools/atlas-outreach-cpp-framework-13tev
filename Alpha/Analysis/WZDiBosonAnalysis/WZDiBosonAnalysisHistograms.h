@@ -10,10 +10,10 @@ void WZDiBosonAnalysis::define_histograms()
   // HISTOGRAMS
 
   // Global histograms variables
-  hist_mLL           = new TH1F("hist_mLL",          "Mass of Dilepton System; m_{ll};Events / bin", 20, 76, 106);
+  hist_mLL           = new TH1F("hist_mLL",          "Mass of Dilepton System; m_{ll} [GeV];Events / bin", 20, 76, 106);
   hist_etmiss        = new TH1F("hist_etmiss",       "Missing Transverse Momentum;E_{T,Miss} [GeV];Events / bin", 20, 0,120);
-  hist_mtw           = new TH1F("hist_mtw",          "Transverse Mass; M^{W}_{T};Events / bin", 20, 0, 200);
-  hist_ptLL          = new TH1F("hist_ptLL",         "Transverse momentum of Dilepton System; p^{ll}_{T};Events / bin", 20, 0, 400);
+  hist_mtw           = new TH1F("hist_mtw",          "Transverse Mass; M^{W}_{T} [GeV];Events / bin", 20, 0, 200);
+  hist_ptLL          = new TH1F("hist_ptLL",         "Transverse momentum of Dilepton System; p^{ll}_{T} [GeV];Events / bin", 20, 0, 400);
 
   // Lepton histograms
   hist_threeleptpt   = new TH1F("hist_threeleptpt",  " Lepton Transverse Momentum;p_{T}^{all lep} [GeV]; Leptons / bin", 10, 25, 200);
