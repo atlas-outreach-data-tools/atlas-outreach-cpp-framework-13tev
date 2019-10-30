@@ -10,36 +10,36 @@ void ZPrimeBoostedAnalysis::define_histograms()
   // HISTOGRAMS
 
   // Global histograms
-  hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T,Miss} [GeV];Events / bin", 30, 0, 200);
-  hist_mtw          = new TH1F("hist_mtw",         "Transverse Mass; M^{W}_{T};Events / bin", 30, 0, 200);
+  hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T}^{miss} [GeV];Events / bin", 30, 0, 400);
+  hist_mtw          = new TH1F("hist_mtw",         "Transverse Mass; M^{W}_{T};Events / bin", 30, 0, 250);
 
   // Jet variables histograms
   hist_n_jets           = new TH1F("hist_n_jets",          "Number of Jets;N_{selected Small-R jets};Events", 4, -0.5, 3.5);
-  hist_leadjet_pt       = new TH1F("hist_leadjet_pt",      "Leading Jet Transverse Momentum; p_{T}^{selected Small-R jet} [GeV];Events / bin", 20, 0, 300);
+  hist_leadjet_pt       = new TH1F("hist_leadjet_pt",      "Leading Jet Transverse Momentum; p_{T}^{selected Small-R jet} [GeV];Events / bin", 20, 0, 400);
   hist_leadjet_eta      = new TH1F("hist_leadjet_eta",     "Leading Jet Pseudorapidity; #eta^{selected Small-R jet}; Events / bin", 30, -3, 3);
 
   hist_n_bjets          = new TH1F("hist_n_bjets",         "Number of b-jets;N_{b-jets};Events", 4, -0.5, 3.5);
-  hist_leadbjet_pt      = new TH1F("hist_leadbjet_pt",     "Leading b-jet Transverse Momentum;p_{T}^{b-jet} [GeV];Events / bin", 20, 0, 300);
+  hist_leadbjet_pt      = new TH1F("hist_leadbjet_pt",     "Leading b-jet Transverse Momentum;p_{T}^{b-jet} [GeV];Events / bin", 20, 0, 400);
   hist_leadbjet_eta     = new TH1F("hist_leadbjet_eta",    "Leading b-jet Pseudorapidity; #eta^{b-jet}; Events / bin", 30, -3, 3);
 
   //largeR jets
   hist_n_leadLRjets           = new TH1F("hist_n_leadLRjets",          "Number of top-tagged Large-R Jets;N^{Large-R jets};Events", 4, -0.5, 3.5);
   hist_leadLRjet_pt       = new TH1F("hist_leadLRjet_pt",      "Large-R Jet Transverse Momentum;p_{T}^{Large-R jet} [GeV];Events / bin", 30, 250, 700);
   hist_leadLRjet_eta      = new TH1F("hist_leadLRjet_eta",     "Large-R Jet Pseudorapidity; #eta^{Large-R jet}; Events / bin", 20, -3, 3);
-  hist_leadLRjet_phi      = new TH1F("hist_leadLRjet_phi",     "Large-R Jet phi; #phi^{Large-R jet}; Events / bin", 12, -3, 3);
-  hist_leadLRjet_m        = new TH1F("hist_leadLRjet_m",       "Large-R Jet mass; m^{Large-R jet} [GeV]; Events / bin", 30, 70, 250);
+  hist_leadLRjet_phi      = new TH1F("hist_leadLRjet_phi",     "Large-R Jet phi; #phi^{Large-R jet}; Events / bin", 12, -3.2, 3.2);
+  hist_leadLRjet_m        = new TH1F("hist_leadLRjet_m",       "Large-R Jet mass; m^{Large-R jet} [GeV]; Events / bin", 30, 50, 250);
   hist_leadLRjet_tau32    = new TH1F("hist_leadLRjet_tau32",   "Large-R Jet N-subjettiness ratio; #tau_{32}^{Large-R jet} [GeV]; Events / bin", 20, 0, 1);
 
   // top-tagged largeR jets
   hist_n_TopLRjets           = new TH1F("hist_n_TopLRjets",          "Number of Top-tagged Large-R Jets;N^{Top-tagged Large-R jets};Events", 4, -0.5, 3.5);
   hist_leadTopLRjet_pt       = new TH1F("hist_leadTopLRjet_pt",      "Top-tagged Large-R Jet Transverse Momentum;p_{T}^{Top-tagged Large-R jet} [GeV];Events / bin", 30, 250, 700);
   hist_leadTopLRjet_eta      = new TH1F("hist_leadTopLRjet_eta",     "Top-tagged Large-R Jet Pseudorapidity; #eta^{Top-tagged Large-R jet}; Events / bin", 20, -3, 3);
-  hist_leadTopLRjet_phi      = new TH1F("hist_leadTopLRjet_phi",     "Top-tagged Large-R Jet phi; #phi^{Top-tagged Large-R jet}; Events / bin", 12, -3, 3);
+  hist_leadTopLRjet_phi      = new TH1F("hist_leadTopLRjet_phi",     "Top-tagged Large-R Jet phi; #phi^{Top-tagged Large-R jet}; Events / bin", 12, -3.2, 3.2);
   hist_leadTopLRjet_m        = new TH1F("hist_leadTopLRjet_m",       "Top-tagged Large-R Jet mass; m^{Top-tagged Large-R jet} [GeV]; Events / bin", 25, 100, 250);
   hist_leadTopLRjet_tau32    = new TH1F("hist_leadTopLRjet_tau32",   "Top-tagged Large-R Jet N-subjettiness ratio; #tau_{32}^{Top-tagged Large-R jet} [GeV]; Events / bin", 20, 0, 1);
 
   // largeR + smallR + lepton (missing neutrino)
-  hist_ttbarMLR   = new TH1F("hist_ttbarMLR",  " (Almost) ttbar mass (no neutrino); m^{Top-tagged Large-R jet, Small-R jet, Lepton} [GeV]; Events / bin", 20, 400, 1300);
+  hist_ttbarMLR   = new TH1F("hist_ttbarMLR",  " (Almost) ttbar mass (no neutrino); m^{Top-tagged Large-R jet, Small-R jet, Lepton} [GeV]; Events / bin", 20, 400, 1600);
 
   // systematics on fatjets
   hist_leadTopLRjet_syst_pt   = new TH1F("hist_leadTopLRjet_syst_pt",  "Leading  top-tagged Large-R Jet pT after syst; p_{T}^{Top-tagged Large-R jet} [GeV] (after p_{T}^{Large-R Jet} syst.); Events / bin", 30, 250, 700);
@@ -47,9 +47,9 @@ void ZPrimeBoostedAnalysis::define_histograms()
 
 
   // Leading Lepton histograms
-  hist_leadleptpt   = new TH1F("hist_leadleptpt",  "Leading Lepton Transverse Momentum;p_{T}^{leadlep} [GeV];Leptons", 20, 0, 200);
+  hist_leadleptpt   = new TH1F("hist_leadleptpt",  "Leading Lepton Transverse Momentum;p_{T}^{leadlep} [GeV];Leptons", 20, 0, 400);
   hist_leadlepteta  = new TH1F("hist_leadlepteta", "Leading Lepton Pseudorapidity; #eta^{leadlep}; Leptons", 30, -3, 3);
-  hist_leadleptE    = new TH1F("hist_leadleptE",   "Leading Lepton Energy; E^{leadlep} [GeV]; Leptons", 30, 0, 300);
+  hist_leadleptE    = new TH1F("hist_leadleptE",   "Leading Lepton Energy; E^{leadlep} [GeV]; Leptons", 30, 0, 500);
   hist_leadleptphi  = new TH1F("hist_leadleptphi", "Leading Lepton Azimuthal Angle ; #phi^{leadlep}; Leptons", 32, -3.2, 3.2);
   hist_leadleptch   = new TH1F("hist_leadleptch",  "Leading Lepton Charge; Q^{leadlep}; Leptons", 7, -1.75, 1.75);
   hist_leadleptID   = new TH1F("hist_leadleptID",  "Leading Lepton Absolute PDG ID; |PDG ID|^{leadlep}; Leptons",  15, 5.5, 20.5);

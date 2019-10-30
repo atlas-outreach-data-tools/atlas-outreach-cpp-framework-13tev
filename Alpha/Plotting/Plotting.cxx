@@ -54,7 +54,7 @@
 #define DEBUG 0
 
 // yields flag, set to 1 top print data and MC yields
-#define YIELDS 1
+#define YIELDS 0
 
 // normalised signal flag, set to 1 to add normalised signal to the plots (can be used for Higgs, SingleTop, ZPrime, SUSY)
 #define NORMSIG 0
@@ -191,15 +191,16 @@ void Plotting::ATLASLabel(Double_t x,Double_t y)
   l.SetNDC();
   l.SetTextFont(72);
   l.SetTextColor(kBlack);
-  l.SetTextSize(0.06);  
-  double delx = 0.16;
+  l.SetTextSize(0.05);  
+  double delx = 0.13; //0.16
   l.DrawLatex(x,y,"ATLAS");
   TLatex p; 
   p.SetNDC();
   p.SetTextFont(42);
   p.SetTextColor(kBlack);
-  p.SetTextSize(0.06);  
-  p.DrawLatex(x+delx,y,"Open Data");
+  p.SetTextSize(0.05);  
+  //p.DrawLatex(x+delx,y,"Open Data");
+  p.DrawLatex(x+delx,y,"Preliminary Open Data");
 
   return;
 }
@@ -241,7 +242,7 @@ void Plotting::WhichFiles(){
 
 ///
 void Plotting::readFiles(){
-  std::cout << "\n Reading files from: " << readname << " \n " << std::endl;
+  std::cout << "Reading files from: " << readname << " \n " << std::endl;
   
   if (option.find("WBosonAnalysis") != option.npos){
     std::cout<<"=====processing WBosonAnalysis====="<<std::endl;
@@ -303,6 +304,13 @@ void Plotting::readFiles(){
         for(; fIter!=lIter;++fIter){
 	  if (DEBUG) std::cout<<"Scaling histogram: "<< fIter->first << " by a factor of: " << scf << std::endl;
 	  fIter->second->Scale(scf);
+
+          // MC overflow
+	  if(std::strstr((fIter->first).c_str(),"four_lep") == NULL )
+          if( abs(fIter->second->GetBinContent(fIter->second->GetNbinsX()+1)) > 0){
+            fIter->second->AddBinContent(fIter->second->GetNbinsX(), fIter->second->GetBinContent(fIter->second->GetNbinsX()+1));
+          }
+
         }
       }
     }
@@ -1434,7 +1442,12 @@ void Plotting::makePlots(){
       histstack = (TH1F*)Higgs->Clone();
     }
 
-
+    // data overflow
+    if(std::strstr((fIter->first).c_str(),"four_lep") == NULL ){
+    if( abs(fIter->second->GetBinContent(fIter->second->GetNbinsX()+1)) > 0){
+     fIter->second->AddBinContent(fIter->second->GetNbinsX(), fIter->second->GetBinContent(fIter->second->GetNbinsX()+1));
+    }
+    }
     /////////////////////////////////////////////////////////////////////////////
     // BEGIN PLOTTING //
 
@@ -1558,7 +1571,7 @@ void Plotting::makePlots(){
     TLegend* leg;
     leg  = new TLegend();
     leg  = new TLegend(0.70,0.50,0.93,0.925);
-    if(option.find("HyyAnalysis")       != option.npos) leg  = new TLegend(0.60,0.50,0.93,0.925);
+    if(option.find("HyyAnalysis")       != option.npos) leg  = new TLegend(0.60,0.45,0.93,0.825);
     leg->SetFillStyle(0);
     leg->SetBorderSize(0);
     leg->SetTextAlign(32);
@@ -2030,7 +2043,7 @@ void Plotting::makePlots(){
       }
       if(fIter->first.find("SR") != option.npos){
         pad0->SetLogy(1);
-        fIter->second->SetMinimum(0.01);
+        fIter->second->SetMinimum(0.02);
         fIter->second->SetMaximum(1e5);
       }
     }
@@ -2109,7 +2122,8 @@ void Plotting::getHistoSettings(){
   if(option.find("ZTauTauAnalysis")       != option.npos){ifile = "list_histos/HistoList_ZTauTauAnalysis.txt";}
   if(option.find("HyyAnalysis")           != option.npos){ifile = "list_histos/HistoList_HyyAnalysis.txt";}
 
-  
+  std::cout << "Reading list of histograms from: " << ifile.c_str() << " \n " << std::endl;
+
   ifstream input(ifile.c_str());
   std::string line;
   while(getline(input,line)){

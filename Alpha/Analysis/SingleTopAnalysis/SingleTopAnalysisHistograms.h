@@ -10,7 +10,7 @@ void SingleTopAnalysis::define_histograms()
   // HISTOGRAMS
 
   // Global histograms
-  hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T,Miss} [GeV];Events / bin", 20, 0, 200);
+  hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T}^{miss} [GeV];Events / bin", 20, 0, 200);
   hist_mtw          = new TH1F("hist_mtw",         "Transverse Mass; M^{W}_{T} [GeV];Events / bin", 30, 0, 200);
   hist_deltaeta   = new TH1F("hist_deltaeta",         "Delta eta; #Delta#eta(j,b);Events / bin",20,0,5);
 
@@ -22,8 +22,8 @@ void SingleTopAnalysis::define_histograms()
   hist_leadbjet_pt      = new TH1F("hist_leadbjet_pt",     "Leading b-jet Transverse Momentum;p_{T}^{b-jet} [GeV];Events / bin", 20, 0, 200);
   hist_leadbjet_eta     = new TH1F("hist_leadbjet_eta",    "Leading b-jet Pseudorapidity; #eta^{b-jet}; Events / bin", 20, -3, 3);
 
-  hist_HT       = new TH1F("hist_HT",      "HT ;H_{T}(lep,jets,E_{T,Miss}) [GeV];Events / bin", 30, 150, 400);
-  hist_Mlb    = new TH1F("hist_Mlb",   "Mlb;m_{lb} [GeV];Events / bin", 30, 50, 150);
+  hist_HT       = new TH1F("hist_HT",      "HT ;H_{T}(lep,jets,E_{T}^{miss}) [GeV];Events / bin", 30, 150, 500);
+  hist_Mlb    = new TH1F("hist_Mlb",   "Mlb;m_{lb} [GeV];Events / bin", 20, 50, 150);
 
 
 

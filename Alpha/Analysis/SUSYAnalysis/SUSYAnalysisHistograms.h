@@ -11,9 +11,9 @@ void SUSYAnalysis::define_histograms(vector<TString> channels)
   // Global histograms
   for(const auto & ch:channels){
     hist_mLL[ch]    = new TH1F("hist_mLL_"+ch,    "Mass of Dilepton System; m_{ll} [GeV];Events / bin", 20, 0, 500);
-    hist_etmiss[ch] = new TH1F("hist_etmiss_"+ch, "Missing Transverse Momentum;E_{T,Miss} [GeV];Events / bin", 20, 0, 2000);
+    hist_etmiss[ch] = new TH1F("hist_etmiss_"+ch, "Missing Transverse Momentum;E_{T}^{miss} [GeV];Events / bin", 20, 0, 2000);
     hist_mt2[ch]    = new TH1F("hist_mt2_"+ch,    "Stransverse Mass; M_{T2} [GeV]; Events / bin", 20, 0, 400); 
-    hist_rebin_etmiss[ch] = new TH1F("hist_rebin_etmiss_"+ch, "Missing Transverse Momentum;E_{T,Miss} [GeV];Events / bin", 10, 0, 300);
+    hist_rebin_etmiss[ch] = new TH1F("hist_rebin_etmiss_"+ch, "Missing Transverse Momentum;E_{T}^{miss} [GeV];Events / bin", 10, 0, 300);
 
     // Leading Lepton histograms
     hist_leadleptpt[ch]  = new TH1F("hist_leadleptpt_"+ch,  "Leading Lepton Transverse Momentum;p_{T}^{leadlep} [GeV];Events / bin", 30, 0, 500);

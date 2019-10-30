@@ -10,19 +10,19 @@ void TTbarAnalysis::define_histograms()
   // HISTOGRAMS
 
   // Global histograms
-  hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T,Miss} [GeV];Events / bin", 20, 0, 200);
-  hist_mtw          = new TH1F("hist_mtw",         "Transverse Mass; M^{W}_{T} [GeV];Events / bin", 40, 0, 200);
-  hist_syst_etmiss  = new TH1F("hist_syst_etmiss",      "Missing Transverse Momentum (MET syst);E_{T,Miss} [GeV] (after E_{T,Miss} syst. uncert.);Events / bin", 20, 0, 200);
-  hist_syst_mtw     = new TH1F("hist_syst_mtw",         "Transverse Mass (MET syst); M^{W}_{T} [GeV] (after E_{T,Miss} and p_{T}^{lep} syst. uncert.);Events / bin", 40, 0, 200);
+  hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T}^{miss} [GeV];Events / bin", 20, 0, 300);
+  hist_mtw          = new TH1F("hist_mtw",         "Transverse Mass; M^{W}_{T} [GeV];Events / bin", 40, 0, 300);
+  hist_syst_etmiss  = new TH1F("hist_syst_etmiss",      "Missing Transverse Momentum (MET syst);E_{T}^{miss} [GeV] (after E_{T}^{miss} syst. uncert.);Events / bin", 20, 0, 300);
+  hist_syst_mtw     = new TH1F("hist_syst_mtw",         "Transverse Mass (MET syst); M^{W}_{T} [GeV] (after E_{T}^{miss} and p_{T}^{lep} syst. uncert.);Events / bin", 40, 0, 300);
 
 
   // Jet variables histograms
   hist_n_jets           = new TH1F("hist_n_jets",          "Number of Jets;N_{jets};Events", 5, 3.5, 8.5);
-  hist_leadjet_pt       = new TH1F("hist_leadjet_pt",      "Leading Jet Transverse Momentum;p_{T}^{jet} [GeV];Events / bin", 20, 0, 200);
+  hist_leadjet_pt       = new TH1F("hist_leadjet_pt",      "Leading Jet Transverse Momentum;p_{T}^{jet} [GeV];Events / bin", 20, 0, 350);
   hist_syst_leadjet_pt  = new TH1F("hist_syst_leadjet_pt",      "Leading Jet Transverse Momentum;p_{T}^{jet} [GeV] (after p_{T}^{jet} syst. uncert.);Events / bin", 20, 0, 200);
   hist_leadjet_eta      = new TH1F("hist_leadjet_eta",     "Leading Jet Pseudorapidity; #eta^{jet}; Events / bin", 30, -3, 3);
   hist_n_bjets          = new TH1F("hist_n_bjets",         "Number of b-jets;N_{b-jets};Events", 3, 1.5, 4.5);
-  hist_leadbjet_pt      = new TH1F("hist_leadbjet_pt",     "Leading b-jet Transverse Momentum;p_{T}^{b-jet} [GeV];Events / bin", 20, 0, 200);
+  hist_leadbjet_pt      = new TH1F("hist_leadbjet_pt",     "Leading b-jet Transverse Momentum;p_{T}^{b-jet} [GeV];Events / bin", 20, 0, 350);
   hist_leadbjet_eta     = new TH1F("hist_leadbjet_eta",    "Leading b-jet Pseudorapidity; #eta^{b-jet}; Events / bin", 30, -3, 3);
 
   // W and top variables

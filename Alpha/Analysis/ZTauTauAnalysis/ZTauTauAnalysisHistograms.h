@@ -12,10 +12,10 @@ void ZTauTauAnalysis::define_histograms()
   // Global variables histograms
   hist_mLL          = new TH1F("hist_mLL",         "Visible mass; m_{vis} [GeV];Events / bin", 30, 20, 100);
   hist_MMC          = new TH1F("hist_MMC",          "Invariant mass (MMC); m^{MMC}_{#tau#tau} [GeV];Events / bin", 15, 50, 200);
-  hist_mt_etau      = new TH1F("hist_mt_etau",      "Transverse Mass; m_{T}(e,E_{T,Miss}) [GeV];Events / bin"  , 30, 1, 150);
-  hist_mt_mutau     = new TH1F("hist_mt_mutau",     "Transverse Mass; m_{T}(#mu,E_{T,Miss}) [GeV];Events / bin", 30, 1, 150);
+  hist_mt_etau      = new TH1F("hist_mt_etau",      "Transverse Mass; m_{T}(e,E_{T}^{miss}) [GeV];Events / bin"  , 30, 1, 150);
+  hist_mt_mutau     = new TH1F("hist_mt_mutau",     "Transverse Mass; m_{T}(#mu,E_{T}^{miss}) [GeV];Events / bin", 30, 1, 150);
   hist_sum_dPhi     = new TH1F("hist_sum_dPhi",     "sum dPhi; #Sigma#Delta#phi;Events / bin", 30, 0, 6.3);
-  hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T,Miss} [GeV];Events / bin", 20, 0, 150);
+  hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T}^{miss} [GeV];Events / bin", 20, 0, 150);
 
   // Jet variables histograms
   hist_n_jets           = new TH1F("hist_n_jets",          "Number of Jets;N_{jets};Events", 6, -0.5, 5.5);

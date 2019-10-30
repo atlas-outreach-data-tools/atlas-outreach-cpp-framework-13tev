@@ -13,7 +13,7 @@ void ZBosonAnalysis::define_histograms()
   hist_mLL          = new TH1F("hist_mLL",         "Mass of Dilepton System; m_{ll} [GeV];Events / bin", 30, 68, 114);
   hist_ee_mLL       = new TH1F("hist_ee_mLL",      "Mass of Dilepton(ee) System; m_{ee} [GeV];Events / bin", 30, 68, 114);
   hist_mumu_mLL     = new TH1F("hist_mumu_mLL",    "Mass of Dilepton(#mu#mu) System; m_{#mu#mu} [GeV];Events / bin", 30, 68, 114);
-  hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T,Miss} [GeV];Events / bin", 20, 0,200);
+  hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T}^{miss} [GeV];Events / bin", 20, 0,200);
  
   // Jet variables histograms
   hist_n_jets           = new TH1F("hist_n_jets",          "Number of Jets;N^{jets};Events", 10, -0.5, 9.5);

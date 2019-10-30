@@ -1,8 +1,7 @@
 ### name of the histogram in the files, add # to comment out
 hist_etmiss
 hist_mLL
-hist_MMC_etau
-hist_MMC_mutau
+hist_MMC
 hist_mt_etau
 hist_mt_mutau
 hist_sum_dPhi

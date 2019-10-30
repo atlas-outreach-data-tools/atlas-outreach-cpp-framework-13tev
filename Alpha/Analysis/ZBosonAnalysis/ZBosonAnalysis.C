@@ -146,7 +146,7 @@ Bool_t ZBosonAnalysis::Process(Long64_t entry)
 		      float InvMass_Leptons_mumu = 0.; if(type_one==13) InvMass_Leptons_mumu = InvMass_Leptons;
 		      
 		      // Invariant mass selection: m_ll - mZ < 25 GeV
-		      if(TMath::Abs(InvMass_Leptons - 91.18) < 25.)
+		      if( (TMath::Abs(InvMass_Leptons_ee - 91.18) < 25. ) || (TMath::Abs(InvMass_Leptons_mumu - 91.18) < 25. ) )
 			{
 			  
 			  // By default, we are using for this analysis a MC sample known to describe poorly large jet multiplicity, thus we cut on nJets<2, lepton kinematics are well described in this phase-space 
@@ -154,32 +154,27 @@ Bool_t ZBosonAnalysis::Process(Long64_t entry)
 
         		if(jet_n==0)
 			    {
-	                     
-                         //Start to fill histograms: definitions of variables
-			  double names_of_global_variable[]={InvMass_Leptons, InvMass_Leptons_ee, InvMass_Leptons_mumu};
+	                 
+                              if(type_one==11) FillHistogramsGlobal(InvMass_Leptons_ee , weight, "hist_ee_mLL");
+                              if(type_one==13) FillHistogramsGlobal(InvMass_Leptons_mumu , weight, "hist_mumu_mLL");
+	                      FillHistogramsGlobal(InvMass_Leptons, weight, "hist_mLL");
+
+                          //Start to fill histograms: definitions of variables
 			  
 			  double names_of_leadlep_variable[]={Lepton_1.Pt()/1000., Lepton_1.Eta(), Lepton_1.E()/1000., Lepton_1.Phi(), (double)lep_charge->at(goodlep1_index), (double)lep_type->at(goodlep1_index)};
 			  
 			  double names_of_subleadlep_variable[]={Lepton_2.Pt()/1000., Lepton_2.Eta(), Lepton_2.E()/1000., Lepton_2.Phi(),(double)lep_charge->at(goodlep2_index), (double)lep_type->at(goodlep2_index)};
 			  			  
 			  //Start to fill histograms : definitions of histogram names
-			  TString histonames_of_global_variable[]={"hist_mLL","hist_ee_mLL","hist_mumu_mLL"};
-			  
 			  TString histonames_of_leadlep_variable[]={"hist_leadleptpt", "hist_leadlepteta", "hist_leadleptE", "hist_leadleptphi", "hist_leadleptch", "hist_leadleptID"};
 			  
 			  TString histonames_of_subleadlep_variable[]={"hist_subleadleptpt", "hist_subleadlepteta", "hist_subleadleptE", "hist_subleadleptphi", "hist_subleadleptch","hist_subleadleptID"};
 
 			  //Start to fill histograms : find the histogram array length
-			  int length_global = sizeof(names_of_global_variable)/sizeof(names_of_global_variable[0]);
 			  int length_leadlep = sizeof(names_of_leadlep_variable)/sizeof(names_of_leadlep_variable[0]);
 			  int length_subleadlep = sizeof(names_of_subleadlep_variable)/sizeof(names_of_subleadlep_variable[0]);
 			  
 			  //Fill histograms
-			  for (int i=0; i<length_global; i++)
-			    {
-			      FillHistogramsGlobal( names_of_global_variable[i], weight, histonames_of_global_variable[i]);
-			    }
-			  
 			  for (int i=0; i<length_leadlep; i++)
 			    {
 			      FillHistogramsLeadlept( names_of_leadlep_variable[i], weight, histonames_of_leadlep_variable[i]);
