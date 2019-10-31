@@ -1,4 +1,5 @@
 ### name of the histogram in the files
+hist_n_jets
 hist_mLL1
 hist_mLL2
 hist_fourlepsys_pt

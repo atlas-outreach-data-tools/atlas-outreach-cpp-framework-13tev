@@ -234,10 +234,27 @@ Bool_t HZZAnalysis::Process(Long64_t entry)
 			  float FourLepSystem_M = FourLepSystem.Mag()/1000.;
 			  float FourLepSystem_pt = FourLepSystem.Pt()/1000.;
 			  float FourLepSystem_y = FourLepSystem.Rapidity();
-			  
+			 
+
+                          //Preselection of good jets
+			  int goodjet_n = 0;
+			  int goodjet_index = 0;
+				  
+			  if (jet_n > 0)
+			    {
+			      for(unsigned int i=0; i<jet_n; i++)
+				{
+				  if(jet_pt->at(i)>30000. && TMath::Abs(jet_eta->at(i)) < 4.4)
+				    {
+				      goodjet_n++;
+				      goodjet_index = i;
+				    }
+				}
+			    }
+
 			  
 			  //Start to fill histograms : definitions of x-axis variables
-			  double names_of_global_variable[]={InvMassZ1_min, InvMassZ2_min, FourLepSystem_pt, FourLepSystem_y, FourLepSystem_M, FourLepSystem_M};
+			  double names_of_global_variable[]={InvMassZ1_min, InvMassZ2_min, FourLepSystem_pt, FourLepSystem_y, FourLepSystem_M, FourLepSystem_M,  (double)goodjet_n };
 			  
 			  double names_of_leadlep_variable[]={Lepton_1.Pt()/1000., Lepton_1.Eta(), Lepton_1.E()/1000., Lepton_1.Phi(), (double)lep_charge->at(goodlep1_index), (double)lep_type->at(goodlep1_index)};
 			  
@@ -249,7 +266,7 @@ Bool_t HZZAnalysis::Process(Long64_t entry)
 			  
 			  
 			  //Start to fill histograms : definitions of histogram names
-			  TString histonames_of_global_variable[]={"hist_mLL1","hist_mLL2","hist_fourlepsys_pt","hist_fourlepsys_y","mass_ext_four_lep", "mass_four_lep"};
+			  TString histonames_of_global_variable[]={"hist_mLL1","hist_mLL2","hist_fourlepsys_pt","hist_fourlepsys_y","mass_ext_four_lep", "mass_four_lep", "hist_n_jets"};
 			  
 			  TString histonames_of_lep_variable[]={"hist_fourleptpt", "hist_fourlepteta", "hist_fourleptE", "hist_fourleptphi", "hist_fourleptch", "hist_fourleptID"};
 			  
