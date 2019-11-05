@@ -200,8 +200,8 @@ void Plotting::ATLASLabel(Double_t x,Double_t y)
   p.SetTextColor(kBlack);
   p.SetTextSize(0.05);  
   //p.DrawLatex(x+delx,y,"Open Data");
-  //p.DrawLatex(x+delx,y,"Preliminary Open Data");
-  p.DrawLatex(x+delx,y,"Internal Open Data");
+  p.DrawLatex(x+delx,y,"Preliminary Open Data");
+  //p.DrawLatex(x+delx,y,"Internal Open Data");
 
   return;
 }
@@ -1565,7 +1565,7 @@ void Plotting::makePlots(){
     l2.SetNDC();
     l2.SetTextSize(0.04);  
     l2.SetTextColor(kBlack);
-    l2.DrawLatex(0.18,0.79, Form("#sqrt{s} = 13 TeV, #int L dt = 10 fb^{-1}")); 
+    l2.DrawLatex(0.18,0.79, Form("#sqrt{s} = 13 TeV, 10 fb^{-1}")); 
     
     
     //create legend
