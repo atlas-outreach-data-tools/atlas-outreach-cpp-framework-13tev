@@ -200,8 +200,8 @@ void Plotting::ATLASLabel(Double_t x,Double_t y)
   p.SetTextColor(kBlack);
   p.SetTextSize(0.05);  
   //p.DrawLatex(x+delx,y,"Open Data");
-  p.DrawLatex(x+delx,y,"Preliminary Open Data");
-  //p.DrawLatex(x+delx,y,"Internal Open Data");
+  //p.DrawLatex(x+delx,y,"Preliminary Open Data");
+  p.DrawLatex(x+delx,y,"Internal Open Data");
 
   return;
 }
