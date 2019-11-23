@@ -211,8 +211,11 @@ Bool_t SUSYAnalysis::Process(Long64_t entry)
       if((jet_pt->at(i))/1000. > 20 && jet_MV2c10->at(i)>0.645925){ n_bjets_pt20++; } // using 77% WP 
     }
 
-    // Set Lorentz vector for MET 
-    TLorentzVector met; 
+    // pathological high-weight event in Sherpa sample
+    if(option.Contains("Wmunu_PTV0_70_CVetoBVeto")) if (met_et/1000. > 1500) met_et = 0;
+
+    // Set Lorentz vector for MET
+    TLorentzVector met;
     met.SetPtEtaPhiM((met_et)/1000.,0.0,met_phi,0);
 
     // Calculate the MT2 variable 
@@ -249,7 +252,7 @@ Bool_t SUSYAnalysis::Process(Long64_t entry)
     // Fill histograms //
     //-----------------//
 
-    double names_of_global_variable[]={mLL, met_et/1000., MT2, met_et/1000.};
+    double names_of_global_variable[]={mLL, met.Et(), MT2, met.Et()};
     double names_of_leadlep_variable[]={l1.Pt(), l1.Eta(), l1.E(), l1.Phi()}; 
     double names_of_subleadlep_variable[]={l2.Pt(), l2.Eta(), l2.E(), l2.Phi()};
 

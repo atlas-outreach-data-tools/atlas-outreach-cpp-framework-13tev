@@ -353,6 +353,7 @@ void Plotting::makePlots(){
   TPad* pad0; //upper
   TPad* pad1; //lower
   TPad* padX; //mask
+  TPad* pad2X; //mask
 
   pad0 = new TPad("pad0","pad0",0,0.29,1,1,0,0,0);
   pad0->SetTickx(false);
@@ -374,18 +375,19 @@ void Plotting::makePlots(){
   pad1->SetFrameBorderMode(0);
 
  
-  padX = new TPad("pad1","pad1",0.07, 0.27, 0.135, 0.29, 0, 0, 0);
-  padX->SetTickx(false);
-  padX->SetTicky(false);
-  padX->SetTopMargin(0.0);
-  padX->SetBottomMargin(0.5);
-  padX->SetLeftMargin(0.14);
-  padX->SetRightMargin(0.05);
-  padX->SetFrameBorderMode(0);
+  padX = new TPad("pad1","pad1",0.08, 0.27, 0.135, 0.29, 0, 0, 0);
+  padX->SetTickx(false);  padX->SetTicky(false);  padX->SetTopMargin(0.0);
+  padX->SetBottomMargin(0.5);  padX->SetLeftMargin(0.14);  padX->SetRightMargin(0.05);  padX->SetFrameBorderMode(0);
+
+  pad2X = new TPad("pad1","pad1",0.08, 0.132, 0.135, 0.17, 0, 0, 0);
+  pad2X->SetTickx(false);  pad2X->SetTicky(false);  pad2X->SetTopMargin(0.0);
+  pad2X->SetBottomMargin(0.5);  pad2X->SetLeftMargin(0.14);  pad2X->SetRightMargin(0.05);  pad2X->SetFrameBorderMode(0);
+
 
   pad1->Draw();
   pad0->Draw();
   padX->Draw();
+  if(!(option.find("HyyAnalysis") != option.npos)) 	    pad2X->Draw();
 
   pad0->cd();
   
@@ -1565,7 +1567,7 @@ void Plotting::makePlots(){
     l2.SetNDC();
     l2.SetTextSize(0.04);  
     l2.SetTextColor(kBlack);
-    l2.DrawLatex(0.18,0.79, Form("#sqrt{s} = 13 TeV, #int L dt = 10 fb^{-1}")); 
+    l2.DrawLatex(0.18,0.79, Form("#sqrt{s} = 13 TeV, 10 fb^{-1}")); 
     
     
     //create legend
@@ -1916,7 +1918,8 @@ void Plotting::makePlots(){
 
     if(! (option.find("HyyAnalysis") != option.npos) ){
       h_ratio->Divide((TH1F*)histstack->Clone());
-      h_ratio->GetYaxis()->SetTitle("Data / Pred      ");
+      h_ratio->GetYaxis()->SetTitle("Data / Pred   ");
+//      h_ratio->GetYaxis()->SetTitle("Data / Pred      ");
     }
    
     if(option.find("HyyAnalysis") != option.npos){
@@ -1977,9 +1980,13 @@ void Plotting::makePlots(){
     h_ratio->GetXaxis()->SetLabelSize(0.13);
     h_ratio->GetXaxis()->SetTitleOffset(1.2);
     h_ratio->GetYaxis()->SetTitleSize(0.12);
-    h_ratio->GetYaxis()->SetTitleOffset(0.5);
+    h_ratio->GetYaxis()->SetTitleOffset(0.4);
+    if(option.find("HyyAnalysis") != option.npos)   h_ratio->GetYaxis()->SetTitleOffset(0.5);
     h_ratio->GetYaxis()->SetLabelSize(0.10);
- 
+    h_ratio->GetYaxis()->SetLabelOffset(0.01);
+    h_ratio->GetXaxis()->SetLabelOffset(0.035);
+
+
     data[fIter->first]->GetXaxis()->SetLabelSize(0);
     gPad->RedrawAxis();
     pad1->cd();

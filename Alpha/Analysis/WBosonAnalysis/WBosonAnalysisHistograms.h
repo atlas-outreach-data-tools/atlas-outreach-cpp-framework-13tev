@@ -11,9 +11,9 @@ void WBosonAnalysis::define_histograms()
 
   //Global variables
   hist_etmiss       = new TH1F("hist_etmiss",       "Missing Transverse Momentum;E_{T}^{miss} [GeV];Events / bin", 30, 0, 200);
-  hist_mtw          = new TH1F("hist_mtw",          "Transverse Mass; M^{W}_{T} [GeV];Events / bin", 40, 40, 180);
-  hist_mtw_enu      = new TH1F("hist_mtw_enu",      "Transverse Mass; M^{W #rightarrow e#nu}_{T} [GeV];Events / bin", 40, 40, 180);
-  hist_mtw_munu     = new TH1F("hist_mtw_munu",     "Transverse Mass; M^{W #rightarrow #mu#nu}_{T} [GeV];Events / bin", 40, 40, 180);
+  hist_mtw          = new TH1F("hist_mtw",          "Transverse Mass; M^{W}_{T} [GeV];Events / bin", 40, 39, 180);
+  hist_mtw_enu      = new TH1F("hist_mtw_enu",      "Transverse Mass; M^{W #rightarrow e#nu}_{T} [GeV];Events / bin", 40, 39, 180);
+  hist_mtw_munu     = new TH1F("hist_mtw_munu",     "Transverse Mass; M^{W #rightarrow #mu#nu}_{T} [GeV];Events / bin", 40, 39, 180);
     
   // Jet variables
   hist_n_jets       = new TH1F("hist_n_jets",      "Number of Jets;N_{jets};Events", 6, -0.5, 5.5);
