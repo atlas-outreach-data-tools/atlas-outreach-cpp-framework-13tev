@@ -379,7 +379,7 @@ void Plotting::makePlots(){
   padX->SetTickx(false);  padX->SetTicky(false);  padX->SetTopMargin(0.0);
   padX->SetBottomMargin(0.5);  padX->SetLeftMargin(0.14);  padX->SetRightMargin(0.05);  padX->SetFrameBorderMode(0);
 
-  pad2X = new TPad("pad1","pad1",0.08, 0.132, 0.135, 0.17, 0, 0, 0);
+  pad2X = new TPad("pad1","pad1",0.08, 0.132, 0.135, 0.16, 0, 0, 0);
   pad2X->SetTickx(false);  pad2X->SetTicky(false);  pad2X->SetTopMargin(0.0);
   pad2X->SetBottomMargin(0.5);  pad2X->SetLeftMargin(0.14);  pad2X->SetRightMargin(0.05);  pad2X->SetFrameBorderMode(0);
 
@@ -1272,7 +1272,7 @@ void Plotting::makePlots(){
       Z->Add(Zmumu_PTV70_140_BFilter[fIter->first]);
       Z->Add(Zmumu_PTV70_140_CFilterBVeto[fIter->first]);
       Z->Add(Zmumu_PTV70_140_CVetoBVeto[fIter->first]);
-      Z->SetFillColor(kBlue-6);
+      Z->SetFillColor(kPink+9);
       Z->SetLineWidth(0);
 
       // Z->tau tau      
@@ -1290,7 +1290,7 @@ void Plotting::makePlots(){
       Z_tautau->Add(Ztautau_PTV70_140_BFilter[fIter->first]);
       Z_tautau->Add(Ztautau_PTV70_140_CFilterBVeto[fIter->first]);
       Z_tautau->Add(Ztautau_PTV70_140_CVetoBVeto[fIter->first]);
-      Z_tautau->SetFillColor(kRed-7);
+      Z_tautau->SetFillColor(kAzure+7);
       Z_tautau->SetLineWidth(0);
      
      }
@@ -1980,8 +1980,7 @@ void Plotting::makePlots(){
     h_ratio->GetXaxis()->SetLabelSize(0.13);
     h_ratio->GetXaxis()->SetTitleOffset(1.2);
     h_ratio->GetYaxis()->SetTitleSize(0.12);
-    h_ratio->GetYaxis()->SetTitleOffset(0.4);
-    if(option.find("HyyAnalysis") != option.npos)   h_ratio->GetYaxis()->SetTitleOffset(0.5);
+    h_ratio->GetYaxis()->SetTitleOffset(0.45);
     h_ratio->GetYaxis()->SetLabelSize(0.10);
     h_ratio->GetYaxis()->SetLabelOffset(0.01);
     h_ratio->GetXaxis()->SetLabelOffset(0.035);
