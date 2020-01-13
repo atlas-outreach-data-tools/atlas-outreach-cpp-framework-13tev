@@ -95,7 +95,7 @@ Bool_t ZBosonAnalysis::Process(Long64_t entry)
 		  if( lep_pt->at(i) >25000. && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.15) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.15 ) )
 		    {
 		      // electron selection in fiducial region excluding candidates in the transition region between the barrel and endcap electromagnetic calorimeters
-		      if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i)<2.47) && ( TMath::Abs(lep_eta->at(i) < 1.37) || TMath::Abs(lep_eta->at(i) > 1.52) ) ) 
+		      if ( lep_type->at(i) == 11 && TMath::Abs(lep_eta->at(i)) < 2.47 && ( TMath::Abs(lep_eta->at(i)) < 1.37 || TMath::Abs(lep_eta->at(i)) > 1.52 ) ) 
                       {
 			 if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 5 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {
        	                    goodlep_n = goodlep_n + 1;
@@ -104,7 +104,7 @@ Bool_t ZBosonAnalysis::Process(Long64_t entry)
 		         }
                       }
 		      // muon selection 
-		      if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)<2.5) ) { 
+		      if ( lep_type->at(i) == 13 && TMath::Abs(lep_eta->at(i)) < 2.5 ) { 
                         if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 3 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {		
 	                   goodlep_n = goodlep_n + 1;
 			   goodlep_index[lep_index] = i;
@@ -149,15 +149,15 @@ Bool_t ZBosonAnalysis::Process(Long64_t entry)
 		      if( (TMath::Abs(InvMass_Leptons_ee - 91.18) < 25. ) || (TMath::Abs(InvMass_Leptons_mumu - 91.18) < 25. ) )
 			{
 			  
-			  // By default, we are using for this analysis a MC sample known to describe poorly large jet multiplicity, thus we cut on nJets<2, lepton kinematics are well described in this phase-space 
+			  // By default, we are using for this analysis a MC sample known to describe poorly large jet multiplicity, thus we cut on nJets==0, lepton kinematics are well described in this phase-space 
 			  //    FillHistogramsLeadJet((double)jet_n, weight, "hist_n_jets");
 
         		if(jet_n==0)
-			    {
+			{
 	                 
-                              if(type_one==11) FillHistogramsGlobal(InvMass_Leptons_ee , weight, "hist_ee_mLL");
-                              if(type_one==13) FillHistogramsGlobal(InvMass_Leptons_mumu , weight, "hist_mumu_mLL");
-	                      FillHistogramsGlobal(InvMass_Leptons, weight, "hist_mLL");
+                          if(type_one==11) FillHistogramsGlobal(InvMass_Leptons_ee , weight, "hist_ee_mLL");
+                          if(type_one==13) FillHistogramsGlobal(InvMass_Leptons_mumu , weight, "hist_mumu_mLL");
+	                  FillHistogramsGlobal(InvMass_Leptons, weight, "hist_mLL");
 
                           //Start to fill histograms: definitions of variables
 			  

@@ -105,7 +105,7 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
 		      if( lep_pt->at(i) > 35000. && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.1) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.1 ) )
 			{
                 	  // electron selection in fiducial region excluding candidates in the transition region between the barrel and endcap electromagnetic calorimeters
-			  if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i)<2.47) && ( TMath::Abs(lep_eta->at(i) < 1.37) || TMath::Abs(lep_eta->at(i) > 1.52) ) ) {
+			  if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i)) < 2.47 && ( TMath::Abs(lep_eta->at(i)) < 1.37 || TMath::Abs(lep_eta->at(i)) > 1.52 ) ) {
 	                 // longitudinal and longitudinal impact parameter cuts
  		 	  if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) > 5) continue;  
                           if( TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) > 0.5) continue; 
@@ -116,9 +116,9 @@ Bool_t WBosonAnalysis::Process(Long64_t entry)
 			  }
 
 			  // muon selection
-			  if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)<2.5) ) {
+			  if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)) < 2.5 ) {
                             
-                            if( TMath::Abs(lep_trackd0pvunbiased->at(0))/lep_tracksigd0pvunbiased->at(0) > 3) continue;  
+                            if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) > 3) continue;  
                             if( TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) > 0.5) continue;
 
                             goodlep_n = goodlep_n + 1;

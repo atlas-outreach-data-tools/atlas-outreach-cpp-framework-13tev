@@ -142,10 +142,10 @@ Bool_t SUSYAnalysis::Process(Long64_t entry)
       if( lep_ptcone30->at(i)/lep_pt->at(i) > 0.15 ) continue;
 
       if( TMath::Abs((int)lep_type->at(i)) == 11 ){
-	if(TMath::Abs(lep_trackd0pvunbiased->at(0))/lep_tracksigd0pvunbiased->at(0) > 5) continue;  
+	if(TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) > 5) continue;  
       }
       if( TMath::Abs((int)lep_type->at(i)) == 13 ){
-	if(TMath::Abs(lep_trackd0pvunbiased->at(0))/lep_tracksigd0pvunbiased->at(0) > 3) continue;  
+	if(TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) > 3) continue;  
       }
 
       n_lep++; // Count "good" leptons 

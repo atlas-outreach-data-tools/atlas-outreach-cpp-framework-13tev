@@ -9,7 +9,7 @@ void main_WZDiBosonAnalysis(int proof = 0, int option= 0)
 {
   // path to your local directory *or* URL, please change the default one!
   /* Local path example */
-  TString path = "/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/renamed/3lep/";
+  TString path = "/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/renamedLargeRJets/3lep/";
   /* The URL to the ATLAS Open Data website repository */
   //  TString path = "http://opendata.atlas.cern/release/samples/";
 

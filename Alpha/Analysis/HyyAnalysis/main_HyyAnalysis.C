@@ -12,7 +12,7 @@ void main_HyyAnalysis(int proof = 0, int option= 0)
   /* Local path example */
   
   /* The URL to the ATLAS Open Data website repository */
-  TString path = "/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/renamed/GamGam/";
+  TString path = "/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/renamedLargeRJets/GamGam/";
 
   //***************************************************************************************************//
   // We run only over data and Higgs MC

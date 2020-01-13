@@ -94,7 +94,7 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 		  // standard lepton isolation requirement => strict isolation
 		  if( lep_pt->at(i) >15000. && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.1) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.1 ) )
 		    {
-		      if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i)<2.47) && ( TMath::Abs(lep_eta->at(i) < 1.37) || TMath::Abs(lep_eta->at(i) > 1.52) ) ) {
+		      if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i)) < 2.47 && ( TMath::Abs(lep_eta->at(i)) < 1.37 || TMath::Abs(lep_eta->at(i)) > 1.52 ) ) {
 			if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 5 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {
 			  goodlep_n = goodlep_n + 1;
 			  goodlep_index[lep_index] = i;
@@ -102,7 +102,7 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 			}
 		      }
 		      // muon selection
-		      if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)<2.5) ) {
+		      if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)) < 2.5 ) {
 			if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 3 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {
 			  goodlep_n = goodlep_n + 1;
 			  goodlep_index[lep_index] = i;
@@ -168,7 +168,7 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 			  
 			  for(unsigned int i=0; i<jet_n; i++)
 			    {
-			      if(jet_pt->at(i)>20000. && TMath::Abs(jet_eta->at(i)) < 2.5)
+			      if(jet_pt->at(i) > 20000. && TMath::Abs(jet_eta->at(i)) < 2.5)
 				{
 				  // JVT cleaning
 				  bool jvt_pass=true;

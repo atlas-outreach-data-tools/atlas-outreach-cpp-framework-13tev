@@ -73,7 +73,7 @@ Bool_t ZPrimeBoostedAnalysis::Process(Long64_t entry)
       if(option.Contains("data")) {  weight = 1.; }
 
       // cut inmediately on at least one large-R jet
-      if (fatjet_n >= 1)
+      if (largeRjet_n >= 1)
 	{
 	  
 	  // MET > 20 GeV
@@ -100,7 +100,7 @@ Bool_t ZPrimeBoostedAnalysis::Process(Long64_t entry)
                           if( lep_pt->at(i) > 30000. && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.15) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.15 ) )
                             {
                               // electron selection in fiducial region excluding candidates in the transition region between the barrel and endcap electromagnetic calorimeters
-                              if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i)<2.47) && ( TMath::Abs(lep_eta->at(i) < 1.37) || TMath::Abs(lep_eta->at(i) > 1.52) ) ) {
+                              if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i)) < 2.47 && ( TMath::Abs(lep_eta->at(i)) < 1.37 || TMath::Abs(lep_eta->at(i)) > 1.52 ) ) {
                                 if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 5 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {
                                   goodlep_n = goodlep_n + 1;
                                   goodlep_index = i;
@@ -108,7 +108,7 @@ Bool_t ZPrimeBoostedAnalysis::Process(Long64_t entry)
                                 }
                               }
                               // muon selection
-                              if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)<2.5) ) {
+                              if ( lep_type->at(i) ==13 && TMath::Abs(lep_eta->at(i)) < 2.5 ) {
                                 if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 3 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {
 				  
                                   goodlep_n = goodlep_n + 1;
@@ -204,19 +204,19 @@ Bool_t ZPrimeBoostedAnalysis::Process(Long64_t entry)
 
 				  // preselection of good top-tagged large-R jets
 				  int TopLRjet_n = 0;
-                                  int goodTopLRjet_index[fatjet_n];
+                                  int goodTopLRjet_index[largeRjet_n];
 			          int TopLRjet_index = 0;
 
 				  // from all the large-R jets, find those we are interested in
-				  for(unsigned int l=0; l<fatjet_n; l++)
+				  for(unsigned int l=0; l<largeRjet_n; l++)
 				    {
-				      // fatjets are calibrated within: m > 50 GeV, pT > 300 GeV and pT < 1500, |eta| < 2
+				      // largeRjets are calibrated within: m > 50 GeV, pT > 300 GeV and pT < 1500, |eta| < 2
 				      // simplified top-tagging requirement: tau32 < 0.75 
-				      if( fatjet_m->at(l)/1000. > 100 && fatjet_pt->at(l)/1000. > 300 && fatjet_pt->at(l)/1000. < 1500 && TMath::Abs(fatjet_eta->at(l)) < 2.0 && fatjet_tau32->at(l) < 0.75 )
+				      if( largeRjet_m->at(l)/1000. > 100 && largeRjet_pt->at(l)/1000. > 300 && largeRjet_pt->at(l)/1000. < 1500 && TMath::Abs(largeRjet_eta->at(l)) < 2.0 && largeRjet_tau32->at(l) < 0.75 )
 					{
 					  
 					  TLorentzVector TopLRjet  = TLorentzVector(); // top-tagged large-R jet
-					  TopLRjet.SetPtEtaPhiE(fatjet_pt->at(l),fatjet_eta->at(l),fatjet_phi->at(l),fatjet_E->at(l));
+					  TopLRjet.SetPtEtaPhiE(largeRjet_pt->at(l),largeRjet_eta->at(l),largeRjet_phi->at(l),largeRjet_E->at(l));
 					  
 					  // well separated from the lepton
 					  float dPhi = TMath::Abs( Lepton_1.Phi() - TopLRjet.Phi() );
@@ -249,15 +249,15 @@ Bool_t ZPrimeBoostedAnalysis::Process(Long64_t entry)
                                               TopLRjet_index++;
 					    }
 					}					
-				    } // iterator over fatjet 
+				    } // iterator over largeRjet 
 				
 			      // before top-tagging, plot Large-R jets 
-                              for(unsigned int n=0; n<fatjet_n; n++)
+                              for(unsigned int n=0; n<largeRjet_n; n++)
 			      {
-		   	         if( fatjet_m->at(n)/1000. > 50 && fatjet_pt->at(n)/1000. > 250 && TMath::Abs(fatjet_eta->at(n)) < 2.0  ) 
+		   	         if( largeRjet_m->at(n)/1000. > 50 && largeRjet_pt->at(n)/1000. > 250 && TMath::Abs(largeRjet_eta->at(n)) < 2.0  ) 
 				 {
 
-                                      double names_of_boost_variable[]={(double)fatjet_n, fatjet_pt->at(n)/1000., fatjet_eta->at(n),fatjet_phi->at(n),fatjet_m->at(n)/1000.,fatjet_tau32->at(n)};
+                                      double names_of_boost_variable[]={(double)largeRjet_n, largeRjet_pt->at(n)/1000., largeRjet_eta->at(n),largeRjet_phi->at(n),largeRjet_m->at(n)/1000.,largeRjet_tau32->at(n)};
 
                                       TString histonames_of_boost_variable[]={"hist_n_leadLRjets","hist_leadLRjet_pt","hist_leadLRjet_eta","hist_leadLRjet_phi","hist_leadLRjet_m","hist_leadLRjet_tau32"};
 
@@ -268,7 +268,7 @@ Bool_t ZPrimeBoostedAnalysis::Process(Long64_t entry)
                                            FillHistogramsBoosted( names_of_boost_variable[i], weight, histonames_of_boost_variable[i]);
                                         }
 			         }
-			      } // iterator over fatjets
+			      } // iterator over largeRjets
 
 
 
@@ -281,7 +281,7 @@ Bool_t ZPrimeBoostedAnalysis::Process(Long64_t entry)
 				      
 				      int TopHad_index = goodTopLRjet_index[0]; 
 				      TLorentzVector TopHad  = TLorentzVector(); // hadronic-top candidate
-				      TopHad.SetPtEtaPhiE(fatjet_pt->at(TopHad_index),fatjet_eta->at(TopHad_index),fatjet_phi->at(TopHad_index),fatjet_E->at(TopHad_index));
+				      TopHad.SetPtEtaPhiE(largeRjet_pt->at(TopHad_index),largeRjet_eta->at(TopHad_index),largeRjet_phi->at(TopHad_index),largeRjet_E->at(TopHad_index));
 				      
 				      TLorentzVector TopLep_almost = TLorentzVector(); //  leptonic-top candidate
 				      // check that  the selected small-R jet is b-tagged
@@ -322,7 +322,7 @@ Bool_t ZPrimeBoostedAnalysis::Process(Long64_t entry)
 					}
 				      
 				      // save histos of top-tagged large-R jets
-				      double names_of_boost_variable[]={(double)TopLRjet_n, fatjet_pt->at(goodTopLRjet_index[0])/1000., fatjet_eta->at(goodTopLRjet_index[0]),fatjet_phi->at(goodTopLRjet_index[0]),fatjet_m->at(goodTopLRjet_index[0])/1000.,fatjet_tau32->at(goodTopLRjet_index[0])};
+				      double names_of_boost_variable[]={(double)TopLRjet_n, largeRjet_pt->at(goodTopLRjet_index[0])/1000., largeRjet_eta->at(goodTopLRjet_index[0]),largeRjet_phi->at(goodTopLRjet_index[0]),largeRjet_m->at(goodTopLRjet_index[0])/1000.,largeRjet_tau32->at(goodTopLRjet_index[0])};
 
 				      TString histonames_of_boost_variable[]={"hist_n_TopLRjets","hist_leadTopLRjet_pt","hist_leadTopLRjet_eta","hist_leadTopLRjet_phi","hist_leadTopLRjet_m","hist_leadTopLRjet_tau32"};
 				      
@@ -334,12 +334,12 @@ Bool_t ZPrimeBoostedAnalysis::Process(Long64_t entry)
 				        }
 				      
 				      
-				      // systematic uncertainty on fatjets 
+				      // systematic uncertainty on largeRjets 
 				      TRandom3* gRand = new TRandom3(0);
-				      Double_t      mean  = fatjet_pt->at(goodTopLRjet_index[0]) / 1000.;
-				      Double_t      sigma = fatjet_pt_syst->at(goodTopLRjet_index[0]) / 1000. ;
-				      float fatjet_pt_variation = gRand->Gaus(mean,sigma);
-				      if(fatjet_pt_variation>300) FillHistogramsBoosted( fatjet_pt_variation, weight, "hist_leadTopLRjet_syst_pt");
+				      Double_t      mean  = largeRjet_pt->at(goodTopLRjet_index[0]) / 1000.;
+				      Double_t      sigma = largeRjet_pt_syst->at(goodTopLRjet_index[0]) / 1000. ;
+				      float largeRjet_pt_variation = gRand->Gaus(mean,sigma);
+				      if(largeRjet_pt_variation>300) FillHistogramsBoosted( largeRjet_pt_variation, weight, "hist_leadTopLRjet_syst_pt");
 				      
 				      
 				    }

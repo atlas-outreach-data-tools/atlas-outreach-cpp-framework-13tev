@@ -107,19 +107,19 @@ class ZPrimeBoostedAnalysis : public TSelector {
    vector<int>     *jet_trueflav;
    vector<bool>    *jet_truthMatched;
    vector<float>   *jet_MV2c10;
-   UInt_t          fatjet_n;
-   vector<float>   *fatjet_pt;
-   vector<float>   *fatjet_eta;
-   vector<float>   *fatjet_phi;
-   vector<float>   *fatjet_E;
-   vector<float>   *fatjet_m;
-   vector<int>     *fatjet_truthMatched;
-   vector<float>   *fatjet_D2;
-   vector<float>   *fatjet_tau32;
+   UInt_t          largeRjet_n;
+   vector<float>   *largeRjet_pt;
+   vector<float>   *largeRjet_eta;
+   vector<float>   *largeRjet_phi;
+   vector<float>   *largeRjet_E;
+   vector<float>   *largeRjet_m;
+   vector<int>     *largeRjet_truthMatched;
+   vector<float>   *largeRjet_D2;
+   vector<float>   *largeRjet_tau32;
    vector<float>   *lep_pt_syst;
    Float_t         met_et_syst;
    vector<float>   *jet_pt_syst;
-   vector<float>   *fatjet_pt_syst;
+   vector<float>   *largeRjet_pt_syst;
 
   // List of branches
    TBranch        *b_runNumber;   //!
@@ -167,19 +167,19 @@ class ZPrimeBoostedAnalysis : public TSelector {
    TBranch        *b_jet_trueflav;   //!
    TBranch        *b_jet_truthMatched;   //!
    TBranch        *b_jet_MV2c10;   //!
-   TBranch        *b_fatjet_n;   //!
-   TBranch        *b_fatjet_pt;   //!
-   TBranch        *b_fatjet_eta;   //!
-   TBranch        *b_fatjet_phi;   //!
-   TBranch        *b_fatjet_E;   //!
-   TBranch        *b_fatjet_m;   //!
-   TBranch        *b_fatjet_truthMatched;   //!
-   TBranch        *b_fatjet_D2;   //!
-   TBranch        *b_fatjet_tau32;   //!
+   TBranch        *b_largeRjet_n;   //!
+   TBranch        *b_largeRjet_pt;   //!
+   TBranch        *b_largeRjet_eta;   //!
+   TBranch        *b_largeRjet_phi;   //!
+   TBranch        *b_largeRjet_E;   //!
+   TBranch        *b_largeRjet_m;   //!
+   TBranch        *b_largeRjet_truthMatched;   //!
+   TBranch        *b_largeRjet_D2;   //!
+   TBranch        *b_largeRjet_tau32;   //!
    TBranch        *b_lep_pt_syst;   //!
    TBranch        *b_met_et_syst;   //!
    TBranch        *b_jet_pt_syst;   //!
-   TBranch        *b_fatjet_pt_syst;   //!
+   TBranch        *b_largeRjet_pt_syst;   //!
 
 
   ZPrimeBoostedAnalysis(TTree * =0) : fChain(0) { }
@@ -250,17 +250,17 @@ void ZPrimeBoostedAnalysis::Init(TTree *tree)
    jet_trueflav = 0;
    jet_truthMatched = 0;
    jet_MV2c10 = 0;
-   fatjet_pt = 0;
-   fatjet_eta = 0;
-   fatjet_phi = 0;
-   fatjet_E = 0;
-   fatjet_m = 0;
-   fatjet_truthMatched = 0;
-   fatjet_D2 = 0;
-   fatjet_tau32 = 0;
+   largeRjet_pt = 0;
+   largeRjet_eta = 0;
+   largeRjet_phi = 0;
+   largeRjet_E = 0;
+   largeRjet_m = 0;
+   largeRjet_truthMatched = 0;
+   largeRjet_D2 = 0;
+   largeRjet_tau32 = 0;
    lep_pt_syst = 0;
    jet_pt_syst = 0;
-   fatjet_pt_syst = 0;
+   largeRjet_pt_syst = 0;
 
 
   // Set branch addresses and branch pointers
@@ -314,19 +314,19 @@ void ZPrimeBoostedAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("jet_trueflav", &jet_trueflav, &b_jet_trueflav);
    fChain->SetBranchAddress("jet_truthMatched", &jet_truthMatched, &b_jet_truthMatched);
    fChain->SetBranchAddress("jet_MV2c10", &jet_MV2c10, &b_jet_MV2c10);
-   fChain->SetBranchAddress("fatjet_n", &fatjet_n, &b_fatjet_n);
-   fChain->SetBranchAddress("fatjet_pt", &fatjet_pt, &b_fatjet_pt);
-   fChain->SetBranchAddress("fatjet_eta", &fatjet_eta, &b_fatjet_eta);
-   fChain->SetBranchAddress("fatjet_phi", &fatjet_phi, &b_fatjet_phi);
-   fChain->SetBranchAddress("fatjet_E", &fatjet_E, &b_fatjet_E);
-   fChain->SetBranchAddress("fatjet_m", &fatjet_m, &b_fatjet_m);
-   fChain->SetBranchAddress("fatjet_truthMatched", &fatjet_truthMatched, &b_fatjet_truthMatched);
-   fChain->SetBranchAddress("fatjet_D2", &fatjet_D2, &b_fatjet_D2);
-   fChain->SetBranchAddress("fatjet_tau32", &fatjet_tau32, &b_fatjet_tau32);
+   fChain->SetBranchAddress("largeRjet_n", &largeRjet_n, &b_largeRjet_n);
+   fChain->SetBranchAddress("largeRjet_pt", &largeRjet_pt, &b_largeRjet_pt);
+   fChain->SetBranchAddress("largeRjet_eta", &largeRjet_eta, &b_largeRjet_eta);
+   fChain->SetBranchAddress("largeRjet_phi", &largeRjet_phi, &b_largeRjet_phi);
+   fChain->SetBranchAddress("largeRjet_E", &largeRjet_E, &b_largeRjet_E);
+   fChain->SetBranchAddress("largeRjet_m", &largeRjet_m, &b_largeRjet_m);
+   fChain->SetBranchAddress("largeRjet_truthMatched", &largeRjet_truthMatched, &b_largeRjet_truthMatched);
+   fChain->SetBranchAddress("largeRjet_D2", &largeRjet_D2, &b_largeRjet_D2);
+   fChain->SetBranchAddress("largeRjet_tau32", &largeRjet_tau32, &b_largeRjet_tau32);
    fChain->SetBranchAddress("lep_pt_syst", &lep_pt_syst, &b_lep_pt_syst);
    fChain->SetBranchAddress("met_et_syst", &met_et_syst, &b_met_et_syst);
    fChain->SetBranchAddress("jet_pt_syst", &jet_pt_syst, &b_jet_pt_syst);
-   fChain->SetBranchAddress("fatjet_pt_syst", &fatjet_pt_syst, &b_fatjet_pt_syst);
+   fChain->SetBranchAddress("largeRjet_pt_syst", &largeRjet_pt_syst, &b_largeRjet_pt_syst);
 
 
  

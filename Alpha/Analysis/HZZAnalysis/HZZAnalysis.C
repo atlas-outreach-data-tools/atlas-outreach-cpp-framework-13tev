@@ -86,9 +86,9 @@ Bool_t HZZAnalysis::Process(Long64_t entry)
               TLorentzVector leptemp;  leptemp.SetPtEtaPhiE(lep_pt->at(i)/1000., lep_eta->at(i), lep_phi->at(i), lep_E->at(i)/1000.);
 	      
               // loosely isolated and very soft 
-	      if( lep_pt->at(i) > 5000. && TMath::Abs(lep_eta->at(i) < 2.5) && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.3) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.3 ) ) {
+	      if( lep_pt->at(i) > 5000. && TMath::Abs(lep_eta->at(i)) < 2.5 && ( (lep_ptcone30->at(i)/lep_pt->at(i)) < 0.3) && ( (lep_etcone20->at(i) / lep_pt->at(i)) < 0.3 ) ) {
 		// electron
-		if ( lep_type->at(i)==11 && lep_pt->at(i) > 7000. && TMath::Abs(lep_eta->at(i)<2.47) ) {
+		if ( lep_type->at(i) == 11 && lep_pt->at(i) > 7000. && TMath::Abs(lep_eta->at(i)) <2.47 ) {
 		  if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 5 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {
 		    goodlep_n = goodlep_n + 1;
 		    goodlep_index[lep_index] = i;
@@ -96,7 +96,7 @@ Bool_t HZZAnalysis::Process(Long64_t entry)
 		  }
 		}
 		//muon
-		if ( lep_type->at(i)==13) {
+		if ( lep_type->at(i) == 13) {
 		  if( TMath::Abs(lep_trackd0pvunbiased->at(i))/lep_tracksigd0pvunbiased->at(i) < 3 && TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta())) < 0.5) {
 		    goodlep_n = goodlep_n + 1;
 		    goodlep_index[lep_index] = i;
@@ -244,7 +244,7 @@ Bool_t HZZAnalysis::Process(Long64_t entry)
 			    {
 			      for(unsigned int i=0; i<jet_n; i++)
 				{
-				  if(jet_pt->at(i)>30000. && TMath::Abs(jet_eta->at(i)) < 4.4)
+				  if(jet_pt->at(i) > 30000. && TMath::Abs(jet_eta->at(i)) < 4.4)
 				    {
 				      goodjet_n++;
 				      goodjet_index = i;

@@ -41,7 +41,7 @@ void ZPrimeBoostedAnalysis::define_histograms()
   // largeR + smallR + lepton (missing neutrino)
   hist_ttbarMLR   = new TH1F("hist_ttbarMLR",  " (Almost) ttbar mass (no neutrino); m^{Top-tagged Large-R jet, Small-R jet, Lepton} [GeV]; Events / bin", 20, 400, 1600);
 
-  // systematics on fatjets
+  // systematics on largeRjets
   hist_leadTopLRjet_syst_pt   = new TH1F("hist_leadTopLRjet_syst_pt",  "Leading  top-tagged Large-R Jet pT after syst; p_{T}^{Top-tagged Large-R jet} [GeV] (after p_{T}^{Large-R Jet} syst.); Events / bin", 30, 250, 700);
 
 

@@ -79,6 +79,7 @@ int main(int argc, char *argv[]){
   m->SetInputLocation(argv[2]);
   string option = argv[1];
 
+  
   // run main plotting code
   m->run();
   
@@ -1848,25 +1849,12 @@ void Plotting::makePlots(){
 
       if(fIter->first.find("mYY_bin1") != option.npos){
         fit->FixParameter(4,119.1); // this value was obtained from the Gaussian fit
-        fit->FixParameter(6,2.39);  // this value was obtained from the Gaussian fit
+        fit->FixParameter(6,2.38);  // this value was obtained from the Gaussian fit
       }
-      if(fIter->first.find("mYY_bin2") != option.npos){
-        fit->FixParameter(4,66.5);  // this value was obtained from the Gaussian fit
-        fit->FixParameter(6,2.31);  // this value was obtained from the Gaussian fit
-      }
-
       if(fIter->first.find("mYY_cat_bin1") != option.npos){
         fit->FixParameter(4,23.2); // this value was obtained from the Gaussian fit
         fit->FixParameter(6,1.83);  // this value was obtained from the Gaussian fit
       }
-      if(fIter->first.find("mYY_cat_bin2") != option.npos){
-        fit->FixParameter(4,13.1);  // this value was obtained from the Gaussian fit
-        fit->FixParameter(6,1.76);  // this value was obtained from the Gaussian fit
-      }
-
-
-
-
 
       // here we are finally fitting 
       data[fIter->first]->Fit("fit","","same:e",105.,160.);
