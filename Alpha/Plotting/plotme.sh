@@ -8,7 +8,7 @@
 analysisCollection=("WBosonAnalysis" "ZBosonAnalysis" "TTbarAnalysis" "SingleTopAnalysis" "WZDiBosonAnalysis" "ZZDiBosonAnalysis" "HWWAnalysis" "HZZAnalysis" "ZTauTauAnalysis" "HyyAnalysis" "SUSYAnalysis" "ZPrimeBoostedAnalysis")
 
 # location of their outputs
-outputpath=("./Analysis/WBosonAnalysis/Output_WBosonAnalysis" \
+outputpath=("../Analysis/WBosonAnalysis/Output_WBosonAnalysis" \
 "../Analysis/ZBosonAnalysis/Output_ZBosonAnalysis" \
 "../Analysis/TTbarAnalysis/Output_TTbarAnalysis" \
 "../Analysis/SingleTopAnalysis/Output_SingleTopAnalysis" \
@@ -41,7 +41,7 @@ echo '11 = ZPrimeBoostedAnalysis'
 read choice
 
 # check choices
-if (( ($choice == 1) || ($choice == 2) || ($choice == 3) || ($choice == 4) ||($choice == 5) ||($choice == 6) ||($choice == 7) || ($choice == 8) || ($choice == 9) || ($choice == 10) ||($choice == 11) ||($choice == 12) )) ; then
+if (( ($choice == 0) || ($choice == 1) || ($choice == 2) || ($choice == 3) ||($choice == 4) ||($choice == 5) ||($choice == 6) || ($choice == 7) || ($choice == 8) || ($choice == 9) ||($choice == 10) ||($choice == 11) )) ; then
     
   analysisName=${analysisCollection[${choice}]}
   echo "Now, choose the location of the ${analysisName} output!"
