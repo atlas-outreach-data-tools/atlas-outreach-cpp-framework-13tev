@@ -1,0 +1,23 @@
+### name of the histogram in the files, add # to comment out
+hist_etmiss
+hist_mLL
+hist_MMC
+hist_mt_etau
+hist_mt_mutau
+hist_sum_dPhi
+hist_taupt
+hist_syst_taupt
+hist_taueta
+hist_tauE
+hist_tauphi
+hist_tau_nTracks
+hist_tau_BDTid
+hist_leadleptpt
+hist_leadlepteta
+hist_leadleptE
+hist_leadleptphi
+hist_leadleptch
+hist_leadleptID
+hist_n_jets
+hist_leadjet_pt
+hist_leadjet_eta
