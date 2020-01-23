@@ -17,13 +17,24 @@ class HWWAnalysis : public TSelector {
   //////////////////////////////////////////////////////////
   // histograms
 
-  // Global histograms
-  TH1F *hist_etmiss       = 0;
-  TH1F *hist_vxp_z        = 0;
-  TH1F *hist_pvxp_n       = 0;
-  TH1F *hist_vismass      = 0;
-  TH1F *hist_ptLL         = 0;
-  TH1F *hist_deltaPhiLL   = 0;
+  // Global variables histograms
+  TH1F *hist_etmiss      = 0;
+  TH1F *hist_mLL         = 0; 
+  TH1F *hist_ptLL        = 0;  
+  TH1F *hist_dPhi_LL      = 0;
+  TH1F *hist_mt          = 0;
+  TH1F *hist_dPhiLLmet      = 0;
+
+  TH1F *histI_etmiss      = 0;
+  TH1F *histI_mLL         = 0;
+  TH1F *histI_ptLL        = 0;
+  TH1F *histI_dPhi_LL      = 0;
+  TH1F *histI_mt          = 0;
+  TH1F *histI_dPhiLLmet      = 0;
+
+
+
+
 
   // Leading Lepton histograms
   TH1F *hist_leadleptpt   = 0;
@@ -49,10 +60,24 @@ class HWWAnalysis : public TSelector {
   TH1F *hist_subleadlepz0   = 0;
   TH1F *hist_subleadlepd0   = 0;
 
+  // Jet variables histograms
+  TH1F *hist_n_jets       = 0;
+  TH1F *hist_n_bjets       = 0;
+
+  TH1F *histI_n_jets       = 0;
+  TH1F *histI_n_bjets       = 0;
+
+
+
+
+
+  TH1F *hist_leadjet_pt       = 0;
+  TH1F *hist_leadjet_eta      = 0;
 
   //////////////////////////////////////////////////////////
   // Declaration of leaf types
-  Int_t           runNumber;
+
+   Int_t           runNumber;
    Int_t           eventNumber;
    Int_t           channelNumber;
    Float_t         mcWeight;
@@ -79,7 +104,7 @@ class HWWAnalysis : public TSelector {
    vector<float>   *lep_phi;
    vector<float>   *lep_E;
    vector<float>   *lep_z0;
-   vector<float>   *lep_charge;
+   vector<int>     *lep_charge;
    vector<unsigned int> *lep_type;
    vector<bool>    *lep_isTightID;
    vector<float>   *lep_ptcone30;
@@ -107,15 +132,16 @@ class HWWAnalysis : public TSelector {
    vector<bool>    *photon_isTightID;
    vector<float>   *photon_ptcone30;
    vector<float>   *photon_etcone20;
-   UInt_t          fatjet_n;
-   vector<float>   *fatjet_pt;
-   vector<float>   *fatjet_eta;
-   vector<float>   *fatjet_phi;
-   vector<float>   *fatjet_E;
-   vector<float>   *fatjet_m;
-   vector<int>     *fatjet_truthMatched;
-   vector<float>   *fatjet_D2;
-   vector<float>   *fatjet_tau32;
+   vector<int>     *photon_convType;
+   UInt_t          largeRjet_n;
+   vector<float>   *largeRjet_pt;
+   vector<float>   *largeRjet_eta;
+   vector<float>   *largeRjet_phi;
+   vector<float>   *largeRjet_E;
+   vector<float>   *largeRjet_m;
+   vector<int>     *largeRjet_truthMatched;
+   vector<float>   *largeRjet_D2;
+   vector<float>   *largeRjet_tau32;
    UInt_t          tau_n;
    vector<float>   *tau_pt;
    vector<float>   *tau_eta;
@@ -136,11 +162,11 @@ class HWWAnalysis : public TSelector {
    Float_t         met_et_syst;
    vector<float>   *jet_pt_syst;
    vector<float>   *photon_pt_syst;
-   vector<float>   *fatjet_pt_syst;
+   vector<float>   *largeRjet_pt_syst;
    vector<float>   *tau_pt_syst;
 
   // List of branches
-   TBranch        *b_runNumber;   //!
+ TBranch        *b_runNumber;   //!
    TBranch        *b_eventNumber;   //!
    TBranch        *b_channelNumber;   //!
    TBranch        *b_mcWeight;   //!
@@ -195,15 +221,15 @@ class HWWAnalysis : public TSelector {
    TBranch        *b_photon_isTightID;   //!
    TBranch        *b_photon_ptcone30;   //!
    TBranch        *b_photon_etcone20;   //!
-   TBranch        *b_fatjet_n;   //!
-   TBranch        *b_fatjet_pt;   //!
-   TBranch        *b_fatjet_eta;   //!
-   TBranch        *b_fatjet_phi;   //!
-   TBranch        *b_fatjet_E;   //!
-   TBranch        *b_fatjet_m;   //!
-   TBranch        *b_fatjet_truthMatched;   //!
-   TBranch        *b_fatjet_D2;   //!
-   TBranch        *b_fatjet_tau32;   //!
+   TBranch        *b_largeRjet_n;   //!
+   TBranch        *b_largeRjet_pt;   //!
+   TBranch        *b_largeRjet_eta;   //!
+   TBranch        *b_largeRjet_phi;   //!
+   TBranch        *b_largeRjet_E;   //!
+   TBranch        *b_largeRjet_m;   //!
+   TBranch        *b_largeRjet_truthMatched;   //!
+   TBranch        *b_largeRjet_D2;   //!
+   TBranch        *b_largeRjet_tau32;   //!
    TBranch        *b_tau_n;   //!
    TBranch        *b_tau_pt;   //!
    TBranch        *b_tau_eta;   //!
@@ -224,9 +250,9 @@ class HWWAnalysis : public TSelector {
    TBranch        *b_met_et_syst;   //!
    TBranch        *b_jet_pt_syst;   //!
    TBranch        *b_photon_pt_syst;   //!
-   TBranch        *b_fatjet_pt_syst;   //!
+   TBranch        *b_largeRjet_pt_syst;   //!
    TBranch        *b_tau_pt_syst;   //!
- 
+
 
   HWWAnalysis(TTree * =0) : fChain(0) { }
   virtual ~HWWAnalysis() { }
@@ -244,6 +270,7 @@ class HWWAnalysis : public TSelector {
   virtual void    FillHistogramsGlobal( double m, float w , TString s);
   virtual void    FillHistogramsLeadlept( double m, float w , TString s);
   virtual void    FillHistogramsSubleadlept( double m, float w , TString s);
+  //virtual void    FillHistogramsLeadJet( double m, float w , TString s);
 
   // Get Output List t osave our histograms in the output file
   virtual TList  *GetOutputList() const { return fOutput; }
@@ -257,6 +284,8 @@ class HWWAnalysis : public TSelector {
   virtual void    SlaveTerminate();
   virtual void    Terminate();
 
+  int nEvents;
+
   ClassDef(HWWAnalysis,0);
 };
 
@@ -265,8 +294,14 @@ class HWWAnalysis : public TSelector {
 #ifdef HWWAnalysis_cxx
 void HWWAnalysis::Init(TTree *tree)
 {
+  // The Init() function is called when the selector needs to initialize
+  // a new tree or chain. Typically here the reader is initialized.
+  // It is normally not necessary to make changes to the generated
+  // code, but the routine can be extended by the user if needed.
+  // Init() will be called many times when running on PROOF
+  // (once per file to be processed).
 
-  
+
    lep_truthMatched = 0;
    lep_trigMatched = 0;
    lep_pt = 0;
@@ -298,14 +333,14 @@ void HWWAnalysis::Init(TTree *tree)
    photon_isTightID = 0;
    photon_ptcone30 = 0;
    photon_etcone20 = 0;
-   fatjet_pt = 0;
-   fatjet_eta = 0;
-   fatjet_phi = 0;
-   fatjet_E = 0;
-   fatjet_m = 0;
-   fatjet_truthMatched = 0;
-   fatjet_D2 = 0;
-   fatjet_tau32 = 0;
+   largeRjet_pt = 0;
+   largeRjet_eta = 0;
+   largeRjet_phi = 0;
+   largeRjet_E = 0;
+   largeRjet_m = 0;
+   largeRjet_truthMatched = 0;
+   largeRjet_D2 = 0;
+   largeRjet_tau32 = 0;
    tau_pt = 0;
    tau_eta = 0;
    tau_phi = 0;
@@ -323,7 +358,7 @@ void HWWAnalysis::Init(TTree *tree)
    lep_pt_syst = 0;
    jet_pt_syst = 0;
    photon_pt_syst = 0;
-   fatjet_pt_syst = 0;
+   largeRjet_pt_syst = 0;
    tau_pt_syst = 0;
 
 
@@ -388,15 +423,15 @@ void HWWAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("photon_isTightID", &photon_isTightID, &b_photon_isTightID);
    fChain->SetBranchAddress("photon_ptcone30", &photon_ptcone30, &b_photon_ptcone30);
    fChain->SetBranchAddress("photon_etcone20", &photon_etcone20, &b_photon_etcone20);
-   fChain->SetBranchAddress("fatjet_n", &fatjet_n, &b_fatjet_n);
-   fChain->SetBranchAddress("fatjet_pt", &fatjet_pt, &b_fatjet_pt);
-   fChain->SetBranchAddress("fatjet_eta", &fatjet_eta, &b_fatjet_eta);
-   fChain->SetBranchAddress("fatjet_phi", &fatjet_phi, &b_fatjet_phi);
-   fChain->SetBranchAddress("fatjet_E", &fatjet_E, &b_fatjet_E);
-   fChain->SetBranchAddress("fatjet_m", &fatjet_m, &b_fatjet_m);
-   fChain->SetBranchAddress("fatjet_truthMatched", &fatjet_truthMatched, &b_fatjet_truthMatched);
-   fChain->SetBranchAddress("fatjet_D2", &fatjet_D2, &b_fatjet_D2);
-   fChain->SetBranchAddress("fatjet_tau32", &fatjet_tau32, &b_fatjet_tau32);
+   fChain->SetBranchAddress("largeRjet_n", &largeRjet_n, &b_largeRjet_n);
+   fChain->SetBranchAddress("largeRjet_pt", &largeRjet_pt, &b_largeRjet_pt);
+   fChain->SetBranchAddress("largeRjet_eta", &largeRjet_eta, &b_largeRjet_eta);
+   fChain->SetBranchAddress("largeRjet_phi", &largeRjet_phi, &b_largeRjet_phi);
+   fChain->SetBranchAddress("largeRjet_E", &largeRjet_E, &b_largeRjet_E);
+   fChain->SetBranchAddress("largeRjet_m", &largeRjet_m, &b_largeRjet_m);
+   fChain->SetBranchAddress("largeRjet_truthMatched", &largeRjet_truthMatched, &b_largeRjet_truthMatched);
+   fChain->SetBranchAddress("largeRjet_D2", &largeRjet_D2, &b_largeRjet_D2);
+   fChain->SetBranchAddress("largeRjet_tau32", &largeRjet_tau32, &b_largeRjet_tau32);
    fChain->SetBranchAddress("tau_n", &tau_n, &b_tau_n);
    fChain->SetBranchAddress("tau_pt", &tau_pt, &b_tau_pt);
    fChain->SetBranchAddress("tau_eta", &tau_eta, &b_tau_eta);
@@ -417,7 +452,7 @@ void HWWAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("met_et_syst", &met_et_syst, &b_met_et_syst);
    fChain->SetBranchAddress("jet_pt_syst", &jet_pt_syst, &b_jet_pt_syst);
    fChain->SetBranchAddress("photon_pt_syst", &photon_pt_syst, &b_photon_pt_syst);
-   fChain->SetBranchAddress("fatjet_pt_syst", &fatjet_pt_syst, &b_fatjet_pt_syst);
+   fChain->SetBranchAddress("largeRjet_pt_syst", &largeRjet_pt_syst, &b_largeRjet_pt_syst);
    fChain->SetBranchAddress("tau_pt_syst", &tau_pt_syst, &b_tau_pt_syst);
 
 

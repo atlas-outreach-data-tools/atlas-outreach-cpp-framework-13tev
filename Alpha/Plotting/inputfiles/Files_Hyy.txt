@@ -1,7 +1,0 @@
-### name | cross-section | sum of weights | efficiency
-data|1|1|1
-ggH125_gamgam|0.102|55922617.6297|1
-ttH125_gamgam|0.0000026433864|485440|1
-VBFH125_gamgam|0.008518764|3441426.13711|1
-WH125_gamgam|0.0019654512|213799.958463|1
-ZH125_gamgam|0.0017347836|358401.082034|1

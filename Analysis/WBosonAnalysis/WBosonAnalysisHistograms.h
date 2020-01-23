@@ -10,30 +10,27 @@ void WBosonAnalysis::define_histograms()
   // HISTOGRAMS
 
   //Global variables
-  hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T,Miss} [GeV];Events", 20, 0,200);
-  hist_vxp_z        = new TH1F("hist_vxp_z",       "Primary Vertex Position; z_{Vertex}; Events", 40, -200,200);
-  hist_pvxp_n       = new TH1F("hist_pvxp_n",      "Number of Vertices; N_{vertex}; Events", 30, -0.5,29.5);
-  hist_mt           = new TH1F("hist_mt",          "Transverse Mass; M^{W}_{T};Events", 40, 0, 200);
-
+  hist_etmiss       = new TH1F("hist_etmiss",       "Missing Transverse Momentum;E_{T}^{miss} [GeV];Events / bin", 30, 0, 200);
+  hist_mtw          = new TH1F("hist_mtw",          "Transverse Mass; M^{W}_{T} [GeV];Events / bin", 40, 39, 180);
+  hist_mtw_enu      = new TH1F("hist_mtw_enu",      "Transverse Mass; M^{W #rightarrow e#nu}_{T} [GeV];Events / bin", 40, 39, 180);
+  hist_mtw_munu     = new TH1F("hist_mtw_munu",     "Transverse Mass; M^{W #rightarrow #mu#nu}_{T} [GeV];Events / bin", 40, 39, 180);
+    
   // Jet variables
-  hist_n_jets       = new TH1F("hist_n_jets",      "Number of Jets;N_{jets};Events", 10, -0.5, 9.5);
-  hist_leadjet_pt   = new TH1F("hist_leadjet_pt",  "Jet Transverse Momentum;p_{T}^{jet} [GeV];Jets", 20, 0, 200);
-  hist_leadjet_m    = new TH1F("hist_leadjet_m",   "Jet Mass; m^{jet} [MeV]; Jets", 20, 0, 20);
-  hist_leadjet_jvf  = new TH1F("hist_leadjet_jvf", "Jet Vertex Fraction; JVF ; Jets", 20, 0, 1);
-  hist_leadjet_eta  = new TH1F("hist_leadjet_eta", "Jet Pseudorapidity; #eta^{jet}; Jets", 30, -3, 3);
-  hist_leadjet_MV1  = new TH1F("hist_leadjet_MV1", "Jet MV1; MV1 weight ; Jets", 20, 0, 1);
+  hist_n_jets       = new TH1F("hist_n_jets",      "Number of Jets;N_{jets};Events", 6, -0.5, 5.5);
+  hist_leadjet_pt   = new TH1F("hist_leadjet_pt",  "Leading Jet Transverse Momentum;p_{T}^{jet} [GeV];Events / bin", 20, 0, 120);
+  hist_leadjet_eta  = new TH1F("hist_leadjet_eta", "Leading Jet Pseudorapidity; #eta^{jet}; Events / bin", 30, -3, 3);
 
   // Leading Lepton variables
-  hist_leadleptpt   = new TH1F("hist_leadleptpt",  "Leading Lepton Transverse Momentum;p_{T}^{leadlep} [GeV];Leptons", 20, 0, 200);
-  hist_leadlepteta  = new TH1F("hist_leadlepteta", "Leading Lepton Pseudorapidity; #eta^{leadlep}; Leptons", 30, -3, 3);
-  hist_leadleptE    = new TH1F("hist_leadleptE",   "Leading Lepton Energy; E^{leadlep} [GeV]; Leptons", 30, 0, 300);
-  hist_leadleptphi  = new TH1F("hist_leadleptphi", "Leading Lepton Azimuthal Angle ; #phi^{leadlep}; Leptons", 32, -3.2, 3.2);
-  hist_leadleptch   = new TH1F("hist_leadleptch",  "Leading Lepton Charge; Q^{leadlep}; Leptons", 7, -1.75, 1.75);
-  hist_leadleptID   = new TH1F("hist_leadleptID",  "Leading Lepton Absolute PDG ID; |PDG ID|^{leadlep}; Leptons",  31, -0.5, 30.5);
-  hist_leadlept_ptc  = new TH1F("hist_leadlept_ptc", "Leading Lepton Relative Transverse Momentum Isolation; ptconerel30^{leadlep}; Leptons", 50, -0.1, 0.4);
-  hist_leadleptetc  = new TH1F("hist_leadleptetc", "Leading Lepton Relative Transverse Energy Isolation; etconerel20^{leadlep}; Leptons", 40, -0.1, 0.4);
-  hist_leadlepz0    = new TH1F("hist_leadlepz0",   "Leading Lepton z0 impact parameter; z_{0}^{leadlep} [mm]; Leptons", 40, -1, 1);
-  hist_leadlepd0    = new TH1F("hist_leadlepd0",   "Leading Lepton d0 impact parameter; d_{0}^{leadlep} [mm]; Leptons", 40, -1, 1);
+  hist_leadleptpt   = new TH1F("hist_leadleptpt",  "Lepton Transverse Momentum;p_{T}^{lep} [GeV];Events / bin", 20, 0, 200);
+  hist_leadlepteta  = new TH1F("hist_leadlepteta", "Lepton Pseudorapidity; #eta^{lep}; Events / bin", 30, -3, 3);
+  hist_leadleptE    = new TH1F("hist_leadleptE",   "Lepton Energy; E^{lep} [GeV]; Events / bin", 30, 0, 300);
+  hist_leadleptphi  = new TH1F("hist_leadleptphi", "Lepton Azimuthal Angle ; #phi^{lep}; Events / bin", 32, -3.2, 3.2);
+  hist_leadleptch   = new TH1F("hist_leadleptch",  "Lepton Charge; Q^{lep}; Events / bin", 7, -1.75, 1.75);
+  hist_leadleptID   = new TH1F("hist_leadleptID",  "Lepton Absolute PDG ID; |PDG ID|^{lep}; Events / bin",  15, 5.5, 20.5);
+  hist_leadlept_ptc  = new TH1F("hist_leadlept_ptc", "Lepton Relative Transverse Momentum Isolation; ptconerel30^{leadlep}; Events / bin", 20, -0.1, 0.2);
+  hist_leadleptetc  = new TH1F("hist_leadleptetc", "Lepton Relative Transverse Energy Isolation; etconerel20^{leadlep}; Events / bin", 20, -0.1, 0.2);
+  hist_leadlepz0    = new TH1F("hist_leadlepz0",   "Lepton longitudinal impact parameter; z_{0}^{lep} [mm]; Events / bin", 20, -1, 1);
+  hist_leadlepd0    = new TH1F("hist_leadlepd0",   "Lepton transverse impact parameter; d_{0}^{lep} [mm]; Events / bin", 20, -5, 5);
 
 }
 
@@ -44,9 +41,7 @@ void WBosonAnalysis::FillOutputList()
 
   // Add Global histograms
   GetOutputList()->Add(hist_etmiss);
-  GetOutputList()->Add(hist_vxp_z);
-  GetOutputList()->Add(hist_pvxp_n);
-  GetOutputList()->Add(hist_mt);
+  GetOutputList()->Add(hist_mtw);  GetOutputList()->Add(hist_mtw_enu);  GetOutputList()->Add(hist_mtw_munu);
 
   //Add Leading Lepton histograms
   GetOutputList()->Add(hist_leadleptpt);
@@ -63,10 +58,7 @@ void WBosonAnalysis::FillOutputList()
   //Add Jet histograms
   GetOutputList()->Add(hist_n_jets);
   GetOutputList()->Add(hist_leadjet_pt);
-  GetOutputList()->Add(hist_leadjet_m);
-  GetOutputList()->Add(hist_leadjet_jvf);
   GetOutputList()->Add(hist_leadjet_eta);
-  GetOutputList()->Add(hist_leadjet_MV1);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -76,9 +68,7 @@ void WBosonAnalysis::WriteHistograms()
 
   // Write Global histograms
   hist_etmiss->Write();
-  hist_vxp_z->Write();
-  hist_pvxp_n->Write();
-  hist_mt->Write();
+  hist_mtw->Write();  hist_mtw_enu->Write();  hist_mtw_munu->Write();
   //Write Leading Lepton histograms
   hist_leadleptpt->Write();
   hist_leadlepteta->Write();
@@ -93,10 +83,7 @@ void WBosonAnalysis::WriteHistograms()
   //Write Jet histograms
   hist_n_jets->Write();
   hist_leadjet_pt->Write();
-  hist_leadjet_m->Write();
-  hist_leadjet_jvf->Write();
   hist_leadjet_eta->Write();
-  hist_leadjet_MV1->Write();
 }
 
 void WBosonAnalysis::FillHistogramsGlobal( double m, float w , TString s)
@@ -104,11 +91,11 @@ void WBosonAnalysis::FillHistogramsGlobal( double m, float w , TString s)
   //Fill Global histograms
   if (s.Contains("hist_etmiss")) hist_etmiss->Fill(m,w);
 
-  if (s.Contains("hist_vxp_z")) hist_vxp_z->Fill(m,w);
+  if (s.Contains("hist_mtw_enu")) hist_mtw_enu->Fill(m,w);
 
-  if (s.Contains("hist_pvxp_n")) hist_pvxp_n->Fill(m,w);
+  if (s.Contains("hist_mtw_munu")) hist_mtw_munu->Fill(m,w);
 
-  if (s.Contains("hist_mt")) hist_mt->Fill(m,w);
+  if (s.Contains("hist_mtw")) hist_mtw->Fill(m,w);
 
 }
 
@@ -144,12 +131,6 @@ void WBosonAnalysis::FillHistogramsLeadJet( double m, float w , TString s)
 
   if (s.Contains("hist_leadjet_pt")) hist_leadjet_pt->Fill(m,w);
 
-  if (s.Contains("hist_leadjet_m")) hist_leadjet_m->Fill(m,w);
-
-  if (s.Contains("hist_leadjet_jvf")) hist_leadjet_jvf->Fill(m,w);
-
   if (s.Contains("hist_leadjet_eta")) hist_leadjet_eta->Fill(m,w);
-
-  if (s.Contains("hist_leadjet_MV1")) hist_leadjet_MV1->Fill(m,w);
 
 }

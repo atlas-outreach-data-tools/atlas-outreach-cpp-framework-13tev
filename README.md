@@ -3,55 +3,52 @@
 ## About
 This is the C++ analysis code that may be used to analyse the data of the ATLAS published dataset.
 
-More information in the 8 TeV ATLAS Open Data PUB notes: https://cds.cern.ch/record/2203649/files/ATL-OREACH-PUB-2016-001.pdf
-and https://cds.cern.ch/record/2624572/files/ATL-OREACH-PUB-2018-001.pdf
+More information can be found in: CDS link to the PUB note [to appear]
 
-This code is made of two parts of codes: analysis codes and plotting codes.
+The code is made of two parts: **analysis** code and **plotting** code.
 
 ## Setup
-After checking out the repository, you need to setup ROOT framework and gcc compiler. The current version was compiled using gcc v6.20 and root v6.10.04
+After checking out the repository, you need to setup ROOT framework ( and gcc compiler preferentially). The current version was compiled using gcc v6.20 and root v6.10.04
 
 ## Samples
 For now, the analysis code can be run using samples located in eos:
-/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/
+
+"/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/renamed/"
 
 ## Analysis Code
-The analysis code is located in the **Analysis** folder. It will be used to write out histograms for the individual input files which will be used for plotting purposes later.
+The analysis code is located in the **Analysis** folder. It is used to make the selection and  create histograms for each individual input file, and those are then used by the plotting code.
 
-Version "BETA" supports currently 7 analyses stored as "NNAnalysis", where NN = WBoson, ZBoson, TTbar, WZDiBoson, ZZDiBoson, HZZ, Hyy
+Currently, **12** different analyses named "NNAnalysis" are supported, where **NN = WBoson, ZBoson, TTbar, SingleTop, WZDiBoson, ZZDiBoson, HZZ, HWW, Hyy, ZPrimeBoosted, ZTauTau and SUSY**
 
-Each analysis code contains 
-- the analysis header (*NNAnalysis.h*) which defines the histograms and gives access to the variables stored in the input samples
-- the histogram header (*NNAnalysisHistograms.h*) which defines the name of output histograms
+Each analysis code contains: 
+- the analysis header (*NNAnalysis.h*) which defines the histograms and provides access to the variables stored in the input samples
+- the histogram header (*NNAnalysisHistograms.h*) which defines the name of the output histograms
 - the analysis code (*NNAnalysis.C*) which makes all the selection and stores the output histograms
-- the analysis main (*main_NNAnalysis.C*) controls which samples are being used
+- the analysis main macro (*main_NNAnalysis.C*) which controls the input samples and their location
 - the output directory (*Output_NNAnalysis*) is where the output histograms (one per each input sample) will be stored
 
 First setup the code using:
+
 ./welcome.sh or source welcome.sh
 
 To run the code:
-./run.sh or source run.ch
+
+./run.sh or source run.sh
 
 Shared libraries will be created and the analysis will run over each input sample.
-Estimated time it takes to run an analysis code: 15 seconds per 1M events
 
 To clean all shared libraries:
+
 ./clean.sh or source clean.sh
 
 ## Plotting
-The plotting code is located in the **Plotting** folder. Compile the plotting code with:
-make
+The plotting code is located in the **Plotting** folder.
+It can be compiled with "make" or 
 
--Run the code with:
-```
-./plot [WBosonAnalysis,ZBosonAnalysis,TTbarAnalysis,WZDiBosonAnalysis,ZZDiBosonAnalysis,HZZAnalysis]  [location of OutputDir_AnalysisName]
-```
+To run the code:
+./plotme.sh or source plotme.sh
 
-Here you have to choose 
-1.) which analysis you will run 
-and 
-2.) where is the output of the analysis code you produced
+and follow the instruction: you will have to choose 1.) which analysis you will run and 2.) where is the output of the analysis code you producedin the previous step
 
 - The plots are saved inside the directory "**histograms**", don't forget to rename in case you run over several analyses
 
@@ -59,9 +56,9 @@ and
 
 - Do you want to add a new plot? just add the name of it in this file (of course it has to exist in the output from the analysis code)
 
-- In case you changed the *Plotting* code, clean first: make clean; make
+- In case you changed the *Plotting* code, clean first (use the clean.sh script) or you can re-compile with "make clean; make"
 
-- Auxiliary: *Files.txt* contains the name, cross-section, sum of weights and efficiency for each of the MC samples. DO NOT CHANGE!
+- Auxiliary: within *inputfiles/Files_NN.txt* the name, cross-section, sum of weights and efficiency for each of the MC samples is stored. DO NOT CHANGE!
 
 ## How to add a new variable and plot it
 1. Add in the header (*NNAnalysis.h*) the new histogram:
@@ -71,7 +68,7 @@ TH1F *h_new      = 0;
 
 2. Add in the main analysis code (*NNAnalysis.C*) the calculation of the new variable:
 ```
-float new_variable = jet_n;
+int new_variable = something;
 ```
 
 3. Add in *NNAnalysisHistograms.h*
@@ -99,14 +96,13 @@ float new_variable = jet_n;
 ```
 FillHistograms( new_variable, weight, "h_new");
 ```
-where "new_variable" is the new variable you calculated in 2.
+where "new_variable" is the new variable you calculated in step 2.
 
 5. now run the code again over all the samples
 
-6. Go to *PlottingCode/list_histos*
-- in *HistoList_NNAnalysis.txt* add one new line:
+6. When running the plotting code, just add a new line to the file: *list_histos/HistoList_NNAnalysis.txt* (corresponding to the analysis you modified)
 ```
   h_new
 ```
 
-7. run the plotting code and you will find the new histogram in histograms/h_new.png!
+7. run the plotting code and you will find the new histogram stored in: "histograms/"

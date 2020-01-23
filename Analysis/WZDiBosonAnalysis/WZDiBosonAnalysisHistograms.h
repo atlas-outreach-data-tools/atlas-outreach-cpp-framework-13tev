@@ -10,23 +10,22 @@ void WZDiBosonAnalysis::define_histograms()
   // HISTOGRAMS
 
   // Global histograms variables
-  hist_mLL         = new TH1F("hist_mLL",        "Mass of Dilepton System; m_{ll};Events", 20, 60, 120);
-  hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T,Miss} [GeV];Events", 10, 0,200);
-  hist_vxp_z        = new TH1F("hist_vxp_z",       "Primary Vertex Position; z_{Vertex}; Events", 20, -200,200);
-  hist_pvxp_n       = new TH1F("hist_pvxp_n",      "Number of Vertices; N_{vertex}; Events", 15, -0.5,29.5);
-  hist_mt           = new TH1F("hist_mt",          "Transverse Mass; M^{W}_{T};Events", 10, 0, 200);
+  hist_mLL           = new TH1F("hist_mLL",          "Mass of Dilepton System; m_{ll} [GeV];Events / bin", 20, 76, 106);
+  hist_etmiss        = new TH1F("hist_etmiss",       "Missing Transverse Momentum;E_{T}^{miss} [GeV];Events / bin", 20, 0, 160);
+  hist_mtw           = new TH1F("hist_mtw",          "Transverse Mass; M^{W}_{T} [GeV];Events / bin", 20, 0, 200);
+  hist_ptLL          = new TH1F("hist_ptLL",         "Transverse momentum of Dilepton System; p^{ll}_{T} [GeV];Events / bin", 20, 0, 400);
 
   // Lepton histograms
-  hist_threeleptpt   = new TH1F("hist_threeleptpt",  " Lepton Transverse Momentum;p_{T}^{lep} [GeV];Leptons", 10, 0, 200);
-  hist_threelepteta  = new TH1F("hist_threelepteta", " Lepton Pseudorapidity; #eta^{lep}; Leptons", 15, -3, 3);
-  hist_threeleptE    = new TH1F("hist_threeleptE",   " Lepton Energy; E^{lep} [GeV]; Leptons", 15, 0, 300);
-  hist_threeleptphi  = new TH1F("hist_threeleptphi", " Lepton Azimuthal Angle ; #phi^{lep}; Leptons", 16, -3.2, 3.2);
-  hist_threeleptch   = new TH1F("hist_threeleptch",  " Lepton Charge; Q^{lep}; Leptons", 7, -1.75, 1.75);
-  hist_threeleptID   = new TH1F("hist_threeleptID",  " Lepton Absolute PDG ID; |PDG ID|^{lep}; Leptons",  31, -0.5, 30.5);
-  hist_threelept_ptc  = new TH1F("hist_threelept_ptc", " Lepton Relative Transverse Momentum Isolation; ptconerel30^{lep}; Leptons", 20, -0.1, 0.4);
-  hist_threeleptetc  = new TH1F("hist_threeleptetc", " Lepton Relative Transverse Energy Isolation; etconerel20^{lep}; Leptons", 20, -0.1, 0.4);
-  hist_threelepz0    = new TH1F("hist_threelepz0",   " Lepton z0 impact parameter; z_{0}^{lep} [mm]; Leptons", 20, -1, 1);
-  hist_threelepd0    = new TH1F("hist_threelepd0",   " Lepton d0 impact parameter; d_{0}^{lep} [mm]; Leptons", 20, -1, 1);
+  hist_threeleptpt   = new TH1F("hist_threeleptpt",  " Lepton Transverse Momentum;p_{T}^{all lep} [GeV]; Leptons / bin", 10, 25, 200);
+  hist_threelepteta  = new TH1F("hist_threelepteta", " Lepton Pseudorapidity; #eta^{all lep}; Leptons / bin", 15, -3, 3);
+  hist_threeleptE    = new TH1F("hist_threeleptE",   " Lepton Energy; E^{all lep} [GeV]; Leptons / bin", 15, 0, 300);
+  hist_threeleptphi  = new TH1F("hist_threeleptphi", " Lepton Azimuthal Angle ; #phi^{all lep}; Leptons / bin", 16, -3.2, 3.2);
+  hist_threeleptch   = new TH1F("hist_threeleptch",  " Lepton Charge; Q^{all lep}; Leptons / bin", 7, -1.75, 1.75);
+  hist_threeleptID   = new TH1F("hist_threeleptID",  " Lepton Absolute PDG ID; |PDG ID|^{all lep}; Leptons / bin",  15, 5.5, 20.5);
+  hist_threelept_ptc  = new TH1F("hist_threelept_ptc", " Lepton Relative Transverse Momentum Isolation; ptconerel30^{all lep}; Leptons / bin", 10, -0.1, 0.2);
+  hist_threeleptetc  = new TH1F("hist_threeleptetc", " Lepton Relative Transverse Energy Isolation; etconerel20^{all lep}; Leptons / bin", 10, -0.1, 0.2);
+  hist_threelepz0    = new TH1F("hist_threelepz0",   " Lepton z0 impact parameter; z_{0}^{all lep} [mm]; Leptons / bin", 10, -1, 1);
+  hist_threelepd0    = new TH1F("hist_threelepd0",   " Lepton d0 impact parameter; d_{0}^{all lep} [mm]; Leptons / bin", 10, -0.2, 0.2);
 
 }
 
@@ -37,11 +36,10 @@ void WZDiBosonAnalysis::FillOutputList()
 
   // Add Global histograms
   GetOutputList()->Add(hist_etmiss);
-  GetOutputList()->Add(hist_vxp_z);
-  GetOutputList()->Add(hist_pvxp_n);
   GetOutputList()->Add(hist_mLL);
-  GetOutputList()->Add(hist_mt);
- 
+  GetOutputList()->Add(hist_mtw);
+  GetOutputList()->Add(hist_ptLL);
+
  // Add  Lepton histograms
   GetOutputList()->Add(hist_threeleptpt);
   GetOutputList()->Add(hist_threelepteta);
@@ -63,10 +61,9 @@ void WZDiBosonAnalysis::WriteHistograms()
 
   // Write Global histograms
   hist_etmiss->Write();
-  hist_vxp_z->Write();
-  hist_pvxp_n->Write();
   hist_mLL->Write();
-  hist_mt->Write();
+  hist_mtw->Write();
+  hist_ptLL->Write();
 
   // Write  Lepton histograms
   hist_threeleptpt->Write();
@@ -87,13 +84,11 @@ void WZDiBosonAnalysis::FillHistogramsGlobal( double m, float w , TString s)
   //Global histograms
   if (s.Contains("hist_mLL")) hist_mLL->Fill(m,w);
 
+  if (s.Contains("hist_ptLL")) hist_ptLL->Fill(m,w);
+
   if (s.Contains("hist_etmiss")) hist_etmiss->Fill(m,w);
 
-  if (s.Contains("hist_vxp_z")) hist_vxp_z->Fill(m,w);
-
-  if (s.Contains("hist_pvxp_n")) hist_pvxp_n->Fill(m,w);
-
-  if (s.Contains("hist_mt")) hist_mt->Fill(m,w);
+  if (s.Contains("hist_mtw")) hist_mtw->Fill(m,w);
 
 }
 

@@ -1,3 +1,4 @@
+### Makefile in case you want to use 'make'
 LIBS = `root-config --glibs` -L/usr/X11R6/lib -lm -ldl -lstdc++  
 TOOL = -I../tools
 CXXFLAGS = --exceptions -I$(ROOTSYS)/include

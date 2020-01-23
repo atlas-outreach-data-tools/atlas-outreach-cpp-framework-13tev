@@ -1,185 +1,174 @@
 //////////////////////////////////////////////////////////////////////////////////////////
+// Creates a TChain to be used by the Analysis.C class
 #include "TROOT.h"
 #include "TChain.h"
 #include "TFile.h"
 #include "TProof.h"
 
-void main_WZDiBosonAnalysis(int proof)
+void main_WZDiBosonAnalysis(int proof = 0, int option= 0)
 {
   // path to your local directory *or* URL, please change the default one!
-
   /* Local path example */
-  //TString path = "/username/atlas-outreach-cpp-framework/Input/";
-  
+  TString path = "/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/renamedLargeRJets/3lep/";
   /* The URL to the ATLAS Open Data website repository */
-  TString path = "http://opendata.atlas.cern/release/samples/";
+  //  TString path = "http://opendata.atlas.cern/release/samples/";
 
-  //////////////////////////////////////////////////////////////////////////////////////////
+  //***************************************************************************************************//
   // adding chains of all MC and data samples
+  // option==0 will run all one by one
+  // Currently 3 options for MC (2,3,4) and 1 for data (1) which can be run in parallel
+  //***************************************************************************************************//
 
-  TChain* chain_WZ = new TChain("mini");
-  chain_WZ->AddFile(path+"MC/mc_105987.WZ.root");
-  chain_WZ->Process("WZDiBosonAnalysis.C+","WZ");
-
-  TChain* chain_WW = new TChain("mini");
-  chain_WW->AddFile(path+"MC/mc_105985.WW.root");
-  chain_WW->Process("WZDiBosonAnalysis.C+","WW");
-
-  TChain* chain_ZZ = new TChain("mini");
-  chain_ZZ->AddFile(path+"MC/mc_105986.ZZ.root");
-  chain_ZZ->Process("WZDiBosonAnalysis.C+","ZZ");
-
-  TChain* chain_stop_tchan_top = new TChain("mini");
-  chain_stop_tchan_top->AddFile(path+"MC/mc_110090.stop_tchan_top.root");
-  chain_stop_tchan_top->Process("WZDiBosonAnalysis.C+","stop_tchan_top");
-
-  TChain* chain_stop_tchan_antitop = new TChain("mini");
-  chain_stop_tchan_antitop->AddFile(path+"MC/mc_110091.stop_tchan_antitop.root");
-  chain_stop_tchan_antitop->Process("WZDiBosonAnalysis.C+","stop_tchan_antitop");
-
-  TChain* chain_stop_schan = new TChain("mini");
-  chain_stop_schan->AddFile(path+"MC/mc_110119.stop_schan.root");
-  chain_stop_schan->Process("WZDiBosonAnalysis.C+","stop_schan");
-
-  TChain* chain_stop_wtchan = new TChain("mini");
-  chain_stop_wtchan->AddFile(path+"MC/mc_110140.stop_wtchan.root");
-  chain_stop_wtchan->Process("WZDiBosonAnalysis.C+","stop_wtchan");
-
-  TChain* chain_ZPrime1000 = new TChain("mini");
-  chain_ZPrime1000->AddFile(path+"MC/mc_110903.ZPrime1000.root");
-  chain_ZPrime1000->Process("WZDiBosonAnalysis.C+","ZPrime1000");
-
-  TChain* chain_ttbar_had = new TChain("mini");
-  chain_ttbar_had->AddFile(path+"MC/mc_117049.ttbar_had.root");
-  chain_ttbar_had->Process("WZDiBosonAnalysis.C+","ttbar_had");
-
-  TChain* chain_ttbar_lep = new TChain("mini");
-  chain_ttbar_lep->AddFile(path+"MC/mc_117050.ttbar_lep.root");
-  chain_ttbar_lep->Process("WZDiBosonAnalysis.C+","ttbar_lep");
-
-  TChain* chain_Zee = new TChain("mini");
-  chain_Zee->AddFile(path+"MC/mc_147770.Zee.root");
-  chain_Zee->Process("WZDiBosonAnalysis.C+","Zee");
-
-  TChain* chain_Zmumu = new TChain("mini");
-  chain_Zmumu->AddFile(path+"MC/mc_147771.Zmumu.root");
-  chain_Zmumu->Process("WZDiBosonAnalysis.C+","Zmumu");
-
-  TChain* chain_Ztautau = new TChain("mini");
-  chain_Ztautau->AddFile(path+"MC/mc_147772.Ztautau.root");
-  chain_Ztautau->Process("WZDiBosonAnalysis.C+","Ztautau");
-
-  TChain* chain_ggH125_WW2lep = new TChain("mini");
-  chain_ggH125_WW2lep->AddFile(path+"MC/mc_161005.ggH125_WW2lep.root");
-  chain_ggH125_WW2lep->Process("WZDiBosonAnalysis.C+","ggH125_WW2lep");
-
-  TChain* chain_VBFH125_WW2lep = new TChain("mini");
-  chain_VBFH125_WW2lep->AddFile(path+"MC/mc_161055.VBFH125_WW2lep.root");
-  chain_VBFH125_WW2lep->Process("WZDiBosonAnalysis.C+","VBFH125_WW2lep");
-
-  TChain* chain_Wenu_PTVnuWithB = new TChain("mini");
-  chain_Wenu_PTVnuWithB->AddFile(path+"MC/mc_167740.Wenu_PTVnuWithB.root");
-  chain_Wenu_PTVnuWithB->Process("WZDiBosonAnalysis.C+","Wenu_PTVnuWithB");
-
-  TChain* chain_Wenu_PTVnuJetsBVeto = new TChain("mini");
-  chain_Wenu_PTVnuJetsBVeto->AddFile(path+"MC/mc_167741.Wenu_PTVnuJetsBVeto.root");
-  chain_Wenu_PTVnuJetsBVeto->Process("WZDiBosonAnalysis.C+","Wenu_PTVnuJetsBVeto");
-
-  TChain* chain_Wenu_PTVnuNoJetsBVeto = new TChain("mini");
-  chain_Wenu_PTVnuNoJetsBVeto->AddFile(path+"MC/mc_167742.Wenu_PTVnuNoJetsBVeto.root");
-  chain_Wenu_PTVnuNoJetsBVeto->Process("WZDiBosonAnalysis.C+","Wenu_PTVnuNoJetsBVeto");
-
-  TChain* chain_Wmunu_PTVnuWithB = new TChain("mini");
-  chain_Wmunu_PTVnuWithB->AddFile(path+"MC/mc_167743.Wmunu_PTVnuWithB.root");
-  chain_Wmunu_PTVnuWithB->Process("WZDiBosonAnalysis.C+","Wmunu_PTVnuWithB");
-
-  TChain* chain_Wmunu_PTVnuJetsBVeto = new TChain("mini");
-  chain_Wmunu_PTVnuJetsBVeto->AddFile(path+"MC/mc_167744.Wmunu_PTVnuJetsBVeto.root");
-  chain_Wmunu_PTVnuJetsBVeto->Process("WZDiBosonAnalysis.C+","Wmunu_PTVnuJetsBVeto");
-
-  TChain* chain_Wmunu_PTVnuNoJetsBVeto = new TChain("mini");
-  chain_Wmunu_PTVnuNoJetsBVeto->AddFile(path+"MC/mc_167745.Wmunu_PTVnuNoJetsBVeto.root");
-  chain_Wmunu_PTVnuNoJetsBVeto->Process("WZDiBosonAnalysis.C+","Wmunu_PTVnuNoJetsBVeto");
-
-  TChain* chain_Wtaunu_PTVnuWithB = new TChain("mini");
-  chain_Wtaunu_PTVnuWithB->AddFile(path+"MC/mc_167746.Wtaunu_PTVnuWithB.root");
-  chain_Wtaunu_PTVnuWithB->Process("WZDiBosonAnalysis.C+","Wtaunu_PTVnuWithB");
-
-  TChain* chain_Wtaunu_PTVnuJetsBVeto = new TChain("mini");
-  chain_Wtaunu_PTVnuJetsBVeto->AddFile(path+"MC/mc_167747.Wtaunu_PTVnuJetsBVeto.root");
-  chain_Wtaunu_PTVnuJetsBVeto->Process("WZDiBosonAnalysis.C+","Wtaunu_PTVnuJetsBVeto");
-
-  TChain* chain_Wtaunu_PTVnuNoJetsBVeto = new TChain("mini");
-  chain_Wtaunu_PTVnuNoJetsBVeto->AddFile(path+"MC/mc_167748.Wtaunu_PTVnuNoJetsBVeto.root");
-  chain_Wtaunu_PTVnuNoJetsBVeto->Process("WZDiBosonAnalysis.C+","Wtaunu_PTVnuNoJetsBVeto");
-
-  TChain* chain_DYeeM08to15 = new TChain("mini");
-  chain_DYeeM08to15->AddFile(path+"MC/mc_173041.DYeeM08to15.root");
-  chain_DYeeM08to15->Process("WZDiBosonAnalysis.C+","DYeeM08to15");
-
-  TChain* chain_DYeeM15to40 = new TChain("mini");
-  chain_DYeeM15to40->AddFile(path+"MC/mc_173042.DYeeM15to40.root");
-  chain_DYeeM15to40->Process("WZDiBosonAnalysis.C+","DYeeM15to40");
-
-  TChain* chain_DYmumuM08to15 = new TChain("mini");
-  chain_DYmumuM08to15->AddFile(path+"MC/mc_173043.DYmumuM08to15.root");
-  chain_DYmumuM08to15->Process("WZDiBosonAnalysis.C+","DYmumuM08to15");
-
-  TChain* chain_DYmumuM15to40 = new TChain("mini");
-  chain_DYmumuM15to40->AddFile(path+"MC/mc_173044.DYmumuM15to40.root");
-  chain_DYmumuM15to40->Process("WZDiBosonAnalysis.C+","DYmumuM15to40");
-
-  TChain* chain_DYtautauM08to15 = new TChain("mini");
-  chain_DYtautauM08to15->AddFile(path+"MC/mc_173045.DYtautauM08to15.root");
-  chain_DYtautauM08to15->Process("WZDiBosonAnalysis.C+","DYtautauM08to15");
-
-  TChain* chain_DYtautauM15to40 = new TChain("mini");
-  chain_DYtautauM15to40->AddFile(path+"MC/mc_173046.DYtautauM15to40.root");
-  chain_DYtautauM15to40->Process("WZDiBosonAnalysis.C+","DYtautauM15to40");
-
-  TChain* chain_data = new TChain("mini");
-  chain_data->AddFile(path+"Data/DataEgamma.root");
-  chain_data->AddFile(path+"Data/DataMuons.root");
-  chain_data->Process("WZDiBosonAnalysis.C+","data");
-
-  if (proof == 1)
-  {
-    TProof::Open("");
-
-    chain_WW->SetProof();
-    chain_WZ->SetProof();
-    chain_ZZ->SetProof();
-    chain_stop_tchan_top->SetProof();
-    chain_stop_tchan_antitop->SetProof();
-    chain_stop_schan->SetProof();
-    chain_stop_wtchan->SetProof();
-    chain_ZPrime1000->SetProof();
-    chain_ttbar_had->SetProof();
-    chain_ttbar_lep->SetProof();
-    chain_Zee->SetProof();
-    chain_Zmumu->SetProof();
-    chain_Ztautau->SetProof();
-    chain_ggH125_WW2lep->SetProof();
-    chain_VBFH125_WW2lep->SetProof();
-    chain_Wenu_PTVnuWithB->SetProof();
-    chain_Wenu_PTVnuJetsBVeto->SetProof();
-    chain_Wenu_PTVnuNoJetsBVeto->SetProof();
-    chain_Wmunu_PTVnuWithB->SetProof();
-    chain_Wmunu_PTVnuJetsBVeto->SetProof();
-    chain_Wmunu_PTVnuNoJetsBVeto->SetProof();
-    chain_Wtaunu_PTVnuWithB->SetProof();
-    chain_Wtaunu_PTVnuJetsBVeto->SetProof();
-    chain_Wtaunu_PTVnuNoJetsBVeto->SetProof();
-    chain_DYeeM08to15->SetProof();
-    chain_DYeeM15to40->SetProof();
-    chain_DYmumuM08to15->SetProof();
-    chain_DYmumuM15to40->SetProof();
-    chain_DYtautauM08to15->SetProof();
-    chain_DYtautauM15to40->SetProof();
-    chain_data->SetProof();
-
+  if (proof == 1)  TProof::Open("");
+  
+  
+  if (option==1 || option==0){
+    TChain* chain_data = new TChain("mini");
+    chain_data->AddFile(path+"Data/data_A.3lep.root");
+    chain_data->AddFile(path+"Data/data_B.3lep.root");
+    chain_data->AddFile(path+"Data/data_C.3lep.root");
+    chain_data->AddFile(path+"Data/data_D.3lep.root");
+    if (proof == 1)  chain_data->SetProof();
+    chain_data->Process("WZDiBosonAnalysis.C+","data");
   }
+   
+  
+  //////////////////////  MC samples
+  
+  if (option==2 || option==0)   {
+    
+    // diboson
+    TChain* chain_ZqqZll = new TChain("mini");
+    chain_ZqqZll->AddFile(path+"MC/mc_363356.ZqqZll.3lep.root");
+    if (proof == 1)  chain_ZqqZll->SetProof();
+    chain_ZqqZll->Process("WZDiBosonAnalysis.C+","ZqqZll");
+    
+    TChain* chain_WqqZll = new TChain("mini");
+    chain_WqqZll->AddFile(path+"MC/mc_363358.WqqZll.3lep.root");
+    if (proof == 1)  chain_WqqZll->SetProof();
+    chain_WqqZll->Process("WZDiBosonAnalysis.C+","WqqZll");
+    
+    TChain* chain_WpqqWmlv = new TChain("mini");
+    chain_WpqqWmlv->AddFile(path+"MC/mc_363359.WpqqWmlv.3lep.root");
+    if (proof == 1)  chain_WpqqWmlv->SetProof();
+    chain_WpqqWmlv->Process("WZDiBosonAnalysis.C+","WpqqWmlv");
+    
+    TChain* chain_WplvWmqq = new TChain("mini");
+    chain_WplvWmqq->AddFile(path+"MC/mc_363360.WplvWmqq.3lep.root");
+    if (proof == 1)  chain_WplvWmqq->SetProof();
+    chain_WplvWmqq->Process("WZDiBosonAnalysis.C+","WplvWmqq");
+    
+    TChain* chain_WlvZqq = new TChain("mini");
+    chain_WlvZqq->AddFile(path+"MC/mc_363489.WlvZqq.3lep.root");
+    if (proof == 1)  chain_WlvZqq->SetProof();
+    chain_WlvZqq->Process("WZDiBosonAnalysis.C+","WlvZqq");
+    
+    TChain* chain_llll = new TChain("mini");
+    chain_llll->AddFile(path+"MC/mc_363490.llll.3lep.root");
+    if (proof == 1)  chain_llll->SetProof();
+    chain_llll->Process("WZDiBosonAnalysis.C+","llll");
+    
+    TChain* chain_lllv = new TChain("mini");
+    chain_lllv->AddFile(path+"MC/mc_363491.lllv.3lep.root");
+    if (proof == 1)  chain_lllv->SetProof();
+    chain_lllv->Process("WZDiBosonAnalysis.C+","lllv");
+    
+    TChain* chain_llvv = new TChain("mini");
+    chain_llvv->AddFile(path+"MC/mc_363492.llvv.3lep.root");
+    if (proof == 1)  chain_llvv->SetProof();
+    chain_llvv->Process("WZDiBosonAnalysis.C+","llvv");
+    
+    TChain* chain_lvvv = new TChain("mini");
+    chain_lvvv->AddFile(path+"MC/mc_363493.lvvv.3lep.root");
+    if (proof == 1)  chain_lvvv->SetProof();
+    chain_lvvv->Process("WZDiBosonAnalysis.C+","lvvv");
+    
+    // Z+jets inclusive
+    TChain* chain_Zee = new TChain("mini");
+    chain_Zee->AddFile(path+"MC/mc_361106.Zee.3lep.root");
+    if (proof == 1)  chain_Zee->SetProof();
+    chain_Zee->Process("WZDiBosonAnalysis.C+","Zee");
+    
+    TChain* chain_Zmumu = new TChain("mini");
+    chain_Zmumu->AddFile(path+"MC/mc_361107.Zmumu.3lep.root");
+    if (proof == 1)  chain_Zmumu->SetProof();
+    chain_Zmumu->Process("WZDiBosonAnalysis.C+","Zmumu");
+    
+    TChain* chain_Ztautau = new TChain("mini");
+    chain_Ztautau->AddFile(path+"MC/mc_361108.Ztautau.3lep.root");
+    if (proof == 1)  chain_Ztautau->SetProof();
+    chain_Ztautau->Process("WZDiBosonAnalysis.C+","Ztautau");
+  }// option 2
+  
 
+  if (option==3 || option==0)   {
+    //single top
+    TChain* chain_single_top_tchan = new TChain("mini");
+    chain_single_top_tchan->AddFile(path+"MC/mc_410011.single_top_tchan.3lep.root");
+    if (proof == 1)  chain_single_top_tchan->SetProof();
+    chain_single_top_tchan->Process("WZDiBosonAnalysis.C+","single_top_tchan");
+    
+    TChain* chain_single_antitop_tchan = new TChain("mini");
+    chain_single_antitop_tchan->AddFile(path+"MC/mc_410012.single_antitop_tchan.3lep.root");
+    if (proof == 1)  chain_single_antitop_tchan->SetProof();
+    chain_single_antitop_tchan->Process("WZDiBosonAnalysis.C+","single_antitop_tchan");
+    
+    TChain* chain_single_top_schan = new TChain("mini");
+    chain_single_top_schan->AddFile(path+"MC/mc_410025.single_top_schan.3lep.root");
+    if (proof == 1)  chain_single_top_schan->SetProof();
+    chain_single_top_schan->Process("WZDiBosonAnalysis.C+","single_top_schan");
+    
+    TChain* chain_single_antitop_schan = new TChain("mini");
+    chain_single_antitop_schan->AddFile(path+"MC/mc_410026.single_antitop_schan.3lep.root");
+    if (proof == 1)  chain_single_antitop_schan->SetProof();
+    chain_single_antitop_schan->Process("WZDiBosonAnalysis.C+","single_antitop_schan");
+    
+    TChain* chain_single_top_wtchan = new TChain("mini");
+    chain_single_top_wtchan->AddFile(path+"MC/mc_410013.single_top_wtchan.3lep.root");
+    if (proof == 1)  chain_single_top_wtchan->SetProof();
+    chain_single_top_wtchan->Process("WZDiBosonAnalysis.C+","single_top_wtchan");
+    
+    TChain* chain_single_antitop_wtchan = new TChain("mini");
+    chain_single_antitop_wtchan->AddFile(path+"MC/mc_410014.single_antitop_wtchan.3lep.root");
+    if (proof == 1)  chain_single_antitop_wtchan->SetProof();
+    chain_single_antitop_wtchan->Process("WZDiBosonAnalysis.C+","single_antitop_wtchan");
 
+    //ttbar
+    TChain* chain_ttbar_lep = new TChain("mini");
+    chain_ttbar_lep->AddFile(path+"MC/mc_410000.ttbar_lep.3lep.root");
+    if (proof == 1)  chain_ttbar_lep->SetProof();
+    chain_ttbar_lep->Process("WZDiBosonAnalysis.C+","ttbar_lep");
+    
+  // W+jets inclusive
+  TChain* chain_Wplusenu = new TChain("mini");
+  chain_Wplusenu->AddFile(path+"MC/mc_361100.Wplusenu.3lep.root");
+  if (proof == 1)  chain_Wplusenu->SetProof();
+  chain_Wplusenu->Process("WZDiBosonAnalysis.C+","Wplusenu");
 
+  TChain* chain_Wplusmunu = new TChain("mini");
+  chain_Wplusmunu->AddFile(path+"MC/mc_361101.Wplusmunu.3lep.root");
+  if (proof == 1)  chain_Wplusmunu->SetProof();
+  chain_Wplusmunu->Process("WZDiBosonAnalysis.C+","Wplusmunu");
+
+  TChain* chain_Wplustaunu = new TChain("mini");
+  chain_Wplustaunu->AddFile(path+"MC/mc_361102.Wplustaunu.3lep.root");
+  if (proof == 1)  chain_Wplustaunu->SetProof();
+  chain_Wplustaunu->Process("WZDiBosonAnalysis.C+","Wplustaunu");
+
+  TChain* chain_Wminusenu = new TChain("mini");
+  chain_Wminusenu->AddFile(path+"MC/mc_361103.Wminusenu.3lep.root");
+  if (proof == 1)  chain_Wminusenu->SetProof();
+  chain_Wminusenu->Process("WZDiBosonAnalysis.C+","Wminusenu");
+
+  TChain* chain_Wminusmunu = new TChain("mini");
+  chain_Wminusmunu->AddFile(path+"MC/mc_361104.Wminusmunu.3lep.root");
+  if (proof == 1)  chain_Wminusmunu->SetProof();
+  chain_Wminusmunu->Process("WZDiBosonAnalysis.C+","Wminusmunu");
+
+  TChain* chain_Wminustaunu = new TChain("mini");
+  chain_Wminustaunu->AddFile(path+"MC/mc_361105.Wminustaunu.3lep.root");
+  if (proof == 1)  chain_Wminustaunu->SetProof();
+  chain_Wminustaunu->Process("WZDiBosonAnalysis.C+","Wminustaunu");
+  } // option 3
+  
 }

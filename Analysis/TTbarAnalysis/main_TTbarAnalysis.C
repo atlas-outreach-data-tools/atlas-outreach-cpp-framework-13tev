@@ -1,190 +1,201 @@
 //////////////////////////////////////////////////////////////////////////////////////////
+// Creates a TChain to be used by the Analysis.C class
 #include "TROOT.h"
 #include "TChain.h"
 #include "TFile.h"
 #include "TProof.h"
 
-void main_TTbarAnalysis(int proof)
+void main_TTbarAnalysis(int proof = 0, int option= 0)
 {
   // path to your local directory *or* URL, please change the default one!
-
   /* Local path example */
-  TString path = "/afs/cern.ch/user/l/lserkin/Desktop/work/OUTREACH/Outreach/data/";
-  
+  TString path = "/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/renamedLargeRJets/1lep/";
   /* The URL to the ATLAS Open Data website repository */
-  //TString path = "http://opendata.atlas.cern/release/samples/";
+  //  TString path = "http://opendata.atlas.cern/release/samples/";
 
-  //////////////////////////////////////////////////////////////////////////////////////////
+  //***************************************************************************************************//
   // adding chains of all MC and data samples
-
-  TChain* chain_ttbar_lep = new TChain("mini");
-  chain_ttbar_lep->AddFile(path+"ttbar.root");
-  chain_ttbar_lep->Process("TTbarAnalysis.C+","ttbar_lep");
-
-/*  
-  TChain* chain_WW = new TChain("mini");
-  chain_WW->AddFile(path+"MC/mc_105985.WW.root");
-  chain_WW->Process("TTbarAnalysis.C+","WW");
-
-  TChain* chain_ZZ = new TChain("mini");
-  chain_ZZ->AddFile(path+"MC/mc_105986.ZZ.root");
-  chain_ZZ->Process("TTbarAnalysis.C+","ZZ");
-
-  TChain* chain_WZ = new TChain("mini");
-  chain_WZ->AddFile(path+"MC/mc_105987.WZ.root");
-  chain_WZ->Process("TTbarAnalysis.C+","WZ");
-
-  TChain* chain_stop_tchan_top = new TChain("mini");
-  chain_stop_tchan_top->AddFile(path+"MC/mc_110090.stop_tchan_top.root");
-  chain_stop_tchan_top->Process("TTbarAnalysis.C+","stop_tchan_top");
-
-  TChain* chain_stop_tchan_antitop = new TChain("mini");
-  chain_stop_tchan_antitop->AddFile(path+"MC/mc_110091.stop_tchan_antitop.root");
-  chain_stop_tchan_antitop->Process("TTbarAnalysis.C+","stop_tchan_antitop");
-
-  TChain* chain_stop_schan = new TChain("mini");
-  chain_stop_schan->AddFile(path+"MC/mc_110119.stop_schan.root");
-  chain_stop_schan->Process("TTbarAnalysis.C+","stop_schan");
-
-  TChain* chain_stop_wtchan = new TChain("mini");
-  chain_stop_wtchan->AddFile(path+"MC/mc_110140.stop_wtchan.root");
-  chain_stop_wtchan->Process("TTbarAnalysis.C+","stop_wtchan");
-
-  TChain* chain_ZPrime1000 = new TChain("mini");
-  chain_ZPrime1000->AddFile(path+"MC/mc_110903.ZPrime1000.root");
-  chain_ZPrime1000->Process("TTbarAnalysis.C+","ZPrime1000");
-
-  TChain* chain_ttbar_had = new TChain("mini");
-  chain_ttbar_had->AddFile(path+"MC/mc_117049.ttbar_had.root");
-  chain_ttbar_had->Process("TTbarAnalysis.C+","ttbar_had");
-
-  TChain* chain_ttbar_lep = new TChain("mini");
-  chain_ttbar_lep->AddFile(path+"MC/mc_117050.ttbar_lep.root");
-  chain_ttbar_lep->Process("TTbarAnalysis.C+","ttbar_lep");
-
-  TChain* chain_Zee = new TChain("mini");
-  chain_Zee->AddFile(path+"MC/mc_147770.Zee.root");
-  chain_Zee->Process("TTbarAnalysis.C+","Zee");
-
-  TChain* chain_Zmumu = new TChain("mini");
-  chain_Zmumu->AddFile(path+"MC/mc_147771.Zmumu.root");
-  chain_Zmumu->Process("TTbarAnalysis.C+","Zmumu");
-
-  TChain* chain_Ztautau = new TChain("mini");
-  chain_Ztautau->AddFile(path+"MC/mc_147772.Ztautau.root");
-  chain_Ztautau->Process("TTbarAnalysis.C+","Ztautau");
-
-  TChain* chain_ggH125_WW2lep = new TChain("mini");
-  chain_ggH125_WW2lep->AddFile(path+"MC/mc_161005.ggH125_WW2lep.root");
-  chain_ggH125_WW2lep->Process("TTbarAnalysis.C+","ggH125_WW2lep");
-
-  TChain* chain_VBFH125_WW2lep = new TChain("mini");
-  chain_VBFH125_WW2lep->AddFile(path+"MC/mc_161055.VBFH125_WW2lep.root");
-  chain_VBFH125_WW2lep->Process("TTbarAnalysis.C+","VBFH125_WW2lep");
-
-  TChain* chain_Wenu_PTVnuWithB = new TChain("mini");
-  chain_Wenu_PTVnuWithB->AddFile(path+"MC/mc_167740.Wenu_PTVnuWithB.root");
-  chain_Wenu_PTVnuWithB->Process("TTbarAnalysis.C+","Wenu_PTVnuWithB");
-
-  TChain* chain_Wenu_PTVnuJetsBVeto = new TChain("mini");
-  chain_Wenu_PTVnuJetsBVeto->AddFile(path+"MC/mc_167741.Wenu_PTVnuJetsBVeto.root");
-  chain_Wenu_PTVnuJetsBVeto->Process("TTbarAnalysis.C+","Wenu_PTVnuJetsBVeto");
-
-  TChain* chain_Wenu_PTVnuNoJetsBVeto = new TChain("mini");
-  chain_Wenu_PTVnuNoJetsBVeto->AddFile(path+"MC/mc_167742.Wenu_PTVnuNoJetsBVeto.root");
-  chain_Wenu_PTVnuNoJetsBVeto->Process("TTbarAnalysis.C+","Wenu_PTVnuNoJetsBVeto");
-
-  TChain* chain_Wmunu_PTVnuWithB = new TChain("mini");
-  chain_Wmunu_PTVnuWithB->AddFile(path+"MC/mc_167743.Wmunu_PTVnuWithB.root");
-  chain_Wmunu_PTVnuWithB->Process("TTbarAnalysis.C+","Wmunu_PTVnuWithB");
-
-  TChain* chain_Wmunu_PTVnuJetsBVeto = new TChain("mini");
-  chain_Wmunu_PTVnuJetsBVeto->AddFile(path+"MC/mc_167744.Wmunu_PTVnuJetsBVeto.root");
-  chain_Wmunu_PTVnuJetsBVeto->Process("TTbarAnalysis.C+","Wmunu_PTVnuJetsBVeto");
-
-  TChain* chain_Wmunu_PTVnuNoJetsBVeto = new TChain("mini");
-  chain_Wmunu_PTVnuNoJetsBVeto->AddFile(path+"MC/mc_167745.Wmunu_PTVnuNoJetsBVeto.root");
-  chain_Wmunu_PTVnuNoJetsBVeto->Process("TTbarAnalysis.C+","Wmunu_PTVnuNoJetsBVeto");
-
-  TChain* chain_Wtaunu_PTVnuWithB = new TChain("mini");
-  chain_Wtaunu_PTVnuWithB->AddFile(path+"MC/mc_167746.Wtaunu_PTVnuWithB.root");
-  chain_Wtaunu_PTVnuWithB->Process("TTbarAnalysis.C+","Wtaunu_PTVnuWithB");
-
-  TChain* chain_Wtaunu_PTVnuJetsBVeto = new TChain("mini");
-  chain_Wtaunu_PTVnuJetsBVeto->AddFile(path+"MC/mc_167747.Wtaunu_PTVnuJetsBVeto.root");
-  chain_Wtaunu_PTVnuJetsBVeto->Process("TTbarAnalysis.C+","Wtaunu_PTVnuJetsBVeto");
-
-  TChain* chain_Wtaunu_PTVnuNoJetsBVeto = new TChain("mini");
-  chain_Wtaunu_PTVnuNoJetsBVeto->AddFile(path+"MC/mc_167748.Wtaunu_PTVnuNoJetsBVeto.root");
-  chain_Wtaunu_PTVnuNoJetsBVeto->Process("TTbarAnalysis.C+","Wtaunu_PTVnuNoJetsBVeto");
-
-  TChain* chain_DYeeM08to15 = new TChain("mini");
-  chain_DYeeM08to15->AddFile(path+"MC/mc_173041.DYeeM08to15.root");
-  chain_DYeeM08to15->Process("TTbarAnalysis.C+","DYeeM08to15");
-
-  TChain* chain_DYeeM15to40 = new TChain("mini");
-  chain_DYeeM15to40->AddFile(path+"MC/mc_173042.DYeeM15to40.root");
-  chain_DYeeM15to40->Process("TTbarAnalysis.C+","DYeeM15to40");
-
-  TChain* chain_DYmumuM08to15 = new TChain("mini");
-  chain_DYmumuM08to15->AddFile(path+"MC/mc_173043.DYmumuM08to15.root");
-  chain_DYmumuM08to15->Process("TTbarAnalysis.C+","DYmumuM08to15");
-
-  TChain* chain_DYmumuM15to40 = new TChain("mini");
-  chain_DYmumuM15to40->AddFile(path+"MC/mc_173044.DYmumuM15to40.root");
-  chain_DYmumuM15to40->Process("TTbarAnalysis.C+","DYmumuM15to40");
-
-  TChain* chain_DYtautauM08to15 = new TChain("mini");
-  chain_DYtautauM08to15->AddFile(path+"MC/mc_173045.DYtautauM08to15.root");
-  chain_DYtautauM08to15->Process("TTbarAnalysis.C+","DYtautauM08to15");
-
-  TChain* chain_DYtautauM15to40 = new TChain("mini");
-  chain_DYtautauM15to40->AddFile(path+"MC/mc_173046.DYtautauM15to40.root");
-  chain_DYtautauM15to40->Process("TTbarAnalysis.C+","DYtautauM15to40");
-
-  TChain* chain_data = new TChain("mini");
-  chain_data->AddFile(path+"Data/DataEgamma.root");
-  chain_data->AddFile(path+"Data/DataMuons.root");
-  chain_data->Process("TTbarAnalysis.C+","data");
-
-
-  if (proof == 1)
-  {
-    TProof::Open("");
-
-    chain_WW->SetProof();
-    chain_WZ->SetProof();
-    chain_ZZ->SetProof();
-    chain_stop_tchan_top->SetProof();
-    chain_stop_tchan_antitop->SetProof();
-    chain_stop_schan->SetProof();
-    chain_stop_wtchan->SetProof();
-    chain_ZPrime1000->SetProof();
-    chain_ttbar_had->SetProof();
-    chain_ttbar_lep->SetProof();
-    chain_Zee->SetProof();
-    chain_Zmumu->SetProof();
-    chain_Ztautau->SetProof();
-    chain_ggH125_WW2lep->SetProof();
-    chain_VBFH125_WW2lep->SetProof();
-    chain_Wenu_PTVnuWithB->SetProof();
-    chain_Wenu_PTVnuJetsBVeto->SetProof();
-    chain_Wenu_PTVnuNoJetsBVeto->SetProof();
-    chain_Wmunu_PTVnuWithB->SetProof();
-    chain_Wmunu_PTVnuJetsBVeto->SetProof();
-    chain_Wmunu_PTVnuNoJetsBVeto->SetProof();
-    chain_Wtaunu_PTVnuWithB->SetProof();
-    chain_Wtaunu_PTVnuJetsBVeto->SetProof();
-    chain_Wtaunu_PTVnuNoJetsBVeto->SetProof();
-    chain_DYeeM08to15->SetProof();
-    chain_DYeeM15to40->SetProof();
-    chain_DYmumuM08to15->SetProof();
-    chain_DYmumuM15to40->SetProof();
-    chain_DYtautauM08to15->SetProof();
-    chain_DYtautauM15to40->SetProof();
-    chain_data->SetProof();
-
+  // option==0 will run all one by one
+  // Currently 4 options for MC (2,3,4,5) and 4 for data (11,12,13,14) which can be run in parallel
+  // If using the options (11,12,13,14) of splitting data, 
+  // you need to add the samples later with: hadd data.root dataA.root dataB.root dataC.root dataD.root
+  //***************************************************************************************************//
+  if (proof == 1)  TProof::Open("");
+  
+  
+  if (option==11 || option==0){
+    TChain* chain_dataA = new TChain("mini");
+    chain_dataA->AddFile(path+"Data/data_A.1lep.root");
+    if (proof == 1)  chain_dataA->SetProof();
+    chain_dataA->Process("TTbarAnalysis.C+","dataA");
   }
-  */
+  
+  if (option==12 || option==0){
+    TChain* chain_dataB = new TChain("mini");
+    chain_dataB->AddFile(path+"Data/data_B.1lep.root");
+    if (proof == 1)  chain_dataB->SetProof();
+    chain_dataB->Process("TTbarAnalysis.C+","dataB");
+  }
+  
+  if (option==13 || option==0){
+    TChain* chain_dataC = new TChain("mini");
+    chain_dataC->AddFile(path+"Data/data_C.1lep.root");
+    if (proof == 1)  chain_dataC->SetProof();
+    chain_dataC->Process("TTbarAnalysis.C+","dataC");
+  }
+  
+  if (option==14 || option==0){
+    TChain* chain_dataD = new TChain("mini");
+    chain_dataD->AddFile(path+"Data/data_D.1lep.root");
+    if (proof == 1)  chain_dataD->SetProof();
+    chain_dataD->Process("TTbarAnalysis.C+","dataD");
+  }
+   
+  
+  //////////////////////  MC samples
+  
+  if (option==2 || option==0)   {
+    
+    // diboson
+    TChain* chain_ZqqZll = new TChain("mini");
+    chain_ZqqZll->AddFile(path+"MC/mc_363356.ZqqZll.1lep.root");
+    if (proof == 1)  chain_ZqqZll->SetProof();
+    chain_ZqqZll->Process("TTbarAnalysis.C+","ZqqZll");
+    
+    TChain* chain_WqqZll = new TChain("mini");
+    chain_WqqZll->AddFile(path+"MC/mc_363358.WqqZll.1lep.root");
+    if (proof == 1)  chain_WqqZll->SetProof();
+    chain_WqqZll->Process("TTbarAnalysis.C+","WqqZll");
+    
+    TChain* chain_WpqqWmlv = new TChain("mini");
+    chain_WpqqWmlv->AddFile(path+"MC/mc_363359.WpqqWmlv.1lep.root");
+    if (proof == 1)  chain_WpqqWmlv->SetProof();
+    chain_WpqqWmlv->Process("TTbarAnalysis.C+","WpqqWmlv");
+    
+    TChain* chain_WplvWmqq = new TChain("mini");
+    chain_WplvWmqq->AddFile(path+"MC/mc_363360.WplvWmqq.1lep.root");
+    if (proof == 1)  chain_WplvWmqq->SetProof();
+    chain_WplvWmqq->Process("TTbarAnalysis.C+","WplvWmqq");
+    
+    TChain* chain_WlvZqq = new TChain("mini");
+    chain_WlvZqq->AddFile(path+"MC/mc_363489.WlvZqq.1lep.root");
+    if (proof == 1)  chain_WlvZqq->SetProof();
+    chain_WlvZqq->Process("TTbarAnalysis.C+","WlvZqq");
+    
+    TChain* chain_llll = new TChain("mini");
+    chain_llll->AddFile(path+"MC/mc_363490.llll.1lep.root");
+    if (proof == 1)  chain_llll->SetProof();
+    chain_llll->Process("TTbarAnalysis.C+","llll");
+    
+    TChain* chain_lllv = new TChain("mini");
+    chain_lllv->AddFile(path+"MC/mc_363491.lllv.1lep.root");
+    if (proof == 1)  chain_lllv->SetProof();
+    chain_lllv->Process("TTbarAnalysis.C+","lllv");
+    
+    TChain* chain_llvv = new TChain("mini");
+    chain_llvv->AddFile(path+"MC/mc_363492.llvv.1lep.root");
+    if (proof == 1)  chain_llvv->SetProof();
+    chain_llvv->Process("TTbarAnalysis.C+","llvv");
+    
+    TChain* chain_lvvv = new TChain("mini");
+    chain_lvvv->AddFile(path+"MC/mc_363493.lvvv.1lep.root");
+    if (proof == 1)  chain_lvvv->SetProof();
+    chain_lvvv->Process("TTbarAnalysis.C+","lvvv");
+    
+    
+    // Z+jets inclusive
+    TChain* chain_Zee = new TChain("mini");
+    chain_Zee->AddFile(path+"MC/mc_361106.Zee.1lep.root");
+    if (proof == 1)  chain_Zee->SetProof();
+    chain_Zee->Process("TTbarAnalysis.C+","Zee");
+    
+    TChain* chain_Zmumu = new TChain("mini");
+    chain_Zmumu->AddFile(path+"MC/mc_361107.Zmumu.1lep.root");
+    if (proof == 1)  chain_Zmumu->SetProof();
+    chain_Zmumu->Process("TTbarAnalysis.C+","Zmumu");
+    
+    TChain* chain_Ztautau = new TChain("mini");
+    chain_Ztautau->AddFile(path+"MC/mc_361108.Ztautau.1lep.root");
+    if (proof == 1)  chain_Ztautau->SetProof();
+    chain_Ztautau->Process("TTbarAnalysis.C+","Ztautau");
+  }// option 2
+  
+
+  if (option==3 || option==0)   {
+    //single top
+    TChain* chain_single_top_tchan = new TChain("mini");
+    chain_single_top_tchan->AddFile(path+"MC/mc_410011.single_top_tchan.1lep.root");
+    if (proof == 1)  chain_single_top_tchan->SetProof();
+    chain_single_top_tchan->Process("TTbarAnalysis.C+","single_top_tchan");
+    
+    TChain* chain_single_antitop_tchan = new TChain("mini");
+    chain_single_antitop_tchan->AddFile(path+"MC/mc_410012.single_antitop_tchan.1lep.root");
+    if (proof == 1)  chain_single_antitop_tchan->SetProof();
+    chain_single_antitop_tchan->Process("TTbarAnalysis.C+","single_antitop_tchan");
+    
+    TChain* chain_single_top_schan = new TChain("mini");
+    chain_single_top_schan->AddFile(path+"MC/mc_410025.single_top_schan.1lep.root");
+    if (proof == 1)  chain_single_top_schan->SetProof();
+    chain_single_top_schan->Process("TTbarAnalysis.C+","single_top_schan");
+    
+    TChain* chain_single_antitop_schan = new TChain("mini");
+    chain_single_antitop_schan->AddFile(path+"MC/mc_410026.single_antitop_schan.1lep.root");
+    if (proof == 1)  chain_single_antitop_schan->SetProof();
+    chain_single_antitop_schan->Process("TTbarAnalysis.C+","single_antitop_schan");
+    
+    TChain* chain_single_top_wtchan = new TChain("mini");
+    chain_single_top_wtchan->AddFile(path+"MC/mc_410013.single_top_wtchan.1lep.root");
+    if (proof == 1)  chain_single_top_wtchan->SetProof();
+    chain_single_top_wtchan->Process("TTbarAnalysis.C+","single_top_wtchan");
+    
+    TChain* chain_single_antitop_wtchan = new TChain("mini");
+    chain_single_antitop_wtchan->AddFile(path+"MC/mc_410014.single_antitop_wtchan.1lep.root");
+    if (proof == 1)  chain_single_antitop_wtchan->SetProof();
+    chain_single_antitop_wtchan->Process("TTbarAnalysis.C+","single_antitop_wtchan");
+
+    //ttbar
+    TChain* chain_ttbar_lep = new TChain("mini");
+    chain_ttbar_lep->AddFile(path+"MC/mc_410000.ttbar_lep.1lep.root");
+    if (proof == 1)  chain_ttbar_lep->SetProof();
+    chain_ttbar_lep->Process("TTbarAnalysis.C+","ttbar_lep");
+    
+  } // option 3
+  
+  
+  if (option==4 || option==0)   {
+  // W+jets inclusive
+  TChain* chain_Wplusenu = new TChain("mini");
+  chain_Wplusenu->AddFile(path+"MC/mc_361100.Wplusenu.1lep.root");
+  if (proof == 1)  chain_Wplusenu->SetProof();
+  chain_Wplusenu->Process("TTbarAnalysis.C+","Wplusenu");
+
+  TChain* chain_Wplusmunu = new TChain("mini");
+  chain_Wplusmunu->AddFile(path+"MC/mc_361101.Wplusmunu.1lep.root");
+  if (proof == 1)  chain_Wplusmunu->SetProof();
+  chain_Wplusmunu->Process("TTbarAnalysis.C+","Wplusmunu");
+
+  TChain* chain_Wplustaunu = new TChain("mini");
+  chain_Wplustaunu->AddFile(path+"MC/mc_361102.Wplustaunu.1lep.root");
+  if (proof == 1)  chain_Wplustaunu->SetProof();
+  chain_Wplustaunu->Process("TTbarAnalysis.C+","Wplustaunu");
+  } // option 4
+
+  if (option==5 || option==0)   {
+  TChain* chain_Wminusenu = new TChain("mini");
+  chain_Wminusenu->AddFile(path+"MC/mc_361103.Wminusenu.1lep.root");
+  if (proof == 1)  chain_Wminusenu->SetProof();
+  chain_Wminusenu->Process("TTbarAnalysis.C+","Wminusenu");
+
+  TChain* chain_Wminusmunu = new TChain("mini");
+  chain_Wminusmunu->AddFile(path+"MC/mc_361104.Wminusmunu.1lep.root");
+  if (proof == 1)  chain_Wminusmunu->SetProof();
+  chain_Wminusmunu->Process("TTbarAnalysis.C+","Wminusmunu");
+
+  TChain* chain_Wminustaunu = new TChain("mini");
+  chain_Wminustaunu->AddFile(path+"MC/mc_361105.Wminustaunu.1lep.root");
+  if (proof == 1)  chain_Wminustaunu->SetProof();
+  chain_Wminustaunu->Process("TTbarAnalysis.C+","Wminustaunu");
+  } // option 5
+
   
 }
