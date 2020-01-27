@@ -12,7 +12,7 @@ void main_ZTauTauAnalysis(int proof = 0, int option= 0)
   TString path = "/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/renamedLargeRJets/1lep1tau/";
   
   /* The URL to the ATLAS Open Data website repository */
-  //  TString path = "http://opendata.atlas.cern/release/samples/";
+  TString path = "http://www.universidad.ch/ATLAS/outreach/open-data-2020/1lep1tau/";
 
   //***************************************************************************************************//
   // Adding chains of all MC and data samples
