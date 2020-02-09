@@ -340,13 +340,9 @@ void ZZDiBosonAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("scaleFactor_BTAG", &scaleFactor_BTAG, &b_scaleFactor_BTAG);
    fChain->SetBranchAddress("scaleFactor_LepTRIGGER", &scaleFactor_LepTRIGGER, &b_scaleFactor_LepTRIGGER);
    fChain->SetBranchAddress("scaleFactor_PhotonTRIGGER", &scaleFactor_PhotonTRIGGER, &b_scaleFactor_PhotonTRIGGER);
-   fChain->SetBranchAddress("scaleFactor_TauTRIGGER", &scaleFactor_TauTRIGGER, &b_scaleFactor_TauTRIGGER);
-   fChain->SetBranchAddress("scaleFactor_DiTauTRIGGER", &scaleFactor_DiTauTRIGGER, &b_scaleFactor_DiTauTRIGGER);
    fChain->SetBranchAddress("trigE", &trigE, &b_trigE);
    fChain->SetBranchAddress("trigM", &trigM, &b_trigM);
    fChain->SetBranchAddress("trigP", &trigP, &b_trigP);
-   fChain->SetBranchAddress("trigT", &trigT, &b_trigT);
-   fChain->SetBranchAddress("trigDT", &trigDT, &b_trigDT);
    fChain->SetBranchAddress("lep_n", &lep_n, &b_lep_n);
    fChain->SetBranchAddress("lep_truthMatched", &lep_truthMatched, &b_lep_truthMatched);
    fChain->SetBranchAddress("lep_trigMatched", &lep_trigMatched, &b_lep_trigMatched);
@@ -403,11 +399,6 @@ void ZZDiBosonAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("tau_nTracks", &tau_nTracks, &b_tau_nTracks);
    fChain->SetBranchAddress("tau_BDTid", &tau_BDTid, &b_tau_BDTid);
    fChain->SetBranchAddress("ditau_m", &ditau_m, &b_ditau_m);
-   fChain->SetBranchAddress("truth_pt", &truth_pt, &b_truth_pt);
-   fChain->SetBranchAddress("truth_eta", &truth_eta, &b_truth_eta);
-   fChain->SetBranchAddress("truth_phi", &truth_phi, &b_truth_phi);
-   fChain->SetBranchAddress("truth_E", &truth_E, &b_truth_E);
-   fChain->SetBranchAddress("truth_pdgid", &truth_pdgid, &b_truth_pdgid);
    fChain->SetBranchAddress("lep_pt_syst", &lep_pt_syst, &b_lep_pt_syst);
    fChain->SetBranchAddress("met_et_syst", &met_et_syst, &b_met_et_syst);
    fChain->SetBranchAddress("jet_pt_syst", &jet_pt_syst, &b_jet_pt_syst);

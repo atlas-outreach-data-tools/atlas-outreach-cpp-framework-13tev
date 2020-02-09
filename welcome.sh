@@ -21,7 +21,7 @@ if (( $choice == 1 )) ; then
     mkdir Analysis/${analysisName}/Output_${analysisName}
   done
 
-  echo "creating the output directory for the Plotting code: Plotting/histograms"
+  echo "Creating the directory for the Plotting code: Plotting/histograms"
   mkdir Plotting/histograms
 
 # removing everything within directories
@@ -32,7 +32,7 @@ elif  (( $choice == 0 )) ; then
     rm -rf Analysis/${analysisName}/Output_${analysisName}
   done
 
-  echo "Removing the output directory for the Plotting code: Plotting/histograms"
+  echo "Removing the directory for the Plotting code: Plotting/histograms"
   rm -rf Plotting/histograms
 
 else

@@ -60,10 +60,10 @@
 #define NORMSIG 0
 
 // save to pdf flag, by default plots saved as png
-#define SAVEPDF 1
+#define SAVEPDF 0
 
 // save to root format flag
-#define SAVEROOT 1
+#define SAVEROOT 0
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 int main(int argc, char *argv[]){
@@ -202,9 +202,7 @@ void Plotting::ATLASLabel(Double_t x,Double_t y)
   p.SetTextFont(42);
   p.SetTextColor(kBlack);
   p.SetTextSize(0.05);  
-  //p.DrawLatex(x+delx,y,"Open Data");
   p.DrawLatex(x+delx,y,"Preliminary Open Data");
-  //p.DrawLatex(x+delx,y,"Internal Open Data");
 
   return;
 }

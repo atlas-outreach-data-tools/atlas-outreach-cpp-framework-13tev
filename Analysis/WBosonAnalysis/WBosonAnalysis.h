@@ -228,13 +228,9 @@ void WBosonAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("scaleFactor_BTAG", &scaleFactor_BTAG, &b_scaleFactor_BTAG);
    fChain->SetBranchAddress("scaleFactor_LepTRIGGER", &scaleFactor_LepTRIGGER, &b_scaleFactor_LepTRIGGER);
    fChain->SetBranchAddress("scaleFactor_PhotonTRIGGER", &scaleFactor_PhotonTRIGGER, &b_scaleFactor_PhotonTRIGGER);
-   fChain->SetBranchAddress("scaleFactor_TauTRIGGER", &scaleFactor_TauTRIGGER, &b_scaleFactor_TauTRIGGER);
-   fChain->SetBranchAddress("scaleFactor_DiTauTRIGGER", &scaleFactor_DiTauTRIGGER, &b_scaleFactor_DiTauTRIGGER);
    fChain->SetBranchAddress("trigE", &trigE, &b_trigE);
    fChain->SetBranchAddress("trigM", &trigM, &b_trigM);
    fChain->SetBranchAddress("trigP", &trigP, &b_trigP);
-   fChain->SetBranchAddress("trigT", &trigT, &b_trigT);
-   fChain->SetBranchAddress("trigDT", &trigDT, &b_trigDT);
    fChain->SetBranchAddress("lep_n", &lep_n, &b_lep_n);
    fChain->SetBranchAddress("lep_truthMatched", &lep_truthMatched, &b_lep_truthMatched);
    fChain->SetBranchAddress("lep_trigMatched", &lep_trigMatched, &b_lep_trigMatched);
