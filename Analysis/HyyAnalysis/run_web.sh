@@ -7,8 +7,8 @@ varname=0
 echo Option is $varname
 option=$varname
 
-echo Will always set PROOF to false for now!
-proofvarname=0
+echo Will always set PROOF to true for now!
+proofvarname=1
 echo PROOF option is $proofvarname
 parallel=$proofvarname
 
