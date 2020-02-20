@@ -3,7 +3,7 @@ analysis="main_HyyAnalysis_web"
 
 ##OPTION
 echo Will always run all data and MC one after another!
-varname=1
+varname=2
 echo Option is $varname
 option=$varname
 
