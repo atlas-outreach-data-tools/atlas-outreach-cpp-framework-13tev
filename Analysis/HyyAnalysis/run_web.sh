@@ -3,12 +3,12 @@ analysis="main_HyyAnalysis_web"
 
 ##OPTION
 echo Will always run all data and MC one after another!
-varname=0
+varname=2
 echo Option is $varname
 option=$varname
 
-echo Will always set PROOF to true for now!
-proofvarname=1
+echo Will always set PROOF to false for now!
+proofvarname=0
 echo PROOF option is $proofvarname
 parallel=$proofvarname
 
