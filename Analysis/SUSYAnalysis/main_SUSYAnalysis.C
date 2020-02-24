@@ -12,7 +12,7 @@ void main_SUSYAnalysis(int proof = 0, int option= 0)
   //TString path = "/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/renamedLargeRJets/2lep/";
 
   /* The URL to the ATLAS Open Data website repository */
-  TString path = "http://www.universidad.ch/ATLAS/outreach/open-data-2020/2lep/";
+  TString path = "https://atlas-opendata.web.cern.ch/atlas-opendata/samples/2020/2lep/";
 
   //***************************************************************************************************//
   // Adding chains of all MC and data samples
