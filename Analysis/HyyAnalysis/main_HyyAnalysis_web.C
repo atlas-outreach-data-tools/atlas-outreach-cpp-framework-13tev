@@ -10,7 +10,8 @@ void main_HyyAnalysis_web(int proof = 0, int option= 0)
   // path to your local directory *or* URL, please change the default one!
 
   /* The URL to the ATLAS Open Data website repository */
-  TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/GamGam/";
+  //TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/GamGam/";
+  TString path = "https://atlas-opendata.web.cern.ch/atlas-opendata/samples/2020/GamGam/";
 
   //***************************************************************************************************//
   // We run only over data and Higgs MC
