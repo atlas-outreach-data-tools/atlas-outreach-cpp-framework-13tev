@@ -1,3 +1,4 @@
+#!/bin/bash
 ## small script to run the analysis
 analysis="main_HWWAnalysis"
 

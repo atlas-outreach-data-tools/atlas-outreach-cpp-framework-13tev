@@ -1,3 +1,4 @@
+#!/bin/bash
 # generic cleaning of unnecessary files
 rm -rf gmon.out
 rm -f *~;

@@ -1,3 +1,4 @@
+#!/bin/bash
 ## small script to run the analysis using the web configuration
 analysis="main_HyyAnalysis_web"
 

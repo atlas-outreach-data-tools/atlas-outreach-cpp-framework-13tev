@@ -1,3 +1,4 @@
+#!/bin/bash
 #######################################################
 #                                                     # 
 # Welcome to ATLAS 13 TeV Open Data C++ framework !!! #
