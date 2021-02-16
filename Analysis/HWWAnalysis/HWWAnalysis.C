@@ -177,7 +177,7 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 				    {
 				      
 				      // cut on 85% WP
-				      if ( jet_MV2c10->at(i) > 0.1758475  && TMath::Abs(jet_eta->at(i)) < 2.5 )
+				      if ( jet_MV2c10->at(i) > 0.1758475 )
 					{
 					  goodbjet_n++;
 					  goodbjet_index[bjet_index] = i;
@@ -204,7 +204,7 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 			  }
 			  
 			  //  remove low mass meson resonances and DY events; ggF regions, at least 1 jet
-			  if ( mLL > 10 && goodjet_n <= 1 && MET > 20)
+			  if ( mLL > 10 && goodjet_n <= 1 && MET > 30)
 			    {
 			      if ( dPhiLLmet > TMath::Pi()/2 )
 				{
