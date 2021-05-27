@@ -5,17 +5,17 @@
 #include "TFile.h"
 #include "TProof.h"
 
-void main_WBosonAnalysis(int proof = 0, int option= 0)
+void main_WBosonAnalysis(int proof = 0, int option= 0) // proof = 1, option = 0, del run.sh
 {
   // path to your local directory *or* URL, please change the default one!
   /* Local path example */
   //TString path = "/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/renamedLargeRJets/1lep/";
 
   /* The URL to the ATLAS Open Data website repository */
-   TString path = "https://atlas-opendata.web.cern.ch/atlas-opendata/samples/2020/1lep/"; // Accede al url, dentro del programa ROOT
+   TString path = "https://atlas-opendata.web.cern.ch/atlas-opendata/samples/2020/1lep/"; // Cadena de carácteres path = url
 
   /* The URL to the CERN Open Data portal repository */
-  //TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/" % Pàgina no existe
+  //TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/" % Pàgina no existe o desactualizada
 
   /* The XROOTD path to the CERN Open Data portal repository */
   //TString path = "root://eospublic.cern.ch//eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/"
@@ -30,33 +30,33 @@ void main_WBosonAnalysis(int proof = 0, int option= 0)
   // Currently 4 options for MC (2,3,41,42,43,44) and 4 for data (11,12,13,14) which can be run in parallel
   // If using the options (11,12,13,14) of splitting data, 
   // you need to add the samples later with: hadd data.root dataA.root dataB.root dataC.root dataD.root
-  // Se necesita agregar esos comandos al finalizar, para combinar los datos en uno solo
-    //***************************************************************************************************// 
-  if (proof == 1)  TProof::Open(""); //Enciende los procesadores para ejecutar
-  
-  
+  // Se necesita agregar esos comandos al finalizar, para combinar los datos en uno solo,
+  //***************************************************************************************************// 
+ 
+  if (proof == 1)  TProof::Open(""); //TProof:Enciende los procesadores para ejecutar. proof = 1 (corre todos los datos en paralelo)
+  //TChain es una colección de archivos que contiene un objeto TTre, un TTre representa una columna de datos.
   if (option==11 || option==0){
-    TChain* chain_dataA = new TChain("mini");  //TChain es una colección de archivos que contiene un objeto TTre, un TTre representa una columna de datos.
-    chain_dataA->AddFile(path+"Data/data_A.1lep.root"); //Agrega el archivo data_A.1lep.root, ubicada en el directorio del url y la asigna a dataA.
-    if (proof == 1)  chain_dataA->SetProof();
-    chain_dataA->Process("WBosonAnalysis.C+","dataA");
-  }
+    TChain* chain_dataA = new TChain("mini");  //TChain::Add(TChain* chain). Agregua todos los archivos de TChain("mini") al chain_dataA.
+    chain_dataA->AddFile(path+"Data/data_A.1lep.root"); //Crea y agrega el archivo data_A.1lep.root, ubicada en el directorio del url y la asigna a chain_dataA.
+    if (proof == 1)  chain_dataA->SetProof(); // Enable/Disable PROOF processing on the current default Proof
+    chain_dataA->Process("WBosonAnalysis.C+","dataA"); // Procesa toda la "dataA" ejecutando el código de "WBosonAnalysis.C+". Luego asigna los datos a chain_dataA
+  } 
   
-  if (option==12 || option==0){
-    TChain* chain_dataB = new TChain("mini");
+  if (option==12 || option==0){     // DataB 
+    TChain* chain_dataB = new TChain("mini");   //Al chain_dataB se le asigna dinámicamente espacio para contener al Tchain("mini")
     chain_dataB->AddFile(path+"Data/data_B.1lep.root");
     if (proof == 1)  chain_dataB->SetProof();
     chain_dataB->Process("WBosonAnalysis.C+","dataB");
   }
   
-  if (option==13 || option==0){
+  if (option==13 || option==0){     // DataC
     TChain* chain_dataC = new TChain("mini");
     chain_dataC->AddFile(path+"Data/data_C.1lep.root");
     if (proof == 1)  chain_dataC->SetProof();
     chain_dataC->Process("WBosonAnalysis.C+","dataC");
   }
   
-  if (option==14 || option==0){
+  if (option==14 || option==0){      // DataD
     TChain* chain_dataD = new TChain("mini");
     chain_dataD->AddFile(path+"Data/data_D.1lep.root");
     if (proof == 1)  chain_dataD->SetProof();
@@ -175,10 +175,10 @@ void main_WBosonAnalysis(int proof = 0, int option= 0)
   } // option 3
   
   
-  // Sherpa W+jets sliced samples
+  // Sherpa W+jets sliced samples. //
   if (option > 40 || option==0)   {
     
-    TChain* chain_Wmunu_PTV0_70_CVetoBVeto = new TChain("mini");
+    TChain* chain_Wmunu_PTV0_70_CVetoBVeto = new TChain("mini");  
     TChain* chain_Wmunu_PTV0_70_CFilterBVeto = new TChain("mini");
     TChain* chain_Wmunu_PTV0_70_BFilter = new TChain("mini");
     TChain* chain_Wmunu_PTV70_140_CVetoBVeto = new TChain("mini");
