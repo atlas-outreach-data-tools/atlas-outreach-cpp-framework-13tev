@@ -28,9 +28,9 @@ parallel=$proofvarname
 ## execute and run ROOT
 echo "starting ROOT"
 ##
-root -l -b << EOF
-.L $analysis.C+
-$analysis($parallel,$option)
-EOF
+root -l -b << EOF // El comando "-b" significa que correrá en modo bash, sin gráficas. y le comando "-l" hace que no aparezca el banner ROOT
+.L $analysis.C+ //Compila el archivo analysis.C (main_WBosonAnalysis.C) y genera una librería compartida $analysis
+$analysis($parallel,$option) // parallel = 1, option = 0
+EOF // End of Comand (EOF), es un delimitador. El << se interpreta como una instrucción para leer la entrada has que finalice.
 ##
 echo "end of ROOT execution"
