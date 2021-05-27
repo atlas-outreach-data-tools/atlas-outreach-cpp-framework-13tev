@@ -27,7 +27,7 @@
 #include <TLorentzVector.h>
 
 string name;
-// Los siguientes métodos se definen el este archivo:
+// Los siguientes métodos se definen en este archivo:
 //    Begin():        called every time a loop on the tree starts,
 //                   
 //    SlaveBegin():   called after Begin(), when on PROOF called only on the
