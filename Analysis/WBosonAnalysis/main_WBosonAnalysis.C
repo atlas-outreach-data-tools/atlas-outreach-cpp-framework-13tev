@@ -12,10 +12,10 @@ void main_WBosonAnalysis(int proof = 0, int option= 0)
   //TString path = "/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/renamedLargeRJets/1lep/";
 
   /* The URL to the ATLAS Open Data website repository */
-//TString path = "https://atlas-opendata.web.cern.ch/atlas-opendata/samples/2020/1lep/";
+   TString path = "https://atlas-opendata.web.cern.ch/atlas-opendata/samples/2020/1lep/"; // Accede al url, dentro del programa ROOT
 
   /* The URL to the CERN Open Data portal repository */
-  TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/"
+  //TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/" % Pàgina no existe
 
   /* The XROOTD path to the CERN Open Data portal repository */
   //TString path = "root://eospublic.cern.ch//eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/"
@@ -23,19 +23,21 @@ void main_WBosonAnalysis(int proof = 0, int option= 0)
   /* An external mirror */
   //TString path = "http://www.universidad.ch/ATLAS/outreach/open-data-2020/1lep/"
   
+  //Opciones para agregegar los datos:
   //***************************************************************************************************//
   // adding chains of all MC and data samples
-  // option==0 will run all one by one
+  // option==0 will run all one by one 
   // Currently 4 options for MC (2,3,41,42,43,44) and 4 for data (11,12,13,14) which can be run in parallel
   // If using the options (11,12,13,14) of splitting data, 
   // you need to add the samples later with: hadd data.root dataA.root dataB.root dataC.root dataD.root
-  //***************************************************************************************************//
-  if (proof == 1)  TProof::Open("");
+  // Se necesita agregar esos comandos al finalizar, para combinar los datos en uno solo
+    //***************************************************************************************************// 
+  if (proof == 1)  TProof::Open(""); //Enciende los procesadores para ejecutar
   
   
   if (option==11 || option==0){
-    TChain* chain_dataA = new TChain("mini");
-    chain_dataA->AddFile(path+"Data/data_A.1lep.root");
+    TChain* chain_dataA = new TChain("mini");  //TChain es una colección de archivos que contiene un objeto TTre, un TTre representa una columna de datos.
+    chain_dataA->AddFile(path+"Data/data_A.1lep.root"); //Agrega el archivo data_A.1lep.root, ubicada en el directorio del url y la asigna a dataA.
     if (proof == 1)  chain_dataA->SetProof();
     chain_dataA->Process("WBosonAnalysis.C+","dataA");
   }
