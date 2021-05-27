@@ -27,6 +27,18 @@
 #include <TLorentzVector.h>
 
 string name;
+// Los siguientes métodos se definen el este archivo:
+//    Begin():        called every time a loop on the tree starts,
+//                   
+//    SlaveBegin():   called after Begin(), when on PROOF called only on the
+//                    slave servers.
+//    Process():      called for each event, in this function you decide what
+//                    to read and fill your histograms.
+//    SlaveTerminate: called at the end of the loop on the tree, when on PROOF
+//                    called only on the slave servers.
+//    Terminate():    called at the end of the loop on the tree,
+//                    a convenient place to draw/fit your histograms.
+//
 
 void WBosonAnalysis::Begin(TTree * )
 {
