@@ -15,13 +15,13 @@ void main_TTbarAnalysis(int proof = 0, int option= 0)
   //TString path = "https://atlas-opendata.web.cern.ch/atlas-opendata/samples/2020/1lep/";
 
   /* The URL to the CERN Open Data portal repository */
-  TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/"
+  TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/";
 
   /* The XROOTD path to the CERN Open Data portal repository */
-  //TString path = "root://eospublic.cern.ch//eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/"
+  //TString path = "root://eospublic.cern.ch//eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/";
 
   /* An external mirror */
-  //TString path = "http://www.universidad.ch/ATLAS/outreach/open-data-2020/1lep/"
+  //TString path = "http://www.universidad.ch/ATLAS/outreach/open-data-2020/1lep/";
   
   //***************************************************************************************************//
   // adding chains of all MC and data samples
