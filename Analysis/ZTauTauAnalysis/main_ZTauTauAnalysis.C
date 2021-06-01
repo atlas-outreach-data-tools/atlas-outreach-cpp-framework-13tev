@@ -15,13 +15,13 @@ void main_ZTauTauAnalysis(int proof = 0, int option= 0)
   //TString path = "https://atlas-opendata.web.cern.ch/atlas-opendata/samples/2020/1lep1tau/";
 
   /* The URL to the CERN Open Data portal repository */
-  TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep1tau/"
+  TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep1tau/";
 
   /* The XROOTD path to the CERN Open Data portal repository */
-  //TString path = "root://eospublic.cern.ch//eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep1tau/"
+  //TString path = "root://eospublic.cern.ch//eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep1tau/";
 
   /* An external mirror */
-  //TString path = "http://www.universidad.ch/ATLAS/outreach/open-data-2020/1lep1tau/"
+  //TString path = "http://www.universidad.ch/ATLAS/outreach/open-data-2020/1lep1tau/";
 
   //***************************************************************************************************//
   // Adding chains of all MC and data samples
