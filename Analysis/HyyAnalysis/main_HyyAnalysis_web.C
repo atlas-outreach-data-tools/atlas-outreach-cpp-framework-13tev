@@ -13,7 +13,7 @@ void main_HyyAnalysis_web(int proof = 0, int option= 0)
   //TString path = "https://atlas-opendata.web.cern.ch/atlas-opendata/samples/2020/GamGam/";
 
   /* The URL to the CERN Open Data portal repository */
-  TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/GamGam/"
+  TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/GamGam/";
   
   /* The XROOTD path to the CERN Open Data portal repository */
   //TString path = "root://eospublic.cern.ch//eos/opendata/atlas/OutreachDatasets/2020-01-22/GamGam/"
