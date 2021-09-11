@@ -1,0 +1,71 @@
+{
+    "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+    "@type": "SoftwareSourceCode",
+    "license": "https://spdx.org/licenses/EUPL-1.1",
+    "codeRepository": "https://atlas.cern/updates/press-statement/13-tev-open-data.git",
+    "dateCreated": "2020-01-01",
+    "datePublished": "2020-02-10",
+    "dateModified": "2021-09-01",
+    "downloadUrl": "https://github.com/artfisica/atlas-outreach-cpp-framework-13tev/archive/refs/tags/1.1.zip",
+    "issueTracker": "https://github.com/atlas-outreach-data-tools/atlas-outreach-cpp-framework-13tev/issues",
+    "name": "ATLAS Open Data 13 TeV analysis C++ framework",
+    "version": "1.1",
+    "description": "A repository with 12 high energy physics analysis examples using the ATLAS Open Data 13 TeV dataset released in 2020. It is written in C++ and some bash scripts.\n* Documentation of the code: http://opendata.atlas.cern/release/2020/documentation/frameworks/cpp.html\n* Documentation of the analysis: http://opendata.atlas.cern/release/2020/documentation/physics/intro.html",
+    "releaseNotes": "Code with License\naccount that is hosting the record in Zenodo",
+    "developmentStatus": "active",
+    "isPartOf": "http://opendata.atlas.cern",
+    "referencePublication": "https://doi.org/10.5281/zenodo.5484047",
+    "programmingLanguage": [
+        "C++",
+        "bash"
+    ],
+    "operatingSystem": [
+        "Linux",
+        "Mac OS"
+    ],
+    "softwareRequirements": [
+        "Python",
+        "ROOT"
+    ],
+    "relatedLink": [
+        "http://opendata.atlas.cern/release/2020/documentation/frameworks/cpp.html",
+        "http://opendata.atlas.cern/release/2020/documentation/physics/intro.html"
+    ],
+    "author": [
+        {
+            "@type": "Person",
+            "@id": "https://orcid.org/0000-0003-4749-5250",
+            "givenName": "Leonid",
+            "familyName": "Serkin",
+            "email": "Leonid.Serkin@cern.ch",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "INFN Gruppo Collegato di Udine and ICTP, Trieste"
+            }
+        },
+        {
+            "@type": "Person",
+            "@id": "https://orcid.org/0000-0001-8241-7835",
+            "givenName": "Arturo",
+            "familyName": "Sanchez Pineda",
+            "email": "arturos@cern.ch",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "LAPP, Univ. Grenoble Alpes, Univ. Savoie Mont Blanc, CNRS/IN2P3, Annecy"
+            }
+        }
+    ],
+    "contributor": [
+        {
+            "@type": "Person",
+            "@id": "https://orcid.org/0000-0002-4259-018X",
+            "givenName": "Meirin Oan",
+            "familyName": "Evans",
+            "email": "meirin.oan.evans@cern.ch",
+            "affiliation": {
+                "@type": "Organization",
+                "name": "University of Sussex"
+            }
+        }
+    ]
+}
