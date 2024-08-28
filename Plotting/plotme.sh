@@ -6,7 +6,7 @@
 ########################################
 
 # names of 12 analyses
-analysisCollection=("WBosonAnalysis" "ZBosonAnalysis" "TTbarAnalysis" "SingleTopAnalysis" "WZDiBosonAnalysis" "ZZDiBosonAnalysis" "HWWAnalysis" "HZZAnalysis" "ZTauTauAnalysis" "HyyAnalysis" "SUSYAnalysis" "ZPrimeBoostedAnalysis")
+analysisCollection=("WBosonAnalysis" "ZBosonAnalysis" "TTbarAnalysis" "SingleTopAnalysis" "WZDiBosonAnalysis" "ZZDiBosonAnalysis" "HWWAnalysis" "HZZAnalysis" "ZTauTauAnalysis" "HyyAnalysis" "SUSYAnalysis" "ZPrimeBoostedAnalysis" "TTbarDilepAnalysis")
 
 # location of their outputs
 outputpath=("../Analysis/WBosonAnalysis/Output_WBosonAnalysis" \
@@ -21,6 +21,7 @@ outputpath=("../Analysis/WBosonAnalysis/Output_WBosonAnalysis" \
 "../Analysis/HyyAnalysis/Output_HyyAnalysis" \
 "../Analysis/SUSYAnalysis/Output_SUSYAnalysis" \
 "../Analysis/ZPrimeBoostedAnalysis/Output_ZPrimeBoostedAnalysis"
+"../Analysis/TTbarDilepAnalysis/Output_TTbarDilepAnalysis"
 )
 
 # begin
@@ -38,11 +39,12 @@ echo '8 = ZTauTauAnalysis'
 echo '9 = HyyAnalysis'
 echo '10 = SUSYAnalysis'
 echo '11 = ZPrimeBoostedAnalysis'
+echo '12 = TTbarDilepAnalysis'
 
 read choice
 
 # check choices
-if (( ($choice == 0) || ($choice == 1) || ($choice == 2) || ($choice == 3) ||($choice == 4) ||($choice == 5) ||($choice == 6) || ($choice == 7) || ($choice == 8) || ($choice == 9) ||($choice == 10) ||($choice == 11) )) ; then
+if (( ($choice == 0) || ($choice == 1) || ($choice == 2) || ($choice == 3) ||($choice == 4) ||($choice == 5) ||($choice == 6) || ($choice == 7) || ($choice == 8) || ($choice == 9) ||($choice == 10) || ($choice == 11) || ($choice == 12) )) ; then
     
   analysisName=${analysisCollection[${choice}]}
   echo "Now, choose the location of the ${analysisName} output!"
@@ -57,7 +59,7 @@ if (( ($choice == 0) || ($choice == 1) || ($choice == 2) || ($choice == 3) ||($c
     root -l -b << EOF
 	.L Plotting.cxx+
     	Plotting *m=new Plotting();
-	m->SetLumi(10064);
+	m->SetLumi(36000);
 	m->SetOption("$analysisName");
     	m->SetInputLocation("$analysisPath")
     	m->run()
