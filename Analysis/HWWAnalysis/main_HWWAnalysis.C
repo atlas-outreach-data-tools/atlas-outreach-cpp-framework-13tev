@@ -10,12 +10,13 @@ void main_HWWAnalysis(int proof = 0, int option= 0)
   // path to your local directory *or* URL, please change the default one!
   /* Local path example */
   //TString path = "/eos/project/a/atlas-outreach/projects/open-data/OpenDataTuples/renamedLargeRJets/2lep/";
-
+  
   /* The URL to the ATLAS Open Data website repository */
   //TString path = "https://atlas-opendata.web.cern.ch/atlas-opendata/samples/2020/2lep/";
   
   /* The URL to the CERN Open Data portal repository */
-  TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/2lep/";
+  //TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/2lep/";
+  TString path = "/eos/user/g/garciarm/ntuple-production-samples/ntuples-open-data/";
   
   /* The XROOTD path to the CERN Open Data portal repository */
   //TString path = "root://eospublic.cern.ch//eos/opendata/atlas/OutreachDatasets/2020-01-22/2lep/";
@@ -34,184 +35,322 @@ void main_HWWAnalysis(int proof = 0, int option= 0)
   
   
   if (option==11 || option==0){
-    TChain* chain_dataA = new TChain("mini");
-    chain_dataA->AddFile(path+"Data/data_A.2lep.root");
-    //if (proof == 1)  chain_dataA->SetProof();
-    chain_dataA->Process("HWWAnalysis.C+","data");
+    
+    //data15
+    TChain* chain_data15_A = new TChain("analysis");
+    chain_data15_A->AddFile(path+"ntuples-data-samples/data15_A.root");
+    //if (proof == 1)  chain_data15->SetProof();
+    chain_data15_A->Process("HWWAnalysis.C+","data15_A");
+    
+    TChain* chain_data15_B = new TChain("analysis");
+    chain_data15_B->AddFile(path+"ntuples-data-samples/data15_B.root");
+    //if (proof == 1)  chain_data15->SetProof();
+    chain_data15_B->Process("HWWAnalysis.C+","data15_B");
   }
   
   if (option==12 || option==0){
-    TChain* chain_dataB = new TChain("mini");
-    chain_dataB->AddFile(path+"Data/data_B.2lep.root");
-    //if (proof == 1)  chain_dataB->SetProof();
-    chain_dataB->Process("HWWAnalysis.C+","data");
-  }
+
+    //data16
+    TChain* chain_data16_A = new TChain("analysis");
+    chain_data16_A->AddFile(path+"ntuples-data-samples/data16_A.root");
+    //if (proof == 1)  chain_data16_A->SetProof();
+    chain_data16_A->Process("HWWAnalysis.C+","data16_A");
   
-  if (option==13 || option==0){
-    TChain* chain_dataC = new TChain("mini");
-    chain_dataC->AddFile(path+"Data/data_C.2lep.root");
-    //if (proof == 1)  chain_dataC->SetProof();
-    chain_dataC->Process("HWWAnalysis.C+","data");
-  }
+    TChain* chain_data16_B = new TChain("analysis");
+    chain_data16_B->AddFile(path+"ntuples-data-samples/data16_B.root");
+    //if (proof == 1)  chain_data16_B->SetProof();
+    chain_data16_B->Process("HWWAnalysis.C+","data16_B");
   
-  if (option==14 || option==0){
-    TChain* chain_dataD = new TChain("mini");
-    chain_dataD->AddFile(path+"Data/data_D.2lep.root");
-    //if (proof == 1)  chain_dataD->SetProof();
-    chain_dataD->Process("HWWAnalysis.C+","data");
-  }
-   
+    TChain* chain_data16_C = new TChain("analysis");
+    chain_data16_C->AddFile(path+"ntuples-data-samples/data16_C.root");
+    //if (proof == 1)  chain_data16_C->SetProof();
+    chain_data16_C->Process("HWWAnalysis.C+","data16_C");
+  
+    TChain* chain_data16_D = new TChain("analysis");
+    chain_data16_D->AddFile(path+"ntuples-data-samples/data16_D.root");
+    //if (proof == 1)  chain_data16_D->SetProof();
+    chain_data16_D->Process("HWWAnalysis.C+","data16_D");
+    
+    TChain* chain_data16_E = new TChain("analysis");
+    chain_data16_E->AddFile(path+"ntuples-data-samples/data16_E.root");
+    //if (proof == 1)  chain_data16_E->SetProof();
+    chain_data16_E->Process("HWWAnalysis.C+","data16_E");
+  
+    TChain* chain_data16_F = new TChain("analysis");
+    chain_data16_F->AddFile(path+"ntuples-data-samples/data16_F.root");
+    //if (proof == 1)  chain_data16_F->SetProof();
+    chain_data16_F->Process("HWWAnalysis.C+","data16_F");
+  
+    TChain* chain_data16_G = new TChain("analysis");
+    chain_data16_G->AddFile(path+"ntuples-data-samples/data16_G.root");
+    //if (proof == 1)  chain_data16_G->SetProof();
+    chain_data16_G->Process("HWWAnalysis.C+","data16_G");
+  
+    TChain* chain_data16_H = new TChain("analysis");
+    chain_data16_H->AddFile(path+"ntuples-data-samples/data16_H.root");
+    //if (proof == 1)  chain_data16_H->SetProof();
+    chain_data16_H->Process("HWWAnalysis.C+","data16_H");
+  }   
   
   //////////////////////  MC samples
   
   if (option==2 || option==0)   {
     
     // diboson
-    TChain* chain_ZqqZll = new TChain("mini");
-    chain_ZqqZll->AddFile(path+"MC/mc_363356.ZqqZll.2lep.root");
-    //if (proof == 1)  chain_ZqqZll->SetProof();
-    chain_ZqqZll->Process("HWWAnalysis.C+","ZqqZll");
     
-    TChain* chain_WqqZll = new TChain("mini");
-    chain_WqqZll->AddFile(path+"MC/mc_363358.WqqZll.2lep.root");
-    //if (proof == 1)  chain_WqqZll->SetProof();
-    chain_WqqZll->Process("HWWAnalysis.C+","WqqZll");
+    TChain* chain_WlvWqq = new TChain("analysis");
+    chain_WlvWqq->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700488.Sh_2211_WlvWqq.root");
+    //if (proof == 1)  chain_WlvWqq->SetProof();
+    chain_WlvWqq->Process("HWWAnalysis.C+","Sh_2211_WlvWqq");
     
-    TChain* chain_WpqqWmlv = new TChain("mini");
-    chain_WpqqWmlv->AddFile(path+"MC/mc_363359.WpqqWmlv.2lep.root");
-    // if (proof == 1)  chain_WpqqWmlv->SetProof();
-    chain_WpqqWmlv->Process("HWWAnalysis.C+","WpqqWmlv");
-    
-    TChain* chain_WplvWmqq = new TChain("mini");
-    chain_WplvWmqq->AddFile(path+"MC/mc_363360.WplvWmqq.2lep.root");
-    //if (proof == 1)  chain_WplvWmqq->SetProof();
-    chain_WplvWmqq->Process("HWWAnalysis.C+","WplvWmqq");
-    
-    TChain* chain_WlvZqq = new TChain("mini");
-    chain_WlvZqq->AddFile(path+"MC/mc_363489.WlvZqq.2lep.root");
+    TChain* chain_WlvZqq = new TChain("analysis");
+    chain_WlvZqq->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700489.Sh_2211_WlvZqq.root");
     //if (proof == 1)  chain_WlvZqq->SetProof();
-    chain_WlvZqq->Process("HWWAnalysis.C+","WlvZqq");
+    chain_WlvZqq->Process("HWWAnalysis.C+","Sh_2211_WlvZqq");
+
+    TChain* chain_WlvZbb = new TChain("analysis");
+    chain_WlvZbb->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700490.Sh_2211_WlvZbb.root");
+    //if (proof == 1)  chain_WlvZbb->SetProof();
+    chain_WlvZbb->Process("HWWAnalysis.C+","Sh_2211_WlvZbb");   
+  
+    TChain* chain_ZqqZll = new TChain("analysis");
+    chain_ZqqZll->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700493.Sh_2211_ZqqZll.root");
+    //if (proof == 1)  chain_ZqqZll->SetProof();
+    chain_ZqqZll->Process("HWWAnalysis.C+","Sh_2211_ZqqZll");
+
+    TChain* chain_ZbbZll = new TChain("analysis");
+    chain_ZbbZll->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700494.Sh_2211_ZbbZll.root");
+    //if (proof == 1)  chain_ZbbZll->SetProof();
+    chain_ZbbZll->Process("HWWAnalysis.C+","Sh_2211_ZbbZll");
+
+    TChain* chain_ZqqZvv = new TChain("analysis");
+    chain_ZqqZvv->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700495.Sh_2211_ZqqZvv.root");
+    //if (proof == 1)  chain_ZqqZvv->SetProof();
+    chain_ZqqZvv->Process("HWWAnalysis.C+","Sh_2211_ZqqZvv");
+    
+    TChain* chain_ZbbZvv = new TChain("analysis");
+    chain_ZbbZvv->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700496.Sh_2211_ZbbZvv.root");
+    //if (proof == 1)  chain_ZbbZvv->SetProof();
+    chain_ZbbZvv->Process("HWWAnalysis.C+","Sh_2211_ZbbZvv");
+
+    TChain* chain_ggZllZqq = new TChain("analysis");
+    chain_ggZllZqq->AddFile(path+"ntuples-mc-samples/mc20_13TeV.364302.Sherpa_222_NNPDF30NNLO_ggZllZqq.root");
+    //if (proof == 1)  chain_ggZllZqq->SetProof();
+    chain_ggZllZqq->Process("HWWAnalysis.C+","Sherpa_222_NNPDF30NNLO_ggZllZqq");
+
+    TChain* chain_ggZvvZqq = new TChain("analysis");
+    chain_ggZvvZqq->AddFile(path+"ntuples-mc-samples/mc20_13TeV.364303.Sherpa_222_NNPDF30NNLO_ggZvvZqq.root");
+    //if (proof == 1)  chain_ggZvvZqq->SetProof();
+    chain_ggZvvZqq->Process("HWWAnalysis.C+","Sherpa_222_NNPDF30NNLO_ggZvvZqq");
+
+    TChain* chain_ggWmlvWpqq = new TChain("analysis");
+    chain_ggWmlvWpqq->AddFile(path+"ntuples-mc-samples/mc20_13TeV.364304.Sherpa_222_NNPDF30NNLO_ggWmlvWpqq.root");
+    //if (proof == 1)  chain_ggWmlvWpqq->SetProof();
+    chain_ggWmlvWpqq->Process("HWWAnalysis.C+","Sherpa_222_NNPDF30NNLO_ggWmlvWpqq");
+
+    TChain* chain_ggWplvWmqq = new TChain("analysis");
+    chain_ggWplvWmqq->AddFile(path+"ntuples-mc-samples/mc20_13TeV.364305.Sherpa_222_NNPDF30NNLO_ggWplvWmqq.root");
+    //if (proof == 1)  chain_ggWplvWmqq->SetProof();
+    chain_ggWplvWmqq->Process("HWWAnalysis.C+","Sherpa_222_NNPDF30NNLO_ggWplvWmqq");
+    
   }
 
   if (option==3 || option==0)   {
 
-    TChain* chain_llll = new TChain("mini");
-    chain_llll->AddFile(path+"MC/mc_363490.llll.2lep.root");
+    TChain* chain_llll = new TChain("analysis");
+    chain_llll->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700600.Sh_2212_llll.root");
     //if (proof == 1)  chain_llll->SetProof();
-    chain_llll->Process("HWWAnalysis.C+","llll");
+    chain_llll->Process("HWWAnalysis.C+","Sh_2212_llll");
     
-    TChain* chain_lllv = new TChain("mini");
-    chain_lllv->AddFile(path+"MC/mc_363491.lllv.2lep.root");
+    TChain* chain_lllv = new TChain("analysis");
+    chain_lllv->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700601.Sh_2212_lllv.root");
     //if (proof == 1)  chain_lllv->SetProof();
-    chain_lllv->Process("HWWAnalysis.C+","lllv");
+    chain_lllv->Process("HWWAnalysis.C+","Sh_2212_lllv");
     
-    TChain* chain_llvv = new TChain("mini");
-    chain_llvv->AddFile(path+"MC/mc_363492.llvv.2lep.root");
-    //if (proof == 1)  chain_llvv->SetProof();
-    chain_llvv->Process("HWWAnalysis.C+","llvv");
-    
-    TChain* chain_lvvv = new TChain("mini");
-    chain_lvvv->AddFile(path+"MC/mc_363493.lvvv.2lep.root");
+    TChain* chain_llvv_os = new TChain("analysis");
+    chain_llvv_os->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700602.Sh_2212_llvv_os.root");
+    //if (proof == 1)  chain_llvv_os->SetProof();
+    chain_llvv_os->Process("HWWAnalysis.C+","Sh_2212_llvv_os");
+
+    TChain* chain_llvv_ss = new TChain("analysis");
+    chain_llvv_ss->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700603.Sh_2212_llvv_ss.root");
+    //if (proof == 1)  chain_llvv_ss->SetProof();
+    chain_llvv_ss->Process("HWWAnalysis.C+","Sh_2212_llvv_ss");
+
+    TChain* chain_lvvv = new TChain("analysis");
+    chain_lvvv->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700604.Sh_2212_lvvv.root");
     //if (proof == 1)  chain_lvvv->SetProof();
-    chain_lvvv->Process("HWWAnalysis.C+","lvvv");
+    chain_lvvv->Process("HWWAnalysis.C+","Sh_2212_lvvv");
+
+    TChain* chain_vvvv = new TChain("analysis");
+    chain_vvvv->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700605.Sh_2212_vvvv.root");
+    //if (proof == 1)  chain_vvvv->SetProof();
+    chain_vvvv->Process("HWWAnalysis.C+","Sh_2212_vvvv");
     
     //single top
-    TChain* chain_single_top_tchan = new TChain("mini");
-    chain_single_top_tchan->AddFile(path+"MC/mc_410011.single_top_tchan.2lep.root");
-    //if (proof == 1)  chain_single_top_tchan->SetProof();
-    chain_single_top_tchan->Process("HWWAnalysis.C+","single_top_tchan");
     
-    TChain* chain_single_antitop_tchan = new TChain("mini");
-    chain_single_antitop_tchan->AddFile(path+"MC/mc_410012.single_antitop_tchan.2lep.root");
-    //if (proof == 1)  chain_single_antitop_tchan->SetProof();
-    chain_single_antitop_tchan->Process("HWWAnalysis.C+","single_antitop_tchan");
-    
-    TChain* chain_single_top_schan = new TChain("mini");
-    chain_single_top_schan->AddFile(path+"MC/mc_410025.single_top_schan.2lep.root");
-    //if (proof == 1)  chain_single_top_schan->SetProof();
-    chain_single_top_schan->Process("HWWAnalysis.C+","single_top_schan");
-    
-    TChain* chain_single_antitop_schan = new TChain("mini");
-    chain_single_antitop_schan->AddFile(path+"MC/mc_410026.single_antitop_schan.2lep.root");
-    //if (proof == 1)  chain_single_antitop_schan->SetProof();
-    chain_single_antitop_schan->Process("HWWAnalysis.C+","single_antitop_schan");
-    
-    TChain* chain_single_top_wtchan = new TChain("mini");
-    chain_single_top_wtchan->AddFile(path+"MC/mc_410013.single_top_wtchan.2lep.root");
-    //if (proof == 1)  chain_single_top_wtchan->SetProof();
-    chain_single_top_wtchan->Process("HWWAnalysis.C+","single_top_wtchan");
-    
-    TChain* chain_single_antitop_wtchan = new TChain("mini");
-    chain_single_antitop_wtchan->AddFile(path+"MC/mc_410014.single_antitop_wtchan.2lep.root");
-    //if (proof == 1)  chain_single_antitop_wtchan->SetProof();
-    chain_single_antitop_wtchan->Process("HWWAnalysis.C+","single_antitop_wtchan");
+    TChain* chain_Wt_DR_dilepton_top = new TChain("analysis");
+    chain_Wt_DR_dilepton_top->AddFile(path+"ntuples-mc-samples/mc20_13TeV.410648.PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top.root");
+    //if (proof == 1)  chain_Wt_DR_dilepton_top->SetProof();
+    chain_Wt_DR_dilepton_top->Process("HWWAnalysis.C+","PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top");
 
- }
+    TChain* chain_Wt_DR_dilepton_antitop = new TChain("analysis");
+    chain_Wt_DR_dilepton_antitop->AddFile(path+"ntuples-mc-samples/mc20_13TeV.410649.PowhegPythia8EvtGen_A14_Wt_DR_dilepton_antitop.root");
+    //if (proof == 1)  chain_Wt_DR_dilepton_antitop->SetProof();
+    chain_Wt_DR_dilepton_antitop->Process("HWWAnalysis.C+","PowhegPythia8EvtGen_A14_Wt_DR_dilepton_antitop");
+
+    TChain* chain_Wt_DR_inclusive_top = new TChain("analysis");
+    chain_Wt_DR_inclusive_top->AddFile(path+"ntuples-mc-samples/mc20_13TeV.410646.PowhegPythia8EvtGen_A14_Wt_DR_inclusive_top.root");
+    //if (proof == 1)  chain_Wt_DR_inclusive_top->SetProof();
+    chain_Wt_DR_inclusive_top->Process("HWWAnalysis.C+","PowhegPythia8EvtGen_A14_Wt_DR_inclusive_top");
+
+    TChain* chain_Wt_DR_inclusive_antitop = new TChain("analysis");
+    chain_Wt_DR_inclusive_antitop->AddFile(path+"ntuples-mc-samples/mc20_13TeV.410647.PowhegPythia8EvtGen_A14_Wt_DR_inclusive_antitop.root");
+    //if (proof == 1)  chain_Wt_DR_inclusive_antitop->SetProof();
+    chain_Wt_DR_inclusive_antitop->Process("HWWAnalysis.C+","PowhegPythia8EvtGen_A14_Wt_DR_inclusive_antitop");
+
+    TChain* chain_tchan_BW50_lept_top = new TChain("analysis");
+    chain_tchan_BW50_lept_top->AddFile(path+"ntuples-mc-samples/mc20_13TeV.410658.PhPy8EG_A14_tchan_BW50_lept_top.root");
+    //if (proof == 1)  chain_tchan_BW50_lept_top->SetProof();
+    chain_tchan_BW50_lept_top->Process("HWWAnalysis.C+","PhPy8EG_A14_tchan_BW50_lept_top");
+
+    TChain* chain_tchan_BW50_lept_antitop = new TChain("analysis");
+    chain_tchan_BW50_lept_antitop->AddFile(path+"ntuples-mc-samples/mc20_13TeV.410659.PhPy8EG_A14_tchan_BW50_lept_antitop.root");
+    //if (proof == 1)  chain_tchan_BW50_lept_antitop->SetProof();
+    chain_tchan_BW50_lept_antitop->Process("HWWAnalysis.C+","PhPy8EG_A14_tchan_BW50_lept_antitop");
+  }
 
 
- if (option==4 || option==0)   {
+  if (option==4 || option==0)   {
 
     // Z+jets inclusive
- 
-    TChain* chain_Zee = new TChain("mini");
-    chain_Zee->AddFile(path+"MC/mc_361106.Zee.2lep.root");
-    //if (proof == 1)  chain_Zee->SetProof();
-    chain_Zee->Process("HWWAnalysis.C+","Zee");
+    TChain* chain_Zee_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Zee_maxHTpTV2_BFilter->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700320.Sh_2211_Zee_maxHTpTV2_BFilter.root");
+    //if (proof == 1)  chain_Zee_maxHTpTV2_BFilter->SetProof();
+    chain_Zee_maxHTpTV2_BFilter->Process("HWWAnalysis.C+","Sh_2211_Zee_maxHTpTV2_BFilter");
+
+    TChain* chain_Zee_maxHTpTV2_CFilterBVeto = new TChain("analysis");
+    chain_Zee_maxHTpTV2_CFilterBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700321.Sh_2211_Zee_maxHTpTV2_CFilterBVeto.root");
+    //if (proof == 1)  chain_Zee_maxHTpTV2_CFilterBVeto->SetProof();
+    chain_Zee_maxHTpTV2_CFilterBVeto->Process("HWWAnalysis.C+","Sh_2211_Zee_maxHTpTV2_CFilterBVeto");
+
+    TChain* chain_Zee_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Zee_maxHTpTV2_CVetoBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700322.Sh_2211_Zee_maxHTpTV2_CVetoBVeto.root");
+    //if (proof == 1)  chain_Zee_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Zee_maxHTpTV2_CVetoBVeto->Process("HWWAnalysis.C+","Sh_2211_Zee_maxHTpTV2_CVetoBVeto");
+
+    TChain* chain_Zmumu_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Zmumu_maxHTpTV2_BFilter->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700323.Sh_2211_Zmumu_maxHTpTV2_BFilter.root");
+    //if (proof == 1)  chain_Zmumu_maxHTpTV2_BFilter->SetProof();
+    chain_Zmumu_maxHTpTV2_BFilter->Process("HWWAnalysis.C+","Sh_2211_Zmumu_maxHTpTV2_BFilter");
+
+    TChain* chain_Zmumu_maxHTpTV2_CFilterBVeto = new TChain("analysis");
+    chain_Zmumu_maxHTpTV2_CFilterBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700324.Sh_2211_Zmumu_maxHTpTV2_CFilterBVeto.root");
+    //if (proof == 1)  chain_Zmumu_maxHTpTV2_CFilterBVeto->SetProof();
+    chain_Zmumu_maxHTpTV2_CFilterBVeto->Process("HWWAnalysis.C+","Sh_2211_Zmumu_maxHTpTV2_CFilterBVeto");
+
+    TChain* chain_Zmumu_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Zmumu_maxHTpTV2_CVetoBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700325.Sh_2211_Zmumu_maxHTpTV2_CVetoBVeto.root");
+    //if (proof == 1)  chain_Zmumu_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Zmumu_maxHTpTV2_CVetoBVeto->Process("HWWAnalysis.C+","Sh_2211_Zmumu_maxHTpTV2_CVetoBVeto");
+
+    TChain* chain_Ztautau_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Ztautau_maxHTpTV2_BFilter->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700792.Sh_2214_Ztautau_maxHTpTV2_BFilter.root");
+    //if (proof == 1)  chain_Ztautau_maxHTpTV2_BFilter->SetProof();
+    chain_Ztautau_maxHTpTV2_BFilter->Process("HWWAnalysis.C+","Sh_2214_Ztautau_maxHTpTV2_BFilter");
+    
+    TChain* chain_Ztautau_maxHTpTV2_CFilterBVeto = new TChain("analysis");
+    chain_Ztautau_maxHTpTV2_CFilterBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700793.Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto.root");
+    //if (proof == 1)  chain_Ztautau_maxHTpTV2_CFilterBVeto->SetProof();
+    chain_Ztautau_maxHTpTV2_CFilterBVeto->Process("HWWAnalysis.C+","Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto");
+
+    TChain* chain_Ztautau_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Ztautau_maxHTpTV2_CVetoBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700794.Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto.root");
+    //if (proof == 1)  chain_Ztautau_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Ztautau_maxHTpTV2_CVetoBVeto->Process("HWWAnalysis.C+","Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto");
+
+    // W+jets
+    
+    TChain* chain_Wenu_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Wenu_maxHTpTV2_BFilter->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700338.Sh_2211_Wenu_maxHTpTV2_BFilter.root");
+    //if (proof == 1)  chain_Wenu_maxHTpTV2_BFilter->SetProof();
+    chain_Wenu_maxHTpTV2_BFilter->Process("HWWAnalysis.C+","Sh_2211_Wenu_maxHTpTV2_BFilter");
+
+    TChain* chain_Wenu_maxHTpTV2_CFilterBVeto = new TChain("analysis");
+    chain_Wenu_maxHTpTV2_CFilterBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700339.Sh_2211_Wenu_maxHTpTV2_CFilterBVeto.root");
+    //if (proof == 1)  chain_Wenu_maxHTpTV2_CFilterBVeto->SetProof();
+    chain_Wenu_maxHTpTV2_CFilterBVeto->Process("HWWAnalysis.C+","Sh_2211_Wenu_maxHTpTV2_CFilterBVeto");
+
+    TChain* chain_Wenu_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Wenu_maxHTpTV2_CVetoBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700340.Sh_2211_Wenu_maxHTpTV2_CVetoBVeto.root");
+    //if (proof == 1)  chain_Wenu_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Wenu_maxHTpTV2_CVetoBVeto->Process("HWWAnalysis.C+","Sh_2211_Wenu_maxHTpTV2_CVetoBVeto");
+
+    TChain* chain_Wmunu_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Wmunu_maxHTpTV2_BFilter->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700341.Sh_2211_Wmunu_maxHTpTV2_BFilter.root");
+    //if (proof == 1)  chain_Wmunu_maxHTpTV2_BFilter->SetProof();
+    chain_Wmunu_maxHTpTV2_BFilter->Process("HWWAnalysis.C+","Sh_2211_Wmunu_maxHTpTV2_BFilter");
+
+    TChain* chain_Wmunu_maxHTpTV2_CFilterBVeto = new TChain("analysis");
+    chain_Wmunu_maxHTpTV2_CFilterBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700342.Sh_2211_Wmunu_maxHTpTV2_CFilterBVeto.root");
+    //if (proof == 1)  chain_Wmunu_maxHTpTV2_CFilterBVeto->SetProof();
+    chain_Wmunu_maxHTpTV2_CFilterBVeto->Process("HWWAnalysis.C+","Sh_2211_Wmunu_maxHTpTV2_CFilterBVeto");
+
+    TChain* chain_Wmunu_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Wmunu_maxHTpTV2_CVetoBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700343.Sh_2211_Wmunu_maxHTpTV2_CVetoBVeto.root");
+    //if (proof == 1)  chain_Wmunu_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Wmunu_maxHTpTV2_CVetoBVeto->Process("HWWAnalysis.C+","Sh_2211_Wmunu_maxHTpTV2_CVetoBVeto");
+
+    TChain* chain_Wtaunu_L_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Wtaunu_L_maxHTpTV2_BFilter->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700344.Sh_2211_Wtaunu_L_maxHTpTV2_BFilter.root");
+    //if (proof == 1)  chain_Wtaunu_L_maxHTpTV2_BFilter->SetProof();
+    chain_Wtaunu_L_maxHTpTV2_BFilter->Process("HWWAnalysis.C+","Sh_2211_Wtaunu_L_maxHTpTV2_BFilter");
+
+    TChain* chain_Wtaunu_L_maxHTpTV2_CFilterBVeto = new TChain("analysis");
+    chain_Wtaunu_L_maxHTpTV2_CFilterBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700345.Sh_2211_Wtaunu_L_maxHTpTV2_CFilterBVeto.root");
+    //if (proof == 1)  chain_Wtaunu_L_maxHTpTV2_CFilterBVeto->SetProof();
+    chain_Wtaunu_L_maxHTpTV2_CFilterBVeto->Process("HWWAnalysis.C+","Sh_2211_Wtaunu_L_maxHTpTV2_CFilterBVeto");
+
+    TChain* chain_Wtaunu_L_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Wtaunu_L_maxHTpTV2_CVetoBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700346.Sh_2211_Wtaunu_L_maxHTpTV2_CVetoBVeto.root");
+    //if (proof == 1)  chain_Wtaunu_L_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Wtaunu_L_maxHTpTV2_CVetoBVeto->Process("HWWAnalysis.C+","Sh_2211_Wtaunu_L_maxHTpTV2_CVetoBVeto");
+
+    TChain* chain_Wtaunu_H_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Wtaunu_H_maxHTpTV2_BFilter->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700347.Sh_2211_Wtaunu_H_maxHTpTV2_BFilter.root");
+    //if (proof == 1)  chain_Wtaunu_H_maxHTpTV2_BFilter->SetProof();
+    chain_Wtaunu_H_maxHTpTV2_BFilter->Process("HWWAnalysis.C+","Sh_2211_Wtaunu_H_maxHTpTV2_BFilter");
+
+    TChain* chain_Wtaunu_H_maxHTpTV2_CFilterBVeto = new TChain("analysis");
+    chain_Wtaunu_H_maxHTpTV2_CFilterBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700348.Sh_2211_Wtaunu_H_maxHTpTV2_CFilterBVeto.root");
+    //if (proof == 1)  chain_Wtaunu_H_maxHTpTV2_CFilterBVeto->SetProof();
+    chain_Wtaunu_H_maxHTpTV2_CFilterBVeto->Process("HWWAnalysis.C+","Sh_2211_Wtaunu_H_maxHTpTV2_CFilterBVeto");
+
+    TChain* chain_Wtaunu_H_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Wtaunu_H_maxHTpTV2_CVetoBVeto->AddFile(path+"ntuples-mc-samples/mc20_13TeV.700349.Sh_2211_Wtaunu_H_maxHTpTV2_CVetoBVeto.root");
+    //if (proof == 1)  chain_Wtaunu_H_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Wtaunu_H_maxHTpTV2_CVetoBVeto->Process("HWWAnalysis.C+","Sh_2211_Wtaunu_H_maxHTpTV2_CVetoBVeto");
+
  }
 
- if (option==5 || option==0)   {
-
-    TChain* chain_Zmumu = new TChain("mini");
-    chain_Zmumu->AddFile(path+"MC/mc_361107.Zmumu.2lep.root");
-    //if (proof == 1)  chain_Zmumu->SetProof();
-    chain_Zmumu->Process("HWWAnalysis.C+","Zmumu");
- }
-
-
- if (option==6 || option==0)   {
-
-    TChain* chain_Ztautau = new TChain("mini");
-    chain_Ztautau->AddFile(path+"MC/mc_361108.Ztautau.2lep.root");
-    //if (proof == 1)  chain_Ztautau->SetProof();
-    chain_Ztautau->Process("HWWAnalysis.C+","Ztautau");
+  if (option==5 || option==0)   {
 
     //ttbar
-    TChain* chain_ttbar_lep = new TChain("mini");
-    chain_ttbar_lep->AddFile(path+"MC/mc_410000.ttbar_lep.2lep.root");
-    //if (proof == 1)  chain_ttbar_lep->SetProof();
-    chain_ttbar_lep->Process("HWWAnalysis.C+","ttbar_lep");
-    
-  // W+jets inclusive
-  TChain* chain_Wplusenu = new TChain("mini");
-  chain_Wplusenu->AddFile(path+"MC/mc_361100.Wplusenu.2lep.root");
-  //if (proof == 1)  chain_Wplusenu->SetProof();
-  chain_Wplusenu->Process("HWWAnalysis.C+","Wplusenu");
+    /*
+      TChain* chain_ttbar_nonallhad = new TChain("analysis");
+      chain_ttbar_nonallhad->AddFile(path+"ntuples-mc-samples/mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.root");
+      //if (proof == 1)  chain_ttbar_nonallhad->SetProof();
+      chain_ttbar_nonallhad->Process("HWWAnalysis.C+","PhPy8EG_A14_ttbar_hdamp258p75_nonallhad");
+    */
+    TChain* chain_ttbar_dil = new TChain("analysis");
+    chain_ttbar_dil->AddFile(path+"ntuples-mc-samples/mc20_13TeV.410472.PhPy8EG_A14_ttbar_hdamp258p75_dil.root");
+    //if (proof == 1)  chain_ttbar_dil->SetProof();
+    chain_ttbar_dil->Process("HWWAnalysis.C+","PhPy8EG_A14_ttbar_hdamp258p75_dil");
+  }
+  
 
-  TChain* chain_Wplusmunu = new TChain("mini");
-  chain_Wplusmunu->AddFile(path+"MC/mc_361101.Wplusmunu.2lep.root");
-  //if (proof == 1)  chain_Wplusmunu->SetProof();
-  chain_Wplusmunu->Process("HWWAnalysis.C+","Wplusmunu");
-
-  TChain* chain_Wplustaunu = new TChain("mini");
-  chain_Wplustaunu->AddFile(path+"MC/mc_361102.Wplustaunu.2lep.root");
-  //if (proof == 1)  chain_Wplustaunu->SetProof();
-  chain_Wplustaunu->Process("HWWAnalysis.C+","Wplustaunu");
-
-  TChain* chain_Wminusenu = new TChain("mini");
-  chain_Wminusenu->AddFile(path+"MC/mc_361103.Wminusenu.2lep.root");
-  //if (proof == 1)  chain_Wminusenu->SetProof();
-  chain_Wminusenu->Process("HWWAnalysis.C+","Wminusenu");
-
-  TChain* chain_Wminusmunu = new TChain("mini");
-  chain_Wminusmunu->AddFile(path+"MC/mc_361104.Wminusmunu.2lep.root");
-  //if (proof == 1)  chain_Wminusmunu->SetProof();
-  chain_Wminusmunu->Process("HWWAnalysis.C+","Wminusmunu");
-
-  TChain* chain_Wminustaunu = new TChain("mini");
-  chain_Wminustaunu->AddFile(path+"MC/mc_361105.Wminustaunu.2lep.root");
-  //if (proof == 1)  chain_Wminustaunu->SetProof();
-  chain_Wminustaunu->Process("HWWAnalysis.C+","Wminustaunu");
-
+ if (option==6 || option==0)   {
+   /*
   // ggH
   TChain* chain_ggH125_WW = new TChain("mini");
   chain_ggH125_WW->AddFile(path+"MC/mc_345324.ggH125_WW2lep.2lep.root");
@@ -223,7 +362,7 @@ void main_HWWAnalysis(int proof = 0, int option= 0)
   chain_VBFH125_WW->AddFile(path+"MC/mc_345323.VBFH125_WW2lep.2lep.root");
   //if (proof == 1)  chain_VBFH125_WW->SetProof();
   chain_VBFH125_WW->Process("HWWAnalysis.C+","VBFH125_WW2lep");
-
+   */
 
  } // option 6
 

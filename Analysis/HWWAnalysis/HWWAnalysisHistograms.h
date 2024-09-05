@@ -57,6 +57,9 @@ void HWWAnalysis::define_histograms()
   hist_subleadlepz0   = new TH1F("hist_subleadlepz0",  "Subleading Lepton z0 impact parameter; z_{0}^{traillep} [mm]; Events / bin", 40, -1, 1);
   hist_subleadlepd0   = new TH1F("hist_subleadlepd0",  "Trailing Lepton d0 impact parameter; d_{0}^{traillep} [mm]; Events / bin", 40, -1, 1);
 
+  // Scaling factors histogram
+  hist_scale_factors = new TH1F("hist_scale_factors", "Scale Factors; SF type; SF", 4, 0, 4);
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -78,8 +81,6 @@ void HWWAnalysis::FillOutputList()
   GetOutputList()->Add(histI_dPhi_LL);
   GetOutputList()->Add(histI_dPhiLLmet);
   GetOutputList()->Add(histI_mt);
-
-
 
 
   // Add Leading Lepton histograms
@@ -113,9 +114,11 @@ void HWWAnalysis::FillOutputList()
   GetOutputList()->Add(histI_n_bjets);
 
 
-
   GetOutputList()->Add(hist_leadjet_pt);
   GetOutputList()->Add(hist_leadjet_eta);
+
+  // Scaling factors histogram
+  GetOutputList()->Add(hist_scale_factors);
 
 }
 
@@ -172,13 +175,12 @@ void HWWAnalysis::WriteHistograms()
   histI_n_jets->Write();
   histI_n_bjets->Write();
 
-
-
-
-
   hist_leadjet_pt->Write();
   hist_leadjet_eta->Write();
 
+  // Scaling factors histogram
+  hist_scale_factors->Write();
+  
 }
 
 void HWWAnalysis::FillHistogramsGlobal( double m, float w , TString s)
