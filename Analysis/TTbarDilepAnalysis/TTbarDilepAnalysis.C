@@ -106,9 +106,6 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
       int goodlep_n = 0;
       int lep_index =0;
 
-      int lep_index1 = -1;
-      int lep_index2 = -1;
-	
       for(Int_t ii=0; ii<lep_n; ii++){
         
 	TLorentzVector leptemp = TLorentzVector();  
@@ -124,7 +121,7 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 		if( lep_type->at(ii)==11 && TMath::Abs(lep_eta->at(ii))<2.47 && (TMath::Abs(lep_eta->at(ii))<1.37 || TMath::Abs(lep_eta->at(ii))>1.52) ){
 
 		  //Condition for transverse impact parameter
-		  if( TMath::Abs(lep_d0sig->at(ii) < 5) ){
+		  if( TMath::Abs(lep_d0->at(ii))/lep_d0sig->at(ii) < 5 ){
 		    if( TMath::Abs(lep_z0->at(ii)*TMath::Sin(leptemp.Theta())) < 0.5 ){    
 		      goodlep_n++;
 		      goodlep_index[lep_index] = ii;
@@ -137,7 +134,7 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 		// muon selection
 		if( lep_type->at(ii)==13 && TMath::Abs(lep_eta->at(ii))<2.5 ){
 		  //Condition for transverse impact parameter      
-		  if( TMath::Abs(lep_d0sig->at(ii) < 3) ){ 
+		  if( TMath::Abs(lep_d0->at(ii))/lep_d0sig->at(ii) < 3 ){ 
 		    if( TMath::Abs(lep_z0->at(ii)*TMath::Sin(leptemp.Theta())) < 0.5 ){	
 		      goodlep_n++;
 		      goodlep_index[lep_index] = ii;
@@ -156,19 +153,17 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 	good_lepton_n_cut++;
 	
 	//Exactly two good leptons, leading lepton with pT > 22 GeV and the subleading lepton with pT > 15 GeV
-	lep_index1 = goodlep_index[0];
-	lep_index2 = goodlep_index[1];
-	//cout << "2 Good leptons passed" << endl;
+	int lep_index1 = goodlep_index[0];
+	int lep_index2 = goodlep_index[1];
+	
 	// Cut on opposite charged leptons
 	if( lep_charge->at(lep_index1)*lep_charge->at(lep_index2) < 0){  
+
 	  OP_charge_leptons_cut++;
-	  /*
-	  if( lep_type->at(lep_index1) == lep_type->at(lep_index2)){
-	    cout << "lep index1 - lep index2 - lep type1 - lep type2: \t " << lep_index1 << "\t" << lep_index2 << "\t" << lep_type->at(lep_index1) << "\t" << lep_type->at(lep_index2) << endl;
-	  }
-	  */
+
 	  // Cut on different types of leptons
 	  if( lep_type->at(lep_index1) != lep_type->at(lep_index2)){ 
+
 	    type_leptons_cut++;
 
 	    //Preselection of good b-jets
@@ -176,42 +171,21 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 	    int goodbjet_n = 0;
 	    int goodbjet_index[jet_n];
 	    int bjet_index = 0;
-
-	    int bjet_index1=-1;
-	    int bjet_index2=-1;
-	    //cout << "Lepton type cut passed" << endl;
+	    
 	    for(Int_t ii=0; ii<jet_n; ii++){
 	      if( (jet_pt->at(ii) > 25.) && (TMath::Abs(jet_eta->at(ii)) < 2.5)){
 		  
 		// JVT cleaning
 		bool jvt_pass=true;
-	       
-		if((jet_pt->at(ii) < 60.)){
-		  //cout << "jet pT < 60 GeV" << endl;
-		  if((jet_jvt->size()!=0)){
-		    //bool jvt_pass=true;
-		    //cout << "jet_jvt size cut" << endl;
-		    if( (TMath::Abs(jet_eta->at(ii))<2.4) && (jet_jvt->at(ii)==false)){
-		      jvt_pass = false;
-		    }
-		  }
-		  else{
-		    jvt_pass = false;
-		  }
-		}
-	   
+
+		//if (jet_pt->at(i) < 60. && TMath::Abs(jet_eta->at(i)) < 2.4 && jet_jvt->at(i) < 0.59) jvt_pass=false;
+	        
 		if(jvt_pass==true){
-		  //cout << "jvt cut passed" << endl;
-		  // cut on b-tagged
-		  //if( jet_DL1d77_isBtagged->size()!=0){
-		  //if( jet_DL1d77_isBtagged->at(ii)==true ){
-		      if(TMath::Abs(jet_eta->at(ii)) < 2.5){
-			goodbjet_n++;
-			goodbjet_index[bjet_index] = ii;
-			bjet_index++;
-		      }
-		      //}
-		      //} 
+		  if( jet_btag_quantile->at(ii) >= 2 && TMath::Abs(jet_eta->at(ii)) < 2.5 ){
+		    goodbjet_n++;
+		    goodbjet_index[bjet_index] = ii;
+		    bjet_index++;
+		  } 
 		}
 	      }
 	    }
@@ -220,8 +194,8 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 	    if( goodbjet_n >= 2 ){
 	      bjets_cut++;
 	      
-	      bjet_index1 = goodbjet_index[0];
-	      bjet_index2 = goodbjet_index[1];    
+	      int bjet_index1 = goodbjet_index[0];
+	      int bjet_index2 = goodbjet_index[1];    
 	      
 	      TLorentzVector lep1 = TLorentzVector();  
 	      TLorentzVector lep2 = TLorentzVector();
@@ -233,11 +207,7 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 		      
 	      ///////// SAVE HISTOGRAMS /////////
 	      double names_of_global_variable[]={met, dilep.Pt(), TMath::Abs(dilep.Eta())};
-	      /*
-	      FillHistogramsGlobal( met, weight, "hist_met");
-	      FillHistogramsGlobal( dilep.Pt(), weight, "hist_lep_pt");
-	      FillHistogramsGlobal( TMath::Abs(dilep.Eta()), weight, "hist_lep_eta");
-	      */
+	
 	      //cout << "The event passed theselection. Filling the histograms" << endl;
 	      
 	      TString histonames_of_global_variable[]={"hist_met", "hist_lep_pt", "hist_lep_eta"};

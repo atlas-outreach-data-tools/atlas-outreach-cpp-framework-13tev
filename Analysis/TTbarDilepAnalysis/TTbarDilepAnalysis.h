@@ -56,7 +56,7 @@ class TTbarDilepAnalysis : public TSelector {
   vector<float> *jet_eta;
   vector<float> *jet_phi;
   vector<float> *jet_e;
-  vector<bool> *jet_DL1d77_isBtagged;
+  vector<int> *jet_btag_quantile;
   vector<bool> *jet_jvt;
   /*
   Int_t largeRJet_n;
@@ -142,7 +142,7 @@ class TTbarDilepAnalysis : public TSelector {
   TBranch *b_jet_eta;
   TBranch *b_jet_phi;
   TBranch *b_jet_e;
-  TBranch *b_jet_DL1d77_isBtagged;
+  TBranch *b_jet_btag_quantile;
   TBranch *b_jet_jvt;
   /*
   TBranch *b_largeRJet_n;
@@ -264,7 +264,7 @@ void TTbarDilepAnalysis::Init(TTree *tree)
   jet_eta = 0;
   jet_phi = 0;
   jet_e = 0;
-  jet_DL1d77_isBtagged = 0;
+  jet_btag_quantile = 0;
   jet_jvt = 0;
   lep_type = 0;
   lep_pt = 0;
@@ -300,7 +300,7 @@ void TTbarDilepAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("jet_eta", &jet_eta, &b_jet_eta);
   fChain->SetBranchAddress("jet_phi", &jet_phi, &b_jet_phi);
   fChain->SetBranchAddress("jet_e", &jet_e, &b_jet_e);
-  //fChain->SetBranchAddress("jet_DL1d77_isBtagged", &jet_DL1d77_isBtagged, &b_jet_DL1d77_isBtagged);
+  fChain->SetBranchAddress("jet_btag_quantile", &jet_btag_quantile, &b_jet_btag_quantile);
   fChain->SetBranchAddress("jet_jvt", &jet_jvt, &b_jet_jvt);
   /*
   fChain->SetBranchAddress("largeRJet_n", &largeRJet_n, &b_largeRJet_n);
