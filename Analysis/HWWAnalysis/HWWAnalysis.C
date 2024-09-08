@@ -197,8 +197,7 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 
 		  if (jvt_pass){
 		    // cut on 85% WP
-		    //if ( jet_MV2c10->at(i) > 0.1758475  && TMath::Abs(jet_eta->at(i)) < 2.5 ){
-		    if ( jet_btag_quantile->at(i) > 4 && TMath::Abs(jet_eta->at(i)) < 2.5 ){
+		    if ( jet_btag_quantile->at(i) >= 2 && TMath::Abs(jet_eta->at(i)) < 2.5 ){
 		      goodbjet_n++;
 		      goodbjet_index[bjet_index] = i;
 		      bjet_index++;

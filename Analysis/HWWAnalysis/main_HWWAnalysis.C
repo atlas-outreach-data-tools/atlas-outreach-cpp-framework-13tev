@@ -336,12 +336,7 @@ void main_HWWAnalysis(int proof = 0, int option= 0)
   if (option==5 || option==0)   {
 
     //ttbar
-    /*
-      TChain* chain_ttbar_nonallhad = new TChain("analysis");
-      chain_ttbar_nonallhad->AddFile(path+"ntuples-mc-samples/mc20_13TeV.410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.root");
-      //if (proof == 1)  chain_ttbar_nonallhad->SetProof();
-      chain_ttbar_nonallhad->Process("HWWAnalysis.C+","PhPy8EG_A14_ttbar_hdamp258p75_nonallhad");
-    */
+    
     TChain* chain_ttbar_dil = new TChain("analysis");
     chain_ttbar_dil->AddFile(path+"ntuples-mc-samples/mc20_13TeV.410472.PhPy8EG_A14_ttbar_hdamp258p75_dil.root");
     //if (proof == 1)  chain_ttbar_dil->SetProof();
@@ -350,20 +345,21 @@ void main_HWWAnalysis(int proof = 0, int option= 0)
   
 
  if (option==6 || option==0)   {
-   /*
-  // ggH
-  TChain* chain_ggH125_WW = new TChain("mini");
-  chain_ggH125_WW->AddFile(path+"MC/mc_345324.ggH125_WW2lep.2lep.root");
-  //if (proof == 1)  chain_ggH125_WW->SetProof();
-  chain_ggH125_WW->Process("HWWAnalysis.C+","ggH125_WW2lep");
 
-  // VBF
-  TChain* chain_VBFH125_WW = new TChain("mini");
-  chain_VBFH125_WW->AddFile(path+"MC/mc_345323.VBFH125_WW2lep.2lep.root");
-  //if (proof == 1)  chain_VBFH125_WW->SetProof();
-  chain_VBFH125_WW->Process("HWWAnalysis.C+","VBFH125_WW2lep");
-   */
-
+   //Higgs samples (H->WW)
+   
+   // ggH
+   TChain* chain_ggH125_WW = new TChain("analysis");
+   chain_ggH125_WW->AddFile(path+"ntuples-mc-samples/mc20_13TeV.345324.PowhegPythia8EvtGen_NNLOPS_NN30_ggH125_WWlvlv_EF_15_5.root");
+   //if (proof == 1)  chain_ggH125_WW->SetProof();
+   chain_ggH125_WW->Process("HWWAnalysis.C+","PowhegPythia8EvtGen_NNLOPS_NN30_ggH125_WWlvlv_EF_15_5");
+   
+   // VBF
+   TChain* chain_VBFH125_WW = new TChain("analysis");
+   chain_VBFH125_WW->AddFile(path+"ntuples-mc-samples/mc20_13TeV.345948.PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_WWlvlv.root");
+   //if (proof == 1)  chain_VBFH125_WW->SetProof();
+   chain_VBFH125_WW->Process("HWWAnalysis.C+","PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_WWlvlv");
+   
  } // option 6
 
   
