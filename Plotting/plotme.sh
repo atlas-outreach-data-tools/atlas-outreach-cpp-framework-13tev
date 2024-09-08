@@ -73,7 +73,7 @@ EOF
     root -l -b << EOF
     	.L Plotting.cxx+
     	Plotting *m=new Plotting();
-	m->SetLumi(10064);
+	m->SetLumi(36000);
     	m->SetOption("$analysisName");
     	m->SetInputLocation("$analysisPath")
     	m->run()
