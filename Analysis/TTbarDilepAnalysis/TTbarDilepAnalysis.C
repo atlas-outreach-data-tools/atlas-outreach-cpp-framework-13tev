@@ -34,6 +34,21 @@ void TTbarDilepAnalysis::Begin(TTree * )
   totalSumOfWeights_SF = 0;
   filteff_SF = 0;
   kfac_SF = 0;
+
+  good_event_lep = 0;
+  two_electrons_lep = 0;
+  two_muons_lep = 0;
+  lep_tight_n = 0;
+  leppt_n = 0;
+  lep_ptvarcone_n = 0;
+  lep_etcone_n = 0;
+  leptype_elec_n = 0;
+  leptype_muon_n = 0;
+  lep_elec_d0 = 0;
+  lep_muon_d0 = 0;
+  lep_elec_z0 = 0;
+  lep_muon_z0 = 0;
+
 }
 
 void TTbarDilepAnalysis::SlaveBegin(TTree * )
@@ -53,7 +68,7 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
   fChain->GetTree()->GetEntry(entry);
   nEvents++;
   
-  if (nEvents % 500000 == 0) std::cout << "Analysed a total of: " << nEvents << " events out of " << fChain->GetTree()->GetEntries() << " in this sample" << std::endl;
+  //if (nEvents % 500000 == 0) std::cout << "Analysed a total of: " << nEvents << " events out of " << fChain->GetTree()->GetEntries() << " in this sample" << std::endl;
   
   if(fChain->GetTree()->GetEntries()>0){
     
@@ -89,11 +104,12 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
       }
     }
     if( is_data==false ){
-      uniqueWeights.insert(initial_sum_of_weights);
+      //uniqueWeights.insert(initial_sum_of_weights);
       if(entry==0){
 	xsec_SF = xsec;
 	filteff_SF = filteff;
 	kfac_SF = kfac;
+	totalSumOfWeights_SF = initial_sum_of_weights;
       }
     }
     
@@ -104,25 +120,33 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
       
       int goodlep_index[lep_n];
       int goodlep_n = 0;
-      int lep_index =0;
-
+      int lep_index = 0;
+      
       for(Int_t ii=0; ii<lep_n; ii++){
-        
+	
 	TLorentzVector leptemp = TLorentzVector();  
 	leptemp.SetPtEtaPhiE(lep_pt->at(ii), lep_eta->at(ii), lep_phi->at(ii), lep_e->at(ii));
         
 	// Lepton is Tight
 	if( (lep_isTight->at(ii)==true) && (lep_isTightID->at(ii)==true) && (lep_isTightIso->at(ii)==true)){
 	  // standard lepton isolation requirement => strict isolation
+	  lep_tight_n++;
 	  if( lep_pt->at(ii) > 25. ){
-	    if( lep_ptvarcone30->at(ii)/lep_pt->at(ii) < 0.1 ){ 
+	    //cout << "event passing lep_pt cut for: " << ii << endl;
+	    leppt_n++;
+	    if( lep_ptvarcone30->at(ii)/lep_pt->at(ii) < 0.1 ){
+	      lep_ptvarcone_n++;
 	      if( lep_topoetcone20->at(ii)/lep_pt->at(ii) < 0.1 ){
+		lep_etcone_n++;
 		// electron selection
+		
 		if( lep_type->at(ii)==11 && TMath::Abs(lep_eta->at(ii))<2.47 && (TMath::Abs(lep_eta->at(ii))<1.37 || TMath::Abs(lep_eta->at(ii))>1.52) ){
-
+		  leptype_elec_n++;
 		  //Condition for transverse impact parameter
 		  if( TMath::Abs(lep_d0->at(ii))/lep_d0sig->at(ii) < 5 ){
+		    lep_elec_d0++;
 		    if( TMath::Abs(lep_z0->at(ii)*TMath::Sin(leptemp.Theta())) < 0.5 ){    
+		      lep_elec_z0++;
 		      goodlep_n++;
 		      goodlep_index[lep_index] = ii;
 		      lep_index++;
@@ -133,9 +157,12 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 		
 		// muon selection
 		if( lep_type->at(ii)==13 && TMath::Abs(lep_eta->at(ii))<2.5 ){
+		  leptype_muon_n++;
 		  //Condition for transverse impact parameter      
 		  if( TMath::Abs(lep_d0->at(ii))/lep_d0sig->at(ii) < 3 ){ 
+		    lep_muon_d0++;
 		    if( TMath::Abs(lep_z0->at(ii)*TMath::Sin(leptemp.Theta())) < 0.5 ){	
+		      lep_muon_z0++;
 		      goodlep_n++;
 		      goodlep_index[lep_index] = ii;
 		      lep_index++;
@@ -148,13 +175,30 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 	  }
 	}
       }
- 
-      if(goodlep_n==2){
+    
+      /*
+      if(goodlep_n>=2){
+	cout << "good lep number: " << goodlep_n << endl;
+      }
+      */
+      if( goodlep_n==2 ){
 	good_lepton_n_cut++;
 	
 	//Exactly two good leptons, leading lepton with pT > 22 GeV and the subleading lepton with pT > 15 GeV
 	int lep_index1 = goodlep_index[0];
 	int lep_index2 = goodlep_index[1];
+
+	if( (lep_type->at(lep_index1)==11) && (lep_type->at(lep_index2)==13) ){
+          good_event_lep++;
+        }
+
+        if( (lep_type->at(lep_index1)==11) && (lep_type->at(lep_index2)==11) ){
+          two_electrons_lep++;
+        }
+
+        if( (lep_type->at(lep_index1)==13) && (lep_type->at(lep_index2)==13) ){
+          two_muons_lep++;
+        }
 	
 	// Cut on opposite charged leptons
 	if( lep_charge->at(lep_index1)*lep_charge->at(lep_index2) < 0){  
@@ -231,13 +275,14 @@ void TTbarDilepAnalysis::SlaveTerminate()
 {
   TString option = GetOption();
   bool is_data = option.Contains("data");
-
+  /*
   if(is_data==false){
     for (const auto& weight : uniqueWeights){
       totalSumOfWeights_SF += weight;
     }
   }
-
+  */
+  
   hist_scale_factors->SetBinContent(0, xsec_SF);
   hist_scale_factors->SetBinContent(1, totalSumOfWeights_SF);
   hist_scale_factors->SetBinContent(2, filteff_SF);
@@ -255,12 +300,28 @@ void TTbarDilepAnalysis::Terminate()
   cout << "bjets cut number: " << bjets_cut << endl;
   cout << "good electron - muon leptons: " << electron_n << "\t" << muon_n << endl;
   cout << "--------------------------------------------------------------------------------------" << endl;
+  cout << "Number of events with two good leptons: " << good_lepton_n_cut << endl;
+  cout << "Number of events with two good electrons: " << two_electrons_lep << endl;
+  cout << "Number of events with two good muons: " << two_muons_lep << endl;
+  cout << "Number of events with one electron and one muon: " << good_event_lep << endl;
+  cout << "--------------------------------------------------------------------------------------" << endl;
   cout << "The scaling factors values are: " << endl;
   cout << "xsec: " << xsec_SF << endl;
-  cout << "totalSumOfWeights: " << totalSumOfWeights_SF  << endl;
+  cout << "totalSumOfWeights: " << totalSumOfWeights_SF << endl;
   cout << "filteff: " << filteff_SF << endl;
   cout << "kfac: " << kfac_SF << endl;
   cout << "--------------------------------------------------------------------------------------" << endl;
+  cout << "trigger cut number: " << trigger_cut << endl;
+  cout << "lep tight number: " << lep_tight_n << endl;
+  cout << "lep pt>25GeV number: " << leppt_n << endl;
+  cout << "lep ptvarcone number: " << lep_ptvarcone_n << endl;
+  cout << "lep et cone number: " << lep_etcone_n << endl;
+  cout << "lep type electron number: " << leptype_elec_n << endl;
+  cout << "lep type muon number: " << leptype_muon_n << endl;
+  cout << "lep electron d0 number: " << lep_elec_d0 << endl;
+  cout << "lep muon d0 number: " << lep_muon_d0 << endl;
+  cout << "lep electron z0 number: " << lep_elec_z0 << endl;
+  cout << "lep muon z0 number: " << lep_muon_z0 << endl;
   
   TString filename_option = GetOption();
   printf("Writting with name option: %s \n", filename_option.Data());

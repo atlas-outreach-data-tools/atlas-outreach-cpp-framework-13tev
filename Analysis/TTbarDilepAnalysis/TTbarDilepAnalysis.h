@@ -13,10 +13,12 @@
 // Headers needed by this particular selector
 #include "vector"
 #include <set>
+#include "ROOT/RVec.hxx"
+//#include <ROOT/RVec.hxx>
 
 class TTbarDilepAnalysis : public TSelector {
   public :
-  TTreeReader     fReader;  //!the tree reader                                                                                               
+  //TTreeReader     fReader;  //!the tree reader                                                                                               
   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
 
   //////////////////////////////////////////////////////////
@@ -51,13 +53,23 @@ class TTbarDilepAnalysis : public TSelector {
 
   Float_t ScaleFactor_BTAG;
   Int_t jet_n;
-
+  /*
   vector<float> *jet_pt;
   vector<float> *jet_eta;
   vector<float> *jet_phi;
   vector<float> *jet_e;
   vector<int> *jet_btag_quantile;
   vector<bool> *jet_jvt;
+  */
+  
+  ROOT::VecOps::RVec<float> *jet_pt;
+  ROOT::VecOps::RVec<float> *jet_eta;
+  ROOT::VecOps::RVec<float> *jet_phi;
+  ROOT::VecOps::RVec<float> *jet_e;
+  ROOT::VecOps::RVec<int> *jet_btag_quantile;
+  ROOT::VecOps::RVec<bool> *jet_jvt;
+
+
   /*
   Int_t largeRJet_n;
   vector<float> *largeRJet_pt;
@@ -71,6 +83,7 @@ class TTbarDilepAnalysis : public TSelector {
   Float_t ScaleFactor_MUON;
 
   Int_t lep_n;
+  /*
   vector<int> *lep_type;
   vector<float> *lep_pt;
   vector<float> *lep_eta;
@@ -83,11 +96,36 @@ class TTbarDilepAnalysis : public TSelector {
   vector<float> *lep_z0;
   vector<float> *lep_d0;
   vector<float> *lep_d0sig;
+  */
 
+  ROOT::VecOps::RVec<int> *lep_type;
+  ROOT::VecOps::RVec<float> *lep_pt;
+  ROOT::VecOps::RVec<float> *lep_eta;
+  ROOT::VecOps::RVec<float> *lep_phi;
+  ROOT::VecOps::RVec<float> *lep_e;
+  ROOT::VecOps::RVec<int> *lep_charge;
+
+  ROOT::VecOps::RVec<float> *lep_ptvarcone30;
+  ROOT::VecOps::RVec<float> *lep_topoetcone20;
+  ROOT::VecOps::RVec<float> *lep_z0;
+  ROOT::VecOps::RVec<float> *lep_d0;
+  ROOT::VecOps::RVec<float> *lep_d0sig;
+  
+  /*
   vector<bool> *lep_isTight;
   vector<bool> *lep_isTightID;
   vector<bool> *lep_isTightIso;
+  */
   
+  ROOT::VecOps::RVec<bool> *lep_isTight;
+  ROOT::VecOps::RVec<bool> *lep_isTightID;
+  ROOT::VecOps::RVec<bool> *lep_isTightIso;
+  
+  /*
+  RVec<float> *lep_isTight;
+  RVec<float> *lep_isTightID;
+  RVec<float> *lep_isTightIso;
+  */
   Float_t ScaleFactor_PHOTON;
   /*
   Int_t photon_n;
@@ -121,7 +159,8 @@ class TTbarDilepAnalysis : public TSelector {
   Float_t met_mpy;
 
   Float_t initial_events;
-  Float_t initial_sum_of_weights;
+  //Float_t initial_sum_of_weights;
+  Double_t initial_sum_of_weights;
   Float_t initial_sum_of_weights_squared;
 
   // List of branches
@@ -242,7 +281,20 @@ class TTbarDilepAnalysis : public TSelector {
 
   int nEvents;
   std::set<float> uniqueWeights;
-
+  int good_event_lep;
+  int two_electrons_lep;
+  int two_muons_lep;
+  int lep_tight_n;
+  int leppt_n;
+  int lep_ptvarcone_n;
+  int lep_etcone_n;
+  int leptype_elec_n;
+  int leptype_muon_n;
+  int lep_elec_d0;
+  int lep_muon_d0;
+  int lep_elec_z0;
+  int lep_muon_z0;
+  
   Float_t xsec_SF;
   Float_t totalSumOfWeights_SF;
   Float_t filteff_SF;
@@ -361,7 +413,8 @@ void TTbarDilepAnalysis::Init(TTree *tree)
   
 
   //fChain->SetBranchAddress("initial_events", &initial_events, &b_initial_events);
-  fChain->SetBranchAddress("initial_sum_of_weights", &initial_sum_of_weights, &b_initial_sum_of_weights);
+  //fChain->SetBranchAddress("initial_sum_of_weights", &initial_sum_of_weights, &b_initial_sum_of_weights);
+  fChain->SetBranchAddress("sum_of_weights", &initial_sum_of_weights, &b_initial_sum_of_weights);
   //fChain->SetBranchAddress("initial_sum_of_weights_squared", &initial_sum_of_weights_squared, &b_initial_sum_of_weights_squared);
   
 }
