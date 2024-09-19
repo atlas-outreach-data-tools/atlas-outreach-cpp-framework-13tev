@@ -375,7 +375,8 @@ void Plotting::makePlots(){
   std::map<std::string,TH1F*> data; 
   
   // TTbarDilep
-  std::map<std::string,TH1F*> PhPy8EG_A14_ttbar_hdamp258p75_dil;
+  //std::map<std::string,TH1F*> PhPy8EG_A14_ttbar_hdamp258p75_dil;
+  std::map<std::string,TH1F*> PhPy8EG_A14_ttbar_hdamp258p75_nonallhad;
 
   // HWW
   std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNLOPS_NN30_ggH125_WWlvlv_EF_15_5;
@@ -448,13 +449,14 @@ void Plotting::makePlots(){
 
   // samples to be used for all the analyses
   //ttbar
-  PhPy8EG_A14_ttbar_hdamp258p75_dil = histo["PhPy8EG_A14_ttbar_hdamp258p75_dil"];
+  //PhPy8EG_A14_ttbar_hdamp258p75_dil = histo["PhPy8EG_A14_ttbar_hdamp258p75_dil"];
+  PhPy8EG_A14_ttbar_hdamp258p75_nonallhad = histo["PhPy8EG_A14_ttbar_hdamp258p75_nonallhad"];
 
   // Single top
-  PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top = histo["PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top"];
-  PowhegPythia8EvtGen_A14_Wt_DR_dilepton_antitop = histo["PowhegPythia8EvtGen_A14_Wt_DR_dilepton_antitop"];
-  PowhegPythia8EvtGen_A14_Wt_DR_inclusive_top = histo["PowhegPythia8EvtGen_A14_Wt_DR_inclusive_top"];
-  PowhegPythia8EvtGen_A14_Wt_DR_inclusive_antitop = histo["PowhegPythia8EvtGen_A14_Wt_DR_inclusive_antitop"];
+  //PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top = histo["PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top"];
+  //PowhegPythia8EvtGen_A14_Wt_DR_dilepton_antitop = histo["PowhegPythia8EvtGen_A14_Wt_DR_dilepton_antitop"];
+  //PowhegPythia8EvtGen_A14_Wt_DR_inclusive_top = histo["PowhegPythia8EvtGen_A14_Wt_DR_inclusive_top"];
+  //PowhegPythia8EvtGen_A14_Wt_DR_inclusive_antitop = histo["PowhegPythia8EvtGen_A14_Wt_DR_inclusive_antitop"];
   PhPy8EG_A14_tchan_BW50_lept_top = histo["PhPy8EG_A14_tchan_BW50_lept_top"];
   PhPy8EG_A14_tchan_BW50_lept_antitop = histo["PhPy8EG_A14_tchan_BW50_lept_antitop"];
 
@@ -464,7 +466,7 @@ void Plotting::makePlots(){
   Sh_2212_llvv_os = histo["Sh_2212_llvv_os"];
   Sh_2212_llvv_ss = histo["Sh_2212_llvv_ss"];
   Sh_2212_lvvv = histo["Sh_2212_lvvv"];
-  Sh_2212_vvvv = histo["Sh_2212_vvvv"];
+  //Sh_2212_vvvv = histo["Sh_2212_vvvv"];
   Sh_2211_WlvWqq = histo["Sh_2211_WlvWqq"];
   Sh_2211_WlvZqq = histo["Sh_2211_WlvZqq"];
   Sh_2211_WlvZbb = histo["Sh_2211_WlvZbb"];
@@ -472,14 +474,14 @@ void Plotting::makePlots(){
   Sh_2211_ZbbZll = histo["Sh_2211_ZbbZll"];
   Sh_2211_ZqqZvv = histo["Sh_2211_ZqqZvv"];
   Sh_2211_ZbbZvv = histo["Sh_2211_ZbbZvv"];
-  Sherpa_222_NNPDF30NNLO_ggZllZqq = histo["Sherpa_222_NNPDF30NNLO_ggZllZqq"];
-  Sherpa_222_NNPDF30NNLO_ggZvvZqq = histo["Sherpa_222_NNPDF30NNLO_ggZvvZqq"];
-  Sherpa_222_NNPDF30NNLO_ggWmlvWpqq = histo["Sherpa_222_NNPDF30NNLO_ggWmlvWpqq"];
-  Sherpa_222_NNPDF30NNLO_ggWplvWmqq = histo["Sherpa_222_NNPDF30NNLO_ggWplvWmqq"];
+  //Sherpa_222_NNPDF30NNLO_ggZllZqq = histo["Sherpa_222_NNPDF30NNLO_ggZllZqq"];
+  //Sherpa_222_NNPDF30NNLO_ggZvvZqq = histo["Sherpa_222_NNPDF30NNLO_ggZvvZqq"];
+  //Sherpa_222_NNPDF30NNLO_ggWmlvWpqq = histo["Sherpa_222_NNPDF30NNLO_ggWmlvWpqq"];
+  //Sherpa_222_NNPDF30NNLO_ggWplvWmqq = histo["Sherpa_222_NNPDF30NNLO_ggWplvWmqq"];
   
   // V_plus_jets
   Sh_2211_Zee_maxHTpTV2_BFilter = histo["Sh_2211_Zee_maxHTpTV2_BFilter"];
-  Sh_2211_Zee_maxHTpTV2_CFilterBVeto = histo["Sh_2211_Zee_maxHTpTV2_CFilterBVeto"];
+  //Sh_2211_Zee_maxHTpTV2_CFilterBVeto = histo["Sh_2211_Zee_maxHTpTV2_CFilterBVeto"];
   Sh_2211_Zee_maxHTpTV2_CVetoBVeto = histo["Sh_2211_Zee_maxHTpTV2_CVetoBVeto"];
   Sh_2211_Zmumu_maxHTpTV2_BFilter = histo["Sh_2211_Zmumu_maxHTpTV2_BFilter"];
   Sh_2211_Zmumu_maxHTpTV2_CFilterBVeto = histo["Sh_2211_Zmumu_maxHTpTV2_CFilterBVeto"];
@@ -557,16 +559,20 @@ void Plotting::makePlots(){
     TH1F* tt_others = new TH1F();
 
     // ttbar
-    ttbar_dilep = (TH1F*)PhPy8EG_A14_ttbar_hdamp258p75_dil[fIter->first]->Clone();
+    //ttbar_dilep = (TH1F*)PhPy8EG_A14_ttbar_hdamp258p75_dil[fIter->first]->Clone();
+    ttbar_dilep = (TH1F*)PhPy8EG_A14_ttbar_hdamp258p75_nonallhad[fIter->first]->Clone();
     ttbar_dilep->SetFillColor(kOrange-3);
     ttbar_dilep->SetLineWidth(0);
     
     // Single top
+    /*
     single_top = (TH1F*)PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top[fIter->first]->Clone();
     single_top->Add(PowhegPythia8EvtGen_A14_Wt_DR_dilepton_antitop[fIter->first]);
     single_top->Add(PowhegPythia8EvtGen_A14_Wt_DR_inclusive_top[fIter->first]);
     single_top->Add(PowhegPythia8EvtGen_A14_Wt_DR_inclusive_antitop[fIter->first]);
-    single_top->Add(PhPy8EG_A14_tchan_BW50_lept_top[fIter->first]);
+    */
+    //single_top->Add(PhPy8EG_A14_tchan_BW50_lept_top[fIter->first]);
+    single_top = (TH1F*)PhPy8EG_A14_tchan_BW50_lept_top[fIter->first]->Clone();
     single_top->Add(PhPy8EG_A14_tchan_BW50_lept_antitop[fIter->first]);
     single_top->SetFillColor(kAzure+8);
     single_top->SetLineWidth(0);
@@ -577,7 +583,7 @@ void Plotting::makePlots(){
     diboson->Add(Sh_2212_llvv_os[fIter->first]);
     diboson->Add(Sh_2212_llvv_ss[fIter->first]);
     diboson->Add(Sh_2212_lvvv[fIter->first]);
-    diboson->Add(Sh_2212_vvvv[fIter->first]);
+    //diboson->Add(Sh_2212_vvvv[fIter->first]);
     diboson->Add(Sh_2211_WlvWqq[fIter->first]);
     diboson->Add(Sh_2211_WlvZqq[fIter->first]);
     diboson->Add(Sh_2211_WlvZbb[fIter->first]);
@@ -585,16 +591,18 @@ void Plotting::makePlots(){
     diboson->Add(Sh_2211_ZbbZll[fIter->first]);
     diboson->Add(Sh_2211_ZqqZvv[fIter->first]);
     diboson->Add(Sh_2211_ZbbZvv[fIter->first]);
+    /*
     diboson->Add(Sherpa_222_NNPDF30NNLO_ggZllZqq[fIter->first]);
     diboson->Add(Sherpa_222_NNPDF30NNLO_ggZvvZqq[fIter->first]);
     diboson->Add(Sherpa_222_NNPDF30NNLO_ggWmlvWpqq[fIter->first]);
     diboson->Add(Sherpa_222_NNPDF30NNLO_ggWplvWmqq[fIter->first]);
+    */
     diboson->SetFillColor(kBlue-6);
     diboson->SetLineWidth(0);
     
     // V_plus_jets
     v_plus_jets = (TH1F*)Sh_2211_Zee_maxHTpTV2_BFilter[fIter->first]->Clone();
-    v_plus_jets->Add(Sh_2211_Zee_maxHTpTV2_CFilterBVeto[fIter->first]);
+    //v_plus_jets->Add(Sh_2211_Zee_maxHTpTV2_CFilterBVeto[fIter->first]);
     v_plus_jets->Add(Sh_2211_Zee_maxHTpTV2_CVetoBVeto[fIter->first]);
     v_plus_jets->Add(Sh_2211_Zmumu_maxHTpTV2_BFilter[fIter->first]);
     v_plus_jets->Add(Sh_2211_Zmumu_maxHTpTV2_CFilterBVeto[fIter->first]);
@@ -655,10 +663,10 @@ void Plotting::makePlots(){
     // The order of the stack defines which samples will appear on top of each other
 
     if(option.find("HWWAnalysis") != option.npos){
-      stack->Add(diboson);
-      stack->Add(v_plus_jets);
       stack->Add(single_top);
       stack->Add(ttbar_dilep);
+      stack->Add(v_plus_jets);
+      stack->Add(diboson);
       stack->Add(Higgs);
       
       histstack = (TH1F*)ttbar_dilep->Clone();
@@ -718,7 +726,7 @@ void Plotting::makePlots(){
     l.SetTextFont(42);
     l.SetTextSize(0.04);
 
-    if(option.find("HWWAnalysis")     != option.npos){l.DrawLatex(0.18,0.71,"H #rightarrow WW* #rightarrow e#nu #mu#nu, N_{jet} #leq 1");}
+    if(option.find("HWWAnalysis")     != option.npos){l.DrawLatex(0.18,0.71,"H #rightarrow WW* #rightarrow e#nu#mu#nu, N_{jet} #leq 1");}
     
     if(option.find("TTbarDilepAnalysis")     != option.npos){l.DrawLatex(0.18,0.71,"t#bar{t} #rightarrow W^{-}W^{+}b#bar{b} #rightarrow e#nu #mu#nu b#bar{b}");}
 
@@ -754,7 +762,7 @@ void Plotting::makePlots(){
       leg->AddEntry(v_plus_jets,  "V+jets", "f");
       leg->AddEntry(ttbar_dilep, "t#bar{t}", "f");
       leg->AddEntry(single_top, "Single top", "f");
-      //leg->AddEntry(histstack,"Stat. unc.","f");
+      leg->AddEntry(histstack,"Stat. unc.","f");
       
       //if(NORMSIG) if(fIter->first.find("histI") != option.npos) leg-> AddEntry(Higgs_normsig, "Higgs_{norm}" ,"l");
       
@@ -776,7 +784,7 @@ void Plotting::makePlots(){
       leg->AddEntry(tt_others, "t#bar{t}V, t#bar{t}jj, t#bar{t}Vjj","f");
       leg->AddEntry(v_plus_jets, "V+jets","f");
       leg->AddEntry(diboson, "VV+jets","f");
-      //leg->AddEntry(histstack,"Stat. unc.","f");
+      leg->AddEntry(histstack,"Stat. unc.","f");
 
       if(YIELDS){
 	cout << "Yields:" << "Data: " << data[fIter->first]->Integral() <<
