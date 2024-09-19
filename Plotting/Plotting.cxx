@@ -377,7 +377,8 @@ void Plotting::makePlots(){
   // TTbarDilep
   //std::map<std::string,TH1F*> PhPy8EG_A14_ttbar_hdamp258p75_dil;
   std::map<std::string,TH1F*> PhPy8EG_A14_ttbar_hdamp258p75_nonallhad;
-
+  std::map<std::string,TH1F*> PhPy8EG_A14_ttbar_hdamp258p75_allhad;
+  
   // HWW
   std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNLOPS_NN30_ggH125_WWlvlv_EF_15_5;
   std::map<std::string, TH1F*> PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_WWlvlv;
@@ -448,10 +449,12 @@ void Plotting::makePlots(){
   data = histo["data"];
 
   // samples to be used for all the analyses
+
   //ttbar
   //PhPy8EG_A14_ttbar_hdamp258p75_dil = histo["PhPy8EG_A14_ttbar_hdamp258p75_dil"];
   PhPy8EG_A14_ttbar_hdamp258p75_nonallhad = histo["PhPy8EG_A14_ttbar_hdamp258p75_nonallhad"];
-
+  PhPy8EG_A14_ttbar_hdamp258p75_allhad = histo["PhPy8EG_A14_ttbar_hdamp258p75_allhad"];
+  
   // Single top
   //PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top = histo["PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top"];
   //PowhegPythia8EvtGen_A14_Wt_DR_dilepton_antitop = histo["PowhegPythia8EvtGen_A14_Wt_DR_dilepton_antitop"];
@@ -561,6 +564,7 @@ void Plotting::makePlots(){
     // ttbar
     //ttbar_dilep = (TH1F*)PhPy8EG_A14_ttbar_hdamp258p75_dil[fIter->first]->Clone();
     ttbar_dilep = (TH1F*)PhPy8EG_A14_ttbar_hdamp258p75_nonallhad[fIter->first]->Clone();
+    ttbar_dilep->Add(PhPy8EG_A14_ttbar_hdamp258p75_allhad[fIter->first]); 
     ttbar_dilep->SetFillColor(kOrange-3);
     ttbar_dilep->SetLineWidth(0);
     
