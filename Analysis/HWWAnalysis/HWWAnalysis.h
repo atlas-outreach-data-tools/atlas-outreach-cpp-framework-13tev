@@ -13,6 +13,7 @@
 // Headers needed by this particular selector
 #include "vector"
 #include <set>
+#include "ROOT/RVec.hxx"
 
 class HWWAnalysis : public TSelector {
   public :
@@ -103,13 +104,15 @@ class HWWAnalysis : public TSelector {
 
   Float_t ScaleFactor_BTAG;
   Int_t jet_n;
+  
+  ROOT::VecOps::RVec<float> *jet_pt;
+  ROOT::VecOps::RVec<float> *jet_eta;
+  ROOT::VecOps::RVec<float> *jet_phi;
+  ROOT::VecOps::RVec<float> *jet_e;
+  ROOT::VecOps::RVec<int> *jet_btag_quantile;
+  ROOT::VecOps::RVec<bool> *jet_jvt;
 
-  vector<float> *jet_pt;
-  vector<float> *jet_eta;
-  vector<float> *jet_phi;
-  vector<float> *jet_e;
-  vector<int> *jet_btag_quantile;
-  vector<bool> *jet_jvt;
+
   /*
   Int_t largeRJet_n;
   vector<float> *largeRJet_pt;
@@ -123,22 +126,23 @@ class HWWAnalysis : public TSelector {
   Float_t ScaleFactor_MUON;
 
   Int_t lep_n;
-  vector<int> *lep_type;
-  vector<float> *lep_pt;
-  vector<float> *lep_eta;
-  vector<float> *lep_phi;
-  vector<float> *lep_e;
-  vector<int> *lep_charge;
 
-  vector<float> *lep_ptvarcone30;
-  vector<float> *lep_topoetcone20;
-  vector<float> *lep_z0;
-  vector<float> *lep_d0;
-  vector<float> *lep_d0sig;
+  ROOT::VecOps::RVec<int> *lep_type;
+  ROOT::VecOps::RVec<float> *lep_pt;
+  ROOT::VecOps::RVec<float> *lep_eta;
+  ROOT::VecOps::RVec<float> *lep_phi;
+  ROOT::VecOps::RVec<float> *lep_e;
+  ROOT::VecOps::RVec<int> *lep_charge;
 
-  vector<bool> *lep_isTight;
-  vector<bool> *lep_isTightID;
-  vector<bool> *lep_isTightIso;
+  ROOT::VecOps::RVec<float> *lep_ptvarcone30;
+  ROOT::VecOps::RVec<float> *lep_topoetcone20;
+  ROOT::VecOps::RVec<float> *lep_z0;
+  ROOT::VecOps::RVec<float> *lep_d0;
+  ROOT::VecOps::RVec<float> *lep_d0sig;
+    
+  ROOT::VecOps::RVec<bool> *lep_isTight;
+  ROOT::VecOps::RVec<bool> *lep_isTightID;
+  ROOT::VecOps::RVec<bool> *lep_isTightIso;
   
   Float_t ScaleFactor_PHOTON;
   /*
@@ -173,9 +177,10 @@ class HWWAnalysis : public TSelector {
   Float_t met_mpy;
 
   Float_t initial_events;
-  Float_t initial_sum_of_weights;
+  //Float_t initial_sum_of_weights;
+  Double_t initial_sum_of_weights;
   Float_t initial_sum_of_weights_squared;
-
+  
   // List of branches
   
   TBranch *b_ScaleFactor_PILEUP;
@@ -415,7 +420,7 @@ void HWWAnalysis::Init(TTree *tree)
   
 
   //fChain->SetBranchAddress("initial_events", &initial_events, &b_initial_events);
-  fChain->SetBranchAddress("initial_sum_of_weights", &initial_sum_of_weights, &b_initial_sum_of_weights);
+  fChain->SetBranchAddress("sum_of_weights", &initial_sum_of_weights, &b_initial_sum_of_weights);
   //fChain->SetBranchAddress("initial_sum_of_weights_squared", &initial_sum_of_weights_squared, &b_initial_sum_of_weights_squared);
   
 }

@@ -87,11 +87,12 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
       }
     }
     if( is_data==false ){
-      uniqueWeights.insert(initial_sum_of_weights);
+      
       if(entry==0){
 	xsec_SF = xsec;
 	filteff_SF = filteff;
 	kfac_SF = kfac;
+	totalSumOfWeights_SF = initial_sum_of_weights;
       }
     }
             
@@ -283,12 +284,6 @@ void HWWAnalysis::SlaveTerminate()
 {
   TString option = GetOption();
   bool is_data = option.Contains("data");
-  
-  if(is_data==false){
-    for (const auto& weight : uniqueWeights){
-      totalSumOfWeights_SF += weight;
-    }
-  }
   
   hist_scale_factors->SetBinContent(0, xsec_SF);
   hist_scale_factors->SetBinContent(1, totalSumOfWeights_SF);
