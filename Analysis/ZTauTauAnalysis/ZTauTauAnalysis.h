@@ -93,7 +93,8 @@ public :
   */
   Float_t ScaleFactor_ELE;
   Float_t ScaleFactor_MUON;
-
+  Float_t scaleFactor_LepTRIGGER;
+  
   Int_t lep_n;
   vector<int> *lep_type;
   vector<float> *lep_pt;
@@ -179,7 +180,8 @@ public :
   */
   TBranch *b_ScaleFactor_ELE;
   TBranch *b_ScaleFactor_MUON;
-
+  TBranch *b_scaleFactor_LepTRIGGER;
+  
   TBranch *b_lep_n;
   TBranch *b_lep_type;
   TBranch *b_lep_pt;
@@ -353,6 +355,8 @@ void ZTauTauAnalysis::Init(TTree *tree)
   */
   fChain->SetBranchAddress("ScaleFactor_ELE", &ScaleFactor_ELE, &b_ScaleFactor_ELE);
   fChain->SetBranchAddress("ScaleFactor_MUON", &ScaleFactor_MUON, &b_ScaleFactor_MUON);
+  fChain->SetBranchAddress("scaleFactor_LepTRIGGER", &scaleFactor_LepTRIGGER, &b_scaleFactor_LepTRIGGER);
+
   fChain->SetBranchAddress("lep_n", &lep_n, &b_lep_n);
   fChain->SetBranchAddress("lep_type", &lep_type, &b_lep_type);
   fChain->SetBranchAddress("lep_pt", &lep_pt, &b_lep_pt);

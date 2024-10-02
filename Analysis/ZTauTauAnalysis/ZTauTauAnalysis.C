@@ -57,7 +57,7 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
   
   fChain->GetTree()->GetEntry(entry);
   nEvents++;
-  if (nEvents % 5000000 == 0) std::cout << "Analysed a total of: " << nEvents << " events out of " << fChain->GetTree()->GetEntries() << " in this sample" << std::endl;
+  if (nEvents % 10000000 == 0) std::cout << "Analysed a total of: " << nEvents << " events out of " << fChain->GetEntries() << " in this sample" << std::endl;
   
   if(fChain->GetTree()->GetEntries()>0){
 
@@ -67,8 +67,9 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
     
     //Scale factors (adding the one for tau)
     //Float_t scaleFactor = scaleFactor_ELE*scaleFactor_MUON*scaleFactor_LepTRIGGER*scaleFactor_PILEUP*scaleFactor_TAU;
-    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP*ScaleFactor_TAU;
-    
+    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP*ScaleFactor_TAU;
+    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*scaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_TAU;
+
     //MC weight
     Float_t m_mcWeight = mcWeight;
     
@@ -203,7 +204,8 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 	      if( (jet_pt->at(i)>25.) && (TMath::Abs(jet_eta->at(i))<2.5) ){
 		// JVT cleaning
 		bool jvt_pass=true;
-		//if (jet_pt->at(i) < 60. && TMath::Abs(jet_eta->at(i)) < 2.4 && jet_jvt->at(i) < 0.59) jvt_pass=false;
+		if (jet_pt->at(i)<60. && TMath::Abs(jet_eta->at(i))<2.4 && jet_jvt->at(i)==false) jvt_pass=false;
+
 		if (jvt_pass){
 		  goodjet_n++;
 		  goodjet_index = i;
