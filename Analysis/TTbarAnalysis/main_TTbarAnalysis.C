@@ -3,7 +3,7 @@
 #include "TROOT.h"
 #include "TChain.h"
 #include "TFile.h"
-#include "TProof.h"
+//#include "TProof.h"
 
 void main_TTbarAnalysis(int proof = 0, int option= 0)
 {
@@ -15,8 +15,9 @@ void main_TTbarAnalysis(int proof = 0, int option= 0)
   //TString path = "https://atlas-opendata.web.cern.ch/atlas-opendata/samples/2020/1lep/";
 
   /* The URL to the CERN Open Data portal repository */
-  TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/";
-
+  //TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/";
+  TString path = "/eos/user/e/egramsta/OpenData/1LMET30/";
+  
   /* The XROOTD path to the CERN Open Data portal repository */
   //TString path = "root://eospublic.cern.ch//eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/";
 
@@ -30,182 +31,252 @@ void main_TTbarAnalysis(int proof = 0, int option= 0)
   // If using the options (11,12,13,14) of splitting data, 
   // you need to add the samples later with: hadd data.root dataA.root dataB.root dataC.root dataD.root
   //***************************************************************************************************//
-  if (proof == 1)  TProof::Open("");
+  //if (proof == 1)  TProof::Open("");
   
   
-  if (option==11 || option==0){
-    TChain* chain_dataA = new TChain("mini");
-    chain_dataA->AddFile(path+"Data/data_A.1lep.root");
-    if (proof == 1)  chain_dataA->SetProof();
-    chain_dataA->Process("TTbarAnalysis.C+","dataA");
-  }
-  
-  if (option==12 || option==0){
-    TChain* chain_dataB = new TChain("mini");
-    chain_dataB->AddFile(path+"Data/data_B.1lep.root");
-    if (proof == 1)  chain_dataB->SetProof();
-    chain_dataB->Process("TTbarAnalysis.C+","dataB");
-  }
-  
-  if (option==13 || option==0){
-    TChain* chain_dataC = new TChain("mini");
-    chain_dataC->AddFile(path+"Data/data_C.1lep.root");
-    if (proof == 1)  chain_dataC->SetProof();
-    chain_dataC->Process("TTbarAnalysis.C+","dataC");
-  }
-  
-  if (option==14 || option==0){
-    TChain* chain_dataD = new TChain("mini");
-    chain_dataD->AddFile(path+"Data/data_D.1lep.root");
-    if (proof == 1)  chain_dataD->SetProof();
-    chain_dataD->Process("TTbarAnalysis.C+","dataD");
+  if(option==1 || option==0){
+    
+    //data15
+    
+    TChain* chain_data = new TChain("analysis");
+    chain_data->AddFile(path+"Data/data15_periodD.root");
+    chain_data->AddFile(path+"Data/data15_periodE.root");
+    chain_data->AddFile(path+"Data/data15_periodF.root");
+    chain_data->AddFile(path+"Data/data15_periodG.root");
+    chain_data->AddFile(path+"Data/data15_periodH.root");
+    chain_data->AddFile(path+"Data/data15_periodJ.root");
+    
+    //data16
+    
+    chain_data->AddFile(path+"Data/data16_periodA.root");
+    chain_data->AddFile(path+"Data/data16_periodB.root");
+    chain_data->AddFile(path+"Data/data16_periodC.root");
+    chain_data->AddFile(path+"Data/data16_periodD.root");
+    chain_data->AddFile(path+"Data/data16_periodE.root");
+    chain_data->AddFile(path+"Data/data16_periodF.root");
+    chain_data->AddFile(path+"Data/data16_periodG.root");
+    chain_data->AddFile(path+"Data/data16_PeriodI.root");
+    chain_data->AddFile(path+"Data/data16_periodK.root");
+    chain_data->AddFile(path+"Data/data16_periodL.root");
+    //if (proof == 1)  chain_data->SetProof();
+    chain_data->Process("TTbarAnalysis.C+","data");
+    
   }
    
   
   //////////////////////  MC samples
   
-  if (option==2 || option==0)   {
+  if (option==2 || option==0){
     
     // diboson
-    TChain* chain_ZqqZll = new TChain("mini");
-    chain_ZqqZll->AddFile(path+"MC/mc_363356.ZqqZll.1lep.root");
-    if (proof == 1)  chain_ZqqZll->SetProof();
-    chain_ZqqZll->Process("TTbarAnalysis.C+","ZqqZll");
     
-    TChain* chain_WqqZll = new TChain("mini");
-    chain_WqqZll->AddFile(path+"MC/mc_363358.WqqZll.1lep.root");
-    if (proof == 1)  chain_WqqZll->SetProof();
-    chain_WqqZll->Process("TTbarAnalysis.C+","WqqZll");
+    TChain* chain_llll = new TChain("analysis");
+    chain_llll->AddFile(path+"MC/mc_700600.Sh_2212_llll.1LMET30.root");
+    //if (proof == 1)  chain_llll->SetProof();
+    chain_llll->Process("TTbarAnalysis.C+","Sh_2212_llll");
     
-    TChain* chain_WpqqWmlv = new TChain("mini");
-    chain_WpqqWmlv->AddFile(path+"MC/mc_363359.WpqqWmlv.1lep.root");
-    if (proof == 1)  chain_WpqqWmlv->SetProof();
-    chain_WpqqWmlv->Process("TTbarAnalysis.C+","WpqqWmlv");
+    TChain* chain_lllv = new TChain("analysis");
+    chain_lllv->AddFile(path+"MC/mc_700601.Sh_2212_lllv.1LMET30.root");
+    //if (proof == 1)  chain_lllv->SetProof();
+    chain_lllv->Process("TTbarAnalysis.C+","Sh_2212_lllv");
     
-    TChain* chain_WplvWmqq = new TChain("mini");
-    chain_WplvWmqq->AddFile(path+"MC/mc_363360.WplvWmqq.1lep.root");
-    if (proof == 1)  chain_WplvWmqq->SetProof();
-    chain_WplvWmqq->Process("TTbarAnalysis.C+","WplvWmqq");
+    TChain* chain_llvv_os = new TChain("analysis");
+    chain_llvv_os->AddFile(path+"MC/mc_700602.Sh_2212_llvv_os.1LMET30.root");
+    //if (proof == 1)  chain_llvv_os->SetProof();
+    chain_llvv_os->Process("TTbarAnalysis.C+","Sh_2212_llvv_os");
+
+    TChain* chain_llvv_ss = new TChain("analysis");
+    chain_llvv_ss->AddFile(path+"MC/mc_700603.Sh_2212_llvv_ss.1LMET30.root");
+    //if (proof == 1)  chain_llvv_ss->SetProof();
+    chain_llvv_ss->Process("TTbarAnalysis.C+","Sh_2212_llvv_ss");
+
+    TChain* chain_lvvv = new TChain("analysis");
+    chain_lvvv->AddFile(path+"MC/mc_700604.Sh_2212_lvvv.1LMET30.root");
+    //if (proof == 1)  chain_lvvv->SetProof();
+    chain_lvvv->Process("TTbarAnalysis.C+","Sh_2212_lvvv");
+
+    TChain* chain_vvvv = new TChain("analysis");
+    chain_vvvv->AddFile(path+"MC/mc_700605.Sh_2212_vvvv.1LMET30.root");
+    //if (proof == 1)  chain_vvvv->SetProof();
+    chain_vvvv->Process("TTbarAnalysis.C+","Sh_2212_vvvv");
+
+    TChain* chain_WlvWqq = new TChain("analysis");
+    chain_WlvWqq->AddFile(path+"MC/mc_700488.Sh_2211_WlvWqq.1LMET30.root");
+    //if (proof == 1)  chain_WlvWqq->SetProof();
+    chain_WlvWqq->Process("TTbarAnalysis.C+","Sh_2211_WlvWqq");
+
+    TChain* chain_WlvZqq = new TChain("analysis");
+    chain_WlvZqq->AddFile(path+"MC/mc_700489.Sh_2211_WlvZqq.1LMET30.root");
+    //if (proof == 1)  chain_WlvZqq->SetProof();
+    chain_WlvZqq->Process("TTbarAnalysis.C+","Sh_2211_WlvZqq");
+
+    TChain* chain_WlvZbb = new TChain("analysis");
+    chain_WlvZbb->AddFile(path+"MC/mc_700490.Sh_2211_WlvZbb.1LMET30.root");
+    //if (proof == 1)  chain_WlvZbb->SetProof();
+    chain_WlvZbb->Process("TTbarAnalysis.C+","Sh_2211_WlvZbb");   
+  
+    TChain* chain_ZqqZll = new TChain("analysis");
+    chain_ZqqZll->AddFile(path+"MC/mc_700493.Sh_2211_ZqqZll.1LMET30.root");
+    //if (proof == 1)  chain_ZqqZll->SetProof();
+    chain_ZqqZll->Process("TTbarAnalysis.C+","Sh_2211_ZqqZll");
+
+    TChain* chain_ZbbZll = new TChain("analysis");
+    chain_ZbbZll->AddFile(path+"MC/mc_700494.Sh_2211_ZbbZll.1LMET30.root");
+    //if (proof == 1)  chain_ZbbZll->SetProof();
+    chain_ZbbZll->Process("TTbarAnalysis.C+","Sh_2211_ZbbZll");
+
+    TChain* chain_ZqqZvv = new TChain("analysis");
+    chain_ZqqZvv->AddFile(path+"MC/mc_700495.Sh_2211_ZqqZvv.1LMET30.root");
+    //if (proof == 1)  chain_ZqqZvv->SetProof();
+    chain_ZqqZvv->Process("TTbarAnalysis.C+","Sh_2211_ZqqZvv");
     
-    TChain* chain_WlvZqq = new TChain("mini");
-    chain_WlvZqq->AddFile(path+"MC/mc_363489.WlvZqq.1lep.root");
-    if (proof == 1)  chain_WlvZqq->SetProof();
-    chain_WlvZqq->Process("TTbarAnalysis.C+","WlvZqq");
-    
-    TChain* chain_llll = new TChain("mini");
-    chain_llll->AddFile(path+"MC/mc_363490.llll.1lep.root");
-    if (proof == 1)  chain_llll->SetProof();
-    chain_llll->Process("TTbarAnalysis.C+","llll");
-    
-    TChain* chain_lllv = new TChain("mini");
-    chain_lllv->AddFile(path+"MC/mc_363491.lllv.1lep.root");
-    if (proof == 1)  chain_lllv->SetProof();
-    chain_lllv->Process("TTbarAnalysis.C+","lllv");
-    
-    TChain* chain_llvv = new TChain("mini");
-    chain_llvv->AddFile(path+"MC/mc_363492.llvv.1lep.root");
-    if (proof == 1)  chain_llvv->SetProof();
-    chain_llvv->Process("TTbarAnalysis.C+","llvv");
-    
-    TChain* chain_lvvv = new TChain("mini");
-    chain_lvvv->AddFile(path+"MC/mc_363493.lvvv.1lep.root");
-    if (proof == 1)  chain_lvvv->SetProof();
-    chain_lvvv->Process("TTbarAnalysis.C+","lvvv");
-    
+    TChain* chain_ZbbZvv = new TChain("analysis");
+    chain_ZbbZvv->AddFile(path+"MC/mc_700496.Sh_2211_ZbbZvv.1LMET30.root");
+    //if (proof == 1)  chain_ZbbZvv->SetProof();
+    chain_ZbbZvv->Process("TTbarAnalysis.C+","Sh_2211_ZbbZvv");
+
     
     // Z+jets inclusive
-    TChain* chain_Zee = new TChain("mini");
-    chain_Zee->AddFile(path+"MC/mc_361106.Zee.1lep.root");
-    if (proof == 1)  chain_Zee->SetProof();
-    chain_Zee->Process("TTbarAnalysis.C+","Zee");
+
+    TChain* chain_Zee_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Zee_maxHTpTV2_BFilter->AddFile(path+"MC/mc_700320.Sh_2211_Zee_maxHTpTV2_BFilter.1LMET30.root");
+    //if (proof == 1)  chain_Zee_maxHTpTV2_BFilter->SetProof();
+    chain_Zee_maxHTpTV2_BFilter->Process("TTbarAnalysis.C+","Sh_2211_Zee_maxHTpTV2_BFilter");
+
+    TChain* chain_Zee_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Zee_maxHTpTV2_CVetoBVeto->AddFile(path+"MC/mc_700322.Sh_2211_Zee_maxHTpTV2_CVetoBVeto.1LMET30.root");
+    //if (proof == 1)  chain_Zee_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Zee_maxHTpTV2_CVetoBVeto->Process("TTbarAnalysis.C+","Sh_2211_Zee_maxHTpTV2_CVetoBVeto");
+
+    TChain* chain_Zmumu_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Zmumu_maxHTpTV2_BFilter->AddFile(path+"MC/mc_700323.Sh_2211_Zmumu_maxHTpTV2_BFilter.1LMET30.root");
+    //if (proof == 1)  chain_Zmumu_maxHTpTV2_BFilter->SetProof();
+    chain_Zmumu_maxHTpTV2_BFilter->Process("TTbarAnalysis.C+","Sh_2211_Zmumu_maxHTpTV2_BFilter");
+
+    TChain* chain_Zmumu_maxHTpTV2_CFilterBVeto = new TChain("analysis");
+    chain_Zmumu_maxHTpTV2_CFilterBVeto->AddFile(path+"MC/mc_700324.Sh_2211_Zmumu_maxHTpTV2_CFilterBVeto.1LMET30.root");
+    //if (proof == 1)  chain_Zmumu_maxHTpTV2_CFilterBVeto->SetProof();
+    chain_Zmumu_maxHTpTV2_CFilterBVeto->Process("TTbarAnalysis.C+","Sh_2211_Zmumu_maxHTpTV2_CFilterBVeto");
+
+    TChain* chain_Zmumu_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Zmumu_maxHTpTV2_CVetoBVeto->AddFile(path+"MC/mc_700325.Sh_2211_Zmumu_maxHTpTV2_CVetoBVeto.1LMET30.root");
+    //if (proof == 1)  chain_Zmumu_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Zmumu_maxHTpTV2_CVetoBVeto->Process("TTbarAnalysis.C+","Sh_2211_Zmumu_maxHTpTV2_CVetoBVeto");
+
     
-    TChain* chain_Zmumu = new TChain("mini");
-    chain_Zmumu->AddFile(path+"MC/mc_361107.Zmumu.1lep.root");
-    if (proof == 1)  chain_Zmumu->SetProof();
-    chain_Zmumu->Process("TTbarAnalysis.C+","Zmumu");
+    TChain* chain_Ztautau_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Ztautau_maxHTpTV2_BFilter->AddFile(path+"MC/mc_700792.Sh_2214_Ztautau_maxHTpTV2_BFilter.1LMET30.root");
+    //if (proof == 1)  chain_Ztautau_maxHTpTV2_BFilter->SetProof();
+    chain_Ztautau_maxHTpTV2_BFilter->Process("TTbarAnalysis.C+","Sh_2214_Ztautau_maxHTpTV2_BFilter");
     
-    TChain* chain_Ztautau = new TChain("mini");
-    chain_Ztautau->AddFile(path+"MC/mc_361108.Ztautau.1lep.root");
-    if (proof == 1)  chain_Ztautau->SetProof();
-    chain_Ztautau->Process("TTbarAnalysis.C+","Ztautau");
+    TChain* chain_Ztautau_maxHTpTV2_CFilterBVeto = new TChain("analysis");
+    chain_Ztautau_maxHTpTV2_CFilterBVeto->AddFile(path+"MC/mc_700793.Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto.1LMET30.root");
+    //if (proof == 1)  chain_Ztautau_maxHTpTV2_CFilterBVeto->SetProof();
+    chain_Ztautau_maxHTpTV2_CFilterBVeto->Process("TTbarAnalysis.C+","Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto");
+
+    TChain* chain_Ztautau_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Ztautau_maxHTpTV2_CVetoBVeto->AddFile(path+"MC/mc_700794.Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto.1LMET30.root");
+    //if (proof == 1)  chain_Ztautau_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Ztautau_maxHTpTV2_CVetoBVeto->Process("TTbarAnalysis.C+","Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto");
+    
+    
   }// option 2
   
 
   if (option==3 || option==0)   {
-    //single top
-    TChain* chain_single_top_tchan = new TChain("mini");
-    chain_single_top_tchan->AddFile(path+"MC/mc_410011.single_top_tchan.1lep.root");
-    if (proof == 1)  chain_single_top_tchan->SetProof();
-    chain_single_top_tchan->Process("TTbarAnalysis.C+","single_top_tchan");
-    
-    TChain* chain_single_antitop_tchan = new TChain("mini");
-    chain_single_antitop_tchan->AddFile(path+"MC/mc_410012.single_antitop_tchan.1lep.root");
-    if (proof == 1)  chain_single_antitop_tchan->SetProof();
-    chain_single_antitop_tchan->Process("TTbarAnalysis.C+","single_antitop_tchan");
-    
-    TChain* chain_single_top_schan = new TChain("mini");
-    chain_single_top_schan->AddFile(path+"MC/mc_410025.single_top_schan.1lep.root");
-    if (proof == 1)  chain_single_top_schan->SetProof();
-    chain_single_top_schan->Process("TTbarAnalysis.C+","single_top_schan");
-    
-    TChain* chain_single_antitop_schan = new TChain("mini");
-    chain_single_antitop_schan->AddFile(path+"MC/mc_410026.single_antitop_schan.1lep.root");
-    if (proof == 1)  chain_single_antitop_schan->SetProof();
-    chain_single_antitop_schan->Process("TTbarAnalysis.C+","single_antitop_schan");
-    
-    TChain* chain_single_top_wtchan = new TChain("mini");
-    chain_single_top_wtchan->AddFile(path+"MC/mc_410013.single_top_wtchan.1lep.root");
-    if (proof == 1)  chain_single_top_wtchan->SetProof();
-    chain_single_top_wtchan->Process("TTbarAnalysis.C+","single_top_wtchan");
-    
-    TChain* chain_single_antitop_wtchan = new TChain("mini");
-    chain_single_antitop_wtchan->AddFile(path+"MC/mc_410014.single_antitop_wtchan.1lep.root");
-    if (proof == 1)  chain_single_antitop_wtchan->SetProof();
-    chain_single_antitop_wtchan->Process("TTbarAnalysis.C+","single_antitop_wtchan");
 
+    //single top
+
+    TChain* chain_tchan_BW50_lept_top = new TChain("analysis");
+    chain_tchan_BW50_lept_top->AddFile(path+"MC/mc_410658.PhPy8EG_A14_tchan_BW50_lept_top.1LMET30.root");
+    //if (proof == 1)  chain_tchan_BW50_lept_top->SetProof();
+    chain_tchan_BW50_lept_top->Process("TTbarAnalysis.C+","PhPy8EG_A14_tchan_BW50_lept_top");
+
+    TChain* chain_tchan_BW50_lept_antitop = new TChain("analysis");
+    chain_tchan_BW50_lept_antitop->AddFile(path+"MC/mc_410659.PhPy8EG_A14_tchan_BW50_lept_antitop.1LMET30.root");
+    //if (proof == 1)  chain_tchan_BW50_lept_antitop->SetProof();
+    chain_tchan_BW50_lept_antitop->Process("TTbarAnalysis.C+","PhPy8EG_A14_tchan_BW50_lept_antitop");
+    
     //ttbar
-    TChain* chain_ttbar_lep = new TChain("mini");
-    chain_ttbar_lep->AddFile(path+"MC/mc_410000.ttbar_lep.1lep.root");
-    if (proof == 1)  chain_ttbar_lep->SetProof();
-    chain_ttbar_lep->Process("TTbarAnalysis.C+","ttbar_lep");
+    
+    TChain* chain_ttbar_nonallhad = new TChain("analysis");
+    chain_ttbar_nonallhad->AddFile(path+"MC/mc_410470.PhPy8EG_A14_ttbar_hdamp258p75_nonallhad.1LMET30.root");
+    //if (proof == 1)  chain_ttbar_nonallhad->SetProof();
+    chain_ttbar_nonallhad->Process("TTbarAnalysis.C+","PhPy8EG_A14_ttbar_hdamp258p75_nonallhad");
+
+    TChain* chain_ttbar_allhad = new TChain("analysis");
+    chain_ttbar_allhad->AddFile(path+"MC/mc_410471.PhPy8EG_A14_ttbar_hdamp258p75_allhad.1LMET30.root");
+    //if (proof == 1)  chain_ttbar_allhad->SetProof();
+    chain_ttbar_allhad->Process("TTbarAnalysis.C+","PhPy8EG_A14_ttbar_hdamp258p75_allhad");
     
   } // option 3
   
   
-  if (option==4 || option==0)   {
-  // W+jets inclusive
-  TChain* chain_Wplusenu = new TChain("mini");
-  chain_Wplusenu->AddFile(path+"MC/mc_361100.Wplusenu.1lep.root");
-  if (proof == 1)  chain_Wplusenu->SetProof();
-  chain_Wplusenu->Process("TTbarAnalysis.C+","Wplusenu");
+  if (option==4 || option==0){
+    
+    // W+jets inclusive
+    
+    TChain* chain_Wenu_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Wenu_maxHTpTV2_BFilter->AddFile(path+"MC/mc_700338.Sh_2211_Wenu_maxHTpTV2_BFilter.1LMET30.root");
+    //if (proof == 1)  chain_Wenu_maxHTpTV2_BFilter->SetProof();
+    chain_Wenu_maxHTpTV2_BFilter->Process("TTbarAnalysis.C+","Sh_2211_Wenu_maxHTpTV2_BFilter");
 
-  TChain* chain_Wplusmunu = new TChain("mini");
-  chain_Wplusmunu->AddFile(path+"MC/mc_361101.Wplusmunu.1lep.root");
-  if (proof == 1)  chain_Wplusmunu->SetProof();
-  chain_Wplusmunu->Process("TTbarAnalysis.C+","Wplusmunu");
+    TChain* chain_Wenu_maxHTpTV2_CFilterBVeto = new TChain("analysis");
+    chain_Wenu_maxHTpTV2_CFilterBVeto->AddFile(path+"MC/mc_700339.Sh_2211_Wenu_maxHTpTV2_CFilterBVeto.1LMET30.root");
+    //if (proof == 1)  chain_Wenu_maxHTpTV2_CFilterBVeto->SetProof();
+    chain_Wenu_maxHTpTV2_CFilterBVeto->Process("TTbarAnalysis.C+","Sh_2211_Wenu_maxHTpTV2_CFilterBVeto");
 
-  TChain* chain_Wplustaunu = new TChain("mini");
-  chain_Wplustaunu->AddFile(path+"MC/mc_361102.Wplustaunu.1lep.root");
-  if (proof == 1)  chain_Wplustaunu->SetProof();
-  chain_Wplustaunu->Process("TTbarAnalysis.C+","Wplustaunu");
+    TChain* chain_Wenu_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Wenu_maxHTpTV2_CVetoBVeto->AddFile(path+"MC/mc_700340.Sh_2211_Wenu_maxHTpTV2_CVetoBVeto.1LMET30.root");
+    //if (proof == 1)  chain_Wenu_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Wenu_maxHTpTV2_CVetoBVeto->Process("TTbarAnalysis.C+","Sh_2211_Wenu_maxHTpTV2_CVetoBVeto");
+
+    TChain* chain_Wmunu_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Wmunu_maxHTpTV2_BFilter->AddFile(path+"MC/mc_700341.Sh_2211_Wmunu_maxHTpTV2_BFilter.1LMET30.root");
+    //if (proof == 1)  chain_Wmunu_maxHTpTV2_BFilter->SetProof();
+    chain_Wmunu_maxHTpTV2_BFilter->Process("TTbarAnalysis.C+","Sh_2211_Wmunu_maxHTpTV2_BFilter");
+
+    TChain* chain_Wmunu_maxHTpTV2_CFilterBVeto = new TChain("analysis");
+    chain_Wmunu_maxHTpTV2_CFilterBVeto->AddFile(path+"MC/mc_700342.Sh_2211_Wmunu_maxHTpTV2_CFilterBVeto.1LMET30.root");
+    //if (proof == 1)  chain_Wmunu_maxHTpTV2_CFilterBVeto->SetProof();
+    chain_Wmunu_maxHTpTV2_CFilterBVeto->Process("TTbarAnalysis.C+","Sh_2211_Wmunu_maxHTpTV2_CFilterBVeto");
+
+    TChain* chain_Wmunu_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Wmunu_maxHTpTV2_CVetoBVeto->AddFile(path+"MC/mc_700343.Sh_2211_Wmunu_maxHTpTV2_CVetoBVeto.1LMET30.root");
+    //if (proof == 1)  chain_Wmunu_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Wmunu_maxHTpTV2_CVetoBVeto->Process("TTbarAnalysis.C+","Sh_2211_Wmunu_maxHTpTV2_CVetoBVeto");
+
+    TChain* chain_Wtaunu_L_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Wtaunu_L_maxHTpTV2_BFilter->AddFile(path+"MC/mc_700344.Sh_2211_Wtaunu_L_maxHTpTV2_BFilter.1LMET30.root");
+    //if (proof == 1)  chain_Wtaunu_L_maxHTpTV2_BFilter->SetProof();
+    chain_Wtaunu_L_maxHTpTV2_BFilter->Process("TTbarAnalysis.C+","Sh_2211_Wtaunu_L_maxHTpTV2_BFilter");
+
+    TChain* chain_Wtaunu_L_maxHTpTV2_CFilterBVeto = new TChain("analysis");
+    chain_Wtaunu_L_maxHTpTV2_CFilterBVeto->AddFile(path+"MC/mc_700345.Sh_2211_Wtaunu_L_maxHTpTV2_CFilterBVeto.1LMET30.root");
+    //if (proof == 1)  chain_Wtaunu_L_maxHTpTV2_CFilterBVeto->SetProof();
+    chain_Wtaunu_L_maxHTpTV2_CFilterBVeto->Process("TTbarAnalysis.C+","Sh_2211_Wtaunu_L_maxHTpTV2_CFilterBVeto");
+
+    TChain* chain_Wtaunu_L_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Wtaunu_L_maxHTpTV2_CVetoBVeto->AddFile(path+"MC/mc_700346.Sh_2211_Wtaunu_L_maxHTpTV2_CVetoBVeto.1LMET30.root");
+    //if (proof == 1)  chain_Wtaunu_L_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Wtaunu_L_maxHTpTV2_CVetoBVeto->Process("TTbarAnalysis.C+","Sh_2211_Wtaunu_L_maxHTpTV2_CVetoBVeto");
+
+    TChain* chain_Wtaunu_H_maxHTpTV2_BFilter = new TChain("analysis");
+    chain_Wtaunu_H_maxHTpTV2_BFilter->AddFile(path+"MC/mc_700347.Sh_2211_Wtaunu_H_maxHTpTV2_BFilter.1LMET30.root");
+    //if (proof == 1)  chain_Wtaunu_H_maxHTpTV2_BFilter->SetProof();
+    chain_Wtaunu_H_maxHTpTV2_BFilter->Process("TTbarAnalysis.C+","Sh_2211_Wtaunu_H_maxHTpTV2_BFilter");
+
+    TChain* chain_Wtaunu_H_maxHTpTV2_CFilterBVeto = new TChain("analysis");
+    chain_Wtaunu_H_maxHTpTV2_CFilterBVeto->AddFile(path+"MC/mc_700348.Sh_2211_Wtaunu_H_maxHTpTV2_CFilterBVeto.1LMET30.root");
+    //if (proof == 1)  chain_Wtaunu_H_maxHTpTV2_CFilterBVeto->SetProof();
+    chain_Wtaunu_H_maxHTpTV2_CFilterBVeto->Process("TTbarAnalysis.C+","Sh_2211_Wtaunu_H_maxHTpTV2_CFilterBVeto");
+
+    TChain* chain_Wtaunu_H_maxHTpTV2_CVetoBVeto = new TChain("analysis");
+    chain_Wtaunu_H_maxHTpTV2_CVetoBVeto->AddFile(path+"MC/mc_700349.Sh_2211_Wtaunu_H_maxHTpTV2_CVetoBVeto.1LMET30.root");
+    //if (proof == 1)  chain_Wtaunu_H_maxHTpTV2_CVetoBVeto->SetProof();
+    chain_Wtaunu_H_maxHTpTV2_CVetoBVeto->Process("TTbarAnalysis.C+","Sh_2211_Wtaunu_H_maxHTpTV2_CVetoBVeto");
+    
   } // option 4
-
-  if (option==5 || option==0)   {
-  TChain* chain_Wminusenu = new TChain("mini");
-  chain_Wminusenu->AddFile(path+"MC/mc_361103.Wminusenu.1lep.root");
-  if (proof == 1)  chain_Wminusenu->SetProof();
-  chain_Wminusenu->Process("TTbarAnalysis.C+","Wminusenu");
-
-  TChain* chain_Wminusmunu = new TChain("mini");
-  chain_Wminusmunu->AddFile(path+"MC/mc_361104.Wminusmunu.1lep.root");
-  if (proof == 1)  chain_Wminusmunu->SetProof();
-  chain_Wminusmunu->Process("TTbarAnalysis.C+","Wminusmunu");
-
-  TChain* chain_Wminustaunu = new TChain("mini");
-  chain_Wminustaunu->AddFile(path+"MC/mc_361105.Wminustaunu.1lep.root");
-  if (proof == 1)  chain_Wminustaunu->SetProof();
-  chain_Wminustaunu->Process("TTbarAnalysis.C+","Wminustaunu");
-  } // option 5
 
   
 }

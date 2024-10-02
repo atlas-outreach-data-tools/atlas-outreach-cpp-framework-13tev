@@ -105,6 +105,7 @@ class TTbarAnalysis : public TSelector {
   */
   Float_t ScaleFactor_ELE;
   Float_t ScaleFactor_MUON;
+  Float_t scaleFactor_LepTRIGGER;
   
   Int_t lep_n;
   /*
@@ -141,7 +142,7 @@ class TTbarAnalysis : public TSelector {
   vector<bool> *lep_isTightIso;
   */
   
-  ROOT::VecOps::RVec<bool> *lep_isTight;
+  //ROOT::VecOps::RVec<bool> *lep_isTight;
   ROOT::VecOps::RVec<bool> *lep_isTightID;
   ROOT::VecOps::RVec<bool> *lep_isTightIso;
   
@@ -218,7 +219,8 @@ class TTbarAnalysis : public TSelector {
   */
   TBranch *b_ScaleFactor_ELE;
   TBranch *b_ScaleFactor_MUON;
-
+  TBranch *b_scaleFactor_LepTRIGGER;
+  
   TBranch *b_lep_n;
   TBranch *b_lep_type;
   TBranch *b_lep_pt;
@@ -233,7 +235,7 @@ class TTbarAnalysis : public TSelector {
   TBranch *b_lep_d0;
   TBranch *b_lep_d0sig;
 
-  TBranch *b_lep_isTight;
+  //TBranch *b_lep_isTight;
   TBranch *b_lep_isTightID;
   TBranch *b_lep_isTightIso;
 
@@ -342,7 +344,7 @@ void TTbarAnalysis::Init(TTree *tree)
   lep_z0 = 0;
   lep_d0 = 0;
   lep_d0sig = 0;
-  lep_isTight = 0;
+  //lep_isTight = 0;
   lep_isTightID = 0;
   lep_isTightIso = 0;
   
@@ -379,6 +381,8 @@ void TTbarAnalysis::Init(TTree *tree)
   */
   fChain->SetBranchAddress("ScaleFactor_ELE", &ScaleFactor_ELE, &b_ScaleFactor_ELE);
   fChain->SetBranchAddress("ScaleFactor_MUON", &ScaleFactor_MUON, &b_ScaleFactor_MUON);
+  fChain->SetBranchAddress("scaleFactor_LepTRIGGER", &scaleFactor_LepTRIGGER, &b_scaleFactor_LepTRIGGER);
+
   fChain->SetBranchAddress("lep_n", &lep_n, &b_lep_n);
   fChain->SetBranchAddress("lep_type", &lep_type, &b_lep_type);
   fChain->SetBranchAddress("lep_pt", &lep_pt, &b_lep_pt);
@@ -391,7 +395,7 @@ void TTbarAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("lep_z0", &lep_z0, &b_lep_z0);
   fChain->SetBranchAddress("lep_d0", &lep_d0, &b_lep_d0);
   fChain->SetBranchAddress("lep_d0sig", &lep_d0sig, &b_lep_d0sig);
-  fChain->SetBranchAddress("lep_isTight", &lep_isTight, &b_lep_isTight);
+  //fChain->SetBranchAddress("lep_isTight", &lep_isTight, &b_lep_isTight);
   fChain->SetBranchAddress("lep_isTightID", &lep_isTightID, &b_lep_isTightID);
   fChain->SetBranchAddress("lep_isTightIso", &lep_isTightIso, &b_lep_isTightIso);
   fChain->SetBranchAddress("ScaleFactor_PHOTON", &ScaleFactor_PHOTON, &b_ScaleFactor_PHOTON);
