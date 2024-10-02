@@ -94,11 +94,12 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
       }
     }
     if( is_data==false ){
-      uniqueWeights.insert(initial_sum_of_weights);
+      //uniqueWeights.insert(initial_sum_of_weights);
       if(entry==0){
 	xsec_SF = xsec;
 	filteff_SF = filteff;
 	kfac_SF = kfac;
+	totalSumOfWeights_SF = initial_sum_of_weights;
       }
     }
     
@@ -116,7 +117,7 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 	TLorentzVector leptemp;  leptemp.SetPtEtaPhiE(lep_pt->at(i), lep_eta->at(i), lep_phi->at(i), lep_e->at(i));
 	
 	// Lepton is Tight
-	if( (lep_isTight->at(i)==true) && (lep_isTightID->at(i)==true) && (lep_isTightIso->at(i)==true) ){
+	if( (lep_isTightID->at(i)==true) && (lep_isTightIso->at(i)==true) ){
 	  // Lepton is highly isolated and hard 
 	  if( (lep_pt->at(i)>30.) && ( (lep_ptvarcone30->at(i)/lep_pt->at(i))<0.1) && ( (lep_topoetcone20->at(i)/lep_pt->at(i))<0.1) ){
 	    // electron selection in fiducial region excluding candidates in the transition region between the barrel and endcap electromagnetic calorimeters
@@ -292,12 +293,6 @@ void ZTauTauAnalysis::SlaveTerminate()
 {
   TString option = GetOption();
   bool is_data = option.Contains("data");
-
-  if(is_data==false){
-    for (const auto& weight : uniqueWeights){
-      totalSumOfWeights_SF += weight;
-    }
-  }
   
   hist_scale_factors->SetBinContent(0, xsec_SF);
   hist_scale_factors->SetBinContent(1, totalSumOfWeights_SF);

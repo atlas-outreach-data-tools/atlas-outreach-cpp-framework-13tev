@@ -13,6 +13,7 @@
 // Headers needed by this particular selector
 #include "vector"
 #include <set>
+#include "ROOT/RVec.hxx"
 
 class ZTauTauAnalysis : public TSelector {
 public :
@@ -72,16 +73,18 @@ public :
   
   Bool_t trigE;
   Bool_t trigM;
-  
+
   Float_t ScaleFactor_BTAG;
   Int_t jet_n;
   
-  vector<float> *jet_pt;
-  vector<float> *jet_eta;
-  vector<float> *jet_phi;
-  vector<float> *jet_e;
-  vector<int> *jet_btag_quantile;
-  vector<bool> *jet_jvt;
+  ROOT::VecOps::RVec<float> *jet_pt;
+  ROOT::VecOps::RVec<float> *jet_eta;
+  ROOT::VecOps::RVec<float> *jet_phi;
+  ROOT::VecOps::RVec<float> *jet_e;
+  ROOT::VecOps::RVec<int> *jet_btag_quantile;
+  ROOT::VecOps::RVec<bool> *jet_jvt;
+
+
   /*
   Int_t largeRJet_n;
   vector<float> *largeRJet_pt;
@@ -96,22 +99,23 @@ public :
   Float_t scaleFactor_LepTRIGGER;
   
   Int_t lep_n;
-  vector<int> *lep_type;
-  vector<float> *lep_pt;
-  vector<float> *lep_eta;
-  vector<float> *lep_phi;
-  vector<float> *lep_e;
-  vector<int> *lep_charge;
 
-  vector<float> *lep_ptvarcone30;
-  vector<float> *lep_topoetcone20;
-  vector<float> *lep_z0;
-  vector<float> *lep_d0;
-  vector<float> *lep_d0sig;
+  ROOT::VecOps::RVec<int> *lep_type;
+  ROOT::VecOps::RVec<float> *lep_pt;
+  ROOT::VecOps::RVec<float> *lep_eta;
+  ROOT::VecOps::RVec<float> *lep_phi;
+  ROOT::VecOps::RVec<float> *lep_e;
+  ROOT::VecOps::RVec<int> *lep_charge;
 
-  vector<bool> *lep_isTight;
-  vector<bool> *lep_isTightID;
-  vector<bool> *lep_isTightIso;
+  ROOT::VecOps::RVec<float> *lep_ptvarcone30;
+  ROOT::VecOps::RVec<float> *lep_topoetcone20;
+  ROOT::VecOps::RVec<float> *lep_z0;
+  ROOT::VecOps::RVec<float> *lep_d0;
+  ROOT::VecOps::RVec<float> *lep_d0sig;
+    
+  //ROOT::VecOps::RVec<bool> *lep_isTight;
+  ROOT::VecOps::RVec<bool> *lep_isTightID;
+  ROOT::VecOps::RVec<bool> *lep_isTightIso;
   
   Float_t ScaleFactor_PHOTON;
   /*
@@ -129,24 +133,25 @@ public :
   Float_t ScaleFactor_TAU;
   
   Int_t tau_n;
-  vector<float> *tau_pt;
-  vector<float> *tau_eta;
-  vector<float> *tau_phi;
-  vector<float> *tau_e;
-  vector<float> *tau_charge;
-  vector<int> *tau_nTracks;
-  vector<bool> *tau_isTight;
+  ROOT::VecOps::RVec<float> *tau_pt;
+  ROOT::VecOps::RVec<float> *tau_eta;
+  ROOT::VecOps::RVec<float> *tau_phi;
+  ROOT::VecOps::RVec<float> *tau_e;
+  ROOT::VecOps::RVec<float> *tau_charge;
+  ROOT::VecOps::RVec<int> *tau_nTracks;
+  ROOT::VecOps::RVec<bool> *tau_isTight;
 
-  vector<float> *tau_RNNJetScore;
-  vector<float> *tau_RNNEleScore;
-  
+  ROOT::VecOps::RVec<float> *tau_RNNJetScore;
+  ROOT::VecOps::RVec<float> *tau_RNNEleScore;
+ 
   Float_t met;
   Float_t met_phi;
   Float_t met_mpx;
   Float_t met_mpy;
 
   Float_t initial_events;
-  Float_t initial_sum_of_weights;
+  //Float_t initial_sum_of_weights;
+  Double_t initial_sum_of_weights;
   Float_t initial_sum_of_weights_squared;
   
   // List of branches
@@ -196,7 +201,7 @@ public :
   TBranch *b_lep_d0;
   TBranch *b_lep_d0sig;
 
-  TBranch *b_lep_isTight;
+  //TBranch *b_lep_isTight;
   TBranch *b_lep_isTightID;
   TBranch *b_lep_isTightIso;
 
@@ -310,7 +315,7 @@ void ZTauTauAnalysis::Init(TTree *tree)
   lep_z0 = 0;
   lep_d0 = 0;
   lep_d0sig = 0;
-  lep_isTight = 0;
+  //lep_isTight = 0;
   lep_isTightID = 0;
   lep_isTightIso = 0;
 
@@ -369,7 +374,7 @@ void ZTauTauAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("lep_z0", &lep_z0, &b_lep_z0);
   fChain->SetBranchAddress("lep_d0", &lep_d0, &b_lep_d0);
   fChain->SetBranchAddress("lep_d0sig", &lep_d0sig, &b_lep_d0sig);
-  fChain->SetBranchAddress("lep_isTight", &lep_isTight, &b_lep_isTight);
+  //fChain->SetBranchAddress("lep_isTight", &lep_isTight, &b_lep_isTight);
   fChain->SetBranchAddress("lep_isTightID", &lep_isTightID, &b_lep_isTightID);
   fChain->SetBranchAddress("lep_isTightIso", &lep_isTightIso, &b_lep_isTightIso);
   fChain->SetBranchAddress("ScaleFactor_PHOTON", &ScaleFactor_PHOTON, &b_ScaleFactor_PHOTON);
@@ -404,7 +409,7 @@ void ZTauTauAnalysis::Init(TTree *tree)
   
 
   //fChain->SetBranchAddress("initial_events", &initial_events, &b_initial_events);
-  fChain->SetBranchAddress("initial_sum_of_weights", &initial_sum_of_weights, &b_initial_sum_of_weights);
+  fChain->SetBranchAddress("sum_of_weights", &initial_sum_of_weights, &b_initial_sum_of_weights);
   //fChain->SetBranchAddress("initial_sum_of_weights_squared", &initial_sum_of_weights_squared, &b_initial_sum_of_weights_squared);
   
 
