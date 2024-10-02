@@ -141,7 +141,7 @@ class HWWAnalysis : public TSelector {
   ROOT::VecOps::RVec<float> *lep_d0;
   ROOT::VecOps::RVec<float> *lep_d0sig;
     
-  ROOT::VecOps::RVec<bool> *lep_isTight;
+  //ROOT::VecOps::RVec<bool> *lep_isTight;
   ROOT::VecOps::RVec<bool> *lep_isTightID;
   ROOT::VecOps::RVec<bool> *lep_isTightIso;
   
@@ -229,7 +229,7 @@ class HWWAnalysis : public TSelector {
   TBranch *b_lep_d0;
   TBranch *b_lep_d0sig;
 
-  TBranch *b_lep_isTight;
+  //TBranch *b_lep_isTight;
   TBranch *b_lep_isTightID;
   TBranch *b_lep_isTightIso;
 
@@ -338,7 +338,7 @@ void HWWAnalysis::Init(TTree *tree)
   lep_z0 = 0;
   lep_d0 = 0;
   lep_d0sig = 0;
-  lep_isTight = 0;
+  //lep_isTight = 0;
   lep_isTightID = 0;
   lep_isTightIso = 0;
   
@@ -388,7 +388,7 @@ void HWWAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("lep_z0", &lep_z0, &b_lep_z0);
   fChain->SetBranchAddress("lep_d0", &lep_d0, &b_lep_d0);
   fChain->SetBranchAddress("lep_d0sig", &lep_d0sig, &b_lep_d0sig);
-  fChain->SetBranchAddress("lep_isTight", &lep_isTight, &b_lep_isTight);
+  //fChain->SetBranchAddress("lep_isTight", &lep_isTight, &b_lep_isTight);
   fChain->SetBranchAddress("lep_isTightID", &lep_isTightID, &b_lep_isTightID);
   fChain->SetBranchAddress("lep_isTightIso", &lep_isTightIso, &b_lep_isTightIso);
   fChain->SetBranchAddress("ScaleFactor_PHOTON", &ScaleFactor_PHOTON, &b_ScaleFactor_PHOTON);

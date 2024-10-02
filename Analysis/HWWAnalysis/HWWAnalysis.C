@@ -112,7 +112,7 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 	TLorentzVector leptemp;  leptemp.SetPtEtaPhiE(lep_pt->at(i), lep_eta->at(i), lep_phi->at(i), lep_e->at(i));
 	    
 	// Lepton is Tight
-	if( (lep_isTight->at(i)==true) && (lep_isTightID->at(i)==true) && (lep_isTightIso->at(i)==true) ){
+	if( (lep_isTightID->at(i)==true) && (lep_isTightIso->at(i)==true) ){
 	  // standard lepton isolation requirement => strict isolation
 	  if( (lep_pt->at(i)>15.) && ((lep_ptvarcone30->at(i)/lep_pt->at(i))<0.1) && ((lep_topoetcone20->at(i)/lep_pt->at(i))<0.1) ){
 	    if ( (lep_type->at(i)==11) && (TMath::Abs(lep_eta->at(i))<2.47) && (TMath::Abs(lep_eta->at(i))<1.37 || TMath::Abs(lep_eta->at(i)) > 1.52 ) ){
