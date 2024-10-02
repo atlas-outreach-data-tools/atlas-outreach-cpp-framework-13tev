@@ -68,7 +68,9 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
   fChain->GetTree()->GetEntry(entry);
   nEvents++;
   
-  //if (nEvents % 500000 == 0) std::cout << "Analysed a total of: " << nEvents << " events out of " << fChain->GetTree()->GetEntries() << " in this sample" << std::endl;
+  //if (nEvents % 1000000 == 0) std::cout << "Analysed a total of: " << nEvents << " events out of " << fChain->GetTree()->GetEntries() << " in this sample" << std::endl;
+
+  if(nEvents % 1000000 == 0) std::cout << "Analysed a total of: " << nEvents << " events out of " << fChain->GetEntries() << " in this chain of samples" << std::endl;
   
   if(fChain->GetTree()->GetEntries()>0){
     
@@ -77,8 +79,7 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
     // **********************************************************************************************//
       
     //Scale factors (adding b-tagging as it is used)
-    //Float_t scaleFactor = ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PHOTON*ScaleFactor_TAU;
-    Float_t scaleFactor = ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_TAU;
+    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*scaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_BTAG;
 
     //MC weight
     Float_t m_mcWeight = mcWeight;
@@ -128,7 +129,9 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 	leptemp.SetPtEtaPhiE(lep_pt->at(ii), lep_eta->at(ii), lep_phi->at(ii), lep_e->at(ii));
         
 	// Lepton is Tight
-	if( (lep_isTight->at(ii)==true) && (lep_isTightID->at(ii)==true) && (lep_isTightIso->at(ii)==true)){
+	//if( (lep_isTight->at(ii)==true) && (lep_isTightID->at(ii)==true) && (lep_isTightIso->at(ii)==true)){
+	if( (lep_isTightID->at(ii)==true) && (lep_isTightIso->at(ii)==true)){
+
 	  // standard lepton isolation requirement => strict isolation
 	  lep_tight_n++;
 	  if( lep_pt->at(ii) > 25. ){
@@ -222,7 +225,7 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 		// JVT cleaning
 		bool jvt_pass=true;
 
-		//if (jet_pt->at(i) < 60. && TMath::Abs(jet_eta->at(i)) < 2.4 && jet_jvt->at(i) < 0.59) jvt_pass=false;
+		if(jet_pt->at(ii)<60. && TMath::Abs(jet_eta->at(ii))<2.4 && jet_jvt->at(ii)==false) jvt_pass=false;
 	        
 		if(jvt_pass==true){
 		  if( jet_btag_quantile->at(ii) >= 2 && TMath::Abs(jet_eta->at(ii)) < 2.5 ){
