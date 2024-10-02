@@ -6,17 +6,25 @@
 #include "TChain.h"
 #include "TFile.h"
 #include "TSelector.h"
+#include <TTreeReader.h>
+#include <TTreeReaderValue.h>
+#include <TTreeReaderArray.h>
 #include "TH1.h"
 // Headers needed by this particular selector
 #include "vector"
+#include <set>
+#include "ROOT/RVec.hxx"
+//#include <ROOT/RVec.hxx>
 
 class TTbarAnalysis : public TSelector {
   public :
-  TTree          *fChain;   //!pointer to the analyzed TTree or TChain
 
+  //TTreeReader     fReader;  //!the tree reader
+  TTree          *fChain;   //!pointer to the analyzed TTree or TChain
+  
   //////////////////////////////////////////////////////////
   // histograms
-
+  
   // Global variables histograms
   TH1F *hist_etmiss       = 0;
   TH1F *hist_mtw          = 0;
@@ -24,12 +32,12 @@ class TTbarAnalysis : public TSelector {
   TH1F *hist_syst_mtw     = 0;
   TH1F *hist_Topmass      = 0;
   TH1F *hist_Wmass      = 0;
-
-
+  
+  
   // Leading Lepton histograms
   TH1F *hist_leadleptpt      = 0;
   TH1F *hist_syst_leadleptpt = 0;
-
+  
   TH1F *hist_leadlepteta  = 0;
   TH1F *hist_leadleptE    = 0;
   TH1F *hist_leadleptphi  = 0;
@@ -39,123 +47,232 @@ class TTbarAnalysis : public TSelector {
   TH1F *hist_leadleptetc  = 0;
   TH1F *hist_leadlepz0    = 0;
   TH1F *hist_leadlepd0    = 0;
-
+  
   // Jet variables histograms
   TH1F *hist_n_jets         = 0;
   TH1F *hist_leadjet_pt     = 0;
   TH1F *hist_syst_leadjet_pt= 0;
-
-
+  
+  
   TH1F *hist_leadjet_eta    = 0;
   TH1F *hist_n_bjets        = 0;
   TH1F *hist_leadbjet_pt    = 0;
   TH1F *hist_leadbjet_eta   = 0;
 
-
-
-
+  
+  TH1F *hist_scale_factors  = 0;
+  
+  
   //////////////////////////////////////////////////////////
   // Declaration of leaf types
- 
-   Int_t           runNumber;
-   Int_t           eventNumber;
-   Int_t           channelNumber;
-   Float_t         mcWeight;
-   Float_t         scaleFactor_PILEUP;
-   Float_t         scaleFactor_ELE;
-   Float_t         scaleFactor_MUON;
-   Float_t         scaleFactor_PHOTON;
-   Float_t         scaleFactor_TAU;
-   Float_t         scaleFactor_BTAG;
-   Float_t         scaleFactor_LepTRIGGER;
-   Float_t         scaleFactor_PhotonTRIGGER;
-   Float_t         scaleFactor_TauTRIGGER;
-   Float_t         scaleFactor_DiTauTRIGGER;
-   Bool_t          trigE;
-   Bool_t          trigM;
-   Bool_t          trigP;
-   Bool_t          trigT;
-   Bool_t          trigDT;
-   UInt_t          lep_n;
-   vector<bool>    *lep_truthMatched;
-   vector<bool>    *lep_trigMatched;
-   vector<float>   *lep_pt;
-   vector<float>   *lep_eta;
-   vector<float>   *lep_phi;
-   vector<float>   *lep_E;
-   vector<float>   *lep_z0;
-   vector<int>   *lep_charge;
-   vector<unsigned int> *lep_type;
-   vector<bool>    *lep_isTightID;
-   vector<float>   *lep_ptcone30;
-   vector<float>   *lep_etcone20;
-   vector<float>   *lep_trackd0pvunbiased;
-   vector<float>   *lep_tracksigd0pvunbiased;
-   Float_t         met_et;
-   Float_t         met_phi;
-   UInt_t          jet_n;
-   vector<float>   *jet_pt;
-   vector<float>   *jet_eta;
-   vector<float>   *jet_phi;
-   vector<float>   *jet_E;
-   vector<float>   *jet_jvt;
-   vector<int>     *jet_trueflav;
-   vector<bool>    *jet_truthMatched;
-   vector<float>   *jet_MV2c10;
-   vector<float>   *lep_pt_syst;
-   Float_t         met_et_syst;
-   vector<float>   *jet_pt_syst;
+  
+  Float_t ScaleFactor_PILEUP;
+  Float_t mcWeight;
+  Float_t xsec;
+  Float_t filteff;
+  Float_t kfac;
+  
+  Bool_t trigE;
+  Bool_t trigM;
+  
+  Float_t ScaleFactor_BTAG;
+  Int_t jet_n;
+  /*
+  vector<float> *jet_pt;
+  vector<float> *jet_eta;
+  vector<float> *jet_phi;
+  vector<float> *jet_e;
+  vector<int> *jet_btag_quantile;
+  vector<bool> *jet_jvt;
+  */
+  
+  ROOT::VecOps::RVec<float> *jet_pt;
+  ROOT::VecOps::RVec<float> *jet_eta;
+  ROOT::VecOps::RVec<float> *jet_phi;
+  ROOT::VecOps::RVec<float> *jet_e;
+  ROOT::VecOps::RVec<int> *jet_btag_quantile;
+  ROOT::VecOps::RVec<bool> *jet_jvt;
+  
+  
+  /*
+    Int_t largeRJet_n;
+    vector<float> *largeRJet_pt;
+    vector<float> *largeRJet_eta;
+    vector<float> *largeRJet_phi;
+    vector<float> *largeRJet_e;
+    vector<float> *largeRJet_m;
+    vector<float> *largeRJet_D2;
+  */
+  Float_t ScaleFactor_ELE;
+  Float_t ScaleFactor_MUON;
+  
+  Int_t lep_n;
+  /*
+  vector<int> *lep_type;
+  vector<float> *lep_pt;
+  vector<float> *lep_eta;
+  vector<float> *lep_phi;
+  vector<float> *lep_e;
+  vector<int> *lep_charge;
+
+  vector<float> *lep_ptvarcone30;
+  vector<float> *lep_topoetcone20;
+  vector<float> *lep_z0;
+  vector<float> *lep_d0;
+  vector<float> *lep_d0sig;
+  */
+
+  ROOT::VecOps::RVec<int> *lep_type;
+  ROOT::VecOps::RVec<float> *lep_pt;
+  ROOT::VecOps::RVec<float> *lep_eta;
+  ROOT::VecOps::RVec<float> *lep_phi;
+  ROOT::VecOps::RVec<float> *lep_e;
+  ROOT::VecOps::RVec<int> *lep_charge;
+
+  ROOT::VecOps::RVec<float> *lep_ptvarcone30;
+  ROOT::VecOps::RVec<float> *lep_topoetcone20;
+  ROOT::VecOps::RVec<float> *lep_z0;
+  ROOT::VecOps::RVec<float> *lep_d0;
+  ROOT::VecOps::RVec<float> *lep_d0sig;
+  
+  /*
+  vector<bool> *lep_isTight;
+  vector<bool> *lep_isTightID;
+  vector<bool> *lep_isTightIso;
+  */
+  
+  ROOT::VecOps::RVec<bool> *lep_isTight;
+  ROOT::VecOps::RVec<bool> *lep_isTightID;
+  ROOT::VecOps::RVec<bool> *lep_isTightIso;
+  
+  /*
+  RVec<float> *lep_isTight;
+  RVec<float> *lep_isTightID;
+  RVec<float> *lep_isTightIso;
+  */
+  Float_t ScaleFactor_PHOTON;
+  /*
+  Int_t photon_n;
+  vector<float> *photon_pt;
+  vector<float> *photon_eta;
+  vector<float> *photon_phi;
+  vector<float> *photon_e;
+  vector<float> *photon_ptcone20;
+  vector<float> *photon_topoetcone40;
+  vector<bool> *photon_isTight;
+  vector<bool> *photon_isTightID;
+  vector<bool> *photon_isTightIso;
+  */
+  Float_t ScaleFactor_TAU;
+  /*
+  Int_t tau_n;
+  vector<float> *tau_pt;
+  vector<float> *tau_eta;
+  vector<float> *tau_phi;
+  vector<float> *tau_e;
+  vector<float> *tau_charge;
+  vector<int> *tau_nTracks;
+  vector<bool> *tau_isTight;
+
+  vector<float> *tau_RNNJetScore;
+  vector<float> *tau_RNNEleScore;
+  */
+  Float_t met;
+  Float_t met_phi;
+  Float_t met_mpx;
+  Float_t met_mpy;
+
+  Float_t initial_events;
+  //Float_t initial_sum_of_weights;
+  Double_t initial_sum_of_weights;
+  Float_t initial_sum_of_weights_squared;
 
   // List of branches
-   TBranch        *b_runNumber;   //!
-   TBranch        *b_eventNumber;   //!
-   TBranch        *b_channelNumber;   //!
-   TBranch        *b_mcWeight;   //!
-   TBranch        *b_scaleFactor_PILEUP;   //!
-   TBranch        *b_scaleFactor_ELE;   //!
-   TBranch        *b_scaleFactor_MUON;   //!
-   TBranch        *b_scaleFactor_PHOTON;   //!
-   TBranch        *b_scaleFactor_TAU;   //!
-   TBranch        *b_scaleFactor_BTAG;   //!
-   TBranch        *b_scaleFactor_LepTRIGGER;   //!
-   TBranch        *b_scaleFactor_PhotonTRIGGER;   //!
-   TBranch        *b_scaleFactor_TauTRIGGER;   //!
-   TBranch        *b_scaleFactor_DiTauTRIGGER;   //!
-   TBranch        *b_trigE;   //!
-   TBranch        *b_trigM;   //!
-   TBranch        *b_trigP;   //!
-   TBranch        *b_trigT;   //!
-   TBranch        *b_trigDT;   //!
-   TBranch        *b_lep_n;   //!
-   TBranch        *b_lep_truthMatched;   //!
-   TBranch        *b_lep_trigMatched;   //!
-   TBranch        *b_lep_pt;   //!
-   TBranch        *b_lep_eta;   //!
-   TBranch        *b_lep_phi;   //!
-   TBranch        *b_lep_E;   //!
-   TBranch        *b_lep_z0;   //!
-   TBranch        *b_lep_charge;   //!
-   TBranch        *b_lep_type;   //!
-   TBranch        *b_lep_isTightID;   //!
-   TBranch        *b_lep_ptcone30;   //!
-   TBranch        *b_lep_etcone20;   //!
-   TBranch        *b_lep_trackd0pvunbiased;   //!
-   TBranch        *b_lep_tracksigd0pvunbiased;   //!
-   TBranch        *b_met_et;   //!
-   TBranch        *b_met_phi;   //!
-   TBranch        *b_jet_n;   //!
-   TBranch        *b_jet_pt;   //!
-   TBranch        *b_jet_eta;   //!
-   TBranch        *b_jet_phi;   //!
-   TBranch        *b_jet_E;   //!
-   TBranch        *b_jet_jvt;   //!
-   TBranch        *b_jet_trueflav;   //!
-   TBranch        *b_jet_truthMatched;   //!
-   TBranch        *b_jet_MV2c10;   //!
-   TBranch        *b_lep_pt_syst;   //!
-   TBranch        *b_met_et_syst;   //!
-   TBranch        *b_jet_pt_syst;   //!
+  
+  TBranch *b_ScaleFactor_PILEUP;
+  TBranch *b_mcWeight;
+  TBranch *b_xsec;
+  TBranch *b_filteff;
+  TBranch *b_kfac;
+  
+  TBranch *b_trigE;
+  TBranch *b_trigM;
 
+  TBranch *b_ScaleFactor_BTAG;
+  TBranch *b_jet_n;
+
+  TBranch *b_jet_pt;
+  TBranch *b_jet_eta;
+  TBranch *b_jet_phi;
+  TBranch *b_jet_e;
+  TBranch *b_jet_btag_quantile;
+  TBranch *b_jet_jvt;
+  /*
+  TBranch *b_largeRJet_n;
+  TBranch *b_largeRJet_pt;
+  TBranch *b_largeRJet_eta;
+  TBranch *b_largeRJet_phi;
+  TBranch *b_largeRJet_e;
+  TBranch *b_largeRJet_m;
+  TBranch *b_largeRJet_D2;
+  */
+  TBranch *b_ScaleFactor_ELE;
+  TBranch *b_ScaleFactor_MUON;
+
+  TBranch *b_lep_n;
+  TBranch *b_lep_type;
+  TBranch *b_lep_pt;
+  TBranch *b_lep_eta;
+  TBranch *b_lep_phi;
+  TBranch *b_lep_e;
+  TBranch *b_lep_charge;
+  
+  TBranch *b_lep_ptvarcone30;
+  TBranch *b_lep_topoetcone20;
+  TBranch *b_lep_z0;
+  TBranch *b_lep_d0;
+  TBranch *b_lep_d0sig;
+
+  TBranch *b_lep_isTight;
+  TBranch *b_lep_isTightID;
+  TBranch *b_lep_isTightIso;
+
+  TBranch *b_ScaleFactor_PHOTON;
+  /*
+  TBranch *b_photon_n;
+  TBranch *b_photon_pt;
+  TBranch *b_photon_eta;
+  TBranch *b_photon_phi;
+  TBranch *b_photon_e;
+  TBranch *b_photon_ptcone20;
+  TBranch *b_photon_topoetcone40;
+  TBranch *b_photon_isTight;
+  TBranch *b_photon_isTightID;
+  TBranch *b_photon_isTightIso;
+  */
+  TBranch *b_ScaleFactor_TAU;
+  /*
+  TBranch *b_tau_n;
+  TBranch *b_tau_pt;
+  TBranch *b_tau_eta;
+  TBranch *b_tau_phi;
+  TBranch *b_tau_e;
+  TBranch *b_tau_charge;
+  TBranch *b_tau_nTracks;
+  TBranch *b_tau_isTight;
+
+  TBranch *b_tau_RNNJetScore;
+  TBranch *b_tau_RNNEleScore;
+  */
+  TBranch *b_met;
+  TBranch *b_met_phi;
+  TBranch *b_met_mpx;
+  TBranch *b_met_mpy;
+
+  TBranch *b_initial_events;
+  TBranch *b_initial_sum_of_weights;
+  TBranch *b_initial_sum_of_weights_squared;
+  
 
   TTbarAnalysis(TTree * =0) : fChain(0) { }
   virtual ~TTbarAnalysis() { }
@@ -176,7 +293,7 @@ class TTbarAnalysis : public TSelector {
   virtual void    FillHistogramsLeadJet( double m, float w , TString s);
   virtual void    FillHistogramsTTbar( double m, float w , TString s);
 
-  // Get Output List t osave our histograms in the output file
+  // Get Output List to save our histograms in the output file
   virtual TList  *GetOutputList() const { return fOutput; }
   //
   virtual void    define_histograms();
@@ -191,10 +308,13 @@ class TTbarAnalysis : public TSelector {
 
   int nEvents;
 
-
-
+  Float_t xsec_SF;
+  Float_t totalSumOfWeights_SF;
+  Float_t filteff_SF;
+  Float_t kfac_SF;
 
   ClassDef(TTbarAnalysis,0);
+
 };
 
 #endif
@@ -202,87 +322,116 @@ class TTbarAnalysis : public TSelector {
 #ifdef TTbarAnalysis_cxx
 void TTbarAnalysis::Init(TTree *tree)
 {
-
-  lep_truthMatched = 0;
-   lep_trigMatched = 0;
-   lep_pt = 0;
-   lep_eta = 0;
-   lep_phi = 0;
-   lep_E = 0;
-   lep_z0 = 0;
-   lep_charge = 0;
-   lep_type = 0;
-   lep_isTightID = 0;
-   lep_ptcone30 = 0;
-   lep_etcone20 = 0;
-   lep_trackd0pvunbiased = 0;
-   lep_tracksigd0pvunbiased = 0;
-   jet_pt = 0;
-   jet_eta = 0;
-   jet_phi = 0;
-   jet_E = 0;
-   jet_jvt = 0;
-   jet_trueflav = 0;
-   jet_truthMatched = 0;
-   jet_MV2c10 = 0;
-   lep_pt_syst = 0;
-   jet_pt_syst = 0;
-
-
+  
+  //fReader.SetTree(tree);
+  
+  jet_pt = 0;
+  jet_eta = 0;
+  jet_phi = 0;
+  jet_e = 0;
+  jet_btag_quantile = 0;
+  jet_jvt = 0;
+  lep_type = 0;
+  lep_pt = 0;
+  lep_eta = 0;
+  lep_phi = 0;
+  lep_e = 0;
+  lep_charge = 0;
+  lep_ptvarcone30 = 0;
+  lep_topoetcone20 = 0;
+  lep_z0 = 0;
+  lep_d0 = 0;
+  lep_d0sig = 0;
+  lep_isTight = 0;
+  lep_isTightID = 0;
+  lep_isTightIso = 0;
+  
+  
   // Set branch addresses and branch pointers
   if (!tree) return;
   fChain = tree;
   fChain->SetMakeClass(1);
+  
 
-
-   fChain->SetBranchAddress("runNumber", &runNumber, &b_runNumber);
-   fChain->SetBranchAddress("eventNumber", &eventNumber, &b_eventNumber);
-   fChain->SetBranchAddress("channelNumber", &channelNumber, &b_channelNumber);
-   fChain->SetBranchAddress("mcWeight", &mcWeight, &b_mcWeight);
-   fChain->SetBranchAddress("scaleFactor_PILEUP", &scaleFactor_PILEUP, &b_scaleFactor_PILEUP);
-   fChain->SetBranchAddress("scaleFactor_ELE", &scaleFactor_ELE, &b_scaleFactor_ELE);
-   fChain->SetBranchAddress("scaleFactor_MUON", &scaleFactor_MUON, &b_scaleFactor_MUON);
-   fChain->SetBranchAddress("scaleFactor_PHOTON", &scaleFactor_PHOTON, &b_scaleFactor_PHOTON);
-   fChain->SetBranchAddress("scaleFactor_TAU", &scaleFactor_TAU, &b_scaleFactor_TAU);
-   fChain->SetBranchAddress("scaleFactor_BTAG", &scaleFactor_BTAG, &b_scaleFactor_BTAG);
-   fChain->SetBranchAddress("scaleFactor_LepTRIGGER", &scaleFactor_LepTRIGGER, &b_scaleFactor_LepTRIGGER);
-   fChain->SetBranchAddress("scaleFactor_PhotonTRIGGER", &scaleFactor_PhotonTRIGGER, &b_scaleFactor_PhotonTRIGGER);
-   fChain->SetBranchAddress("trigE", &trigE, &b_trigE);
-   fChain->SetBranchAddress("trigM", &trigM, &b_trigM);
-   fChain->SetBranchAddress("trigP", &trigP, &b_trigP);
-   fChain->SetBranchAddress("lep_n", &lep_n, &b_lep_n);
-   fChain->SetBranchAddress("lep_truthMatched", &lep_truthMatched, &b_lep_truthMatched);
-   fChain->SetBranchAddress("lep_trigMatched", &lep_trigMatched, &b_lep_trigMatched);
-   fChain->SetBranchAddress("lep_pt", &lep_pt, &b_lep_pt);
-   fChain->SetBranchAddress("lep_eta", &lep_eta, &b_lep_eta);
-   fChain->SetBranchAddress("lep_phi", &lep_phi, &b_lep_phi);
-   fChain->SetBranchAddress("lep_E", &lep_E, &b_lep_E);
-   fChain->SetBranchAddress("lep_z0", &lep_z0, &b_lep_z0);
-   fChain->SetBranchAddress("lep_charge", &lep_charge, &b_lep_charge);
-   fChain->SetBranchAddress("lep_type", &lep_type, &b_lep_type);
-   fChain->SetBranchAddress("lep_isTightID", &lep_isTightID, &b_lep_isTightID);
-   fChain->SetBranchAddress("lep_ptcone30", &lep_ptcone30, &b_lep_ptcone30);
-   fChain->SetBranchAddress("lep_etcone20", &lep_etcone20, &b_lep_etcone20);
-   fChain->SetBranchAddress("lep_trackd0pvunbiased", &lep_trackd0pvunbiased, &b_lep_trackd0pvunbiased);
-   fChain->SetBranchAddress("lep_tracksigd0pvunbiased", &lep_tracksigd0pvunbiased, &b_lep_tracksigd0pvunbiased);
-   fChain->SetBranchAddress("met_et", &met_et, &b_met_et);
-   fChain->SetBranchAddress("met_phi", &met_phi, &b_met_phi);
-   fChain->SetBranchAddress("jet_n", &jet_n, &b_jet_n);
-   fChain->SetBranchAddress("jet_pt", &jet_pt, &b_jet_pt);
-   fChain->SetBranchAddress("jet_eta", &jet_eta, &b_jet_eta);
-   fChain->SetBranchAddress("jet_phi", &jet_phi, &b_jet_phi);
-   fChain->SetBranchAddress("jet_E", &jet_E, &b_jet_E);
-   fChain->SetBranchAddress("jet_jvt", &jet_jvt, &b_jet_jvt);
-   fChain->SetBranchAddress("jet_trueflav", &jet_trueflav, &b_jet_trueflav);
-   fChain->SetBranchAddress("jet_truthMatched", &jet_truthMatched, &b_jet_truthMatched);
-   fChain->SetBranchAddress("jet_MV2c10", &jet_MV2c10, &b_jet_MV2c10);
-   fChain->SetBranchAddress("lep_pt_syst", &lep_pt_syst, &b_lep_pt_syst);
-   fChain->SetBranchAddress("met_et_syst", &met_et_syst, &b_met_et_syst);
-   fChain->SetBranchAddress("jet_pt_syst", &jet_pt_syst, &b_jet_pt_syst);
-
-
- 
-
+  fChain->SetBranchAddress("ScaleFactor_PILEUP", &ScaleFactor_PILEUP, &b_ScaleFactor_PILEUP);
+  fChain->SetBranchAddress("mcWeight", &mcWeight, &b_mcWeight);
+  fChain->SetBranchAddress("xsec", &xsec, &b_xsec);
+  fChain->SetBranchAddress("filteff", &filteff, &b_filteff);
+  fChain->SetBranchAddress("kfac", &kfac, &b_kfac);
+  fChain->SetBranchAddress("trigE", &trigE, &b_trigE);
+  fChain->SetBranchAddress("trigM", &trigM, &b_trigM);
+  fChain->SetBranchAddress("ScaleFactor_BTAG", &ScaleFactor_BTAG, &b_ScaleFactor_BTAG);
+  fChain->SetBranchAddress("jet_n", &jet_n, &b_jet_n);
+  fChain->SetBranchAddress("jet_pt", &jet_pt, &b_jet_pt);
+  fChain->SetBranchAddress("jet_eta", &jet_eta, &b_jet_eta);
+  fChain->SetBranchAddress("jet_phi", &jet_phi, &b_jet_phi);
+  fChain->SetBranchAddress("jet_e", &jet_e, &b_jet_e);
+  fChain->SetBranchAddress("jet_btag_quantile", &jet_btag_quantile, &b_jet_btag_quantile);
+  fChain->SetBranchAddress("jet_jvt", &jet_jvt, &b_jet_jvt);
+  /*
+    fChain->SetBranchAddress("largeRJet_n", &largeRJet_n, &b_largeRJet_n);
+    fChain->SetBranchAddress("largeRJet_pt", &largeRJet_pt, &b_largeRJet_pt);
+    fChain->SetBranchAddress("largeRJet_eta", &largeRJet_eta, &b_largeRJet_eta);
+    fChain->SetBranchAddress("largeRJet_phi", &largeRJet_phi, &b_largeRJet_phi);
+    fChain->SetBranchAddress("largeRJet_e", &largeRJet_e, &b_largeRJet_e);
+    fChain->SetBranchAddress("largeRJet_m", &largeRJet_m, &b_largeRJet_m);
+    fChain->SetBranchAddress("largeRJet_D2", &largeRJet_D2, &b_largeRJet_D2);
+  */
+  fChain->SetBranchAddress("ScaleFactor_ELE", &ScaleFactor_ELE, &b_ScaleFactor_ELE);
+  fChain->SetBranchAddress("ScaleFactor_MUON", &ScaleFactor_MUON, &b_ScaleFactor_MUON);
+  fChain->SetBranchAddress("lep_n", &lep_n, &b_lep_n);
+  fChain->SetBranchAddress("lep_type", &lep_type, &b_lep_type);
+  fChain->SetBranchAddress("lep_pt", &lep_pt, &b_lep_pt);
+  fChain->SetBranchAddress("lep_eta", &lep_eta, &b_lep_eta);
+  fChain->SetBranchAddress("lep_phi", &lep_phi, &b_lep_phi);
+  fChain->SetBranchAddress("lep_e", &lep_e, &b_lep_e);
+  fChain->SetBranchAddress("lep_charge", &lep_charge, &b_lep_charge);
+  fChain->SetBranchAddress("lep_ptvarcone30", &lep_ptvarcone30, &b_lep_ptvarcone30);
+  fChain->SetBranchAddress("lep_topoetcone20", &lep_topoetcone20, &b_lep_topoetcone20);
+  fChain->SetBranchAddress("lep_z0", &lep_z0, &b_lep_z0);
+  fChain->SetBranchAddress("lep_d0", &lep_d0, &b_lep_d0);
+  fChain->SetBranchAddress("lep_d0sig", &lep_d0sig, &b_lep_d0sig);
+  fChain->SetBranchAddress("lep_isTight", &lep_isTight, &b_lep_isTight);
+  fChain->SetBranchAddress("lep_isTightID", &lep_isTightID, &b_lep_isTightID);
+  fChain->SetBranchAddress("lep_isTightIso", &lep_isTightIso, &b_lep_isTightIso);
+  fChain->SetBranchAddress("ScaleFactor_PHOTON", &ScaleFactor_PHOTON, &b_ScaleFactor_PHOTON);
+  /*
+    fChain->SetBranchAddress("photon_n", &photon_n, &b_photon_n);
+    fChain->SetBranchAddress("photon_pt", &photon_pt, &b_photon_pt);
+    fChain->SetBranchAddress("photon_eta", &photon_eta, &b_photon_eta);
+    fChain->SetBranchAddress("photon_phi", &photon_phi, &b_photon_phi);
+    fChain->SetBranchAddress("photon_e", &photon_e, &b_photon_e);
+    fChain->SetBranchAddress("photon_ptcone20", &photon_ptcone20, &b_photon_ptcone20);
+    fChain->SetBranchAddress("photon_topoetcone40", &photon_topoetcone40, &b_photon_topoetcone40);
+    fChain->SetBranchAddress("photon_isTight", &photon_isTight, &b_photon_isTight);
+    fChain->SetBranchAddress("photon_isTightID", &photon_isTightID, &b_photon_isTightID);
+    fChain->SetBranchAddress("photon_isTightIso", &photon_isTightIso, &b_photon_isTightIso);
+  */
+  fChain->SetBranchAddress("ScaleFactor_TAU", &ScaleFactor_TAU, &b_ScaleFactor_TAU);
+  /*
+    fChain->SetBranchAddress("tau_n", &tau_n, &b_tau_n);
+    fChain->SetBranchAddress("tau_pt", &tau_pt, &b_tau_pt);
+    fChain->SetBranchAddress("tau_eta", &tau_eta, &b_tau_eta);
+    fChain->SetBranchAddress("tau_phi", &tau_phi, &b_tau_phi);
+    fChain->SetBranchAddress("tau_e", &tau_e, &b_tau_e);
+    fChain->SetBranchAddress("tau_charge", &tau_charge, &b_tau_charge);
+    fChain->SetBranchAddress("tau_nTracks", &tau_nTracks, &b_tau_nTracks);
+    fChain->SetBranchAddress("tau_isTight", &tau_isTight, &b_tau_isTight);
+    fChain->SetBranchAddress("tau_RNNJetScore", &tau_RNNJetScore, &b_tau_RNNJetScore);
+    fChain->SetBranchAddress("tau_RNNEleScore", &tau_RNNEleScore, &b_tau_RNNEleScore);
+  */
+  fChain->SetBranchAddress("met", &met, &b_met);
+  fChain->SetBranchAddress("met_phi", &met_phi, &b_met_phi);
+  fChain->SetBranchAddress("met_mpx", &met_mpx, &b_met_mpx);
+  fChain->SetBranchAddress("met_mpy", &met_mpy, &b_met_mpy);
+  
+  
+  //fChain->SetBranchAddress("initial_events", &initial_events, &b_initial_events);
+  //fChain->SetBranchAddress("initial_sum_of_weights", &initial_sum_of_weights, &b_initial_sum_of_weights);
+  fChain->SetBranchAddress("sum_of_weights", &initial_sum_of_weights, &b_initial_sum_of_weights);
+  //fChain->SetBranchAddress("initial_sum_of_weights_squared", &initial_sum_of_weights_squared, &b_initial_sum_of_weights_squared);
+  
+  
 }
 
 Bool_t TTbarAnalysis::Notify()
