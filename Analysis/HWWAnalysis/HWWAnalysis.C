@@ -51,7 +51,7 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
   
   fChain->GetTree()->GetEntry(entry);
   nEvents++;
-  if (nEvents % 500000 == 0) std::cout << "Analysed a total of: " << nEvents << " events out of " << fChain->GetTree()->GetEntries() << " in this sample" << std::endl;
+  if (nEvents % 1000000 == 0) std::cout << "Analysed a total of: " << nEvents << " events out of " << fChain->GetEntries() << " in this sample" << std::endl;
   
   if(fChain->GetTree()->GetEntries()>0){
     
@@ -61,8 +61,9 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
       
     //Scale factors
     //Float_t scaleFactor = scaleFactor_ELE*scaleFactor_MUON*scaleFactor_LepTRIGGER*scaleFactor_PILEUP;
-    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP;
-
+    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP;
+    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*scaleFactor_LepTRIGGER*ScaleFactor_PILEUP;
+    
     //MC weight
     Float_t m_mcWeight = mcWeight;
 
@@ -191,10 +192,11 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 		  
 	      for(Int_t i=0; i<jet_n; i++){
 		
-		if(jet_pt->at(i) > 20. && TMath::Abs(jet_eta->at(i)) < 2.5){
+		if(jet_pt->at(i)>20. && TMath::Abs(jet_eta->at(i))<2.5){
+
 		  // JVT cleaning
 		  bool jvt_pass=true;
-		  //if (jet_pt->at(i) < 60. && TMath::Abs(jet_eta->at(i)) < 2.4 && jet_jvt->at(i) < 0.59) jvt_pass=false;
+		  if(jet_pt->at(i)<60. && TMath::Abs(jet_eta->at(i))<2.4 && jet_jvt->at(i)==false) jvt_pass=false;
 
 		  if (jvt_pass){
 		    // cut on 85% WP
