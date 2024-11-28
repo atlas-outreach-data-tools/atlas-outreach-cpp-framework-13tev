@@ -30,6 +30,17 @@ class TTbarDilepAnalysis : public TSelector {
   TH1F *hist_lep_eta  = 0;
   TH1F *hist_scale_factors  = 0;
 
+  // Scale factors histograms
+
+  TH1F *hist_ScaleFactor_PILEUP = 0;
+  TH1F *hist_ScaleFactor_BTAG = 0;
+  TH1F *hist_ScaleFactor_ELE = 0;
+  TH1F *hist_ScaleFactor_MUON = 0;
+  TH1F *hist_ScaleFactor_PHOTON = 0;
+  TH1F *hist_ScaleFactor_TAU = 0;
+  TH1F *hist_ScaleFactor_lepTRIGGER = 0;
+  TH1F *hist_ScaleFactor_JVT = 0;
+  
   int muon_n = 0;
   int electron_n = 0;
   int trigger_cut = 0;
@@ -52,6 +63,7 @@ class TTbarDilepAnalysis : public TSelector {
   Bool_t trigM;
 
   Float_t ScaleFactor_BTAG;
+  Float_t ScaleFactor_JVT;
   Int_t jet_n;
   /*
   vector<float> *jet_pt;
@@ -81,7 +93,7 @@ class TTbarDilepAnalysis : public TSelector {
   */
   Float_t ScaleFactor_ELE;
   Float_t ScaleFactor_MUON;
-  Float_t scaleFactor_LepTRIGGER;
+  Float_t ScaleFactor_LepTRIGGER;
   
   Int_t lep_n;
   /*
@@ -176,6 +188,7 @@ class TTbarDilepAnalysis : public TSelector {
   TBranch *b_trigM;
 
   TBranch *b_ScaleFactor_BTAG;
+  TBranch *b_ScaleFactor_JVT;
   TBranch *b_jet_n;
 
   TBranch *b_jet_pt;
@@ -195,7 +208,7 @@ class TTbarDilepAnalysis : public TSelector {
   */
   TBranch *b_ScaleFactor_ELE;
   TBranch *b_ScaleFactor_MUON;
-  TBranch *b_scaleFactor_LepTRIGGER;
+  TBranch *b_ScaleFactor_LepTRIGGER;
   
   TBranch *b_lep_n;
   TBranch *b_lep_type;
@@ -267,6 +280,9 @@ class TTbarDilepAnalysis : public TSelector {
   virtual void    SetInputList(TList *input) { fInput = input; }
 
   virtual void    FillHistogramsGlobal( double m, float w , TString s);
+  virtual void    mc_under_and_overflow();
+  virtual void    fill_hist_scale_factors(float SF_PILEUP, float SF_BTAG, float SF_ELE, float SF_MUON, float SF_PHOTON, float SF_TAU, float SF_lepTRIGGER, float SF_JVT);
+
   
   // Get Output List to save our histograms in the output file
   virtual TList  *GetOutputList() const { return fOutput; }
@@ -349,6 +365,7 @@ void TTbarDilepAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("trigE", &trigE, &b_trigE);
   fChain->SetBranchAddress("trigM", &trigM, &b_trigM);
   fChain->SetBranchAddress("ScaleFactor_BTAG", &ScaleFactor_BTAG, &b_ScaleFactor_BTAG);
+  fChain->SetBranchAddress("ScaleFactor_JVT", &ScaleFactor_JVT, &b_ScaleFactor_JVT);
   fChain->SetBranchAddress("jet_n", &jet_n, &b_jet_n);
   fChain->SetBranchAddress("jet_pt", &jet_pt, &b_jet_pt);
   fChain->SetBranchAddress("jet_eta", &jet_eta, &b_jet_eta);
@@ -367,7 +384,7 @@ void TTbarDilepAnalysis::Init(TTree *tree)
   */
   fChain->SetBranchAddress("ScaleFactor_ELE", &ScaleFactor_ELE, &b_ScaleFactor_ELE);
   fChain->SetBranchAddress("ScaleFactor_MUON", &ScaleFactor_MUON, &b_ScaleFactor_MUON);
-  fChain->SetBranchAddress("scaleFactor_LepTRIGGER", &scaleFactor_LepTRIGGER, &b_scaleFactor_LepTRIGGER);
+  fChain->SetBranchAddress("ScaleFactor_LepTRIGGER", &ScaleFactor_LepTRIGGER, &b_ScaleFactor_LepTRIGGER);
   
   fChain->SetBranchAddress("lep_n", &lep_n, &b_lep_n);
   fChain->SetBranchAddress("lep_type", &lep_type, &b_lep_type);

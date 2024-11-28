@@ -78,15 +78,12 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
     // **********************************************************************************************//
       
     //Scale factors (adding b-tagging as it is used)
-    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*scaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_BTAG;
+    
+    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_JVT;
 
-    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_TAU*scaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_BTAG;
+    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_LepTRIGGER;
 
-    //Float_t scaleFactor = ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_TAU;
-
-    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*scaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_BTAG;
-
-    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP*ScaleFactor_BTAG;
+    //Float_t scaleFactor = 1.0;
     
     //MC weight
     Float_t m_mcWeight = mcWeight;
@@ -242,6 +239,8 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 	      for (int ii=0; ii<length_global; ii++){
 		FillHistogramsGlobal( names_of_global_variable[ii], weight, histonames_of_global_variable[ii] );
 	      }
+
+	      fill_hist_scale_factors(ScaleFactor_PILEUP, ScaleFactor_BTAG, ScaleFactor_ELE, ScaleFactor_MUON, ScaleFactor_PHOTON, ScaleFactor_TAU, ScaleFactor_LepTRIGGER, ScaleFactor_JVT);
 	    }		   		  		      
 	  }
 	}
@@ -297,6 +296,7 @@ void TTbarDilepAnalysis::Terminate()
   const char* filename = output_name;
 
   TFile physicsoutput_TTbarDilep(filename,"recreate");
+  mc_under_and_overflow();
   WriteHistograms();
   physicsoutput_TTbarDilep.Close();
 }
