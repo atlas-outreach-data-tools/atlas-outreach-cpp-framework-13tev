@@ -18,7 +18,7 @@ void main_HWWAnalysis(int proof = 0, int option= 0)
   //TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/2lep/";
   //TString path = "/eos/user/g/garciarm/ntuple-production-samples/ntuples-open-data/";
   //TString path = "/eos/user/e/egramsta/OpenData/2J2LMET30/";
-  TString path = "/eos/user/e/egramsta/OpenData/1LMET30/";
+  TString path = "/eos/user/e/egramsta/OpenData/NOV2024/1LMET30/";
   
   /* The XROOTD path to the CERN Open Data portal repository */
   //TString path = "root://eospublic.cern.ch//eos/opendata/atlas/OutreachDatasets/2020-01-22/2lep/";
@@ -41,28 +41,20 @@ void main_HWWAnalysis(int proof = 0, int option= 0)
     //data15
     
     TChain* chain_data = new TChain("analysis");
-    chain_data->AddFile(path+"Data/data15_periodD.root");
-    chain_data->AddFile(path+"Data/data15_periodE.root");
-    chain_data->AddFile(path+"Data/data15_periodF.root");
-    chain_data->AddFile(path+"Data/data15_periodG.root");
-    chain_data->AddFile(path+"Data/data15_periodH.root");
-    chain_data->AddFile(path+"Data/data15_periodJ.root");
+    chain_data->AddFile(path+"Data/data15.root");
     
     //data16
-    
-    chain_data->AddFile(path+"Data/data16_periodA.root");
-    chain_data->AddFile(path+"Data/data16_periodB.root");
-    chain_data->AddFile(path+"Data/data16_periodC.root");
-    chain_data->AddFile(path+"Data/data16_periodD.root");
-    chain_data->AddFile(path+"Data/data16_periodE.root");
-    chain_data->AddFile(path+"Data/data16_periodF.root");
-    chain_data->AddFile(path+"Data/data16_periodG.root");
-    chain_data->AddFile(path+"Data/data16_PeriodI.root");
-    chain_data->AddFile(path+"Data/data16_periodK.root");
-    chain_data->AddFile(path+"Data/data16_periodL.root");
+
+    chain_data->AddFile(path+"Data/data16_f1.root");
+    chain_data->AddFile(path+"Data/data16_f2.root");
+    chain_data->AddFile(path+"Data/data16_f3.root");
+    chain_data->AddFile(path+"Data/data16_f4.root");
+    chain_data->AddFile(path+"Data/data16_f5.root");
+    chain_data->AddFile(path+"Data/data16_f6.root");
     //if (proof == 1)  chain_data->SetProof();
-    chain_data->Process("HWWAnalysis.C+","data");
     
+    chain_data->Process("HWWAnalysis.C+","data");
+
   }
   
   //////////////////////  MC samples

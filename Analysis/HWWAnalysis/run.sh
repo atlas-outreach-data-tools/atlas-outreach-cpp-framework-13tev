@@ -1,4 +1,7 @@
 #!/bin/bash
+
+start_time=$(date +%s)
+
 ## small script to run the analysis
 analysis="main_HWWAnalysis"
 
@@ -34,3 +37,13 @@ $analysis($parallel,$option)
 EOF
 ##
 echo "end of ROOT execution"
+
+end_time=$(date +%s)
+execution_time=$((end_time - start_time))
+
+# Calculate hours, minutes, and seconds
+hours=$((execution_time / 3600))
+minutes=$(((execution_time % 3600) / 60))
+seconds=$((execution_time % 60))
+
+echo "Execution time: ${hours}h ${minutes}m ${seconds}s"

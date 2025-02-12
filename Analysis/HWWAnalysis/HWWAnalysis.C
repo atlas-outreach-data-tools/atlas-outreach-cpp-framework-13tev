@@ -60,9 +60,12 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
     // **********************************************************************************************//
       
     //Scale factors
-    //Float_t scaleFactor = scaleFactor_ELE*scaleFactor_MUON*scaleFactor_LepTRIGGER*scaleFactor_PILEUP;
-    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP;
-    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*scaleFactor_LepTRIGGER*ScaleFactor_PILEUP;
+    
+    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_JVT;
+
+    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_JVT;
+
+    //Float_t scaleFactor = 1.0;
     
     //MC weight
     Float_t m_mcWeight = mcWeight;
@@ -112,25 +115,21 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 	TLorentzVector leptemp;  leptemp.SetPtEtaPhiE(lep_pt->at(i), lep_eta->at(i), lep_phi->at(i), lep_e->at(i));
 	    
 	// Lepton is Tight
-	if( (lep_isTightID->at(i)==true) && (lep_isTightIso->at(i)==true) ){
-	  // standard lepton isolation requirement => strict isolation
-	  if( (lep_pt->at(i)>15.) && ((lep_ptvarcone30->at(i)/lep_pt->at(i))<0.1) && ((lep_topoetcone20->at(i)/lep_pt->at(i))<0.1) ){
-	    if ( (lep_type->at(i)==11) && (TMath::Abs(lep_eta->at(i))<2.47) && (TMath::Abs(lep_eta->at(i))<1.37 || TMath::Abs(lep_eta->at(i)) > 1.52 ) ){
-	      if( (TMath::Abs(lep_d0->at(i))/lep_d0sig->at(i)<5) && (TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta()))<0.5) ){
-		goodlep_n = goodlep_n + 1;
-		goodlep_index[lep_index] = i;
-		lep_index++;
-		electron_n++;
-	      }
+	if( (lep_isTightID->at(i)==true) && (lep_isTightIso->at(i)==true) && (lep_isTrigMatched->at(i)==true)){
+	  if( (lep_pt->at(i)>15.) ){
+	    // electron selection
+	    if ( (lep_type->at(i)==11) && (TMath::Abs(lep_eta->at(i))<2.47) && (TMath::Abs(lep_eta->at(i))<1.37 || TMath::Abs(lep_eta->at(i))>1.52) ){
+	      goodlep_n = goodlep_n + 1;
+	      goodlep_index[lep_index] = i;
+	      lep_index++;
+	      electron_n++;
 	    }
 	    // muon selection
 	    if ( (lep_type->at(i)==13) && (TMath::Abs(lep_eta->at(i))<2.5) ){
-	      if( (TMath::Abs(lep_d0->at(i))/lep_d0sig->at(i)<3) && (TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta()))<0.5) ){
-		goodlep_n = goodlep_n + 1;
-		goodlep_index[lep_index] = i;
-		lep_index++;
-		muon_n++;
-	      }
+	      goodlep_n = goodlep_n + 1;
+	      goodlep_index[lep_index] = i;
+	      lep_index++;
+	      muon_n++;
 	    }
 	  }
 	}// tight
@@ -150,31 +149,31 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 	  if ( lep_charge->at(goodlep1_index)*lep_charge->at(goodlep2_index) < 0 ){
 
 	    OP_charge_leptons_cut++;
-
+	    
 	    if ( lep_type->at(goodlep1_index) != lep_type->at(goodlep2_index) ){
-
+	      
 	      type_leptons_cut++;
 	      
 	      // TLorentzVector definitions
 	      TLorentzVector Lepton_1  = TLorentzVector();
 	      TLorentzVector Lepton_2  = TLorentzVector();
 	      TLorentzVector      MeT  = TLorentzVector();
-		  
+	      
 	      Lepton_1.SetPtEtaPhiE(lep_pt->at(goodlep1_index), lep_eta->at(goodlep1_index), lep_phi->at(goodlep1_index), lep_e->at(goodlep1_index));
 	      Lepton_2.SetPtEtaPhiE(lep_pt->at(goodlep2_index), lep_eta->at(goodlep2_index), lep_phi->at(goodlep2_index), lep_e->at(goodlep2_index));
 	      MeT.SetPtEtaPhiE(met, 0, met_phi , met);
-		  
+	      
 	      TLorentzVector     Lepton_12 = TLorentzVector();
 	      Lepton_12 = Lepton_1 + Lepton_2;
 		  
 	      float mLL       = Lepton_12.Mag();
 	      float ptLL      = Lepton_12.Pt();
-		  
+	      
 	      float dPhi_LL  = TMath::Abs(lep_phi->at(goodlep1_index) - lep_phi->at(goodlep2_index) );
 	      dPhi_LL        = dPhi_LL < TMath::Pi() ? dPhi_LL : 2*TMath::Pi() - dPhi_LL;
 		  
 	      Float_t MET = met;
-			  
+	      
 	      float dPhiLLmet = TMath::Abs( Lepton_12.Phi() - MeT.Phi() );
 	      dPhiLLmet    = dPhiLLmet < TMath::Pi() ? dPhiLLmet : 2*TMath::Pi() - dPhiLLmet;
 		  
@@ -196,16 +195,17 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 
 		  // JVT cleaning
 		  bool jvt_pass=true;
-		  if(jet_pt->at(i)<60. && TMath::Abs(jet_eta->at(i))<2.4 && jet_jvt->at(i)==false) jvt_pass=false;
 
-		  if (jvt_pass){
+		  if( jet_jvt->at(i)==false ) jvt_pass=false;
+
+		  if( jvt_pass ){
 		    // cut on 85% WP
-		    if ( jet_btag_quantile->at(i) >= 2 && TMath::Abs(jet_eta->at(i)) < 2.5 ){
+		    if( jet_btag_quantile->at(i)>=2 && TMath::Abs(jet_eta->at(i))<2.5 ){
 		      goodbjet_n++;
 		      goodbjet_index[bjet_index] = i;
 		      bjet_index++;
 		    }	      
-		    if (jet_pt->at(i)>30.){
+		    if( jet_pt->at(i)>30. ){
 		      goodjet_n++;
 		      goodjet_index[jet_index] = i;
 		      jet_index++;

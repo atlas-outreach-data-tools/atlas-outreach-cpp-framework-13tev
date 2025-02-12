@@ -103,6 +103,7 @@ class HWWAnalysis : public TSelector {
   Bool_t trigM;
 
   Float_t ScaleFactor_BTAG;
+  Float_t ScaleFactor_JVT;
   Int_t jet_n;
   
   ROOT::VecOps::RVec<float> *jet_pt;
@@ -124,7 +125,7 @@ class HWWAnalysis : public TSelector {
   */
   Float_t ScaleFactor_ELE;
   Float_t ScaleFactor_MUON;
-  Float_t scaleFactor_LepTRIGGER;
+  Float_t ScaleFactor_LepTRIGGER;
   
   Int_t lep_n;
 
@@ -144,6 +145,7 @@ class HWWAnalysis : public TSelector {
   //ROOT::VecOps::RVec<bool> *lep_isTight;
   ROOT::VecOps::RVec<bool> *lep_isTightID;
   ROOT::VecOps::RVec<bool> *lep_isTightIso;
+  ROOT::VecOps::RVec<bool> *lep_isTrigMatched;
   
   Float_t ScaleFactor_PHOTON;
   /*
@@ -194,6 +196,7 @@ class HWWAnalysis : public TSelector {
   TBranch *b_trigM;
 
   TBranch *b_ScaleFactor_BTAG;
+  TBranch *b_ScaleFactor_JVT;
   TBranch *b_jet_n;
 
   TBranch *b_jet_pt;
@@ -213,7 +216,7 @@ class HWWAnalysis : public TSelector {
   */
   TBranch *b_ScaleFactor_ELE;
   TBranch *b_ScaleFactor_MUON;
-  TBranch *b_scaleFactor_LepTRIGGER;
+  TBranch *b_ScaleFactor_LepTRIGGER;
   
   TBranch *b_lep_n;
   TBranch *b_lep_type;
@@ -232,7 +235,8 @@ class HWWAnalysis : public TSelector {
   //TBranch *b_lep_isTight;
   TBranch *b_lep_isTightID;
   TBranch *b_lep_isTightIso;
-
+  TBranch *b_lep_isTrigMatched;
+  
   TBranch *b_ScaleFactor_PHOTON;
   /*
   TBranch *b_photon_n;
@@ -341,7 +345,7 @@ void HWWAnalysis::Init(TTree *tree)
   //lep_isTight = 0;
   lep_isTightID = 0;
   lep_isTightIso = 0;
-  
+  lep_isTrigMatched = 0;
   
   // Set branch addresses and branch pointers
   if (!tree) return;
@@ -356,6 +360,7 @@ void HWWAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("trigE", &trigE, &b_trigE);
   fChain->SetBranchAddress("trigM", &trigM, &b_trigM);
   fChain->SetBranchAddress("ScaleFactor_BTAG", &ScaleFactor_BTAG, &b_ScaleFactor_BTAG);
+  fChain->SetBranchAddress("ScaleFactor_JVT", &ScaleFactor_JVT, &b_ScaleFactor_JVT);
   fChain->SetBranchAddress("jet_n", &jet_n, &b_jet_n);
   fChain->SetBranchAddress("jet_pt", &jet_pt, &b_jet_pt);
   fChain->SetBranchAddress("jet_eta", &jet_eta, &b_jet_eta);
@@ -374,7 +379,7 @@ void HWWAnalysis::Init(TTree *tree)
   */
   fChain->SetBranchAddress("ScaleFactor_ELE", &ScaleFactor_ELE, &b_ScaleFactor_ELE);
   fChain->SetBranchAddress("ScaleFactor_MUON", &ScaleFactor_MUON, &b_ScaleFactor_MUON);
-  fChain->SetBranchAddress("scaleFactor_LepTRIGGER", &scaleFactor_LepTRIGGER, &b_scaleFactor_LepTRIGGER);
+  fChain->SetBranchAddress("ScaleFactor_LepTRIGGER", &ScaleFactor_LepTRIGGER, &b_ScaleFactor_LepTRIGGER);
 
   fChain->SetBranchAddress("lep_n", &lep_n, &b_lep_n);
   fChain->SetBranchAddress("lep_type", &lep_type, &b_lep_type);
@@ -391,6 +396,7 @@ void HWWAnalysis::Init(TTree *tree)
   //fChain->SetBranchAddress("lep_isTight", &lep_isTight, &b_lep_isTight);
   fChain->SetBranchAddress("lep_isTightID", &lep_isTightID, &b_lep_isTightID);
   fChain->SetBranchAddress("lep_isTightIso", &lep_isTightIso, &b_lep_isTightIso);
+  fChain->SetBranchAddress("lep_isTrigMatched", &lep_isTrigMatched, &b_lep_isTrigMatched);
   fChain->SetBranchAddress("ScaleFactor_PHOTON", &ScaleFactor_PHOTON, &b_ScaleFactor_PHOTON);
   /*
   fChain->SetBranchAddress("photon_n", &photon_n, &b_photon_n);
