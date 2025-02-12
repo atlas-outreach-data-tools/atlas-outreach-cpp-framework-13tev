@@ -40,16 +40,26 @@ void main_TTbarDilepAnalysis(int proof = 0, int option= 0)
     //data15
     
     TChain* chain_data = new TChain("analysis");
-    chain_data->AddFile(path+"Data/data15.root");
+    chain_data->AddFile(path+"Data/data15_periodD.root");
+    chain_data->AddFile(path+"Data/data15_periodE.root");
+    chain_data->AddFile(path+"Data/data15_periodF.root");
+    chain_data->AddFile(path+"Data/data15_periodG.root");
+    chain_data->AddFile(path+"Data/data15_periodH.root");
+    chain_data->AddFile(path+"Data/data15_periodJ.root");
     
     //data16
+    chain_data->AddFile(path+"Data/data16_periodA.root");
+    chain_data->AddFile(path+"Data/data16_periodB.root");
+    chain_data->AddFile(path+"Data/data16_periodC.root");
+    chain_data->AddFile(path+"Data/data16_periodD.root");
+    chain_data->AddFile(path+"Data/data16_periodE.root");
+    chain_data->AddFile(path+"Data/data16_periodF.root");
+    chain_data->AddFile(path+"Data/data16_periodG.root");
+    chain_data->AddFile(path+"Data/data16_periodI.root");
+    //chain_data->AddFile(path+"Data/data16_PeriodI.root");
+    chain_data->AddFile(path+"Data/data16_periodK.root");
+    chain_data->AddFile(path+"Data/data16_periodL.root");
     
-    chain_data->AddFile(path+"Data/data16_f1.root");
-    chain_data->AddFile(path+"Data/data16_f2.root");
-    chain_data->AddFile(path+"Data/data16_f3.root");
-    chain_data->AddFile(path+"Data/data16_f4.root");
-    chain_data->AddFile(path+"Data/data16_f5.root");
-    chain_data->AddFile(path+"Data/data16_f6.root");
     //if (proof == 1)  chain_data->SetProof();
     chain_data->Process("TTbarDilepAnalysis.C+","data");
     
