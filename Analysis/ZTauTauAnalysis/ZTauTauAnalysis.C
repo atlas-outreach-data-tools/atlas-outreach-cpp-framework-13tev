@@ -66,9 +66,12 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
     // ****************************************************************************************************************************//
     
     //Scale factors (adding the one for tau)
-    //Float_t scaleFactor = scaleFactor_ELE*scaleFactor_MUON*scaleFactor_LepTRIGGER*scaleFactor_PILEUP*scaleFactor_TAU;
-    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP*ScaleFactor_TAU;
-    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*scaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_TAU;
+
+    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_TAU*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_JVT;
+    
+    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_TAU*ScaleFactor_PILEUP*ScaleFactor_JVT;
+
+    //Float_t scaleFactor = 1.0;
 
     //MC weight
     Float_t m_mcWeight = mcWeight;
@@ -94,7 +97,6 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
       }
     }
     if( is_data==false ){
-      //uniqueWeights.insert(initial_sum_of_weights);
       if(entry==0){
 	xsec_SF = xsec;
 	filteff_SF = filteff;
@@ -103,9 +105,8 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
       }
     }
     
-    
     //Preselection cut for electron/muon trigger
-    if( trigE || trigM){
+    if( trigE || trigM ){
 	  
       // Preselection, one of the tau-leptons decays leptonically (tau_lep) and the other hadronically (tau_had). Leptonic tau decays are reconstructed as electrons and muons
       int goodlep_index =0;
@@ -117,24 +118,21 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 	TLorentzVector leptemp;  leptemp.SetPtEtaPhiE(lep_pt->at(i), lep_eta->at(i), lep_phi->at(i), lep_e->at(i));
 	
 	// Lepton is Tight
-	if( (lep_isTightID->at(i)==true) && (lep_isTightIso->at(i)==true) ){
-	  // Lepton is highly isolated and hard 
-	  if( (lep_pt->at(i)>30.) && ( (lep_ptvarcone30->at(i)/lep_pt->at(i))<0.1) && ( (lep_topoetcone20->at(i)/lep_pt->at(i))<0.1) ){
+	if( (lep_isTightID->at(i)==true) && (lep_isTightIso->at(i)==true) && (lep_isTrigMatched->at(i)==true) ){
+
+	  if( (lep_pt->at(i)>30.) ){
 	    // electron selection in fiducial region excluding candidates in the transition region between the barrel and endcap electromagnetic calorimeters
 	    if( (lep_type->at(i)==11) && (TMath::Abs(lep_eta->at(i))<2.47) && (TMath::Abs(lep_eta->at(i))<1.37 || TMath::Abs(lep_eta->at(i)) > 1.52) ){
-	      if( (TMath::Abs(lep_d0->at(i))/lep_d0sig->at(i)<5) && (TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta()))<0.5) ){
-		goodlep_n = goodlep_n + 1;
-		goodlep_index = i;
-		lep_index++;
-	      }
+	      goodlep_n = goodlep_n + 1;
+	      goodlep_index = i;
+	      lep_index++;
 	    }
+
 	    // muon selection 
 	    if( (lep_type->at(i)==13) && (TMath::Abs(lep_eta->at(i))<2.5) ){
-	      if( (TMath::Abs(lep_d0->at(i))/lep_d0sig->at(i)<3) && (TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta()))<0.5) ){
-		goodlep_n = goodlep_n + 1;
-		goodlep_index = i;
-		lep_index++;
-	      }
+	      goodlep_n = goodlep_n + 1;
+	      goodlep_index = i;
+	      lep_index++;
 	    }
 	  }
 	}
@@ -205,7 +203,7 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 	      if( (jet_pt->at(i)>25.) && (TMath::Abs(jet_eta->at(i))<2.5) ){
 		// JVT cleaning
 		bool jvt_pass=true;
-		if (jet_pt->at(i)<60. && TMath::Abs(jet_eta->at(i))<2.4 && jet_jvt->at(i)==false) jvt_pass=false;
+		if( jet_jvt->at(i)==false ) jvt_pass=false;
 
 		if (jvt_pass){
 		  goodjet_n++;
