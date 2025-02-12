@@ -80,7 +80,7 @@ int main(int argc, char *argv[]){
   m->SetOption(argv[1]);
   m->SetInputLocation(argv[2]);
   string option = argv[1];
-
+  
   
   // run main plotting code
   m->run();
@@ -230,7 +230,7 @@ void Plotting::WhichFiles(){
     Float_t xsec = 1., sumw=1., eff=1., kfac=1.;
     istringstream linestream(line);
     getline(linestream, name);
-
+    
     std::string readme = readname + "/" + name + ".root";
     TFile* file  = TFile::Open(readme.c_str(), "READ");
     TH1F* histo_SF = (TH1F*)file->Get("hist_scale_factors");
@@ -292,12 +292,14 @@ void Plotting::readFiles(){
 	  if (DEBUG) std::cout<<"Scaling histogram: "<< fIter->first << " by a factor of: " << scf << std::endl;
 	  fIter->second->Scale(scf);
 
+	  /*
           // MC overflow
-	  if(std::strstr((fIter->first).c_str(),"four_lep") == NULL )
-          if( abs(fIter->second->GetBinContent(fIter->second->GetNbinsX()+1)) > 0){
-            fIter->second->AddBinContent(fIter->second->GetNbinsX(), fIter->second->GetBinContent(fIter->second->GetNbinsX()+1));
-          }
-
+	  if(std::strstr((fIter->first).c_str(),"four_lep") == NULL ){
+	    if( abs(fIter->second->GetBinContent(fIter->second->GetNbinsX()+1)) > 0){
+	      fIter->second->AddBinContent(fIter->second->GetNbinsX(), fIter->second->GetBinContent(fIter->second->GetNbinsX()+1));
+	    }
+	  }
+	  */
         }
       }
     }
@@ -581,259 +583,6 @@ void Plotting::makePlots(){
     TH1F* ZVV = new TH1F();
     TH1F* ZPrime = new TH1F();
     TH1F* tt_others = new TH1F();
-
-    /*
-    // merge for WBoson and SingleTop and ZPrimeBoosted analyses
-    if( option.find("WBosonAnalysis") != option.npos || 
-        option.find("SingleTopAnalysis") != option.npos || 
-	option.find("ZPrimeBoostedAnalysis") != option.npos )
-    {
-      
-      // diboson samples 
-      diboson = (TH1F*)WlvZqq[fIter->first]->Clone();
-      diboson->Add(WplvWmqq[fIter->first]);
-      if(!(option.find("ZPrimeBoostedAnalysis") != option.npos))  diboson->Add(WpqqWmlv[fIter->first]);
-      diboson->Add(ZqqZll[fIter->first]); 
-      diboson->Add(WqqZll[fIter->first]);
-      if(!(option.find("ZPrimeBoostedAnalysis") != option.npos))  diboson->Add(llll[fIter->first]); 
-      diboson->Add(lllv[fIter->first]);
-      diboson->Add(llvv[fIter->first]);
-      diboson->Add(lvvv[fIter->first]);
-      diboson->SetFillColor(kBlue-6);
-      diboson->SetLineWidth(0);
-  
-      // sliced W+jets samples
-      W = (TH1F*)Wenu_PTV0_70_BFilter[fIter->first]->Clone();
-      W->Add(Wenu_PTV0_70_CFilterBVeto[fIter->first]);
-      W->Add(Wenu_PTV0_70_CVetoBVeto[fIter->first]);
-      W->Add(Wenu_PTV1000[fIter->first]);
-      W->Add(Wenu_PTV140_280_BFilter[fIter->first]);
-      W->Add(Wenu_PTV140_280_CFilterBVeto[fIter->first]);
-      W->Add(Wenu_PTV140_280_CVetoBVeto[fIter->first]);
-      W->Add(Wenu_PTV280_500_BFilter[fIter->first]);
-      W->Add(Wenu_PTV280_500_CFilterBVeto[fIter->first]);
-      W->Add(Wenu_PTV280_500_CVetoBVeto[fIter->first]);
-      W->Add(Wenu_PTV500_1000[fIter->first]);
-      W->Add(Wenu_PTV70_140_BFilter[fIter->first]);
-      W->Add(Wenu_PTV70_140_CFilterBVeto[fIter->first]);
-      W->Add(Wenu_PTV70_140_CVetoBVeto[fIter->first]);
-      W->Add(Wmunu_PTV0_70_BFilter[fIter->first]);
-      W->Add(Wmunu_PTV0_70_CFilterBVeto[fIter->first]);
-      W->Add(Wmunu_PTV0_70_CVetoBVeto[fIter->first]);
-      W->Add(Wmunu_PTV1000[fIter->first]);
-      W->Add(Wmunu_PTV140_280_BFilter[fIter->first]);
-      W->Add(Wmunu_PTV140_280_CFilterBVeto[fIter->first]);
-      W->Add(Wmunu_PTV140_280_CVetoBVeto[fIter->first]);
-      W->Add(Wmunu_PTV280_500_BFilter[fIter->first]);
-      W->Add(Wmunu_PTV280_500_CFilterBVeto[fIter->first]);
-      W->Add(Wmunu_PTV280_500_CVetoBVeto[fIter->first]);
-      W->Add(Wmunu_PTV500_1000[fIter->first]);
-      W->Add(Wmunu_PTV70_140_BFilter[fIter->first]);
-      W->Add(Wmunu_PTV70_140_CFilterBVeto[fIter->first]);
-      W->Add(Wmunu_PTV70_140_CVetoBVeto[fIter->first]);
-      W->Add(Wtaunu_PTV0_70_BFilter[fIter->first]);
-      W->Add(Wtaunu_PTV0_70_CFilterBVeto[fIter->first]);
-      W->Add(Wtaunu_PTV0_70_CVetoBVeto[fIter->first]);
-      W->Add(Wtaunu_PTV1000[fIter->first]);
-      W->Add(Wtaunu_PTV140_280_BFilter[fIter->first]);
-      W->Add(Wtaunu_PTV140_280_CFilterBVeto[fIter->first]);
-      W->Add(Wtaunu_PTV140_280_CVetoBVeto[fIter->first]);
-      W->Add(Wtaunu_PTV280_500_BFilter[fIter->first]);
-      W->Add(Wtaunu_PTV280_500_CFilterBVeto[fIter->first]);
-      W->Add(Wtaunu_PTV280_500_CVetoBVeto[fIter->first]);
-      W->Add(Wtaunu_PTV500_1000[fIter->first]);
-      W->Add(Wtaunu_PTV70_140_BFilter[fIter->first]);
-      W->Add(Wtaunu_PTV70_140_CFilterBVeto[fIter->first]);
-      W->Add(Wtaunu_PTV70_140_CVetoBVeto[fIter->first]);
-      W->SetFillColor(kGreen-3);
-      W->SetLineWidth(0);
-      if( option.find("SingleTopAnalysis") != option.npos ) W->Scale(1.1); //change by hand the normalisation from validation region
-      
-
-      // inclusive Z samples (also could use sliced samples, however this speeds up the process as this is a minor background)     
-      Z = (TH1F*)Zmumu[fIter->first]->Clone();
-      Z->Add(Ztautau[fIter->first]);
-      Z->Add(Zee[fIter->first]);
-      Z->SetFillColor(kPink+9);
-      Z->SetLineWidth(0);
-    
-      V = (TH1F*)W->Clone();
-      V->Add(Ztautau[fIter->first]);
-      V->Add(Zee[fIter->first]);
-      V->Add(Zmumu[fIter->first]);
-      V->SetFillColor(kGreen-3);
-      V->SetLineWidth(0);
-
-      if( option.find("ZPrimeBoostedAnalysis") != option.npos){
-        ZPrime = (TH1F*)ZPrime1000[fIter->first]->Clone();
-        ZPrime->SetFillColor(kRed);
-        ZPrime->SetLineWidth(0);
-      }
-
-      ttbar = (TH1F*)ttbar_lep[fIter->first]->Clone();
-      ttbar->SetFillColor(kOrange-3);
-      ttbar->SetLineWidth(0);
-      if( option.find("ZPrimeBoostedAnalysis") != option.npos) {
-	      if( !(fIter->first.find("leadLR") != option.npos )) ttbar->Scale(0.91); //change by hand the normalisation depending on large-R jets
-      }
-
-      stop = (TH1F*)single_top_tchan[fIter->first]->Clone();
-      stop->Add(single_antitop_tchan[fIter->first]);
-      stop->Add(single_top_wtchan[fIter->first]);
-      stop->Add(single_antitop_wtchan[fIter->first]);
-      stop->Add(single_top_schan[fIter->first]);
-      stop->Add(single_antitop_schan[fIter->first]);
-      stop->SetFillColor(kAzure+8);
-      stop->SetLineWidth(0);
-
-      // only t-channel single top
-      stop_tq = (TH1F*)single_top_tchan[fIter->first]->Clone();
-      stop_tq->Add(single_antitop_tchan[fIter->first]);
-      stop_tq->SetFillColor(kAzure+8);
-      stop_tq->SetLineWidth(0);
-
-      // other single top (tW, s-channel) and ttbar
-      stop_tWtb = (TH1F*)single_top_wtchan[fIter->first]->Clone();
-      stop_tWtb->Add(single_antitop_wtchan[fIter->first]);
-      stop_tWtb->Add(single_top_schan[fIter->first]);
-      stop_tWtb->Add(single_antitop_schan[fIter->first]);
-      stop_tWtb->Add(ttbar_lep[fIter->first]);
-      stop_tWtb->SetFillColor(kOrange-3);
-      stop_tWtb->SetLineWidth(0);
-
-      // special Z and diboson
-      ZVV = (TH1F*)Zmumu[fIter->first]->Clone();
-      ZVV->Add(Ztautau[fIter->first]);
-      ZVV->Add(Zee[fIter->first]);
-      ZVV->Add(WlvZqq[fIter->first]);
-      ZVV->Add(WplvWmqq[fIter->first]);
-      if(!(option.find("ZPrimeBoostedAnalysis") != option.npos))  ZVV->Add(WpqqWmlv[fIter->first]);
-      ZVV->Add(ZqqZll[fIter->first]);
-      ZVV->Add(WqqZll[fIter->first]);
-      if(!(option.find("ZPrimeBoostedAnalysis") != option.npos))  ZVV->Add(llll[fIter->first]);
-      ZVV->Add(lllv[fIter->first]);
-      ZVV->Add(llvv[fIter->first]);
-      ZVV->Add(lvvv[fIter->first]);
-      ZVV->SetFillColor(kPink+9);
-      ZVV->SetLineWidth(0);
-
-
-    }
-
-    // merge for Top 
-    if(option.find("TTbarAnalysis") != option.npos || option.find("ZBosonAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos || option.find("ZZDiBosonAnalysis") != option.npos ){
-
-      //ttbar
-      ttbar = (TH1F*)ttbar_lep[fIter->first]->Clone();
-      ttbar->SetFillColor(kOrange-3);
-      ttbar->SetLineWidth(0);
-
-      // all diboson
-      diboson = (TH1F*)WlvZqq[fIter->first]->Clone();
-      diboson->Add(WplvWmqq[fIter->first]);
-      diboson->Add(WpqqWmlv[fIter->first]);
-      diboson->Add(ZqqZll[fIter->first]);
-      diboson->Add(WqqZll[fIter->first]);
-      diboson->Add(llll[fIter->first]);
-      diboson->Add(lllv[fIter->first]);
-      diboson->Add(llvv[fIter->first]);
-      diboson->Add(lvvv[fIter->first]);
-      diboson->SetFillColor(kBlue-6);
-      diboson->SetLineWidth(0);
-
-      // split diboson into WW+ZZ
-      VV = (TH1F*)WplvWmqq[fIter->first]->Clone(); // WW
-      VV->Add(WpqqWmlv[fIter->first]); // WW
-      VV->Add(ZqqZll[fIter->first]); // Z->qq Z->ll
-      VV->Add(llll[fIter->first]); // Z->ll Z->ll
-      VV->Add(llvv[fIter->first]); // Z->ll Z->vv
-      VV->SetFillColor(kBlue-6);
-      VV->SetLineWidth(0);
-      
-      // only WZ
-      W_Z = (TH1F*)lllv[fIter->first]->Clone(); // W->lv Z->ll
-      W_Z->Add(lvvv[fIter->first]); // W->lv Z->vv
-      W_Z->Add(WqqZll[fIter->first]); // W->qq Z->ll
-      W_Z->Add(WlvZqq[fIter->first]);  // W->lv Z->qq
-      W_Z->SetFillColor(kRed-7);
-      W_Z->SetLineWidth(0);
-
-
-      // split diboson into WW+WZ
-      WWZ = (TH1F*)WplvWmqq[fIter->first]->Clone(); // WW
-      WWZ->Add(WpqqWmlv[fIter->first]); // WW
-      WWZ->Add(lllv[fIter->first]);  // // W->lv Z->ll
-      WWZ->Add(lvvv[fIter->first]); // W->lv Z->vv
-      WWZ->Add(WqqZll[fIter->first]); // W->qq Z->ll
-      WWZ->Add(WlvZqq[fIter->first]);  // W->lv Z->qq
-      WWZ->SetFillColor(kRed-7);
-      WWZ->SetLineWidth(0);
-
-      // only ZZ
-      Z_Z = (TH1F*)llll[fIter->first]->Clone(); // Z->ll Z->ll
-      Z_Z->Add(ZqqZll[fIter->first]); // Z->qq Z->ll
-      Z_Z->Add(llvv[fIter->first]); // Z->ll Z->vv
-      Z_Z->SetFillColor(kBlue-6);
-      Z_Z->SetLineWidth(0);
-      //      Z_Z->Scale(1.08); // loop-induced gluon–gluon gg->ZZ is not included in the current MCs, which can be seen from the 4 lepton control region
-
-
-      // single top
-      stop = (TH1F*)single_top_tchan[fIter->first]->Clone();
-      stop->Add(single_antitop_tchan[fIter->first]);
-      stop->Add(single_top_wtchan[fIter->first]);
-      stop->Add(single_antitop_wtchan[fIter->first]);
-      stop->Add(single_top_schan[fIter->first]);
-      stop->Add(single_antitop_schan[fIter->first]);
-      stop->SetFillColor(kAzure+8);
-      stop->SetLineWidth(0);
-
-      // add ttbar and single top
-      top = (TH1F*)ttbar->Clone();
-      top->Add(stop);
-      top->SetFillColor(kOrange-3);
-      top->SetLineWidth(0);
-
-      // V+jets, both W and Z
-      V = (TH1F*)Wplusenu[fIter->first]->Clone();
-      V->Add(Wplusmunu[fIter->first]);
-      V->Add(Wplustaunu[fIter->first]);
-      V->Add(Wminusenu[fIter->first]);
-      V->Add(Wminusmunu[fIter->first]);
-      V->Add(Wminustaunu[fIter->first]);
-      V->Add(Ztautau[fIter->first]);
-      V->Add(Zee[fIter->first]);
-      V->Add(Zmumu[fIter->first]);
-      V->SetFillColor(kGreen-3);
-      V->SetLineWidth(0);
-    
-      
-      // ttbar, single top, V+jets
-      topV = (TH1F*)top->Clone();
-      topV->Add(V);
-      topV->SetFillColor(kGreen-3);
-      topV->SetLineWidth(0);
-
- 
- 
-      Z = (TH1F*)Zmumu[fIter->first]->Clone();
-      Z->Add(Ztautau[fIter->first]);
-      Z->Add(Zee[fIter->first]);
-      Z->SetFillColor(kPink+9);
-      Z->SetLineWidth(0);
-
-      W = (TH1F*)Wplusenu[fIter->first]->Clone();
-      W->Add(Wplusmunu[fIter->first]);
-      W->Add(Wplustaunu[fIter->first]);
-      W->Add(Wminusenu[fIter->first]);
-      W->Add(Wminusmunu[fIter->first]);
-      W->Add(Wminustaunu[fIter->first]);
-      W->SetFillColor(kGreen-3);
-      W->SetLineWidth(0);
-
-    }
-
-    */
 
     // merge for HWW _Analysis
     if(option.find("HWWAnalysis") != option.npos){
@@ -1129,12 +878,14 @@ void Plotting::makePlots(){
       histstack->Add(tt_others);
     }
 
+    /*
     // data overflow
     if(std::strstr((fIter->first).c_str(),"four_lep") == NULL ){
       if( abs(fIter->second->GetBinContent(fIter->second->GetNbinsX()+1)) > 0){
 	fIter->second->AddBinContent(fIter->second->GetNbinsX(), fIter->second->GetBinContent(fIter->second->GetNbinsX()+1));
       }
     }
+    */
     /////////////////////////////////////////////////////////////////////////////
     // BEGIN PLOTTING //
 
@@ -1178,9 +929,18 @@ void Plotting::makePlots(){
     l.SetTextFont(42);
     l.SetTextSize(0.04);
 
-    if(option.find("HWWAnalysis")     != option.npos){l.DrawLatex(0.18,0.71,"H #rightarrow WW* #rightarrow e#nu#mu#nu, N_{jet} #leq 1");}
-    if(option.find("ZTauTauAnalysis")   != option.npos){l.DrawLatex(0.18,0.71,"Z #rightarrow #tau_{l}#tau_{h}");}
-    if(option.find("TTbarDilepAnalysis")     != option.npos){l.DrawLatex(0.18,0.71,"t#bar{t} #rightarrow W^{-}W^{+}b#bar{b} #rightarrow e#nu #mu#nu b#bar{b}");}
+    if(option.find("HWWAnalysis")     != option.npos){
+      l.DrawLatex(0.18,0.66,"H #rightarrow WW* #rightarrow e#nu#mu#nu, N_{jet} #leq 1");
+      l.DrawLatex(0.18,0.71,"Work in Progress");
+    }
+    if(option.find("ZTauTauAnalysis")   != option.npos){
+      l.DrawLatex(0.18,0.66,"Z #rightarrow #tau_{l}#tau_{h}");
+      l.DrawLatex(0.18,0.71,"Work in Progress");
+    }
+    if(option.find("TTbarDilepAnalysis")     != option.npos){
+      l.DrawLatex(0.18,0.66,"t#bar{t} #rightarrow W^{-}W^{+}b#bar{b} #rightarrow e#nu #mu#nu b#bar{b}");
+      l.DrawLatex(0.18,0.71,"Work in Progress");
+    }
 
     TLatex l2;
     l2.SetNDC();
@@ -1321,8 +1081,8 @@ void Plotting::makePlots(){
     hline->Draw();
 
     // cosmetics
-    h_ratio->SetMinimum(0);
-    h_ratio->SetMaximum(2);
+    h_ratio->SetMinimum(0.5);
+    h_ratio->SetMaximum(1.5);
 
     h_ratio->GetXaxis()->SetTitle(  fIter->second->GetXaxis()->GetTitle()  );
     h_ratio->GetXaxis()->SetTitleSize(0.15);
