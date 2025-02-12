@@ -133,12 +133,14 @@ class TTbarDilepAnalysis : public TSelector {
   //ROOT::VecOps::RVec<bool> *lep_isTight;
   ROOT::VecOps::RVec<bool> *lep_isTightID;
   ROOT::VecOps::RVec<bool> *lep_isTightIso;
-  
+  ROOT::VecOps::RVec<bool> *lep_isTrigMatched;
+
   /*
   RVec<float> *lep_isTight;
   RVec<float> *lep_isTightID;
   RVec<float> *lep_isTightIso;
   */
+
   Float_t ScaleFactor_PHOTON;
   /*
   Int_t photon_n;
@@ -227,6 +229,7 @@ class TTbarDilepAnalysis : public TSelector {
   //TBranch *b_lep_isTight;
   TBranch *b_lep_isTightID;
   TBranch *b_lep_isTightIso;
+  TBranch *b_lep_isTrigMatched;
 
   TBranch *b_ScaleFactor_PHOTON;
   /*
@@ -350,7 +353,7 @@ void TTbarDilepAnalysis::Init(TTree *tree)
   //lep_isTight = 0;
   lep_isTightID = 0;
   lep_isTightIso = 0;
-  
+  lep_isTrigMatched = 0;
   
   // Set branch addresses and branch pointers
   if (!tree) return;
@@ -401,6 +404,7 @@ void TTbarDilepAnalysis::Init(TTree *tree)
   //fChain->SetBranchAddress("lep_isTight", &lep_isTight, &b_lep_isTight);
   fChain->SetBranchAddress("lep_isTightID", &lep_isTightID, &b_lep_isTightID);
   fChain->SetBranchAddress("lep_isTightIso", &lep_isTightIso, &b_lep_isTightIso);
+  fChain->SetBranchAddress("lep_isTrigMatched", &lep_isTrigMatched, &b_lep_isTrigMatched);
   fChain->SetBranchAddress("ScaleFactor_PHOTON", &ScaleFactor_PHOTON, &b_ScaleFactor_PHOTON);
   /*
   fChain->SetBranchAddress("photon_n", &photon_n, &b_photon_n);

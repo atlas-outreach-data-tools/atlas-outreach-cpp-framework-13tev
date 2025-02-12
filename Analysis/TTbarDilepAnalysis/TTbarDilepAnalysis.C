@@ -79,9 +79,9 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
       
     //Scale factors (adding b-tagging as it is used)
     
-    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_JVT;
+    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_JVT;
 
-    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_LepTRIGGER;
+    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_LepTRIGGER;
 
     //Float_t scaleFactor = 1.0;
     
@@ -132,7 +132,7 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 	leptemp.SetPtEtaPhiE(lep_pt->at(ii), lep_eta->at(ii), lep_phi->at(ii), lep_e->at(ii));
         
 	// Lepton is Tight
-	if( (lep_isTightID->at(ii)==true) && (lep_isTightIso->at(ii)==true)){
+	if( (lep_isTightID->at(ii)==true) && (lep_isTightIso->at(ii)==true) && (lep_isTrigMatched->at(ii)==true)){
 	  lep_tight_n++;
 	  if( lep_pt->at(ii) > 25. ){
 	    leppt_n++;
