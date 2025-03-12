@@ -1,0 +1,21 @@
+### name of the histogram in the files, remove any space AFTER the name
+hist_etmiss
+hist_mtw
+hist_syst_etmiss
+hist_syst_mtw
+hist_leadleptpt
+hist_syst_leadleptpt
+hist_leadlepteta
+hist_leadleptE
+hist_leadleptphi
+hist_leadleptch
+hist_leadleptID
+hist_n_jets
+hist_leadjet_pt
+hist_syst_leadjet_pt
+hist_leadjet_eta
+hist_n_bjets
+hist_leadbjet_pt
+hist_leadbjet_eta
+hist_Topmass
+hist_Wmass

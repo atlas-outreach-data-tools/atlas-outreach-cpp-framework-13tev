@@ -1,0 +1,16 @@
+### name of the histogram in the files, add # to comment out
+hist_mLL
+hist_ee_mLL
+hist_mumu_mLL
+hist_leadleptpt
+hist_leadlepteta
+hist_leadleptE
+hist_leadleptphi
+hist_leadleptch
+hist_leadleptID
+hist_subleadleptpt
+hist_subleadlepteta
+hist_subleadleptE
+hist_subleadleptphi
+hist_subleadleptch
+hist_subleadleptID
