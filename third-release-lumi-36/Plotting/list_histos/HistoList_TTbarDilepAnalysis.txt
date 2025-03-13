@@ -1,4 +1,0 @@
-### name of the histogram in the files, add # to comment out
-hist_met
-hist_lep_pt
-hist_lep_eta

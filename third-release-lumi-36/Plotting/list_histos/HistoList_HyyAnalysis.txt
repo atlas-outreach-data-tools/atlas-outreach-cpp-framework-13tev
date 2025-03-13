@@ -1,3 +1,0 @@
-### name of the histogram in the files
-hist_mYY_cat_bin1
-hist_mYY_bin1
