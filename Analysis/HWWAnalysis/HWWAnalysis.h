@@ -95,9 +95,9 @@ class HWWAnalysis : public TSelector {
   
   Float_t ScaleFactor_PILEUP;
   Float_t mcWeight;
-  Float_t xsec;
-  Float_t filteff;
-  Float_t kfac;
+  Double_t xsec;
+  Double_t filteff;
+  Double_t kfac;
   
   Bool_t trigE;
   Bool_t trigM;
@@ -308,10 +308,10 @@ class HWWAnalysis : public TSelector {
   int nEvents;
   std::set<float> uniqueWeights;
 
-  Float_t xsec_SF;
-  Float_t totalSumOfWeights_SF;
-  Float_t filteff_SF;
-  Float_t kfac_SF;
+  Double_t xsec_SF;
+  Double_t totalSumOfWeights_SF;
+  Double_t filteff_SF;
+  Double_t kfac_SF;
   
   ClassDef(HWWAnalysis,0);
   
