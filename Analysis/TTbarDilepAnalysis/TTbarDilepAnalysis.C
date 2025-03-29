@@ -79,7 +79,7 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
       
     //Scale factors (adding b-tagging as it is used)
     
-    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_JVT;
+    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_FTAG*ScaleFactor_JVT;
 
     //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_LepTRIGGER;
 
