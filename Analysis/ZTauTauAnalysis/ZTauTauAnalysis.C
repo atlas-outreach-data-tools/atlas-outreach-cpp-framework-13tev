@@ -205,7 +205,7 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 		bool jvt_pass=true;
 		if( jet_jvt->at(i)==false ) jvt_pass=false;
 
-		if (jvt_pass){
+		if (jvt_pass == true){
 		  goodjet_n++;
 		  goodjet_index = i;
 		}

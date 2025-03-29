@@ -74,6 +74,7 @@ public :
   Bool_t trigE;
   Bool_t trigM;
 
+  Float_t ScaleFactor_FTAG;
   Float_t ScaleFactor_BTAG;
   Float_t ScaleFactor_JVT;
   Int_t jet_n;
@@ -167,6 +168,7 @@ public :
   TBranch *b_trigE;
   TBranch *b_trigM;
 
+  TBranch *b_ScaleFactor_FTAG;
   TBranch *b_ScaleFactor_BTAG;
   TBranch *b_ScaleFactor_JVT;
   TBranch *b_jet_n;
@@ -346,6 +348,8 @@ void ZTauTauAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("kfac", &kfac, &b_kfac);
   fChain->SetBranchAddress("trigE", &trigE, &b_trigE);
   fChain->SetBranchAddress("trigM", &trigM, &b_trigM);
+
+  fChain->SetBranchAddress("ScaleFactor_FTAG", &ScaleFactor_FTAG, &b_ScaleFactor_FTAG);
   fChain->SetBranchAddress("ScaleFactor_BTAG", &ScaleFactor_BTAG, &b_ScaleFactor_BTAG);
   fChain->SetBranchAddress("ScaleFactor_JVT", &ScaleFactor_JVT, &b_ScaleFactor_JVT);
   fChain->SetBranchAddress("jet_n", &jet_n, &b_jet_n);
