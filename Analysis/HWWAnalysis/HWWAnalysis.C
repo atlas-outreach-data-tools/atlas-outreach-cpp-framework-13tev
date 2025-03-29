@@ -61,7 +61,7 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
       
     //Scale factors
     
-    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_JVT;
+    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_FTAG*ScaleFactor_JVT;
 
     //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_JVT;
 
@@ -198,7 +198,7 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 
 		  if( jet_jvt->at(i)==false ) jvt_pass=false;
 
-		  if( jvt_pass ){
+		  if( jvt_pass == true ){
 		    // cut on 85% WP
 		    if( jet_btag_quantile->at(i)>=2 && TMath::Abs(jet_eta->at(i))<2.5 ){
 		      goodbjet_n++;
