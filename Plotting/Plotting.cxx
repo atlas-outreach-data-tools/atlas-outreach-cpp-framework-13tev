@@ -216,6 +216,7 @@ void Plotting::WhichFiles(){
 
   //options
 
+  if( option.find("ZBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos ) { ifile = "inputfiles/Files_base.txt" ;}
   if(option.find("HWWAnalysis")           != option.npos){   ifile = "inputfiles/Files_HWW.txt";}
   if(option.find("TTbarDilepAnalysis")    != option.npos){   ifile = "inputfiles/Files_TTbarDilep.txt";}
   if(option.find("ZTauTauAnalysis")       != option.npos){   ifile = "inputfiles/Files_ZTauTau.txt";}
@@ -257,6 +258,9 @@ void Plotting::readFiles(){
 
   std::cout << "Reading files from: " << readname << " \n " << std::endl;
 
+  if (option.find("TTbarAnalysis") != option.npos){
+    std::cout<<"=====processing TTbarAnalysis====="<<std::endl;
+  }
   if (option.find("HWWAnalysis") != option.npos){
     std::cout<<"=====processing HWWAnalysis====="<<std::endl;
   }
@@ -384,7 +388,7 @@ void Plotting::makePlots(){
   // data
   std::map<std::string,TH1F*> data; 
   
-  // TTbarDilep
+  // default top pair production
   //std::map<std::string,TH1F*> PhPy8EG_A14_ttbar_hdamp258p75_dil;
   std::map<std::string,TH1F*> PhPy8EG_A14_ttbar_hdamp258p75_nonallhad;
   std::map<std::string,TH1F*> PhPy8EG_A14_ttbar_hdamp258p75_allhad;
@@ -464,6 +468,26 @@ void Plotting::makePlots(){
   //PhPy8EG_A14_ttbar_hdamp258p75_dil = histo["PhPy8EG_A14_ttbar_hdamp258p75_dil"];
   PhPy8EG_A14_ttbar_hdamp258p75_nonallhad = histo["PhPy8EG_A14_ttbar_hdamp258p75_nonallhad"];
   PhPy8EG_A14_ttbar_hdamp258p75_allhad = histo["PhPy8EG_A14_ttbar_hdamp258p75_allhad"];
+
+  /*
+  // reading Powheg Z+jets samples, used in HZZ, ZZDiBoson, SingleTop, TTbar, WBoson, ZPrimeBoosted, ZBoson, HWW, WZDiBoson ... analyses 
+  if( option.find("HZZAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("HWWAnalysis") != option.npos ||  option.find("ZBosonAnalysis") != option.npos || option.find("ZPrimeBoostedAnalysis") != option.npos || option.find("WBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("SingleTopAnalysis") != option.npos ){
+    Zee = histo["Zee"];
+    Zmumu = histo["Zmumu"];
+    Ztautau = histo["Ztautau"];
+  }
+
+  // reading Powheg W+jets samples, used in HZZ, HWW, ZZDiBoson, WZDiBoson, TTbar, ZBoson, SUSY ... analyses 
+  if( option.find("ZBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos || option.find("HWWAnalysis") != option.npos || option.find("HZZAnalysis") != option.npos) 
+    {
+      Wplusenu = histo["Wplusenu"];
+      Wplusmunu= histo["Wplusmunu"];
+      Wplustaunu= histo["Wplustaunu"];  
+      Wminusenu= histo["Wminusenu"];
+      Wminusmunu= histo["Wminusmunu"];
+      Wminustaunu= histo["Wminustaunu"];
+    }
+  */
   
   // Single top
   //PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top = histo["PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top"];
@@ -515,6 +539,7 @@ void Plotting::makePlots(){
   Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto = histo["Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto"];
   Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto = histo["Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto"];
 
+  
   // reading HWW samples used
   if(option.find("HWWAnalysis") != option.npos){
 
@@ -649,6 +674,162 @@ void Plotting::makePlots(){
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
 
+    }
+
+
+
+    
+    // merge for Top 
+    if(option.find("TTbarAnalysis") != option.npos || option.find("ZBosonAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos || option.find("ZZDiBosonAnalysis") != option.npos ){
+
+      //ttbar
+
+      ttbar = (TH1F*)PhPy8EG_A14_ttbar_hdamp258p75_nonallhad[fIter->first]->Clone();
+      ttbar->Add(PhPy8EG_A14_ttbar_hdamp258p75_allhad[fIter->first]); 
+      ttbar->SetFillColor(kOrange-3);
+      ttbar->SetLineWidth(0);
+      
+      // Diboson
+      diboson = (TH1F*)Sh_2212_llll[fIter->first]->Clone();
+      diboson->Add(Sh_2212_lllv[fIter->first]);
+      diboson->Add(Sh_2212_llvv_os[fIter->first]);
+      diboson->Add(Sh_2212_llvv_ss[fIter->first]);
+      diboson->Add(Sh_2212_lvvv[fIter->first]);
+      //diboson->Add(Sh_2212_vvvv[fIter->first]);
+      diboson->Add(Sh_2211_WlvWqq[fIter->first]);
+      diboson->Add(Sh_2211_WlvZqq[fIter->first]);
+      diboson->Add(Sh_2211_WlvZbb[fIter->first]);
+      diboson->Add(Sh_2211_ZqqZll[fIter->first]);
+      diboson->Add(Sh_2211_ZbbZll[fIter->first]);
+      diboson->Add(Sh_2211_ZqqZvv[fIter->first]);
+      diboson->Add(Sh_2211_ZbbZvv[fIter->first]);
+      /*
+	diboson->Add(Sherpa_222_NNPDF30NNLO_ggZllZqq[fIter->first]);
+	diboson->Add(Sherpa_222_NNPDF30NNLO_ggZvvZqq[fIter->first]);
+	diboson->Add(Sherpa_222_NNPDF30NNLO_ggWmlvWpqq[fIter->first]);
+	diboson->Add(Sherpa_222_NNPDF30NNLO_ggWplvWmqq[fIter->first]);
+      */
+      diboson->SetFillColor(kBlue-6);
+      diboson->SetLineWidth(0);
+
+
+      // split diboson into WW+ZZ
+      VV = (TH1F*)Sh_2212_llll[fIter->first]->Clone();
+      VV->Add(Sh_2212_llvv_os[fIter->first]);
+      VV->Add(Sh_2212_llvv_ss[fIter->first]);
+      //diboson->Add(Sh_2212_vvvv[fIter->first]);
+      VV->Add(Sh_2211_WlvWqq[fIter->first]);
+      VV->Add(Sh_2211_ZqqZll[fIter->first]);
+      VV->Add(Sh_2211_ZbbZll[fIter->first]);
+      VV->Add(Sh_2211_ZqqZvv[fIter->first]);
+      VV->Add(Sh_2211_ZbbZvv[fIter->first]);
+      VV->SetFillColor(kBlue-6);
+      VV->SetLineWidth(0);
+
+      // only WZ
+      W_Z = (TH1F*)Sh_2212_lllv[fIter->first]->Clone();
+      W_Z->Add(Sh_2212_lvvv[fIter->first]);
+      //W_Z->Add(Sh_2212_vvvv[fIter->first]);
+      W_Z->Add(Sh_2211_WlvZqq[fIter->first]);
+      W_Z->Add(Sh_2211_WlvZbb[fIter->first]);
+      W_Z->SetFillColor(kRed-7);
+      W_Z->SetLineWidth(0);
+      
+      // split diboson into WW+WZ
+      WWZ = (TH1F*)Sh_2212_lllv[fIter->first]->Clone();
+      WWZ->Add(Sh_2212_lvvv[fIter->first]);
+      WWZ->Add(Sh_2211_WlvWqq[fIter->first]);
+      WWZ->Add(Sh_2211_WlvZqq[fIter->first]);
+      WWZ->Add(Sh_2211_WlvZbb[fIter->first]);
+      WWZ->SetFillColor(kRed-7);
+      WWZ->SetLineWidth(0);
+
+      // only ZZ
+      Z_Z = (TH1F*)Sh_2212_llll[fIter->first]->Clone();
+      Z_Z->Add(Sh_2212_llvv_os[fIter->first]);
+      Z_Z->Add(Sh_2212_llvv_ss[fIter->first]);
+      //Z_Z->Add(Sh_2212_vvvv[fIter->first]);
+      Z_Z->Add(Sh_2211_ZqqZll[fIter->first]);
+      Z_Z->Add(Sh_2211_ZbbZll[fIter->first]);
+      Z_Z->Add(Sh_2211_ZqqZvv[fIter->first]);
+      Z_Z->Add(Sh_2211_ZbbZvv[fIter->first]);
+      Z_Z->SetFillColor(kBlue-6);
+      Z_Z->SetLineWidth(0);
+      //      Z_Z->Scale(1.08); // loop-induced gluon–gluon gg->ZZ is not included in the current MCs, which can be seen from the 4 lepton control region
+
+      // stop
+      stop = (TH1F*)PhPy8EG_A14_tchan_BW50_lept_top[fIter->first]->Clone();
+      stop->Add(PhPy8EG_A14_tchan_BW50_lept_antitop[fIter->first]);
+      stop->SetFillColor(kAzure+8);
+      stop->SetLineWidth(0);
+      
+      // add ttbar and single top
+      top = (TH1F*)ttbar->Clone();
+      top->Add(stop);
+      top->SetFillColor(kOrange-3);
+      top->SetLineWidth(0);
+
+      // V_plus_jets, both W and Z
+      
+      V = (TH1F*)Sh_2211_Wenu_maxHTpTV2_BFilter[fIter->first]->Clone();
+      V->Add(Sh_2211_Wenu_maxHTpTV2_CFilterBVeto[fIter->first]);
+      V->Add(Sh_2211_Wenu_maxHTpTV2_CVetoBVeto[fIter->first]);
+      V->Add(Sh_2211_Wmunu_maxHTpTV2_BFilter[fIter->first]);
+      V->Add(Sh_2211_Wmunu_maxHTpTV2_CFilterBVeto[fIter->first]);
+      V->Add(Sh_2211_Wmunu_maxHTpTV2_CVetoBVeto[fIter->first]);
+      V->Add(Sh_2211_Wtaunu_L_maxHTpTV2_BFilter[fIter->first]);
+      V->Add(Sh_2211_Wtaunu_L_maxHTpTV2_CFilterBVeto[fIter->first]);
+      V->Add(Sh_2211_Wtaunu_L_maxHTpTV2_CVetoBVeto[fIter->first]);
+      V->Add(Sh_2211_Wtaunu_H_maxHTpTV2_BFilter[fIter->first]);
+      V->Add(Sh_2211_Wtaunu_H_maxHTpTV2_CFilterBVeto[fIter->first]);
+      V->Add(Sh_2211_Wtaunu_H_maxHTpTV2_CVetoBVeto[fIter->first]);
+      V->Add(Sh_2211_Zee_maxHTpTV2_BFilter[fIter->first]);
+      //V->Add(Sh_2211_Zee_maxHTpTV2_CFilterBVeto[fIter->first]);
+      V->Add(Sh_2211_Zee_maxHTpTV2_CVetoBVeto[fIter->first]);
+      V->Add(Sh_2211_Zmumu_maxHTpTV2_BFilter[fIter->first]);
+      V->Add(Sh_2211_Zmumu_maxHTpTV2_CFilterBVeto[fIter->first]);
+      V->Add(Sh_2211_Zmumu_maxHTpTV2_CVetoBVeto[fIter->first]);
+      V->Add(Sh_2214_Ztautau_maxHTpTV2_BFilter[fIter->first]);
+      V->Add(Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto[fIter->first]);
+      V->Add(Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto[fIter->first]);
+      V->SetFillColor(kGreen-3);
+      V->SetLineWidth(0);
+      
+      // ttbar, single top, V+jets
+      topV = (TH1F*)top->Clone();
+      topV->Add(V);
+      topV->SetFillColor(kGreen-3);
+      topV->SetLineWidth(0);
+      
+      // V_plus_jets
+      
+      W = (TH1F*)Sh_2211_Wenu_maxHTpTV2_BFilter[fIter->first]->Clone();
+      W->Add(Sh_2211_Wenu_maxHTpTV2_CFilterBVeto[fIter->first]);
+      W->Add(Sh_2211_Wenu_maxHTpTV2_CVetoBVeto[fIter->first]);
+      W->Add(Sh_2211_Wmunu_maxHTpTV2_BFilter[fIter->first]);
+      W->Add(Sh_2211_Wmunu_maxHTpTV2_CFilterBVeto[fIter->first]);
+      W->Add(Sh_2211_Wmunu_maxHTpTV2_CVetoBVeto[fIter->first]);
+      W->Add(Sh_2211_Wtaunu_L_maxHTpTV2_BFilter[fIter->first]);
+      W->Add(Sh_2211_Wtaunu_L_maxHTpTV2_CFilterBVeto[fIter->first]);
+      W->Add(Sh_2211_Wtaunu_L_maxHTpTV2_CVetoBVeto[fIter->first]);
+      W->Add(Sh_2211_Wtaunu_H_maxHTpTV2_BFilter[fIter->first]);
+      W->Add(Sh_2211_Wtaunu_H_maxHTpTV2_CFilterBVeto[fIter->first]);
+      W->Add(Sh_2211_Wtaunu_H_maxHTpTV2_CVetoBVeto[fIter->first]);
+      W->SetFillColor(kGreen-3);
+      W->SetLineWidth(0);
+      
+      Z = (TH1F*)Sh_2211_Zee_maxHTpTV2_BFilter[fIter->first]->Clone();
+      //Z->Add(Sh_2211_Zee_maxHTpTV2_CFilterBVeto[fIter->first]);
+      Z->Add(Sh_2211_Zee_maxHTpTV2_CVetoBVeto[fIter->first]);
+      Z->Add(Sh_2211_Zmumu_maxHTpTV2_BFilter[fIter->first]);
+      Z->Add(Sh_2211_Zmumu_maxHTpTV2_CFilterBVeto[fIter->first]);
+      Z->Add(Sh_2211_Zmumu_maxHTpTV2_CVetoBVeto[fIter->first]);
+      Z->Add(Sh_2214_Ztautau_maxHTpTV2_BFilter[fIter->first]);
+      Z->Add(Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto[fIter->first]);
+      Z->Add(Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto[fIter->first]);
+      Z->SetFillColor(kPink+9);
+      Z->SetLineWidth(0);
+      
     }
 
     // merge for ZTauTauAnalysis
@@ -838,6 +1019,18 @@ void Plotting::makePlots(){
       
     // The order of the stack defines which samples will appear on top of each other
 
+    if(option.find("TTbarAnalysis") != option.npos || option.find("ZPrimeBoostedAnalysis") != option.npos){
+      stack->Add(diboson);
+      stack->Add(stop);
+      stack->Add(V);
+      stack->Add(ttbar);
+
+      histstack = (TH1F*)ttbar->Clone();
+      histstack->Add(stop);
+      histstack->Add(diboson);
+      histstack->Add(V);
+    }
+
     if(option.find("HWWAnalysis") != option.npos){
       stack->Add(stop);
       stack->Add(ttbar);
@@ -929,6 +1122,10 @@ void Plotting::makePlots(){
     l.SetTextFont(42);
     l.SetTextSize(0.04);
 
+    if(option.find("TTbarAnalysis")     != option.npos){
+      l.DrawLatex(0.18,0.66,"t#bar{t} #rightarrow l#nub q#bar{q}b");
+      l.DrawLatex(0.18,0.71,"Work in Progress");
+    }
     if(option.find("HWWAnalysis")     != option.npos){
       l.DrawLatex(0.18,0.66,"H #rightarrow WW* #rightarrow e#nu#mu#nu, N_{jet} #leq 1");
       l.DrawLatex(0.18,0.71,"Work in Progress");
@@ -965,6 +1162,30 @@ void Plotting::makePlots(){
     
     // fill legend depending on the analysis, the order reflects the stack order
 
+    // ------------------------------------------------------- //   
+    if(option.find("TTbarAnalysis") != option.npos || option.find("ZPrimeBoostedAnalysis") != option.npos ) {
+      leg-> AddEntry(data[fIter->first] , "Data" ,"lep");
+      leg-> AddEntry(ttbar, "t#bar{t}", "f");
+      leg-> AddEntry(V,  "V+jets", "f");
+      leg-> AddEntry(stop, "Single top", "f");
+      leg-> AddEntry(diboson , "Diboson", "f");
+      leg-> AddEntry(histstack,"Stat. unc.","f");
+      /*
+      if(option.find("ZPrimeBoostedAnalysis") != option.npos && NORMSIG){
+	if(fIter->first.find("LR") != option.npos) leg-> AddEntry(ZPrime_normsig, "m_{Z'}=1 TeV" ,"l");
+      }
+      */
+      if(YIELDS){
+	cout << "Yields:" << "Data: " << data[fIter->first]->Integral() <<
+	  ",  single top: " <<  stop->Integral()  <<
+	  ",  ttbar: " <<  ttbar->Integral()  <<
+	  ",  V+jets: " << V->Integral()  <<
+	  ",  diboson: " << diboson->Integral()  <<
+	  ",  Total pred.: "<< diboson->Integral() + V->Integral() + ttbar->Integral() + stop->Integral() <<
+	  endl;
+      }
+    }
+    
     // ------------------------------------------------------- //
     
     if(option.find("HWWAnalysis") != option.npos){
@@ -1115,6 +1336,28 @@ void Plotting::makePlots(){
     ///////////////////////////////////////////////////////////////
     // Drawing options 
 
+    if(option.find("TTbarAnalysis") != option.npos){
+      pad0->SetLogy(1);
+      fIter->second->SetMinimum(10);
+      fIter->second->SetMaximum(1e8);
+      if(fIter->first.find("Topmass") != option.npos){
+	pad0->SetLogy(0);
+	fIter->second->SetMinimum(1);
+	fIter->second->SetMaximum(1e4);
+      }
+      if(fIter->first.find("Wmass") != option.npos){
+	pad0->SetLogy(0);
+	fIter->second->SetMinimum(1);
+	fIter->second->SetMaximum(5e3);
+      }
+      if(fIter->first.find("leptch") != option.npos){
+	pad0->SetLogy(1);
+	fIter->second->SetMinimum(10);
+	fIter->second->SetMaximum(1e9);
+      }
+    }
+    
+    
     if(option.find("TTbarDilepAnalysis") != option.npos){
       if(fIter->first.find("hist_lep_pt") != option.npos){
         pad0->SetLogy(1);
@@ -1173,6 +1416,7 @@ void Plotting::getHistoSettings(){
   // read in configuration file
   std::string ifile;
 
+  if(option.find("TTbarAnalysis")         != option.npos){ifile = "list_histos/HistoList_TTbarAnalysis.txt";}
   if(option.find("HWWAnalysis")           != option.npos){ifile = "list_histos/HistoList_HWWAnalysis.txt";}
   if(option.find("ZTauTauAnalysis")       != option.npos){ifile = "list_histos/HistoList_ZTauTauAnalysis.txt";}
   if(option.find("TTbarDilepAnalysis")    != option.npos){ifile = "list_histos/HistoList_TTbarDilepAnalysis.txt";}
