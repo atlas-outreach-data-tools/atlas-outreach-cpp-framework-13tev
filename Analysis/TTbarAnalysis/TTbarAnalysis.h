@@ -33,7 +33,6 @@ class TTbarAnalysis : public TSelector {
   TH1F *hist_Topmass      = 0;
   TH1F *hist_Wmass      = 0;
   
-  
   // Leading Lepton histograms
   TH1F *hist_leadleptpt      = 0;
   TH1F *hist_syst_leadleptpt = 0;
@@ -62,29 +61,30 @@ class TTbarAnalysis : public TSelector {
   
   TH1F *hist_scale_factors  = 0;
   
+
+  int muon_n = 0;
+  int electron_n = 0;
+  int trigger_cut = 0;
+  int good_lepton_n_cut = 0;
+  int OP_charge_leptons_cut = 0;
+  int type_leptons_cut = 0;
+  int bjets_cut = 0;
   
   //////////////////////////////////////////////////////////
   // Declaration of leaf types
   
   Float_t ScaleFactor_PILEUP;
   Float_t mcWeight;
-  Float_t xsec;
-  Float_t filteff;
-  Float_t kfac;
+  Double_t xsec;
+  Double_t filteff;
+  Double_t kfac;
   
   Bool_t trigE;
   Bool_t trigM;
-  
+
+  Float_t ScaleFactor_FTAG;
   Float_t ScaleFactor_BTAG;
   Int_t jet_n;
-  /*
-  vector<float> *jet_pt;
-  vector<float> *jet_eta;
-  vector<float> *jet_phi;
-  vector<float> *jet_e;
-  vector<int> *jet_btag_quantile;
-  vector<bool> *jet_jvt;
-  */
   
   ROOT::VecOps::RVec<float> *jet_pt;
   ROOT::VecOps::RVec<float> *jet_eta;
@@ -92,7 +92,6 @@ class TTbarAnalysis : public TSelector {
   ROOT::VecOps::RVec<float> *jet_e;
   ROOT::VecOps::RVec<int> *jet_btag_quantile;
   ROOT::VecOps::RVec<bool> *jet_jvt;
-  
   
   /*
     Int_t largeRJet_n;
@@ -103,9 +102,12 @@ class TTbarAnalysis : public TSelector {
     vector<float> *largeRJet_m;
     vector<float> *largeRJet_D2;
   */
+
+  ROOT::VecOps::RVec<float> *jet_pt_jer1;
+  
   Float_t ScaleFactor_ELE;
   Float_t ScaleFactor_MUON;
-  Float_t scaleFactor_LepTRIGGER;
+  Float_t ScaleFactor_LepTRIGGER;
   
   Int_t lep_n;
   /*
@@ -145,13 +147,10 @@ class TTbarAnalysis : public TSelector {
   //ROOT::VecOps::RVec<bool> *lep_isTight;
   ROOT::VecOps::RVec<bool> *lep_isTightID;
   ROOT::VecOps::RVec<bool> *lep_isTightIso;
+  ROOT::VecOps::RVec<bool> *lep_isTrigMatched;
   
-  /*
-  RVec<float> *lep_isTight;
-  RVec<float> *lep_isTightID;
-  RVec<float> *lep_isTightIso;
-  */
   Float_t ScaleFactor_PHOTON;
+
   /*
   Int_t photon_n;
   vector<float> *photon_pt;
@@ -199,6 +198,7 @@ class TTbarAnalysis : public TSelector {
   TBranch *b_trigE;
   TBranch *b_trigM;
 
+  TBranch *b_ScaleFactor_FTAG;
   TBranch *b_ScaleFactor_BTAG;
   TBranch *b_jet_n;
 
@@ -217,9 +217,11 @@ class TTbarAnalysis : public TSelector {
   TBranch *b_largeRJet_m;
   TBranch *b_largeRJet_D2;
   */
+
+  TBranch *b_jet_pt_jer1;
   TBranch *b_ScaleFactor_ELE;
   TBranch *b_ScaleFactor_MUON;
-  TBranch *b_scaleFactor_LepTRIGGER;
+  TBranch *b_ScaleFactor_LepTRIGGER;
   
   TBranch *b_lep_n;
   TBranch *b_lep_type;
@@ -238,7 +240,8 @@ class TTbarAnalysis : public TSelector {
   //TBranch *b_lep_isTight;
   TBranch *b_lep_isTightID;
   TBranch *b_lep_isTightIso;
-
+  TBranch *b_lep_isTrigMatched;
+  
   TBranch *b_ScaleFactor_PHOTON;
   /*
   TBranch *b_photon_n;
@@ -283,38 +286,52 @@ class TTbarAnalysis : public TSelector {
   virtual void    SlaveBegin(TTree *tree);
   virtual void    Init(TTree *tree);
   virtual Bool_t  Notify();
-
+  
   virtual Bool_t  Process(Long64_t entry);
   virtual Int_t   GetEntry(Long64_t entry, Int_t getall = 0) { return fChain ? fChain->GetTree()->GetEntry(entry, getall) : 0; }
   virtual void    SetOption(const char *option) { fOption = option; }
   virtual void    SetObject(TObject *obj) { fObject = obj; }
   virtual void    SetInputList(TList *input) { fInput = input; }
-
+ 
   virtual void    FillHistogramsGlobal( double m, float w , TString s);
   virtual void    FillHistogramsLeadlept( double m, float w , TString s);
   virtual void    FillHistogramsLeadJet( double m, float w , TString s);
   virtual void    FillHistogramsTTbar( double m, float w , TString s);
 
+  //virtual void    mc_under_and_overflow();
+  //virtual void    fill_hist_scale_factors(float SF_PILEUP, float SF_BTAG, float SF_ELE, float SF_MUON, float SF_PHOTON, float SF_TAU, float SF_lepTRIGGER, float SF_JVT);
+
+  
   // Get Output List to save our histograms in the output file
   virtual TList  *GetOutputList() const { return fOutput; }
-  //
   virtual void    define_histograms();
-  //
   virtual void    FillOutputList();
-  //
   virtual void    WriteHistograms();
-
   virtual void    SlaveTerminate();
   virtual void    Terminate();
 
-
+  
   int nEvents;
-
-  Float_t xsec_SF;
-  Float_t totalSumOfWeights_SF;
-  Float_t filteff_SF;
-  Float_t kfac_SF;
-
+  std::set<float> uniqueWeights;
+  int good_event_lep;
+  int two_electrons_lep;
+  int two_muons_lep;
+  int lep_tight_n;
+  int leppt_n;
+  int lep_ptvarcone_n;
+  int lep_etcone_n;
+  int leptype_elec_n;
+  int leptype_muon_n;
+  int lep_elec_d0;
+  int lep_muon_d0;
+  int lep_elec_z0;
+  int lep_muon_z0;
+  
+  Double_t xsec_SF;
+  Double_t totalSumOfWeights_SF;
+  Double_t filteff_SF;
+  Double_t kfac_SF;
+  
   ClassDef(TTbarAnalysis,0);
 
 };
@@ -333,6 +350,7 @@ void TTbarAnalysis::Init(TTree *tree)
   jet_e = 0;
   jet_btag_quantile = 0;
   jet_jvt = 0;
+  jet_pt_jer1 = 0;
   lep_type = 0;
   lep_pt = 0;
   lep_eta = 0;
@@ -347,21 +365,22 @@ void TTbarAnalysis::Init(TTree *tree)
   //lep_isTight = 0;
   lep_isTightID = 0;
   lep_isTightIso = 0;
-  
+  lep_isTrigMatched = 0;
   
   // Set branch addresses and branch pointers
   if (!tree) return;
   fChain = tree;
   fChain->SetMakeClass(1);
   
-
   fChain->SetBranchAddress("ScaleFactor_PILEUP", &ScaleFactor_PILEUP, &b_ScaleFactor_PILEUP);
   fChain->SetBranchAddress("mcWeight", &mcWeight, &b_mcWeight);
   fChain->SetBranchAddress("xsec", &xsec, &b_xsec);
   fChain->SetBranchAddress("filteff", &filteff, &b_filteff);
   fChain->SetBranchAddress("kfac", &kfac, &b_kfac);
+
   fChain->SetBranchAddress("trigE", &trigE, &b_trigE);
   fChain->SetBranchAddress("trigM", &trigM, &b_trigM);
+  fChain->SetBranchAddress("ScaleFactor_FTAG", &ScaleFactor_FTAG, &b_ScaleFactor_FTAG);
   fChain->SetBranchAddress("ScaleFactor_BTAG", &ScaleFactor_BTAG, &b_ScaleFactor_BTAG);
   fChain->SetBranchAddress("jet_n", &jet_n, &b_jet_n);
   fChain->SetBranchAddress("jet_pt", &jet_pt, &b_jet_pt);
@@ -379,9 +398,11 @@ void TTbarAnalysis::Init(TTree *tree)
     fChain->SetBranchAddress("largeRJet_m", &largeRJet_m, &b_largeRJet_m);
     fChain->SetBranchAddress("largeRJet_D2", &largeRJet_D2, &b_largeRJet_D2);
   */
+
+  fChain->SetBranchAddress("jet_pt_jer1", &jet_pt_jer1, &b_jet_pt_jer1);
   fChain->SetBranchAddress("ScaleFactor_ELE", &ScaleFactor_ELE, &b_ScaleFactor_ELE);
   fChain->SetBranchAddress("ScaleFactor_MUON", &ScaleFactor_MUON, &b_ScaleFactor_MUON);
-  fChain->SetBranchAddress("scaleFactor_LepTRIGGER", &scaleFactor_LepTRIGGER, &b_scaleFactor_LepTRIGGER);
+  fChain->SetBranchAddress("ScaleFactor_LepTRIGGER", &ScaleFactor_LepTRIGGER, &b_ScaleFactor_LepTRIGGER);
 
   fChain->SetBranchAddress("lep_n", &lep_n, &b_lep_n);
   fChain->SetBranchAddress("lep_type", &lep_type, &b_lep_type);
@@ -398,6 +419,7 @@ void TTbarAnalysis::Init(TTree *tree)
   //fChain->SetBranchAddress("lep_isTight", &lep_isTight, &b_lep_isTight);
   fChain->SetBranchAddress("lep_isTightID", &lep_isTightID, &b_lep_isTightID);
   fChain->SetBranchAddress("lep_isTightIso", &lep_isTightIso, &b_lep_isTightIso);
+  fChain->SetBranchAddress("lep_isTrigMatched", &lep_isTrigMatched, &b_lep_isTrigMatched);
   fChain->SetBranchAddress("ScaleFactor_PHOTON", &ScaleFactor_PHOTON, &b_ScaleFactor_PHOTON);
   /*
     fChain->SetBranchAddress("photon_n", &photon_n, &b_photon_n);

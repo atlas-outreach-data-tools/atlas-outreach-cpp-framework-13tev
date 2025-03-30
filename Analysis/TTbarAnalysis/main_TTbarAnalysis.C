@@ -16,8 +16,8 @@ void main_TTbarAnalysis(int proof = 0, int option= 0)
 
   /* The URL to the CERN Open Data portal repository */
   //TString path = "http://opendata.cern.ch/eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/";
-  TString path = "/eos/user/e/egramsta/OpenData/1LMET30/";
-  
+  TString path = "/eos/user/e/egramsta/OpenData/FEB2025/1LMET30/";
+ 
   /* The XROOTD path to the CERN Open Data portal repository */
   //TString path = "root://eospublic.cern.ch//eos/opendata/atlas/OutreachDatasets/2020-01-22/1lep/";
 
@@ -36,28 +36,30 @@ void main_TTbarAnalysis(int proof = 0, int option= 0)
   
   if(option==1 || option==0){
     
+    TChain* chain_data = new TChain("analysis");
+    
     //data15
     
-    TChain* chain_data = new TChain("analysis");
-    chain_data->AddFile(path+"Data/data15_periodD.root");
-    chain_data->AddFile(path+"Data/data15_periodE.root");
-    chain_data->AddFile(path+"Data/data15_periodF.root");
-    chain_data->AddFile(path+"Data/data15_periodG.root");
-    chain_data->AddFile(path+"Data/data15_periodH.root");
-    chain_data->AddFile(path+"Data/data15_periodJ.root");
+    chain_data->AddFile(path+"Data/data15_periodD.1LMET30.root");
+    chain_data->AddFile(path+"Data/data15_periodE.1LMET30.root");
+    chain_data->AddFile(path+"Data/data15_periodF.1LMET30.root");
+    chain_data->AddFile(path+"Data/data15_periodG.1LMET30.root");
+    chain_data->AddFile(path+"Data/data15_periodH.1LMET30.root");
+    chain_data->AddFile(path+"Data/data15_periodJ.1LMET30.root");
     
     //data16
     
-    chain_data->AddFile(path+"Data/data16_periodA.root");
-    chain_data->AddFile(path+"Data/data16_periodB.root");
-    chain_data->AddFile(path+"Data/data16_periodC.root");
-    chain_data->AddFile(path+"Data/data16_periodD.root");
-    chain_data->AddFile(path+"Data/data16_periodE.root");
-    chain_data->AddFile(path+"Data/data16_periodF.root");
-    chain_data->AddFile(path+"Data/data16_periodG.root");
-    chain_data->AddFile(path+"Data/data16_PeriodI.root");
-    chain_data->AddFile(path+"Data/data16_periodK.root");
-    chain_data->AddFile(path+"Data/data16_periodL.root");
+    chain_data->AddFile(path+"Data/data16_periodA.1LMET30.root");
+    chain_data->AddFile(path+"Data/data16_periodB.1LMET30.root");
+    chain_data->AddFile(path+"Data/data16_periodC.1LMET30.root");
+    chain_data->AddFile(path+"Data/data16_periodD.1LMET30.root");
+    chain_data->AddFile(path+"Data/data16_periodE.1LMET30.root");
+    chain_data->AddFile(path+"Data/data16_periodF.1LMET30.root");
+    chain_data->AddFile(path+"Data/data16_periodG.1LMET30.root");
+    chain_data->AddFile(path+"Data/data16_periodI.1LMET30.root");
+    chain_data->AddFile(path+"Data/data16_periodK.1LMET30.root");
+    chain_data->AddFile(path+"Data/data16_periodL.1LMET30.root");
+    
     //if (proof == 1)  chain_data->SetProof();
     chain_data->Process("TTbarAnalysis.C+","data");
     
@@ -184,9 +186,9 @@ void main_TTbarAnalysis(int proof = 0, int option= 0)
   
 
   if (option==3 || option==0)   {
-
-    //single top
-
+    
+    //single top samples
+ 
     TChain* chain_tchan_BW50_lept_top = new TChain("analysis");
     chain_tchan_BW50_lept_top->AddFile(path+"MC/mc_410658.PhPy8EG_A14_tchan_BW50_lept_top.1LMET30.root");
     //if (proof == 1)  chain_tchan_BW50_lept_top->SetProof();
@@ -196,7 +198,28 @@ void main_TTbarAnalysis(int proof = 0, int option= 0)
     chain_tchan_BW50_lept_antitop->AddFile(path+"MC/mc_410659.PhPy8EG_A14_tchan_BW50_lept_antitop.1LMET30.root");
     //if (proof == 1)  chain_tchan_BW50_lept_antitop->SetProof();
     chain_tchan_BW50_lept_antitop->Process("TTbarAnalysis.C+","PhPy8EG_A14_tchan_BW50_lept_antitop");
-    
+
+    TChain* chain_schan_lept_top = new TChain("analysis");
+    chain_schan_lept_top->AddFile(path+"MC/mc_410644.PowhegPythia8EvtGen_A14_singletop_schan_lept_top.1LMET30.root");
+    //if (proof == 1)  chain_schan_lept_top->SetProof();
+    chain_schan_lept_top->Process("TTbarAnalysis.C+","PowhegPythia8EvtGen_A14_singletop_schan_lept_top");
+
+    TChain* chain_schan_lept_antitop = new TChain("analysis");
+    chain_schan_lept_antitop->AddFile(path+"MC/mc_410645.PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop.1LMET30.root");
+    //if (proof == 1)  chain_schan_lept_antitop->SetProof();
+    chain_schan_lept_antitop->Process("TTbarAnalysis.C+","PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop");
+
+    TChain* chain_tW_dyn_DR_incl_antitop = new TChain("analysis");
+    chain_tW_dyn_DR_incl_antitop->AddFile(path+"MC/mc_601352.PhPy8EG_tW_dyn_DR_incl_antitop.1LMET30.root");
+    //if (proof == 1)  chain_tW_dyn_DR_incl_antitop->SetProof();
+    chain_tW_dyn_DR_incl_antitop->Process("TTbarAnalysis.C+","PhPy8EG_tW_dyn_DR_incl_antitop");
+
+    TChain* chain_tW_dyn_DR_incl_top = new TChain("analysis");
+    chain_tW_dyn_DR_incl_top->AddFile(path+"MC/mc_601355.PhPy8EG_tW_dyn_DR_incl_top.1LMET30.root");
+    //if (proof == 1)  chain_tW_dyn_DR_incl_top->SetProof();
+    chain_tW_dyn_DR_incl_top->Process("TTbarAnalysis.C+","PhPy8EG_tW_dyn_DR_incl_top");
+
+   
     //ttbar
     
     TChain* chain_ttbar_nonallhad = new TChain("analysis");

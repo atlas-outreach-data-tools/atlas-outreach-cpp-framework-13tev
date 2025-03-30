@@ -26,20 +26,35 @@
 string name;
 
 void TTbarAnalysis::Begin(TTree * )
-{
-
+{ 
   nEvents=0;
-
-  //uniqueWeights = 0;
   xsec_SF = 0;
   totalSumOfWeights_SF = 0;
   filteff_SF = 0;
   kfac_SF = 0;
   
+  good_event_lep = 0;
+  two_electrons_lep = 0;
+  two_muons_lep = 0;
+  lep_tight_n = 0;
+  leppt_n = 0;
+  lep_ptvarcone_n = 0;
+  lep_etcone_n = 0;
+  leptype_elec_n = 0;
+  leptype_muon_n = 0;
+  lep_elec_d0 = 0;
+  lep_muon_d0 = 0;
+  lep_elec_z0 = 0;
+  lep_muon_z0 = 0;
+
 }
 
 void TTbarAnalysis::SlaveBegin(TTree * )
 {
+
+  cout << "************************************************************************************************************************" << endl;
+  cout << "************************************************************************************************************************" << endl;
+  
   TString option = GetOption();
   printf("Starting analysis with process option: %s \n", option.Data());
   
@@ -63,7 +78,7 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
     // **********************************************************************************************//
     
     //Scale factors (adding b-tagging as it is used)
-    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*scaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_BTAG;
+    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_FTAG;
 
     //MC weight
     Float_t m_mcWeight = mcWeight;
@@ -89,7 +104,6 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
       }
     }
     if( is_data==false ){
-      //uniqueWeights.insert(initial_sum_of_weights);
       if(entry==0){
 	xsec_SF = xsec;
 	filteff_SF = filteff;
@@ -99,18 +113,20 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
     }
     
     // cut on at least 4 jets
-    if (jet_n > 3){
+    if(jet_n > 3){
       
       // MET > 30 GeV
       if(met > 30.){
 	
 	// Preselection cut for electron/muon trigger, Good Run List, and good vertex
-	if(trigE || trigM){
+	if( (trigE==true) || (trigM==true) ){
+
+	  trigger_cut++;
 	  
 	  // Preselection of good leptons
-	  int goodlep_index =0;
+	  int goodlep_index = 0;
 	  int goodlep_n = 0;
-	  int lep_index =0;
+	  int lep_index = 0;
 	  
 	  for(Int_t i=0; i<lep_n; i++){
 
@@ -118,33 +134,34 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
 	    leptemp.SetPtEtaPhiE(lep_pt->at(i), lep_eta->at(i), lep_phi->at(i), lep_e->at(i));
 
 	    // Lepton is Tight
-	    //if( lep_isTightID->at(i) ){
-	    if( (lep_isTightID->at(i)==true) && (lep_isTightIso->at(i)==true)){
+	    if( (lep_isTightID->at(i)==true) && (lep_isTightIso->at(i)==true) && (lep_isTrigMatched->at(i)==true) ){
 
-	      // Lepton is isolated and hard pT
-	      if( (lep_pt->at(i)>30.) && ((lep_ptvarcone30->at(i)/lep_pt->at(i))<0.15) && ((lep_topoetcone20->at(i)/lep_pt->at(i))<0.15) ){
+	      lep_tight_n++;
+	      
+	      if( lep_pt->at(i)>30. ){
+		
+		leppt_n++;
+		
 		// electron selection in fiducial region excluding candidates in the transition region between the barrel and endcap electromagnetic calorimeters
-		if ( lep_type->at(i)==11 && TMath::Abs(lep_eta->at(i))<2.47 && ( TMath::Abs(lep_eta->at(i))<1.37 || TMath::Abs(lep_eta->at(i))>1.52 ) ){
-		  if( (TMath::Abs(lep_d0->at(i))/lep_d0sig->at(i)<5) && (TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta()))<0.5) ){
-		    goodlep_n = goodlep_n + 1;
-		    goodlep_index = i;
-		    lep_index++;
-		  }
-		}
+		if( (lep_type->at(i)==11) && (TMath::Abs(lep_eta->at(i))<2.47) && ( (TMath::Abs(lep_eta->at(i))<1.37) || (TMath::Abs(lep_eta->at(i))>1.52) ) ){
+		  goodlep_n = goodlep_n + 1;
+		  goodlep_index = i;
+		  lep_index++;
+	        }
 		// muon selection
-		if ( lep_type->at(i) == 13 && TMath::Abs(lep_eta->at(i)) < 2.5 ) {
-        	  if( (TMath::Abs(lep_d0->at(i))/lep_d0sig->at(i)<3) && (TMath::Abs(lep_z0->at(i)*TMath::Sin(leptemp.Theta()))<0.5) ){
-		    goodlep_n = goodlep_n + 1;
-		    goodlep_index = i;
-		    lep_index++;
-		  }
-		}
+		if( (lep_type->at(i)==13) && (TMath::Abs(lep_eta->at(i)) < 2.5) ){
+		  goodlep_n = goodlep_n + 1;
+		  goodlep_index = i;
+		  lep_index++;
+	        }
 	      }
 	    }
 	  }
-	  
+
 	  //Exactly one good lepton
 	  if(goodlep_n==1){
+	    
+	    good_lepton_n_cut++;
 	    
 	    //Preselection of good jets
 	    int goodjet_n = 0;
@@ -155,16 +172,17 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
 	    
 	    int goodbjet_index[jet_n];
 	    int bjet_index = 0;
-	     
+	    
 	    for(Int_t i=0; i<jet_n; i++){
 	      
-	      if(jet_pt->at(i)>30. && TMath::Abs(jet_eta->at(i))<2.5){
-
+	      if( (jet_pt->at(i)>30.) && (TMath::Abs(jet_eta->at(i))<2.5) ){
+		
 		// JVT cleaning
 		bool jvt_pass=true;
-
-		if (jet_pt->at(i)<60. && TMath::Abs(jet_eta->at(i))<2.4 && jet_jvt->at(i)==false) jvt_pass=false;
-		if (jvt_pass){
+		
+		if( jet_jvt->at(i)==false ) jvt_pass=false;
+		
+		if( jvt_pass==true ){
 		  goodjet_n++;
 		  goodjet_index[jet_index] = i;
 		  jet_index++;
@@ -178,7 +196,7 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
 		}
 	      }
 	    }
-		      
+
 	    // TLorentzVector definitions
 	    TLorentzVector Lepton_1  = TLorentzVector();
 	    TLorentzVector      MeT  = TLorentzVector();
@@ -186,25 +204,29 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
 	    // nominal values		      
 	    Lepton_1.SetPtEtaPhiE(lep_pt->at(goodlep_index), lep_eta->at(goodlep_index), lep_phi->at(goodlep_index),lep_e->at(goodlep_index));
 	    MeT.SetPtEtaPhiE(met, 0, met_phi , met);
-		      
+	    
 	    //Calculation of MTW
 	    float mtw = sqrt(2*Lepton_1.Pt()*MeT.Et()*(1-cos(Lepton_1.DeltaPhi(MeT))));
 	    
 	    // At least four good jets
 	    if(goodjet_n>=4){
-
+	      
 	      int goodjet1_index = goodjet_index[0]; // leading jet
 	      
 	      //At least two b-tagged jets
 	      if(goodbjet_n>=2){
 		
+		bjets_cut++;
+		
 		int goodbjet1_index = goodbjet_index[0]; // leading b-jet
 		
 		// MTW > 30 GeV
 		if(mtw>30.){
-			
+		  
+		  //TRandom3* gRand = new TRandom3(0);
+		  
 		  // systematic variations on objects
-
+		  
 		  /*
 		  // First, we sample a random number from a Gaussian distribution with a given mean and sigma
 		  TRandom3* gRand = new TRandom3(0);
@@ -228,34 +250,38 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
 		  // MTW with syst variation on both MET and lepton pT
 		  float mtw_syst = sqrt(2*Lepton_1_syst.Pt()*MeT_syst.Et()*(1-cos(Lepton_1_syst.DeltaPhi(MeT_syst))));
 		  
+		  
 		  // syst variation on jet pT
-		  Double_t 	mean_jet = jet_pt->at(goodjet1_index)/1000.; 
-		  Double_t 	sigma_jet = ( jet_pt_syst->at(goodjet1_index)/1000. ) ; 
+		  Double_t 	mean_jet = jet_pt->at(goodjet1_index); 
+		  Double_t 	sigma_jet = jet_pt_jer1->at(goodjet1_index); 
 		  float leadjet_pt_variation = gRand->Gaus(mean_jet,sigma_jet); 
 		  */
 		  
 		  ///////// SAVE HISTOGRAMS /////////
 		  double names_of_global_variable[]={met,mtw};
-
+		  
 		  /*
 		  // correspond to the analysis cuts
 		  if (MeT_syst.Et()/1000. > 30 && mtw_syst/1000. > 30) { 
-		    FillHistogramsGlobal( MeT_syst.Et()/1000., weight, "hist_syst_etmiss");
-		    FillHistogramsGlobal( mtw_syst/1000., weight, "hist_syst_mtw");
+		  FillHistogramsGlobal( MeT_syst.Et()/1000., weight, "hist_syst_etmiss");
+		  FillHistogramsGlobal( mtw_syst/1000., weight, "hist_syst_mtw");
 		  }
 		  if (Lepton_1_syst.Pt()/1000. > 30) FillHistogramsLeadlept( Lepton_1_syst.Pt()/1000., weight, "hist_syst_leadleptpt");
 		  */
+
 		  
 		  double names_of_leadlep_variable[]={Lepton_1.Pt(), Lepton_1.Eta(), Lepton_1.E(), Lepton_1.Phi(), (double)lep_charge->at(goodlep_index), (double)lep_type->at(goodlep_index)};
 		  
 		  //double names_of_jet_variable[]={(double)goodjet_n, jet_pt->at(goodjet1_index),jet_eta->at(goodjet1_index),(double)goodbjet_n, jet_pt->at(goodbjet1_index),jet_eta->at(goodbjet1_index),leadjet_pt_variation};
-
+		  
 		  double names_of_jet_variable[]={(double)goodjet_n, jet_pt->at(goodjet1_index),jet_eta->at(goodjet1_index),(double)goodbjet_n, jet_pt->at(goodbjet1_index),jet_eta->at(goodbjet1_index)};
 		  
 		  TString histonames_of_global_variable[]={"hist_etmiss","hist_mtw"};
 		  
 		  TString histonames_of_leadlep_variable[]={"hist_leadleptpt", "hist_leadlepteta","hist_leadleptE","hist_leadleptphi","hist_leadleptch","hist_leadleptID"};
 		  
+		  //TString histonames_of_jet_variable[]={"hist_n_jets","hist_leadjet_pt","hist_leadjet_eta","hist_n_bjets","hist_leadbjet_pt","hist_leadbjet_eta","hist_syst_leadjet_pt"};
+
 		  TString histonames_of_jet_variable[]={"hist_n_jets","hist_leadjet_pt","hist_leadjet_eta","hist_n_bjets","hist_leadbjet_pt","hist_leadbjet_eta"};
 		  
 		  int length_global = sizeof(names_of_global_variable)/sizeof(names_of_global_variable[0]);
@@ -274,25 +300,28 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
 		  for (int i=0; i<length_leadjet; i++){
 		    FillHistogramsLeadJet( names_of_jet_variable[i], weight, histonames_of_jet_variable[i]);
 		  }
-		  		  
+
 		  // Invariant mass distribution of the 3-jets combination with the highest vector pT sum, a handle on the top mass
 		  
 		  float PTjjjmax=0;
 		  float Mjjjmax=0;
 		  int a=0; int b=0; int c=0;
-                  
+		  
 		  // iterate over 3 jets, build vectors
-		  for ( int i = 0; i < goodjet_n; ++i) {
-		    for ( int j = i + 1; j < goodjet_n; ++j) {
-		      for ( int k = j + 1; k < goodjet_n; ++k) {
-			TLorentzVector jet1  = TLorentzVector(); jet1.SetPtEtaPhiE(jet_pt->at(goodjet_index[i]), jet_eta->at(goodjet_index[i]), jet_phi->at(goodjet_index[i]),jet_e->at(goodjet_index[i]));
-			TLorentzVector jet2  = TLorentzVector(); jet2.SetPtEtaPhiE(jet_pt->at(goodjet_index[j]), jet_eta->at(goodjet_index[j]), jet_phi->at(goodjet_index[j]),jet_e->at(goodjet_index[j]));
-			TLorentzVector jet3  = TLorentzVector(); jet3.SetPtEtaPhiE(jet_pt->at(goodjet_index[k]), jet_eta->at(goodjet_index[k]), jet_phi->at(goodjet_index[k]),jet_e->at(goodjet_index[k]));
+		  for(int i = 0; i < goodjet_n; ++i){
+		    for(int j = i + 1; j < goodjet_n; ++j){
+		      for(int k = j + 1; k < goodjet_n; ++k){
+			TLorentzVector jet1  = TLorentzVector();
+			jet1.SetPtEtaPhiE(jet_pt->at(goodjet_index[i]), jet_eta->at(goodjet_index[i]), jet_phi->at(goodjet_index[i]),jet_e->at(goodjet_index[i]));
+			TLorentzVector jet2  = TLorentzVector();
+			jet2.SetPtEtaPhiE(jet_pt->at(goodjet_index[j]), jet_eta->at(goodjet_index[j]), jet_phi->at(goodjet_index[j]),jet_e->at(goodjet_index[j]));
+			TLorentzVector jet3  = TLorentzVector();
+			jet3.SetPtEtaPhiE(jet_pt->at(goodjet_index[k]), jet_eta->at(goodjet_index[k]), jet_phi->at(goodjet_index[k]),jet_e->at(goodjet_index[k]));
 			
 			// find largest pT of 3-jet system,
 			float PTjjjTemp = (jet1 + jet2 + jet3).Pt();
 			
-			if (PTjjjTemp>PTjjjmax) { 
+			if(PTjjjTemp>PTjjjmax){ 
 			  PTjjjmax=PTjjjTemp;  
 			  Mjjjmax = (jet1 + jet2 + jet3).M(); // this is m(jjj) 
 			  a=i; b=j; c=k; // store the indices
@@ -302,9 +331,9 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
 			  float PTjjTemp13 = (jet1 + jet3).Pt();
 			  float PTjjTemp23 = (jet2 + jet3).Pt();
 			  
-			  if (PTjjTemp12 > PTjjTemp13 && PTjjTemp12 > PTjjTemp23) {a=i; b=j; c=k;}
-			  if (PTjjTemp13 > PTjjTemp12 && PTjjTemp13 > PTjjTemp23) {a=i; b=k; c=j;}
-			  if (PTjjTemp23 > PTjjTemp12 && PTjjTemp23 > PTjjTemp13) {a=j; b=k; c=i;}
+			  if(PTjjTemp12 > PTjjTemp13 && PTjjTemp12 > PTjjTemp23){a=i; b=j; c=k;}
+			  if(PTjjTemp13 > PTjjTemp12 && PTjjTemp13 > PTjjTemp23){a=i; b=k; c=j;}
+			  if(PTjjTemp23 > PTjjTemp12 && PTjjTemp23 > PTjjTemp13){a=j; b=k; c=i;}
 			  
 			}   
 		      }
@@ -317,10 +346,12 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
 		  
 		  float Mjjmax= ( j1 + j2 ).M(); // first indices  
 		  
-		  if ( Mjjjmax>100 && Mjjjmax<250) FillHistogramsTTbar(Mjjjmax,weight,"hist_Topmass");
-		  
-		  if ( Mjjmax>50 && Mjjmax<120) FillHistogramsTTbar(Mjjmax,weight,"hist_Wmass");
-		  
+		  if( Mjjjmax>100 && Mjjjmax<250 ){
+		    FillHistogramsTTbar(Mjjjmax,weight,"hist_Topmass");
+		  }
+		  if( Mjjmax>50 && Mjjmax<120){
+		    FillHistogramsTTbar(Mjjmax,weight,"hist_Wmass");
+		  }
 		  
 		  // delete random number
 		  //gRand->Delete();
@@ -333,6 +364,7 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
       }
     }
   }
+
   return kTRUE;
 }
 
@@ -352,13 +384,25 @@ void TTbarAnalysis::Terminate()
 {
 
   cout << "--------------------------------------------------------------------------------------" << endl;
+  cout << "trigger cut number: " << trigger_cut << endl;
+  cout << "good lepton number: " << good_lepton_n_cut << endl;
+  //cout << "opposite charged leptons number: " << OP_charge_leptons_cut << endl;
+  //cout << "type leptons number: " << type_leptons_cut << endl;
+  cout << "bjets cut number: " << bjets_cut << endl;
+  cout << "good electron - muon leptons: " << electron_n << "\t" << muon_n << endl;
+  cout << "--------------------------------------------------------------------------------------" << endl;
   cout << "The scaling factors values are: " << endl;
   cout << "xsec: " << xsec_SF << endl;
   cout << "totalSumOfWeights: " << totalSumOfWeights_SF << endl;
   cout << "filteff: " << filteff_SF << endl;
   cout << "kfac: " << kfac_SF << endl;
   cout << "--------------------------------------------------------------------------------------" << endl;
-  
+  cout << "trigger cut number: " << trigger_cut << endl;
+  cout << "lep tight number: " << lep_tight_n << endl;
+  cout << "lep pt>25GeV number: " << leppt_n << endl;
+  //cout << "lep type electron number: " << electron_n << endl;
+  //cout << "lep type muon number: " << muon_n << endl;
+
   TString filename_option = GetOption();
   printf("Writting with name option: %s \n", filename_option.Data());
   TString output_name="Output_TTbarAnalysis/"+filename_option+".root";
