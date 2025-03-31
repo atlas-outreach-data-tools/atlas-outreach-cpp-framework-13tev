@@ -84,6 +84,8 @@ class TTbarAnalysis : public TSelector {
 
   Float_t ScaleFactor_FTAG;
   Float_t ScaleFactor_BTAG;
+  Float_t ScaleFactor_JVT;
+
   Int_t jet_n;
   
   ROOT::VecOps::RVec<float> *jet_pt;
@@ -200,6 +202,8 @@ class TTbarAnalysis : public TSelector {
 
   TBranch *b_ScaleFactor_FTAG;
   TBranch *b_ScaleFactor_BTAG;
+  TBranch *b_ScaleFactor_JVT;
+  
   TBranch *b_jet_n;
 
   TBranch *b_jet_pt;
@@ -382,6 +386,8 @@ void TTbarAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("trigM", &trigM, &b_trigM);
   fChain->SetBranchAddress("ScaleFactor_FTAG", &ScaleFactor_FTAG, &b_ScaleFactor_FTAG);
   fChain->SetBranchAddress("ScaleFactor_BTAG", &ScaleFactor_BTAG, &b_ScaleFactor_BTAG);
+  fChain->SetBranchAddress("ScaleFactor_JVT", &ScaleFactor_JVT, &b_ScaleFactor_JVT);
+
   fChain->SetBranchAddress("jet_n", &jet_n, &b_jet_n);
   fChain->SetBranchAddress("jet_pt", &jet_pt, &b_jet_pt);
   fChain->SetBranchAddress("jet_eta", &jet_eta, &b_jet_eta);

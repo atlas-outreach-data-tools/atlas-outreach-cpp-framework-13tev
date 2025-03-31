@@ -78,7 +78,7 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
     // **********************************************************************************************//
     
     //Scale factors (adding b-tagging as it is used)
-    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_FTAG;
+    Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_FTAG*ScaleFactor_JVT;
 
     //MC weight
     Float_t m_mcWeight = mcWeight;
