@@ -1,13 +1,22 @@
 ### data
 data
+### ttbar
 PhPy8EG_A14_ttbar_hdamp258p75_nonallhad
+PhPy8EG_A14_ttbar_hdamp258p75_allhad
+### single top
 PhPy8EG_A14_tchan_BW50_lept_top
 PhPy8EG_A14_tchan_BW50_lept_antitop
+PowhegPythia8EvtGen_A14_singletop_schan_lept_top
+PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop
+PhPy8EG_tW_dyn_DR_incl_antitop
+PhPy8EG_tW_dyn_DR_incl_top
+### diboson
 Sh_2212_llll
 Sh_2212_lllv
 Sh_2212_llvv_os
 Sh_2212_llvv_ss
 Sh_2212_lvvv
+Sh_2212_vvvv
 Sh_2211_WlvWqq
 Sh_2211_WlvZqq
 Sh_2211_WlvZbb
@@ -15,6 +24,7 @@ Sh_2211_ZqqZll
 Sh_2211_ZbbZll
 Sh_2211_ZqqZvv
 Sh_2211_ZbbZvv
+### V_plus_jets
 Sh_2211_Zee_maxHTpTV2_BFilter
 Sh_2211_Zee_maxHTpTV2_CVetoBVeto
 Sh_2211_Zmumu_maxHTpTV2_BFilter
@@ -35,5 +45,6 @@ Sh_2211_Wtaunu_L_maxHTpTV2_CVetoBVeto
 Sh_2214_Ztautau_maxHTpTV2_BFilter
 Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto
 Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto
+### signal H->WW
 PowhegPythia8EvtGen_NNLOPS_NN30_ggH125_WWlvlv_EF_15_5
 PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_WWlvlv

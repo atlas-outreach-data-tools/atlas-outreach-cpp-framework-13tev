@@ -398,10 +398,10 @@ void Plotting::makePlots(){
   std::map<std::string, TH1F*> PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_WWlvlv;
   
   // Single top
-  std::map<std::string, TH1F*> PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top;
-  std::map<std::string, TH1F*> PowhegPythia8EvtGen_A14_Wt_DR_dilepton_antitop;
-  std::map<std::string, TH1F*> PowhegPythia8EvtGen_A14_Wt_DR_inclusive_top;
-  std::map<std::string, TH1F*> PowhegPythia8EvtGen_A14_Wt_DR_inclusive_antitop;
+  std::map<std::string, TH1F*> PowhegPythia8EvtGen_A14_singletop_schan_lept_top;
+  std::map<std::string, TH1F*> PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop;
+  std::map<std::string, TH1F*> PhPy8EG_tW_dyn_DR_incl_antitop;
+  std::map<std::string, TH1F*> PhPy8EG_tW_dyn_DR_incl_top;
   std::map<std::string, TH1F*> PhPy8EG_A14_tchan_BW50_lept_top;
   std::map<std::string, TH1F*> PhPy8EG_A14_tchan_BW50_lept_antitop;
 
@@ -490,10 +490,10 @@ void Plotting::makePlots(){
   */
   
   // Single top
-  //PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top = histo["PowhegPythia8EvtGen_A14_Wt_DR_dilepton_top"];
-  //PowhegPythia8EvtGen_A14_Wt_DR_dilepton_antitop = histo["PowhegPythia8EvtGen_A14_Wt_DR_dilepton_antitop"];
-  //PowhegPythia8EvtGen_A14_Wt_DR_inclusive_top = histo["PowhegPythia8EvtGen_A14_Wt_DR_inclusive_top"];
-  //PowhegPythia8EvtGen_A14_Wt_DR_inclusive_antitop = histo["PowhegPythia8EvtGen_A14_Wt_DR_inclusive_antitop"];
+  PowhegPythia8EvtGen_A14_singletop_schan_lept_top = histo["PowhegPythia8EvtGen_A14_singletop_schan_lept_top"];
+  PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop = histo["PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop"];
+  PhPy8EG_tW_dyn_DR_incl_antitop = histo["PhPy8EG_tW_dyn_DR_incl_antitop"];
+  PhPy8EG_tW_dyn_DR_incl_top = histo["PhPy8EG_tW_dyn_DR_incl_top"];
   PhPy8EG_A14_tchan_BW50_lept_top = histo["PhPy8EG_A14_tchan_BW50_lept_top"];
   PhPy8EG_A14_tchan_BW50_lept_antitop = histo["PhPy8EG_A14_tchan_BW50_lept_antitop"];
 
@@ -503,7 +503,7 @@ void Plotting::makePlots(){
   Sh_2212_llvv_os = histo["Sh_2212_llvv_os"];
   Sh_2212_llvv_ss = histo["Sh_2212_llvv_ss"];
   Sh_2212_lvvv = histo["Sh_2212_lvvv"];
-  //Sh_2212_vvvv = histo["Sh_2212_vvvv"];
+  Sh_2212_vvvv = histo["Sh_2212_vvvv"];
   Sh_2211_WlvWqq = histo["Sh_2211_WlvWqq"];
   Sh_2211_WlvZqq = histo["Sh_2211_WlvZqq"];
   Sh_2211_WlvZbb = histo["Sh_2211_WlvZbb"];
@@ -511,10 +511,6 @@ void Plotting::makePlots(){
   Sh_2211_ZbbZll = histo["Sh_2211_ZbbZll"];
   Sh_2211_ZqqZvv = histo["Sh_2211_ZqqZvv"];
   Sh_2211_ZbbZvv = histo["Sh_2211_ZbbZvv"];
-  //Sherpa_222_NNPDF30NNLO_ggZllZqq = histo["Sherpa_222_NNPDF30NNLO_ggZllZqq"];
-  //Sherpa_222_NNPDF30NNLO_ggZvvZqq = histo["Sherpa_222_NNPDF30NNLO_ggZvvZqq"];
-  //Sherpa_222_NNPDF30NNLO_ggWmlvWpqq = histo["Sherpa_222_NNPDF30NNLO_ggWmlvWpqq"];
-  //Sherpa_222_NNPDF30NNLO_ggWplvWmqq = histo["Sherpa_222_NNPDF30NNLO_ggWplvWmqq"];
   
   // V_plus_jets
   Sh_2211_Zee_maxHTpTV2_BFilter = histo["Sh_2211_Zee_maxHTpTV2_BFilter"];
@@ -630,7 +626,7 @@ void Plotting::makePlots(){
       diboson->Add(Sh_2212_llvv_os[fIter->first]);
       diboson->Add(Sh_2212_llvv_ss[fIter->first]);
       diboson->Add(Sh_2212_lvvv[fIter->first]);
-      //diboson->Add(Sh_2212_vvvv[fIter->first]);
+      diboson->Add(Sh_2212_vvvv[fIter->first]);
       diboson->Add(Sh_2211_WlvWqq[fIter->first]);
       diboson->Add(Sh_2211_WlvZqq[fIter->first]);
       diboson->Add(Sh_2211_WlvZbb[fIter->first]);
@@ -671,14 +667,15 @@ void Plotting::makePlots(){
       // single top
       stop = (TH1F*)PhPy8EG_A14_tchan_BW50_lept_top[fIter->first]->Clone();
       stop->Add(PhPy8EG_A14_tchan_BW50_lept_antitop[fIter->first]);
+      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_top[fIter->first]);
+      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop[fIter->first]);
+      stop->Add(PhPy8EG_tW_dyn_DR_incl_antitop[fIter->first]);
+      stop->Add(PhPy8EG_tW_dyn_DR_incl_top[fIter->first]);
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
 
     }
 
-
-
-    
     // merge for Top 
     if(option.find("TTbarAnalysis") != option.npos || option.find("ZBosonAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos || option.find("ZZDiBosonAnalysis") != option.npos ){
 
@@ -695,7 +692,7 @@ void Plotting::makePlots(){
       diboson->Add(Sh_2212_llvv_os[fIter->first]);
       diboson->Add(Sh_2212_llvv_ss[fIter->first]);
       diboson->Add(Sh_2212_lvvv[fIter->first]);
-      //diboson->Add(Sh_2212_vvvv[fIter->first]);
+      diboson->Add(Sh_2212_vvvv[fIter->first]);
       diboson->Add(Sh_2211_WlvWqq[fIter->first]);
       diboson->Add(Sh_2211_WlvZqq[fIter->first]);
       diboson->Add(Sh_2211_WlvZbb[fIter->first]);
@@ -703,12 +700,6 @@ void Plotting::makePlots(){
       diboson->Add(Sh_2211_ZbbZll[fIter->first]);
       diboson->Add(Sh_2211_ZqqZvv[fIter->first]);
       diboson->Add(Sh_2211_ZbbZvv[fIter->first]);
-      /*
-	diboson->Add(Sherpa_222_NNPDF30NNLO_ggZllZqq[fIter->first]);
-	diboson->Add(Sherpa_222_NNPDF30NNLO_ggZvvZqq[fIter->first]);
-	diboson->Add(Sherpa_222_NNPDF30NNLO_ggWmlvWpqq[fIter->first]);
-	diboson->Add(Sherpa_222_NNPDF30NNLO_ggWplvWmqq[fIter->first]);
-      */
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
 
@@ -717,7 +708,7 @@ void Plotting::makePlots(){
       VV = (TH1F*)Sh_2212_llll[fIter->first]->Clone();
       VV->Add(Sh_2212_llvv_os[fIter->first]);
       VV->Add(Sh_2212_llvv_ss[fIter->first]);
-      //diboson->Add(Sh_2212_vvvv[fIter->first]);
+      VV->Add(Sh_2212_vvvv[fIter->first]);
       VV->Add(Sh_2211_WlvWqq[fIter->first]);
       VV->Add(Sh_2211_ZqqZll[fIter->first]);
       VV->Add(Sh_2211_ZbbZll[fIter->first]);
@@ -729,7 +720,7 @@ void Plotting::makePlots(){
       // only WZ
       W_Z = (TH1F*)Sh_2212_lllv[fIter->first]->Clone();
       W_Z->Add(Sh_2212_lvvv[fIter->first]);
-      //W_Z->Add(Sh_2212_vvvv[fIter->first]);
+      W_Z->Add(Sh_2212_vvvv[fIter->first]);
       W_Z->Add(Sh_2211_WlvZqq[fIter->first]);
       W_Z->Add(Sh_2211_WlvZbb[fIter->first]);
       W_Z->SetFillColor(kRed-7);
@@ -748,7 +739,7 @@ void Plotting::makePlots(){
       Z_Z = (TH1F*)Sh_2212_llll[fIter->first]->Clone();
       Z_Z->Add(Sh_2212_llvv_os[fIter->first]);
       Z_Z->Add(Sh_2212_llvv_ss[fIter->first]);
-      //Z_Z->Add(Sh_2212_vvvv[fIter->first]);
+      Z_Z->Add(Sh_2212_vvvv[fIter->first]);
       Z_Z->Add(Sh_2211_ZqqZll[fIter->first]);
       Z_Z->Add(Sh_2211_ZbbZll[fIter->first]);
       Z_Z->Add(Sh_2211_ZqqZvv[fIter->first]);
@@ -760,6 +751,10 @@ void Plotting::makePlots(){
       // stop
       stop = (TH1F*)PhPy8EG_A14_tchan_BW50_lept_top[fIter->first]->Clone();
       stop->Add(PhPy8EG_A14_tchan_BW50_lept_antitop[fIter->first]);
+      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_top[fIter->first]);
+      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop[fIter->first]);
+      stop->Add(PhPy8EG_tW_dyn_DR_incl_antitop[fIter->first]);
+      stop->Add(PhPy8EG_tW_dyn_DR_incl_top[fIter->first]);
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
       
@@ -849,7 +844,7 @@ void Plotting::makePlots(){
       diboson->Add(Sh_2212_llvv_os[fIter->first]);
       diboson->Add(Sh_2212_llvv_ss[fIter->first]);
       diboson->Add(Sh_2212_lvvv[fIter->first]);
-      //diboson->Add(Sh_2212_vvvv[fIter->first]);
+      diboson->Add(Sh_2212_vvvv[fIter->first]);
       diboson->Add(Sh_2211_WlvWqq[fIter->first]);
       diboson->Add(Sh_2211_WlvZqq[fIter->first]);
       diboson->Add(Sh_2211_WlvZbb[fIter->first]);
@@ -864,6 +859,10 @@ void Plotting::makePlots(){
 
       stop = (TH1F*)PhPy8EG_A14_tchan_BW50_lept_top[fIter->first]->Clone();
       stop->Add(PhPy8EG_A14_tchan_BW50_lept_antitop[fIter->first]);
+      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_top[fIter->first]);
+      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop[fIter->first]);
+      stop->Add(PhPy8EG_tW_dyn_DR_incl_antitop[fIter->first]);
+      stop->Add(PhPy8EG_tW_dyn_DR_incl_top[fIter->first]);
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
 
@@ -928,6 +927,10 @@ void Plotting::makePlots(){
       // stop
       stop = (TH1F*)PhPy8EG_A14_tchan_BW50_lept_top[fIter->first]->Clone();
       stop->Add(PhPy8EG_A14_tchan_BW50_lept_antitop[fIter->first]);
+      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_top[fIter->first]);
+      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop[fIter->first]);
+      stop->Add(PhPy8EG_tW_dyn_DR_incl_antitop[fIter->first]);
+      stop->Add(PhPy8EG_tW_dyn_DR_incl_top[fIter->first]);
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
       
@@ -937,7 +940,7 @@ void Plotting::makePlots(){
       diboson->Add(Sh_2212_llvv_os[fIter->first]);
       diboson->Add(Sh_2212_llvv_ss[fIter->first]);
       diboson->Add(Sh_2212_lvvv[fIter->first]);
-      //diboson->Add(Sh_2212_vvvv[fIter->first]);
+      diboson->Add(Sh_2212_vvvv[fIter->first]);
       diboson->Add(Sh_2211_WlvWqq[fIter->first]);
       diboson->Add(Sh_2211_WlvZqq[fIter->first]);
       diboson->Add(Sh_2211_WlvZbb[fIter->first]);
@@ -945,12 +948,6 @@ void Plotting::makePlots(){
       diboson->Add(Sh_2211_ZbbZll[fIter->first]);
       diboson->Add(Sh_2211_ZqqZvv[fIter->first]);
       diboson->Add(Sh_2211_ZbbZvv[fIter->first]);
-      /*
-	diboson->Add(Sherpa_222_NNPDF30NNLO_ggZllZqq[fIter->first]);
-	diboson->Add(Sherpa_222_NNPDF30NNLO_ggZvvZqq[fIter->first]);
-	diboson->Add(Sherpa_222_NNPDF30NNLO_ggWmlvWpqq[fIter->first]);
-	diboson->Add(Sherpa_222_NNPDF30NNLO_ggWplvWmqq[fIter->first]);
-      */
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
       

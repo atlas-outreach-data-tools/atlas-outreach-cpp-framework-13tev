@@ -1,5 +1,6 @@
 ### name | cross-section | sum of weights | efficiency
 data
+### V_plus_jets
 Sh_2211_Zee_maxHTpTV2_BFilter
 Sh_2211_Zee_maxHTpTV2_CVetoBVeto
 Sh_2211_Zmumu_maxHTpTV2_BFilter
@@ -20,6 +21,7 @@ Sh_2211_Wtaunu_H_maxHTpTV2_CVetoBVeto
 Sh_2211_Wtaunu_L_maxHTpTV2_BFilter
 Sh_2211_Wtaunu_L_maxHTpTV2_CFilterBVeto
 Sh_2211_Wtaunu_L_maxHTpTV2_CVetoBVeto
+### Diboson
 Sh_2211_WlvWqq
 Sh_2211_WlvZqq
 Sh_2211_WlvZbb
@@ -32,13 +34,14 @@ Sh_2212_lllv
 Sh_2212_llvv_os
 Sh_2212_llvv_ss
 Sh_2212_lvvv
+Sh_2212_vvvv
+### ttbar
 PhPy8EG_A14_ttbar_hdamp258p75_nonallhad
 PhPy8EG_A14_ttbar_hdamp258p75_allhad
+### single top
 PhPy8EG_A14_tchan_BW50_lept_top
 PhPy8EG_A14_tchan_BW50_lept_antitop
-#single_top_tchan|44.152|4986200|1
-#single_antitop_tchan|26.276|4989800|1
-#single_top_schan|2.06121|997800|1
-#single_antitop_schan|1.288662|995400|1
-#single_top_wtchan|35.845486|4865800|1
-#single_antitop_wtchan|35.824406|4945600|1
+PowhegPythia8EvtGen_A14_singletop_schan_lept_top
+PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop
+PhPy8EG_tW_dyn_DR_incl_antitop
+PhPy8EG_tW_dyn_DR_incl_top
