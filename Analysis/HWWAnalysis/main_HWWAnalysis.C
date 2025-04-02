@@ -82,7 +82,7 @@ void main_HWWAnalysis(int proof = 0, int option= 0)
     chain_ttbar_allhad->AddFile(path+"MC/mc_410471.PhPy8EG_A14_ttbar_hdamp258p75_allhad.1LMET30.root");
     //if (proof == 1)  chain_ttbar_allhad->SetProof();
     chain_ttbar_allhad->Process("HWWAnalysis.C+","PhPy8EG_A14_ttbar_hdamp258p75_allhad");
-
+    
   }
 
   if (option==3 || option==0){
@@ -98,6 +98,26 @@ void main_HWWAnalysis(int proof = 0, int option= 0)
     chain_tchan_BW50_lept_antitop->AddFile(path+"MC/mc_410659.PhPy8EG_A14_tchan_BW50_lept_antitop.1LMET30.root");
     //if (proof == 1)  chain_tchan_BW50_lept_antitop->SetProof();
     chain_tchan_BW50_lept_antitop->Process("HWWAnalysis.C+","PhPy8EG_A14_tchan_BW50_lept_antitop");
+
+    TChain* chain_schan_lept_top = new TChain("analysis");
+    chain_schan_lept_top->AddFile(path+"MC/mc_410644.PowhegPythia8EvtGen_A14_singletop_schan_lept_top.1LMET30.root");
+    //if (proof == 1)  chain_schan_lept_top->SetProof();
+    chain_schan_lept_top->Process("HWWAnalysis.C+","PowhegPythia8EvtGen_A14_singletop_schan_lept_top");
+
+    TChain* chain_schan_lept_antitop = new TChain("analysis");
+    chain_schan_lept_antitop->AddFile(path+"MC/mc_410645.PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop.1LMET30.root");
+    //if (proof == 1)  chain_schan_lept_antitop->SetProof();
+    chain_schan_lept_antitop->Process("HWWAnalysis.C+","PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop");
+
+    TChain* chain_tW_dyn_DR_incl_antitop = new TChain("analysis");
+    chain_tW_dyn_DR_incl_antitop->AddFile(path+"MC/mc_601352.PhPy8EG_tW_dyn_DR_incl_antitop.1LMET30.root");
+    //if (proof == 1)  chain_tW_dyn_DR_incl_antitop->SetProof();
+    chain_tW_dyn_DR_incl_antitop->Process("HWWAnalysis.C+","PhPy8EG_tW_dyn_DR_incl_antitop");
+
+    TChain* chain_tW_dyn_DR_incl_top = new TChain("analysis");
+    chain_tW_dyn_DR_incl_top->AddFile(path+"MC/mc_601355.PhPy8EG_tW_dyn_DR_incl_top.1LMET30.root");
+    //if (proof == 1)  chain_tW_dyn_DR_incl_top->SetProof();
+    chain_tW_dyn_DR_incl_top->Process("HWWAnalysis.C+","PhPy8EG_tW_dyn_DR_incl_top");
     
   }
 

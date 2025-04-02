@@ -72,8 +72,7 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
 
     // read input option
     TString option = GetOption();
-    if(option.Contains("single")) { m_mcWeight = (mcWeight/TMath::Abs(mcWeight)); } // set to 1 or -1 for single top MCs
-    
+
     //Total weight
     Float_t weight = scaleFactor*m_mcWeight;
     

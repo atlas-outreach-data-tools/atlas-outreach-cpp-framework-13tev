@@ -66,7 +66,7 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
     // ****************************************************************************************************************************//
     
     //Scale factors (adding the one for tau)
-
+    
     Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_TAU*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_JVT;
     
     //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_TAU*ScaleFactor_PILEUP*ScaleFactor_JVT;
@@ -78,8 +78,7 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
     
     // read input option
     TString option = GetOption();
-    if(option.Contains("single")) { m_mcWeight = (mcWeight/TMath::Abs(mcWeight)); } // set to 1 or -1 for single top MCs
-    
+
     //Total weight
     Float_t weight = scaleFactor*m_mcWeight;
       

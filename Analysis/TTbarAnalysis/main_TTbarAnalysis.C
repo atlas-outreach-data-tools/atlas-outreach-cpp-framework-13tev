@@ -219,7 +219,10 @@ void main_TTbarAnalysis(int proof = 0, int option= 0)
     //if (proof == 1)  chain_tW_dyn_DR_incl_top->SetProof();
     chain_tW_dyn_DR_incl_top->Process("TTbarAnalysis.C+","PhPy8EG_tW_dyn_DR_incl_top");
 
-   
+  } // Option 3
+
+  if (option==4 || option==0){
+
     //ttbar
     
     TChain* chain_ttbar_nonallhad = new TChain("analysis");
@@ -232,10 +235,10 @@ void main_TTbarAnalysis(int proof = 0, int option= 0)
     //if (proof == 1)  chain_ttbar_allhad->SetProof();
     chain_ttbar_allhad->Process("TTbarAnalysis.C+","PhPy8EG_A14_ttbar_hdamp258p75_allhad");
     
-  } // option 3
+  } // option 4
   
   
-  if (option==4 || option==0){
+  if (option==5 || option==0){
     
     // W+jets inclusive
     
