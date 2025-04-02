@@ -389,7 +389,6 @@ void Plotting::makePlots(){
   std::map<std::string,TH1F*> data; 
   
   // default top pair production
-  //std::map<std::string,TH1F*> PhPy8EG_A14_ttbar_hdamp258p75_dil;
   std::map<std::string,TH1F*> PhPy8EG_A14_ttbar_hdamp258p75_nonallhad;
   std::map<std::string,TH1F*> PhPy8EG_A14_ttbar_hdamp258p75_allhad;
   
@@ -465,29 +464,8 @@ void Plotting::makePlots(){
   // samples to be used for all the analyses
 
   //ttbar
-  //PhPy8EG_A14_ttbar_hdamp258p75_dil = histo["PhPy8EG_A14_ttbar_hdamp258p75_dil"];
   PhPy8EG_A14_ttbar_hdamp258p75_nonallhad = histo["PhPy8EG_A14_ttbar_hdamp258p75_nonallhad"];
   PhPy8EG_A14_ttbar_hdamp258p75_allhad = histo["PhPy8EG_A14_ttbar_hdamp258p75_allhad"];
-
-  /*
-  // reading Powheg Z+jets samples, used in HZZ, ZZDiBoson, SingleTop, TTbar, WBoson, ZPrimeBoosted, ZBoson, HWW, WZDiBoson ... analyses 
-  if( option.find("HZZAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("HWWAnalysis") != option.npos ||  option.find("ZBosonAnalysis") != option.npos || option.find("ZPrimeBoostedAnalysis") != option.npos || option.find("WBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("SingleTopAnalysis") != option.npos ){
-    Zee = histo["Zee"];
-    Zmumu = histo["Zmumu"];
-    Ztautau = histo["Ztautau"];
-  }
-
-  // reading Powheg W+jets samples, used in HZZ, HWW, ZZDiBoson, WZDiBoson, TTbar, ZBoson, SUSY ... analyses 
-  if( option.find("ZBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos || option.find("HWWAnalysis") != option.npos || option.find("HZZAnalysis") != option.npos) 
-    {
-      Wplusenu = histo["Wplusenu"];
-      Wplusmunu= histo["Wplusmunu"];
-      Wplustaunu= histo["Wplustaunu"];  
-      Wminusenu= histo["Wminusenu"];
-      Wminusmunu= histo["Wminusmunu"];
-      Wminustaunu= histo["Wminustaunu"];
-    }
-  */
   
   // Single top
   PowhegPythia8EvtGen_A14_singletop_schan_lept_top = histo["PowhegPythia8EvtGen_A14_singletop_schan_lept_top"];
@@ -636,7 +614,6 @@ void Plotting::makePlots(){
       diboson->Add(Sh_2211_ZbbZvv[fIter->first]);
       diboson->SetFillColor(kBlue-6);
       diboson->SetLineWidth(0);
-      diboson->Scale(1.3); //normalisation scaling, from WW control region we need a factor of 1.3, underestimation of WZ cross section requires a normalisation factor of 1.15-1.2, also contributions with misidentified leptons are not estimated nor added => a total of 1.3 is taken
 
       // V_plus_jets
 
@@ -746,7 +723,6 @@ void Plotting::makePlots(){
       Z_Z->Add(Sh_2211_ZbbZvv[fIter->first]);
       Z_Z->SetFillColor(kBlue-6);
       Z_Z->SetLineWidth(0);
-      //      Z_Z->Scale(1.08); // loop-induced gluon–gluon gg->ZZ is not included in the current MCs, which can be seen from the 4 lepton control region
 
       // stop
       stop = (TH1F*)PhPy8EG_A14_tchan_BW50_lept_top[fIter->first]->Clone();
