@@ -7,12 +7,12 @@ The framework makes use of the [C++ language](http://www.cplusplus.com/doc/tutor
 The 13 TeV ATLAS Open Data are **hosted** on the [CERN Open Data online portal](http://opendata.cern.ch/) and [ATLAS Open Data online portal](http://opendata.atlas.cern). The framework can access the samples in two ways:
 
 + reading them online directly;
-+ reading them form a local storage (the samples need to be downloaded locally).
++ reading them from a local storage (the samples need to be downloaded locally).
 
 The framework consists of **two main parts**: 
 
-+ the **analysis** part, located within the "Analysis" directory: it performs the particular object selection and stores the output histograms;
-+ the **plotting** part, located within the "Plotting" directory: it makes the final Data / Prediction plots.
++ the **analysis** part, located within the `Analysis` directory: it performs the particular object selection and stores the output histograms;
++ the **plotting** part, located within the `Plotting` directory: it makes the final Data / Prediction plots.
 
 ---
 
@@ -23,12 +23,12 @@ The analysis code is located in the **Analysis** folder, with 12 sub-folders cor
 
 Each analysis sub-folder contains the following files:
 
-+ analysis main code (**NNAnalysis.C**): it makes all the selection and stores the output histograms;
-+ analysis main header (**NNAnalysis.h**): it defines the histograms and gives access to the variables stored in the input samples;
-+ histogram header (**NNAnalysisHistograms.h**): it defines the name of output histograms;
-+ analysis main-control code (**main_NNAnalysis.C**): it controls which input samples are going to be used and their location;
-+ a [bash script](https://www.shellscript.sh/) (**run.sh**), executed via a Linux/UNIX shell called [source](https://linuxize.com/post/bash-source-command/): helps you in running the analysis interactively.
-+ *in case you used the welcome script*, the output directory (**Output_NNAnalysis**) will be created: this is the place where the output of the analysis code (*one file with histograms per each input sample*) will be stored. Warning: if the output directory does not exist, the code will fail, please create always an empty one!
++ analysis main code (`NNAnalysis.C`): it makes all the selection and stores the output histograms;
++ analysis main header (`NNAnalysis.h`): it defines the histograms and gives access to the variables stored in the input samples;
++ histogram header (`NNAnalysisHistograms.h`): it defines the name of output histograms;
++ analysis main-control code (`main_NNAnalysis.C`): it controls which input samples are going to be used and their location;
++ a [bash script](https://www.shellscript.sh/) (`run.sh`), executed via a Linux/UNIX shell called [source](https://linuxize.com/post/bash-source-command/): helps you in running the analysis interactively.
++ *in case you used the welcome script*, the output directory (`Output_NNAnalysis`) will be created: this is the place where the output of the analysis code (*one file with histograms per each input sample*) will be stored. Warning: if the output directory does not exist, the code will fail, please create always an empty one!
 
 
 As an example, in the case of the HWWAnalysis, the sub-folder looks like this (Output_HWWAnalysis was not created yet):
