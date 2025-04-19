@@ -104,7 +104,7 @@ source plotme.sh
 The script will interactively ask you for **two options** which you can type directly (0, 1,..) in the terminal and hit "ENTER":
 
 + The **first option** will be: which analysis exactly out of the 12 you want to plot?
-+ The **second option** will ask you for the location of the **Output_NNAnalysis** directory that was created by running the Analysis code.
++ The **second option** will ask you for the location of the `Output_NNAnalysis` directory that was created by running the Analysis code.
 
 After you choose the options, the code will compile and create the needed ROOT shared libraries, and the plotting will begin. If everything was successful, the code will create in the output directory (**histograms**) the corresponding plots defined in **HistoList_ANALYSISNAME.txt**.
 
@@ -119,7 +119,7 @@ To clean all shared and linked libraries after running, you can use a script cal
 
 + In case something is not working: by changing "#define DEBUG 0" to "#define DEBUG 1" in *Plotting.cxx*, a lot of debug information will appear, this can help you trace the origin of any possible problem (usually, these could be: the directory *histograms* does not exist, a wrong path for the location of the input files is given, a wrong or non-existent histogram name is requested, one or several input files from the analysis are missing or failed,..) 
 
-+ In case you want to compile the code instead of the using the plotme script, type "make clean; make" and then run the code with *./plot [NNAnalysis]  [location of Output_NNAnalysis]*
++ In case you want to compile the code instead of using the plotme script, type "make clean; make" and then run the code with *./plot [NNAnalysis]  [location of Output_NNAnalysis]*
 
 ---
 
