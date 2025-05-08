@@ -44,8 +44,7 @@ echo '12 = TTbarDilepAnalysis'
 read choice
 
 # check choices
-if (( ($choice == 0) || ($choice == 1) || ($choice == 2) || ($choice == 3) ||($choice == 4) ||($choice == 5) ||($choice == 6) || ($choice == 7) || ($choice == 8) || ($choice == 9) ||($choice == 10) || ($choice == 11) || ($choice == 12) )) ; then
-    
+if [ $choice -ge 0 -a $choice -le 12 ]; then
   analysisName=${analysisCollection[${choice}]}
   echo "Now, choose the location of the ${analysisName} output!"
   echo "If the location corresponds to ${outputpath[${choice}]}: type 0"

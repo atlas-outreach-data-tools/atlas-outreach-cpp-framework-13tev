@@ -9,21 +9,14 @@ analysis="main_ZTauTauAnalysis"
 echo Which option should I run? 
 echo Options are:
 echo 0 = run all data and MC one after another
-echo 1 = run data only \(can be run in parallel\)
-echo 2,3,41,42 = run MC samples only \(can be run in parallel\)
+echo 1 = run data only
+echo 2,3,4,5,6 = run MC samples only
 read varname
 echo Option is $varname
 option=$varname
 
-
-echo Should I use PROOF? \(will make things faster\)
-echo Options are:
-echo 0 = NO
-echo 1 = YES
-read proofvarname
-echo PROOF option is $proofvarname
-parallel=$proofvarname
-
+#PROOF is currently desactivated 
+parallel=0
 
 ## execute and run ROOT
 echo "starting ROOT"

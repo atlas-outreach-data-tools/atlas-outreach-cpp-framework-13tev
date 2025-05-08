@@ -1,4 +1,4 @@
-### name | cross-section | sum of weights | efficiency
+### name of the root samples outputs in the Analysis folder
 data
 ### V_plus_jets
 Sh_2211_Zee_maxHTpTV2_BFilter

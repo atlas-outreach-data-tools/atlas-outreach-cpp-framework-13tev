@@ -51,7 +51,7 @@
 //######################### F L A G S ###############################//
 
 // debugging flag, set to 1 for checks
-#define DEBUG 1
+#define DEBUG 0
 
 // yields flag, set to 1 top print data and MC yields
 #define YIELDS 1
