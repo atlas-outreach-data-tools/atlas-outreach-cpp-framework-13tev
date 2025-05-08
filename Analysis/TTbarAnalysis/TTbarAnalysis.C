@@ -222,56 +222,10 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
 		// MTW > 30 GeV
 		if(mtw>30.){
 		  
-		  //TRandom3* gRand = new TRandom3(0);
-		  
-		  // systematic variations on objects
-		  
-		  /*
-		  // First, we sample a random number from a Gaussian distribution with a given mean and sigma
-		  TRandom3* gRand = new TRandom3(0);
-		  Double_t      mean_met = met_et; // nominal
-		  Double_t      sigma_met = met_et_syst; // width corresponds to the uncertainty 
-		  float met_et_variation = gRand->Gaus(mean_met,sigma_met); // this is the variation up and down
-		  
-		  // leptons syst
-		  Double_t      mean_lep = lep_pt->at(goodlep_index);
-		  Double_t      sigma_lep = lep_pt_syst->at(goodlep_index) ; 
-		  float lep_pt_variation = gRand->Gaus(mean_lep,sigma_lep);
-		  
-		  // lepton with syst 
-		  TLorentzVector Lepton_1_syst  = TLorentzVector();
-		  Lepton_1_syst.SetPtEtaPhiE(lep_pt_variation, lep_eta->at(goodlep_index), lep_phi->at(goodlep_index),lep_E->at(goodlep_index));
-		  
-		  // MET with syst
-		  TLorentzVector      MeT_syst  = TLorentzVector();
-		  MeT_syst.SetPtEtaPhiE(met_et_variation, 0, met_phi , met_et_variation);
-		  
-		  // MTW with syst variation on both MET and lepton pT
-		  float mtw_syst = sqrt(2*Lepton_1_syst.Pt()*MeT_syst.Et()*(1-cos(Lepton_1_syst.DeltaPhi(MeT_syst))));
-		  
-		  
-		  // syst variation on jet pT
-		  Double_t 	mean_jet = jet_pt->at(goodjet1_index); 
-		  Double_t 	sigma_jet = jet_pt_jer1->at(goodjet1_index); 
-		  float leadjet_pt_variation = gRand->Gaus(mean_jet,sigma_jet); 
-		  */
-		  
 		  ///////// SAVE HISTOGRAMS /////////
 		  double names_of_global_variable[]={met,mtw};
-		  
-		  /*
-		  // correspond to the analysis cuts
-		  if (MeT_syst.Et()/1000. > 30 && mtw_syst/1000. > 30) { 
-		  FillHistogramsGlobal( MeT_syst.Et()/1000., weight, "hist_syst_etmiss");
-		  FillHistogramsGlobal( mtw_syst/1000., weight, "hist_syst_mtw");
-		  }
-		  if (Lepton_1_syst.Pt()/1000. > 30) FillHistogramsLeadlept( Lepton_1_syst.Pt()/1000., weight, "hist_syst_leadleptpt");
-		  */
-
-		  
+	  
 		  double names_of_leadlep_variable[]={Lepton_1.Pt(), Lepton_1.Eta(), Lepton_1.E(), Lepton_1.Phi(), (double)lep_charge->at(goodlep_index), (double)lep_type->at(goodlep_index)};
-		  
-		  //double names_of_jet_variable[]={(double)goodjet_n, jet_pt->at(goodjet1_index),jet_eta->at(goodjet1_index),(double)goodbjet_n, jet_pt->at(goodbjet1_index),jet_eta->at(goodbjet1_index),leadjet_pt_variation};
 		  
 		  double names_of_jet_variable[]={(double)goodjet_n, jet_pt->at(goodjet1_index),jet_eta->at(goodjet1_index),(double)goodbjet_n, jet_pt->at(goodbjet1_index),jet_eta->at(goodbjet1_index)};
 		  
@@ -279,8 +233,6 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
 		  
 		  TString histonames_of_leadlep_variable[]={"hist_leadleptpt", "hist_leadlepteta","hist_leadleptE","hist_leadleptphi","hist_leadleptch","hist_leadleptID"};
 		  
-		  //TString histonames_of_jet_variable[]={"hist_n_jets","hist_leadjet_pt","hist_leadjet_eta","hist_n_bjets","hist_leadbjet_pt","hist_leadbjet_eta","hist_syst_leadjet_pt"};
-
 		  TString histonames_of_jet_variable[]={"hist_n_jets","hist_leadjet_pt","hist_leadjet_eta","hist_n_bjets","hist_leadbjet_pt","hist_leadbjet_eta"};
 		  
 		  int length_global = sizeof(names_of_global_variable)/sizeof(names_of_global_variable[0]);
@@ -351,10 +303,6 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
 		  if( Mjjmax>50 && Mjjmax<120){
 		    FillHistogramsTTbar(Mjjmax,weight,"hist_Wmass");
 		  }
-		  
-		  // delete random number
-		  //gRand->Delete();
-		  
 		}
 	      }
 	    }

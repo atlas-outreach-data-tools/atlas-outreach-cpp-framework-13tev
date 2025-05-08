@@ -76,14 +76,8 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
     // **********************************************************************************************//
     // Begin analysis selection, largely based on: ATLAS Collaboration, JHEP 11 (2017) 191           //
     // **********************************************************************************************//
-      
-    //Scale factors (adding b-tagging as it is used)
     
     Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_FTAG*ScaleFactor_JVT;
-
-    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_LepTRIGGER;
-
-    //Float_t scaleFactor = 1.0;
     
     //MC weight
     Float_t m_mcWeight = mcWeight;
@@ -228,8 +222,6 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 		      
 	      ///////// SAVE HISTOGRAMS /////////
 	      double names_of_global_variable[]={met, dilep.Pt(), TMath::Abs(dilep.Eta())};
-	
-	      //cout << "The event passed theselection. Filling the histograms" << endl;
 	      
 	      TString histonames_of_global_variable[]={"hist_met", "hist_lep_pt", "hist_lep_eta"};
 				  

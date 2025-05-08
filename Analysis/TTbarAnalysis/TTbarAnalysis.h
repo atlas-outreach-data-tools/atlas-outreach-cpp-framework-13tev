@@ -94,38 +94,12 @@ class TTbarAnalysis : public TSelector {
   ROOT::VecOps::RVec<float> *jet_e;
   ROOT::VecOps::RVec<int> *jet_btag_quantile;
   ROOT::VecOps::RVec<bool> *jet_jvt;
-  
-  /*
-    Int_t largeRJet_n;
-    vector<float> *largeRJet_pt;
-    vector<float> *largeRJet_eta;
-    vector<float> *largeRJet_phi;
-    vector<float> *largeRJet_e;
-    vector<float> *largeRJet_m;
-    vector<float> *largeRJet_D2;
-  */
-
   ROOT::VecOps::RVec<float> *jet_pt_jer1;
   
   Float_t ScaleFactor_ELE;
   Float_t ScaleFactor_MUON;
   Float_t ScaleFactor_LepTRIGGER;
-  
   Int_t lep_n;
-  /*
-  vector<int> *lep_type;
-  vector<float> *lep_pt;
-  vector<float> *lep_eta;
-  vector<float> *lep_phi;
-  vector<float> *lep_e;
-  vector<int> *lep_charge;
-
-  vector<float> *lep_ptvarcone30;
-  vector<float> *lep_topoetcone20;
-  vector<float> *lep_z0;
-  vector<float> *lep_d0;
-  vector<float> *lep_d0sig;
-  */
 
   ROOT::VecOps::RVec<int> *lep_type;
   ROOT::VecOps::RVec<float> *lep_pt;
@@ -140,52 +114,18 @@ class TTbarAnalysis : public TSelector {
   ROOT::VecOps::RVec<float> *lep_d0;
   ROOT::VecOps::RVec<float> *lep_d0sig;
   
-  /*
-  vector<bool> *lep_isTight;
-  vector<bool> *lep_isTightID;
-  vector<bool> *lep_isTightIso;
-  */
-  
-  //ROOT::VecOps::RVec<bool> *lep_isTight;
   ROOT::VecOps::RVec<bool> *lep_isTightID;
   ROOT::VecOps::RVec<bool> *lep_isTightIso;
   ROOT::VecOps::RVec<bool> *lep_isTrigMatched;
   
   Float_t ScaleFactor_PHOTON;
-
-  /*
-  Int_t photon_n;
-  vector<float> *photon_pt;
-  vector<float> *photon_eta;
-  vector<float> *photon_phi;
-  vector<float> *photon_e;
-  vector<float> *photon_ptcone20;
-  vector<float> *photon_topoetcone40;
-  vector<bool> *photon_isTight;
-  vector<bool> *photon_isTightID;
-  vector<bool> *photon_isTightIso;
-  */
   Float_t ScaleFactor_TAU;
-  /*
-  Int_t tau_n;
-  vector<float> *tau_pt;
-  vector<float> *tau_eta;
-  vector<float> *tau_phi;
-  vector<float> *tau_e;
-  vector<float> *tau_charge;
-  vector<int> *tau_nTracks;
-  vector<bool> *tau_isTight;
-
-  vector<float> *tau_RNNJetScore;
-  vector<float> *tau_RNNEleScore;
-  */
   Float_t met;
   Float_t met_phi;
   Float_t met_mpx;
   Float_t met_mpy;
 
   Float_t initial_events;
-  //Float_t initial_sum_of_weights;
   Double_t initial_sum_of_weights;
   Float_t initial_sum_of_weights_squared;
 
@@ -212,16 +152,6 @@ class TTbarAnalysis : public TSelector {
   TBranch *b_jet_e;
   TBranch *b_jet_btag_quantile;
   TBranch *b_jet_jvt;
-  /*
-  TBranch *b_largeRJet_n;
-  TBranch *b_largeRJet_pt;
-  TBranch *b_largeRJet_eta;
-  TBranch *b_largeRJet_phi;
-  TBranch *b_largeRJet_e;
-  TBranch *b_largeRJet_m;
-  TBranch *b_largeRJet_D2;
-  */
-
   TBranch *b_jet_pt_jer1;
   TBranch *b_ScaleFactor_ELE;
   TBranch *b_ScaleFactor_MUON;
@@ -241,38 +171,12 @@ class TTbarAnalysis : public TSelector {
   TBranch *b_lep_d0;
   TBranch *b_lep_d0sig;
 
-  //TBranch *b_lep_isTight;
   TBranch *b_lep_isTightID;
   TBranch *b_lep_isTightIso;
   TBranch *b_lep_isTrigMatched;
   
   TBranch *b_ScaleFactor_PHOTON;
-  /*
-  TBranch *b_photon_n;
-  TBranch *b_photon_pt;
-  TBranch *b_photon_eta;
-  TBranch *b_photon_phi;
-  TBranch *b_photon_e;
-  TBranch *b_photon_ptcone20;
-  TBranch *b_photon_topoetcone40;
-  TBranch *b_photon_isTight;
-  TBranch *b_photon_isTightID;
-  TBranch *b_photon_isTightIso;
-  */
   TBranch *b_ScaleFactor_TAU;
-  /*
-  TBranch *b_tau_n;
-  TBranch *b_tau_pt;
-  TBranch *b_tau_eta;
-  TBranch *b_tau_phi;
-  TBranch *b_tau_e;
-  TBranch *b_tau_charge;
-  TBranch *b_tau_nTracks;
-  TBranch *b_tau_isTight;
-
-  TBranch *b_tau_RNNJetScore;
-  TBranch *b_tau_RNNEleScore;
-  */
   TBranch *b_met;
   TBranch *b_met_phi;
   TBranch *b_met_mpx;
@@ -301,10 +205,6 @@ class TTbarAnalysis : public TSelector {
   virtual void    FillHistogramsLeadlept( double m, float w , TString s);
   virtual void    FillHistogramsLeadJet( double m, float w , TString s);
   virtual void    FillHistogramsTTbar( double m, float w , TString s);
-
-  //virtual void    mc_under_and_overflow();
-  //virtual void    fill_hist_scale_factors(float SF_PILEUP, float SF_BTAG, float SF_ELE, float SF_MUON, float SF_PHOTON, float SF_TAU, float SF_lepTRIGGER, float SF_JVT);
-
   
   // Get Output List to save our histograms in the output file
   virtual TList  *GetOutputList() const { return fOutput; }
@@ -366,7 +266,6 @@ void TTbarAnalysis::Init(TTree *tree)
   lep_z0 = 0;
   lep_d0 = 0;
   lep_d0sig = 0;
-  //lep_isTight = 0;
   lep_isTightID = 0;
   lep_isTightIso = 0;
   lep_isTrigMatched = 0;
@@ -395,15 +294,6 @@ void TTbarAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("jet_e", &jet_e, &b_jet_e);
   fChain->SetBranchAddress("jet_btag_quantile", &jet_btag_quantile, &b_jet_btag_quantile);
   fChain->SetBranchAddress("jet_jvt", &jet_jvt, &b_jet_jvt);
-  /*
-    fChain->SetBranchAddress("largeRJet_n", &largeRJet_n, &b_largeRJet_n);
-    fChain->SetBranchAddress("largeRJet_pt", &largeRJet_pt, &b_largeRJet_pt);
-    fChain->SetBranchAddress("largeRJet_eta", &largeRJet_eta, &b_largeRJet_eta);
-    fChain->SetBranchAddress("largeRJet_phi", &largeRJet_phi, &b_largeRJet_phi);
-    fChain->SetBranchAddress("largeRJet_e", &largeRJet_e, &b_largeRJet_e);
-    fChain->SetBranchAddress("largeRJet_m", &largeRJet_m, &b_largeRJet_m);
-    fChain->SetBranchAddress("largeRJet_D2", &largeRJet_D2, &b_largeRJet_D2);
-  */
 
   fChain->SetBranchAddress("jet_pt_jer1", &jet_pt_jer1, &b_jet_pt_jer1);
   fChain->SetBranchAddress("ScaleFactor_ELE", &ScaleFactor_ELE, &b_ScaleFactor_ELE);
@@ -422,47 +312,18 @@ void TTbarAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("lep_z0", &lep_z0, &b_lep_z0);
   fChain->SetBranchAddress("lep_d0", &lep_d0, &b_lep_d0);
   fChain->SetBranchAddress("lep_d0sig", &lep_d0sig, &b_lep_d0sig);
-  //fChain->SetBranchAddress("lep_isTight", &lep_isTight, &b_lep_isTight);
   fChain->SetBranchAddress("lep_isTightID", &lep_isTightID, &b_lep_isTightID);
   fChain->SetBranchAddress("lep_isTightIso", &lep_isTightIso, &b_lep_isTightIso);
   fChain->SetBranchAddress("lep_isTrigMatched", &lep_isTrigMatched, &b_lep_isTrigMatched);
   fChain->SetBranchAddress("ScaleFactor_PHOTON", &ScaleFactor_PHOTON, &b_ScaleFactor_PHOTON);
-  /*
-    fChain->SetBranchAddress("photon_n", &photon_n, &b_photon_n);
-    fChain->SetBranchAddress("photon_pt", &photon_pt, &b_photon_pt);
-    fChain->SetBranchAddress("photon_eta", &photon_eta, &b_photon_eta);
-    fChain->SetBranchAddress("photon_phi", &photon_phi, &b_photon_phi);
-    fChain->SetBranchAddress("photon_e", &photon_e, &b_photon_e);
-    fChain->SetBranchAddress("photon_ptcone20", &photon_ptcone20, &b_photon_ptcone20);
-    fChain->SetBranchAddress("photon_topoetcone40", &photon_topoetcone40, &b_photon_topoetcone40);
-    fChain->SetBranchAddress("photon_isTight", &photon_isTight, &b_photon_isTight);
-    fChain->SetBranchAddress("photon_isTightID", &photon_isTightID, &b_photon_isTightID);
-    fChain->SetBranchAddress("photon_isTightIso", &photon_isTightIso, &b_photon_isTightIso);
-  */
+
   fChain->SetBranchAddress("ScaleFactor_TAU", &ScaleFactor_TAU, &b_ScaleFactor_TAU);
-  /*
-    fChain->SetBranchAddress("tau_n", &tau_n, &b_tau_n);
-    fChain->SetBranchAddress("tau_pt", &tau_pt, &b_tau_pt);
-    fChain->SetBranchAddress("tau_eta", &tau_eta, &b_tau_eta);
-    fChain->SetBranchAddress("tau_phi", &tau_phi, &b_tau_phi);
-    fChain->SetBranchAddress("tau_e", &tau_e, &b_tau_e);
-    fChain->SetBranchAddress("tau_charge", &tau_charge, &b_tau_charge);
-    fChain->SetBranchAddress("tau_nTracks", &tau_nTracks, &b_tau_nTracks);
-    fChain->SetBranchAddress("tau_isTight", &tau_isTight, &b_tau_isTight);
-    fChain->SetBranchAddress("tau_RNNJetScore", &tau_RNNJetScore, &b_tau_RNNJetScore);
-    fChain->SetBranchAddress("tau_RNNEleScore", &tau_RNNEleScore, &b_tau_RNNEleScore);
-  */
   fChain->SetBranchAddress("met", &met, &b_met);
   fChain->SetBranchAddress("met_phi", &met_phi, &b_met_phi);
   fChain->SetBranchAddress("met_mpx", &met_mpx, &b_met_mpx);
   fChain->SetBranchAddress("met_mpy", &met_mpy, &b_met_mpy);
   
-  
-  //fChain->SetBranchAddress("initial_events", &initial_events, &b_initial_events);
-  //fChain->SetBranchAddress("initial_sum_of_weights", &initial_sum_of_weights, &b_initial_sum_of_weights);
   fChain->SetBranchAddress("sum_of_weights", &initial_sum_of_weights, &b_initial_sum_of_weights);
-  //fChain->SetBranchAddress("initial_sum_of_weights_squared", &initial_sum_of_weights_squared, &b_initial_sum_of_weights_squared);
-  
   
 }
 

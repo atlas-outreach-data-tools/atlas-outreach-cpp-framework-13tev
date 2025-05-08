@@ -61,18 +61,14 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
   
   if(fChain->GetTree()->GetEntries()>0){
 
-    // ****************************************************************************************************************************//
-    //  Begin simplified selection based on: ATLAS Collaboration, Eur. Phys. J. C 78 (2018) 163 and Phys. Rev. D 99, 072001 (2019) //
-    // ****************************************************************************************************************************//
+    // ******************************************************************************************************************
+    //  Begin simplified selection based on: ATLAS Collaboration, Eur. Phys. J. C 78 (2018) 163 and Phys. Rev. D 99, 072001 (2019) 
+    // ******************************************************************************************************************
     
     //Scale factors (adding the one for tau)
     
     Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_TAU*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_JVT;
     
-    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_TAU*ScaleFactor_PILEUP*ScaleFactor_JVT;
-
-    //Float_t scaleFactor = 1.0;
-
     //MC weight
     Float_t m_mcWeight = mcWeight;
     
@@ -218,11 +214,6 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 	  if ( (VisibleMass_LepTau>35) && (VisibleMass_LepTau<75) && (mt<30) && (sum_dPhi<3.5) ) {
 		 
 	    //Start to fill histograms: definitions of variables
-	    //*******************
-	    // There is no branch called ditau_m, so there is no MMC value
-	    //double names_of_global_variable[]      = { VisibleMass_LepTau, MMC_mass, met,  mt_etau, mt_mutau, sum_dPhi, (double)jet_n };
-	    //TString histonames_of_global_variable[]= {"hist_mLL", "hist_MMC", "hist_etmiss", "hist_mt_etau", "hist_mt_mutau", "hist_sum_dPhi", "hist_n_jets"};
-	    //*******************
 	    
 	    double names_of_global_variable[]      = { VisibleMass_LepTau, met,  mt_etau, mt_mutau, sum_dPhi, (double)jet_n };
 	    TString histonames_of_global_variable[]= {"hist_mLL", "hist_etmiss", "hist_mt_etau", "hist_mt_mutau", "hist_sum_dPhi", "hist_n_jets"};
@@ -230,12 +221,6 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 	    double names_of_leadlep_variable[]     = {Lepton.Pt(), Lepton.Eta(), Lepton.E(), Lepton.Phi(), (double)lep_charge->at(goodlep_index), (double)lep_type->at(goodlep_index)};
 	    TString histonames_of_leadlep_variable[]={"hist_leadleptpt", "hist_leadlepteta", "hist_leadleptE", "hist_leadleptphi", "hist_leadleptch", "hist_leadleptID"};
 
-	    //*************
-	    // There is no a branch called tau_BDTid
-	    //double names_of_tau_variable[]={HadTau.Pt(), HadTau.Eta(), HadTau.E(), HadTau.Phi(), (double)tau_nTracks->at(goodtau_index), tau_BDTid->at(goodtau_index) };
-	    //TString histonames_of_tau_variable[]={"hist_taupt", "hist_taueta", "hist_tauE", "hist_tauphi", "hist_tau_nTracks", "hist_tau_BDTid"};
-	    //************
-	    
 	    double names_of_tau_variable[] ={ HadTau.Pt(), HadTau.Eta(), HadTau.E(), HadTau.Phi(), (double)tau_nTracks->at(goodtau_index) };
 	    TString histonames_of_tau_variable[]={"hist_taupt", "hist_taueta", "hist_tauE", "hist_tauphi", "hist_tau_nTracks" };
 	     
@@ -256,18 +241,7 @@ Bool_t ZTauTauAnalysis::Process(Long64_t entry)
 	    for (int i=0; i<length_tau; i++){
 	      FillHistogramsTau( names_of_tau_variable[i], weight, histonames_of_tau_variable[i]);
 	    }
-		    
-	    /*
-	    // systematic variations on tau pT
-	    // Sample a random number from a Gaussian distribution with a given mean and sigma
-	    TRandom3* gRand = new TRandom3(0);
-	    Double_t      mean     = tau_pt->at(goodtau_index)/1000. ; // nominal
-	    Double_t      sigma    = tau_pt_syst->at(goodtau_index)/1000. ; // width corresponds to the uncertainty
-	    float tau_pt_variation = gRand->Gaus(mean, sigma); // this is the variation up and down
-	    
-	    if(tau_pt_variation>25) FillHistogramsTau( tau_pt_variation , weight, "hist_syst_taupt");
-	    */
-	    
+		    	    
 	    // fill jets
 	    if (jet_n > 0){
 	      double names_of_jet_variable[]={jet_pt->at(goodjet_index), jet_eta->at(goodjet_index)};
@@ -300,19 +274,7 @@ void ZTauTauAnalysis::SlaveTerminate()
 
 void ZTauTauAnalysis::Terminate()
 {
-  /*
-  cout << "--------------------------------------------------------------------------------------" << endl;
-  cout << "trigger cut number: " << trigger_cut << endl;
-  cout << "good lepton number: " << good_lepton_n_cut << endl;
-  cout << "opposite charged leptons number: " << OP_charge_leptons_cut << endl;
-  cout << "type leptons number: " << type_leptons_cut << endl;
-  cout << "dPhiLLmet cut number: " << dPhiLLmet_cut << endl;
-  cout << "ptLL cut number: " << ptLL_cut << endl;
-  cout << "mLL cut number: " << mLL_cut << endl;
-  cout << "dPhi_LL cut number: " << dPhi_LL_cut << endl;
-  cout << "bjets cut number: " << bjets_cut << endl;
-  cout << "good electron - muon leptons: " << electron_n << "\t" << muon_n << endl;
-  */
+
   cout << "--------------------------------------------------------------------------------------" << endl;
   cout << "The scaling factors values are: " << endl;
   cout << "xsec: " << xsec_SF << endl;

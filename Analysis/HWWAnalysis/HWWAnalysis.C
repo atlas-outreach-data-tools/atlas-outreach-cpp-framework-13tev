@@ -62,10 +62,6 @@ Bool_t HWWAnalysis::Process(Long64_t entry)
     //Scale factors
     
     Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_LepTRIGGER*ScaleFactor_PILEUP*ScaleFactor_FTAG*ScaleFactor_JVT;
-
-    //Float_t scaleFactor = ScaleFactor_ELE*ScaleFactor_MUON*ScaleFactor_PILEUP*ScaleFactor_BTAG*ScaleFactor_JVT;
-
-    //Float_t scaleFactor = 1.0;
     
     //MC weight
     Float_t m_mcWeight = mcWeight;
