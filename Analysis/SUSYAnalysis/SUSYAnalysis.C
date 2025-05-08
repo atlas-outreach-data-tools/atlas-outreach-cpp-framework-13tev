@@ -238,9 +238,6 @@ Bool_t SUSYAnalysis::Process(Long64_t entry)
     //MC weight
     Float_t m_mcWeight = mcWeight;
 
-    // read input option
-    if(option.Contains("single")) { m_mcWeight = (mcWeight/TMath::Abs(mcWeight)); } // set to 1 or -1 for single top MCs
-
     //Total weight
     Float_t weight = scaleFactor*m_mcWeight;
 
