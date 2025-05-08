@@ -50,9 +50,9 @@ void main_TTbarAnalysis(int proof = 0, int option= 0){
     chain_data->AddFile(path+"data16_periodC."+skim+".root");
     chain_data->AddFile(path+"data16_periodD."+skim+".root");
     chain_data->AddFile(path+"data16_periodE."+skim+".root");
-    chain_data->AddFile(path+"data16_periodF."+skim+"root");
+    chain_data->AddFile(path+"data16_periodF."+skim+".root");
     chain_data->AddFile(path+"data16_periodG."+skim+".root");
-    chain_data->AddFile(path+"data16_periodI."+skim+"root");
+    chain_data->AddFile(path+"data16_periodI."+skim+".root");
     chain_data->AddFile(path+"data16_periodK."+skim+".root");
     chain_data->AddFile(path+"data16_periodL."+skim+".root");
     
