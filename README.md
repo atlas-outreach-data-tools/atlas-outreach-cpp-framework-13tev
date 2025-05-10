@@ -7,12 +7,12 @@ The framework makes use of the [C++ language](http://www.cplusplus.com/doc/tutor
 The 13 TeV ATLAS Open Data are **hosted** on the [CERN Open Data online portal](http://opendata.cern.ch/) and [ATLAS Open Data online portal](http://opendata.atlas.cern). The framework can access the samples in two ways:
 
 + reading them online directly;
-+ reading them form a local storage (the samples need to be downloaded locally).
++ reading them from a local storage (the samples need to be downloaded locally).
 
 The framework consists of **two main parts**: 
 
-+ the **analysis** part, located within the "Analysis" directory: it performs the particular object selection and stores the output histograms;
-+ the **plotting** part, located within the "Plotting" directory: it makes the final Data / Prediction plots.
++ the **analysis** part, located within the `Analysis` directory: it performs the particular object selection and stores the output histograms;
++ the **plotting** part, located within the `Plotting` directory: it makes the final Data / Prediction plots.
 
 ---
 
@@ -23,12 +23,12 @@ The analysis code is located in the **Analysis** folder, with 12 sub-folders cor
 
 Each analysis sub-folder contains the following files:
 
-+ analysis main code (**NNAnalysis.C**): it makes all the selection and stores the output histograms;
-+ analysis main header (**NNAnalysis.h**): it defines the histograms and gives access to the variables stored in the input samples;
-+ histogram header (**NNAnalysisHistograms.h**): it defines the name of output histograms;
-+ analysis main-control code (**main_NNAnalysis.C**): it controls which input samples are going to be used and their location;
-+ a [bash script](https://www.shellscript.sh/) (**run.sh**), executed via a Linux/UNIX shell called [source](https://linuxize.com/post/bash-source-command/): helps you in running the analysis interactively.
-+ *in case you used the welcome script*, the output directory (**Output_NNAnalysis**) will be created: this is the place where the output of the analysis code (*one file with histograms per each input sample*) will be stored. Warning: if the output directory does not exist, the code will fail, please create always an empty one!
++ analysis main code (`NNAnalysis.C`): it makes all the selection and stores the output histograms;
++ analysis main header (`NNAnalysis.h`): it defines the histograms and gives access to the variables stored in the input samples;
++ histogram header (`NNAnalysisHistograms.h`): it defines the name of output histograms;
++ analysis main-control code (`main_NNAnalysis.C`): it controls which input samples are going to be used and their location;
++ a [bash script](https://www.shellscript.sh/) (`run.sh`), executed via a Linux/UNIX shell called [source](https://linuxize.com/post/bash-source-command/): helps you in running the analysis interactively.
++ *in case you used the welcome script*, the output directory (`Output_NNAnalysis`) will be created: this is the place where the output of the analysis code (*one file with histograms per each input sample*) will be stored. Warning: if the output directory does not exist, the code will fail, please create always an empty one!
 
 
 As an example, in the case of the HWWAnalysis, the sub-folder looks like this (Output_HWWAnalysis was not created yet):
@@ -104,7 +104,7 @@ source plotme.sh
 The script will interactively ask you for **two options** which you can type directly (0, 1,..) in the terminal and hit "ENTER":
 
 + The **first option** will be: which analysis exactly out of the 12 you want to plot?
-+ The **second option** will ask you for the location of the **Output_NNAnalysis** directory that was created by running the Analysis code.
++ The **second option** will ask you for the location of the `Output_NNAnalysis` directory that was created by running the Analysis code.
 
 After you choose the options, the code will compile and create the needed ROOT shared libraries, and the plotting will begin. If everything was successful, the code will create in the output directory (**histograms**) the corresponding plots defined in **HistoList_ANALYSISNAME.txt**.
 
@@ -119,7 +119,7 @@ To clean all shared and linked libraries after running, you can use a script cal
 
 + In case something is not working: by changing "#define DEBUG 0" to "#define DEBUG 1" in *Plotting.cxx*, a lot of debug information will appear, this can help you trace the origin of any possible problem (usually, these could be: the directory *histograms* does not exist, a wrong path for the location of the input files is given, a wrong or non-existent histogram name is requested, one or several input files from the analysis are missing or failed,..) 
 
-+ In case you want to compile the code instead of the using the plotme script, type "make clean; make" and then run the code with *./plot [NNAnalysis]  [location of Output_NNAnalysis]*
++ In case you want to compile the code instead of using the plotme script, type "make clean; make" and then run the code with *./plot [NNAnalysis]  [location of Output_NNAnalysis]*
 
 ---
 
