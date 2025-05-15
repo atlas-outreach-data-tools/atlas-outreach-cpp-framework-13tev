@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
-#ifndef ZTauTauAnalysis_h
-#define ZTauTauAnalysis_h
+#ifndef TTbarDilepAnalysis_h
+#define TTbarDilepAnalysis_h
 
 #include "TROOT.h"
 #include "TChain.h"
@@ -14,57 +14,45 @@
 #include "vector"
 #include <set>
 #include "ROOT/RVec.hxx"
+//#include <ROOT/RVec.hxx>
 
-class ZTauTauAnalysis : public TSelector {
-public :
-  TTreeReader     fReader;  //!the tree reader 
+class TTbarDilepAnalysis : public TSelector {
+  public :
+  //TTreeReader     fReader;  //!the tree reader                                                                                               
   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
-  
+
   //////////////////////////////////////////////////////////
   // histograms
-  
+
   // Global variables histograms
-  TH1F *hist_etmiss    = 0;
-  TH1F *hist_mLL    = 0;
-  TH1F *hist_MMC    = 0;
-  TH1F *hist_mt_etau    = 0;
-  TH1F *hist_mt_mutau    = 0;
-  TH1F *hist_sum_dPhi   = 0;
-
-  // Leading Lepton histograms
-  TH1F *hist_leadleptpt   = 0;
-  TH1F *hist_leadlepteta  = 0;
-  TH1F *hist_leadleptE    = 0;
-  TH1F *hist_leadleptphi  = 0;
-  TH1F *hist_leadleptch   = 0;
-  TH1F *hist_leadleptID   = 0;
-  TH1F *hist_leadlept_ptc  = 0;
-  TH1F *hist_leadleptetc  = 0;
-  TH1F *hist_leadlepz0    = 0;
-  TH1F *hist_leadlepd0    = 0;
-
-  // Tau histograms
-
-  TH1F *hist_taupt    = 0;
-  TH1F *hist_taueta    = 0;
-  TH1F *hist_tauE    = 0;
-  TH1F *hist_tauphi    = 0;
-
-  TH1F *hist_tau_nTracks    = 0;
-  TH1F *hist_tau_BDTid    = 0;
-
-  TH1F *hist_syst_taupt    = 0;
-
-  // Jet variables histograms
-  TH1F *hist_n_jets       = 0;
-  TH1F *hist_leadjet_pt       = 0;
-  TH1F *hist_leadjet_eta      = 0;
-
+  TH1F *hist_met      = 0;
+  TH1F *hist_lep_pt   = 0;
+  TH1F *hist_lep_eta  = 0;
   TH1F *hist_scale_factors  = 0;
+
+  // Scale factors histograms
+
+  TH1F *hist_ScaleFactor_PILEUP = 0;
+  TH1F *hist_ScaleFactor_BTAG = 0;
+  TH1F *hist_ScaleFactor_ELE = 0;
+  TH1F *hist_ScaleFactor_MUON = 0;
+  TH1F *hist_ScaleFactor_PHOTON = 0;
+  TH1F *hist_ScaleFactor_TAU = 0;
+  TH1F *hist_ScaleFactor_lepTRIGGER = 0;
+  TH1F *hist_ScaleFactor_JVT = 0;
+  
+  int muon_n = 0;
+  int electron_n = 0;
+  int trigger_cut = 0;
+  int good_lepton_n_cut = 0;
+  int OP_charge_leptons_cut = 0;
+  int type_leptons_cut = 0;
+  int bjets_cut = 0;
+
   
   //////////////////////////////////////////////////////////
   // Declaration of leaf types
-
+  
   Float_t ScaleFactor_PILEUP;
   Float_t mcWeight;
   Double_t xsec;
@@ -91,7 +79,7 @@ public :
   Float_t ScaleFactor_LepTRIGGER;
   
   Int_t lep_n;
-
+  
   ROOT::VecOps::RVec<int> *lep_type;
   ROOT::VecOps::RVec<float> *lep_pt;
   ROOT::VecOps::RVec<float> *lep_eta;
@@ -104,26 +92,13 @@ public :
   ROOT::VecOps::RVec<float> *lep_z0;
   ROOT::VecOps::RVec<float> *lep_d0;
   ROOT::VecOps::RVec<float> *lep_d0sig;
-    
+  
   ROOT::VecOps::RVec<bool> *lep_isTightID;
   ROOT::VecOps::RVec<bool> *lep_isTightIso;
   ROOT::VecOps::RVec<bool> *lep_isTrigMatched;
-  
+
   Float_t ScaleFactor_PHOTON;
   Float_t ScaleFactor_TAU;
-  
-  Int_t tau_n;
-  ROOT::VecOps::RVec<float> *tau_pt;
-  ROOT::VecOps::RVec<float> *tau_eta;
-  ROOT::VecOps::RVec<float> *tau_phi;
-  ROOT::VecOps::RVec<float> *tau_e;
-  ROOT::VecOps::RVec<float> *tau_charge;
-  ROOT::VecOps::RVec<int> *tau_nTracks;
-  ROOT::VecOps::RVec<bool> *tau_isTight;
-
-  ROOT::VecOps::RVec<float> *tau_RNNJetScore;
-  ROOT::VecOps::RVec<float> *tau_RNNEleScore;
- 
   Float_t met;
   Float_t met_phi;
   Float_t met_mpx;
@@ -132,9 +107,9 @@ public :
   Float_t initial_events;
   Double_t initial_sum_of_weights;
   Float_t initial_sum_of_weights_squared;
-  
-  // List of branches
 
+  // List of branches
+  
   TBranch *b_ScaleFactor_PILEUP;
   TBranch *b_mcWeight;
   TBranch *b_xsec;
@@ -155,6 +130,7 @@ public :
   TBranch *b_jet_e;
   TBranch *b_jet_btag_quantile;
   TBranch *b_jet_jvt;
+
   TBranch *b_ScaleFactor_ELE;
   TBranch *b_ScaleFactor_MUON;
   TBranch *b_ScaleFactor_LepTRIGGER;
@@ -176,22 +152,9 @@ public :
   TBranch *b_lep_isTightID;
   TBranch *b_lep_isTightIso;
   TBranch *b_lep_isTrigMatched;
-  
+
   TBranch *b_ScaleFactor_PHOTON;
   TBranch *b_ScaleFactor_TAU;
-  
-  TBranch *b_tau_n;
-  TBranch *b_tau_pt;
-  TBranch *b_tau_eta;
-  TBranch *b_tau_phi;
-  TBranch *b_tau_e;
-  TBranch *b_tau_charge;
-  TBranch *b_tau_nTracks;
-  TBranch *b_tau_isTight;
-
-  TBranch *b_tau_RNNJetScore;
-  TBranch *b_tau_RNNEleScore;
-  
   TBranch *b_met;
   TBranch *b_met_phi;
   TBranch *b_met_mpx;
@@ -201,8 +164,9 @@ public :
   TBranch *b_initial_sum_of_weights;
   TBranch *b_initial_sum_of_weights_squared;
   
-  ZTauTauAnalysis(TTree * =0) : fChain(0) { }
-  virtual ~ZTauTauAnalysis() { }
+
+  TTbarDilepAnalysis(TTree * =0) : fChain(0) { }
+  virtual ~TTbarDilepAnalysis() { }
   virtual Int_t   Version() const { return 2; }
   virtual void    Begin(TTree *tree);
   virtual void    SlaveBegin(TTree *tree);
@@ -214,47 +178,52 @@ public :
   virtual void    SetOption(const char *option) { fOption = option; }
   virtual void    SetObject(TObject *obj) { fObject = obj; }
   virtual void    SetInputList(TList *input) { fInput = input; }
+
   virtual void    FillHistogramsGlobal( double m, float w , TString s);
-  virtual void    FillHistogramsLeadlept( double m, float w , TString s);
-  virtual void    FillHistogramsTau( double m, float w , TString s);
-  virtual void    FillHistogramsLeadJet( double m, float w , TString s);
+  virtual void    mc_under_and_overflow();
+  virtual void    fill_hist_scale_factors(float SF_PILEUP, float SF_BTAG, float SF_ELE, float SF_MUON, float SF_PHOTON, float SF_TAU, float SF_lepTRIGGER, float SF_JVT);
 
-  // Get Output List t osave our histograms in the output file
+  
+  // Get Output List to save our histograms in the output file
   virtual TList  *GetOutputList() const { return fOutput; }
-  //
   virtual void    define_histograms();
-  //
   virtual void    FillOutputList();
-  //
   virtual void    WriteHistograms();
-
   virtual void    SlaveTerminate();
   virtual void    Terminate();
 
-
   int nEvents;
   std::set<float> uniqueWeights;
+  int good_event_lep;
+  int two_electrons_lep;
+  int two_muons_lep;
+  int lep_tight_n;
+  int leppt_n;
+  int lep_ptvarcone_n;
+  int lep_etcone_n;
+  int leptype_elec_n;
+  int leptype_muon_n;
+  int lep_elec_d0;
+  int lep_muon_d0;
+  int lep_elec_z0;
+  int lep_muon_z0;
   
   Double_t xsec_SF;
   Double_t totalSumOfWeights_SF;
   Double_t filteff_SF;
   Double_t kfac_SF;
-
-  ClassDef(ZTauTauAnalysis,0);
+  
+  ClassDef(TTbarDilepAnalysis,0);
+  
 };
 
 #endif
 
-#ifdef ZTauTauAnalysis_cxx
-void ZTauTauAnalysis::Init(TTree *tree)
+#ifdef TTbarDilepAnalysis_cxx
+void TTbarDilepAnalysis::Init(TTree *tree)
 {
-  // The Init() function is called when the selector needs to initialize
-  // a new tree or chain. Typically here the reader is initialized.
-  // It is normally not necessary to make changes to the generated
-  // code, but the routine can be extended by the user if needed.
-  // Init() will be called many times when running on PROOF
-  // (once per file to be processed).
 
+  //fReader.SetTree(tree);
 
   jet_pt = 0;
   jet_eta = 0;
@@ -276,16 +245,6 @@ void ZTauTauAnalysis::Init(TTree *tree)
   lep_isTightID = 0;
   lep_isTightIso = 0;
   lep_isTrigMatched = 0;
-  
-  tau_pt = 0;
-  tau_eta = 0;
-  tau_phi = 0;
-  tau_e = 0;
-  tau_charge = 0;
-  tau_nTracks = 0;
-  tau_isTight = 0;
-  tau_RNNJetScore = 0;
-  tau_RNNEleScore = 0;
   
   // Set branch addresses and branch pointers
   if (!tree) return;
@@ -310,10 +269,11 @@ void ZTauTauAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("jet_e", &jet_e, &b_jet_e);
   fChain->SetBranchAddress("jet_btag_quantile", &jet_btag_quantile, &b_jet_btag_quantile);
   fChain->SetBranchAddress("jet_jvt", &jet_jvt, &b_jet_jvt);
+
   fChain->SetBranchAddress("ScaleFactor_ELE", &ScaleFactor_ELE, &b_ScaleFactor_ELE);
   fChain->SetBranchAddress("ScaleFactor_MUON", &ScaleFactor_MUON, &b_ScaleFactor_MUON);
   fChain->SetBranchAddress("ScaleFactor_LepTRIGGER", &ScaleFactor_LepTRIGGER, &b_ScaleFactor_LepTRIGGER);
-
+  
   fChain->SetBranchAddress("lep_n", &lep_n, &b_lep_n);
   fChain->SetBranchAddress("lep_type", &lep_type, &b_lep_type);
   fChain->SetBranchAddress("lep_pt", &lep_pt, &b_lep_pt);
@@ -322,6 +282,7 @@ void ZTauTauAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("lep_e", &lep_e, &b_lep_e);
   fChain->SetBranchAddress("lep_charge", &lep_charge, &b_lep_charge);
   fChain->SetBranchAddress("lep_ptvarcone30", &lep_ptvarcone30, &b_lep_ptvarcone30);
+
   fChain->SetBranchAddress("lep_topoetcone20", &lep_topoetcone20, &b_lep_topoetcone20);
   fChain->SetBranchAddress("lep_z0", &lep_z0, &b_lep_z0);
   fChain->SetBranchAddress("lep_d0", &lep_d0, &b_lep_d0);
@@ -329,30 +290,19 @@ void ZTauTauAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("lep_isTightID", &lep_isTightID, &b_lep_isTightID);
   fChain->SetBranchAddress("lep_isTightIso", &lep_isTightIso, &b_lep_isTightIso);
   fChain->SetBranchAddress("lep_isTrigMatched", &lep_isTrigMatched, &b_lep_isTrigMatched);
-  
   fChain->SetBranchAddress("ScaleFactor_PHOTON", &ScaleFactor_PHOTON, &b_ScaleFactor_PHOTON);
   fChain->SetBranchAddress("ScaleFactor_TAU", &ScaleFactor_TAU, &b_ScaleFactor_TAU);
-  fChain->SetBranchAddress("tau_n", &tau_n, &b_tau_n);
-  fChain->SetBranchAddress("tau_pt", &tau_pt, &b_tau_pt);
-  fChain->SetBranchAddress("tau_eta", &tau_eta, &b_tau_eta);
-  fChain->SetBranchAddress("tau_phi", &tau_phi, &b_tau_phi);
-  fChain->SetBranchAddress("tau_e", &tau_e, &b_tau_e);
-  fChain->SetBranchAddress("tau_charge", &tau_charge, &b_tau_charge);
-  fChain->SetBranchAddress("tau_nTracks", &tau_nTracks, &b_tau_nTracks);
-  fChain->SetBranchAddress("tau_isTight", &tau_isTight, &b_tau_isTight);
-  fChain->SetBranchAddress("tau_RNNJetScore", &tau_RNNJetScore, &b_tau_RNNJetScore);
-  fChain->SetBranchAddress("tau_RNNEleScore", &tau_RNNEleScore, &b_tau_RNNEleScore);
 
   fChain->SetBranchAddress("met", &met, &b_met);
   fChain->SetBranchAddress("met_phi", &met_phi, &b_met_phi);
   fChain->SetBranchAddress("met_mpx", &met_mpx, &b_met_mpx);
   fChain->SetBranchAddress("met_mpy", &met_mpy, &b_met_mpy);
-  
+
   fChain->SetBranchAddress("sum_of_weights", &initial_sum_of_weights, &b_initial_sum_of_weights);
   
 }
 
-Bool_t ZTauTauAnalysis::Notify()
+Bool_t TTbarDilepAnalysis::Notify()
 {
   // The Notify() function is called when a new file is opened. This
   // can be either for a new TTree in a TChain or when when a new TTree
@@ -363,4 +313,4 @@ Bool_t ZTauTauAnalysis::Notify()
   return kTRUE;
 }
 
-#endif // #ifdef ZTauTauAnalysis_cxx
+#endif // #ifdef TTbarAnalysis_cxx

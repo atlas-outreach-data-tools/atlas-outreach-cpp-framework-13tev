@@ -46,6 +46,10 @@ void TTbarAnalysis::define_histograms()
   hist_leadleptetc  = new TH1F("hist_leadleptetc", "Leading Lepton Relative Transverse Energy Isolation; etconerel20^{leadlep}; Events / bin", 20, -0.1, 0.2);
   hist_leadlepz0    = new TH1F("hist_leadlepz0",   "Leading Lepton z0 impact parameter; z_{0}^{leadlep} [mm]; Events / bin", 20, -1, 1);
   hist_leadlepd0    = new TH1F("hist_leadlepd0",   "Leading Lepton d0 impact parameter; d_{0}^{leadlep} [mm]; Events / bin", 20, -0.2, 0.2);
+
+
+  hist_scale_factors = new TH1F("hist_scale_factors", "Scale Factors; SF type; SF", 4, 0, 4);
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -84,6 +88,7 @@ void TTbarAnalysis::FillOutputList()
   GetOutputList()->Add(hist_leadbjet_pt);
   GetOutputList()->Add(hist_leadbjet_eta);
 
+  GetOutputList()->Add(hist_scale_factors);
 
 }
 
@@ -123,6 +128,7 @@ void TTbarAnalysis::WriteHistograms()
   hist_leadbjet_pt->Write();
   hist_leadbjet_eta->Write();
 
+  hist_scale_factors->Write();
 
 }
 
@@ -172,9 +178,6 @@ void TTbarAnalysis::FillHistogramsLeadJet( double m, float w , TString s)
   if (s.Contains("hist_n_bjets")) hist_n_bjets->Fill(m,w);
   if (s.Contains("hist_leadbjet_pt")) hist_leadbjet_pt->Fill(m,w);
   if (s.Contains("hist_leadbjet_eta")) hist_leadbjet_eta->Fill(m,w);
-
-
-
 
 }
 

@@ -3,7 +3,7 @@
 start_time=$(date +%s)
 
 ## small script to run the analysis
-analysis="main_ZTauTauAnalysis"
+analysis="main_TTbarDilepAnalysis"
 
 ##OPTION
 echo Which option should I run? 

@@ -44,6 +44,9 @@ void ZTauTauAnalysis::define_histograms()
 
   hist_syst_taupt  = new TH1F("hist_syst_taupt", "Hadronic tau Transverse Momentum;p_{T}^{#tau_{h}} [GeV] (after p_{T,#tau_{h}} syst. uncert.);Events / bin", 20, 25, 75);
 
+  // Scaling factors histogram
+  hist_scale_factors = new TH1F("hist_scale_factors", "Scale Factors; SF type; SF", 4, 0, 4);
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -61,8 +64,6 @@ void ZTauTauAnalysis::FillOutputList()
 
   GetOutputList()->Add(hist_mt_etau);
   GetOutputList()->Add(hist_mt_mutau);
-
-
 
   // Add Leading Lepton histograms
   GetOutputList()->Add(hist_leadleptpt);
@@ -91,6 +92,9 @@ void ZTauTauAnalysis::FillOutputList()
   GetOutputList()->Add(hist_leadjet_pt);
   GetOutputList()->Add(hist_leadjet_eta);
 
+  // Scaling factors histogram
+  GetOutputList()->Add(hist_scale_factors);
+  
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -139,6 +143,9 @@ void ZTauTauAnalysis::WriteHistograms()
   hist_leadjet_pt->Write();
   hist_leadjet_eta->Write();
 
+  // Scaling factors histogram
+  hist_scale_factors->Write();
+  
 }
 
 void ZTauTauAnalysis::FillHistogramsGlobal( double m, float w , TString s)
