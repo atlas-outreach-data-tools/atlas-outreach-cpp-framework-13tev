@@ -50,10 +50,7 @@ void TTbarDilepAnalysis::Begin(TTree * )
 }
 
 void TTbarDilepAnalysis::SlaveBegin(TTree * )
-{
-  cout << "************************************************************************************************************************" << endl;
-  cout << "************************************************************************************************************************" << endl;
-  
+{  
   TString option = GetOption();
   printf("Starting analysis with process option: %s \n", option.Data());
   
@@ -114,8 +111,8 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
     if( (trigE==true) || (trigM==true) ){
 
       trigger_cut++;
-      
-      int goodlep_index[lep_n];
+
+      std::vector<int> goodlep_index(lep_n);
       int goodlep_n = 0;
       int lep_index = 0;
       
@@ -184,7 +181,7 @@ Bool_t TTbarDilepAnalysis::Process(Long64_t entry)
 	    //Preselection of good b-jets
   
 	    int goodbjet_n = 0;
-	    int goodbjet_index[jet_n];
+	    std::vector<int> goodbjet_index(jet_n);
 	    int bjet_index = 0;
 	    
 	    for(Int_t ii=0; ii<jet_n; ii++){

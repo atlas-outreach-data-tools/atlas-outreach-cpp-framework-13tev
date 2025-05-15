@@ -50,11 +50,7 @@ void TTbarAnalysis::Begin(TTree * )
 }
 
 void TTbarAnalysis::SlaveBegin(TTree * )
-{
-
-  cout << "************************************************************************************************************************" << endl;
-  cout << "************************************************************************************************************************" << endl;
-  
+{  
   TString option = GetOption();
   printf("Starting analysis with process option: %s \n", option.Data());
   
@@ -165,11 +161,11 @@ Bool_t TTbarAnalysis::Process(Long64_t entry)
 	    //Preselection of good jets
 	    int goodjet_n = 0;
 	    int goodbjet_n = 0;
-	    
-	    int goodjet_index[jet_n];
+
+	    std::vector<int> goodjet_index(jet_n);
 	    int jet_index = 0;
-	    
-	    int goodbjet_index[jet_n];
+
+	    std::vector<int> goodbjet_index(jet_n);
 	    int bjet_index = 0;
 	    
 	    for(Int_t i=0; i<jet_n; i++){
