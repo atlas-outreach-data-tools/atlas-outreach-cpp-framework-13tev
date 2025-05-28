@@ -5,3 +5,12 @@
 *.out
 Output_*/
 histograms*/
+Analysis/HZZAnalysis
+Analysis/HyyAnalysis
+Analysis/SUSYAnalysis
+Analysis/SingleTopAnalysis
+Analysis/WBosonAnalysis
+Analysis/WZDiBosonAnalysis
+Analysis/ZBosonAnalysis
+Analysis/ZPrimeBoostedAnalysis
+Analysis/ZZDiBosonAnalysis
