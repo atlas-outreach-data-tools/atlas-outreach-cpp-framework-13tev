@@ -1,5 +1,14 @@
 # C++ framework for the 13 TeV ATLAS Open Data analysis
 
+## Migration process to implement the third release samples
+Some analyses are being migrating due to the third release samples. At the moment, there are 4 analyses that have been modified to use the new release and are the following ones:
+
+**HWWAnalysis**   
+**ZTauTauAnalysis**
+**TTbarAnalysis**
+**TTbarDilepAnalysis**
+
+The previous analyses documented in the previous released are still under the migration process, and will be uploaded in the future. If you want to run these analyses, we recommend you to revise the tag called `10fb-legacy`, which is the back-up for these analyses in the second release. 
 
 ## Introduction
 The framework makes use of the [C++ language](http://www.cplusplus.com/doc/tutorial/) and is interfaced with [ROOT](https://root.cern.ch/), and is available under this [Github link](https://github.com/atlas-outreach-data-tools/atlas-outreach-cpp-framework-13tev). After cloning/downloading the repository, the only things you need to setup are: you need to have the ROOT framework (see [here](https://root.cern.ch/building-root#quick-start) for a quick start on ROOT) and a [gcc compiler](https://gcc.gnu.org/). The current version of the framework was compiled using gcc v6.20 and ROOT v6.10.04.
