@@ -5,46 +5,28 @@
 #
 ########################################
 
-# names of 12 analyses
-analysisCollection=("WBosonAnalysis" "ZBosonAnalysis" "TTbarAnalysis" "SingleTopAnalysis" "WZDiBosonAnalysis" "ZZDiBosonAnalysis" "HWWAnalysis" "HZZAnalysis" "ZTauTauAnalysis" "HyyAnalysis" "SUSYAnalysis" "ZPrimeBoostedAnalysis" "TTbarDilepAnalysis")
+# names of 4 available analyses
+analysisCollection=("HWWAnalysis" "ZTauTauAnalysis" "TTbarAnalysis" "TTbarDilepAnalysis")
 
 # location of their outputs
-outputpath=("../Analysis/WBosonAnalysis/Output_WBosonAnalysis" \
-"../Analysis/ZBosonAnalysis/Output_ZBosonAnalysis" \
-"../Analysis/TTbarAnalysis/Output_TTbarAnalysis" \
-"../Analysis/SingleTopAnalysis/Output_SingleTopAnalysis" \
-"../Analysis/WZDiBosonAnalysis/Output_WZDiBosonAnalysis" \
-"../Analysis/ZZDiBosonAnalysis/Output_ZZDiBosonAnalysis" \
-"../Analysis/HWWAnalysis/Output_HWWAnalysis" \
-"../Analysis/HZZAnalysis/Output_HZZAnalysis" \
+outputpath=("../Analysis/HWWAnalysis/Output_HWWAnalysis" \
 "../Analysis/ZTauTauAnalysis/Output_ZTauTauAnalysis" \
-"../Analysis/HyyAnalysis/Output_HyyAnalysis" \
-"../Analysis/SUSYAnalysis/Output_SUSYAnalysis" \
-"../Analysis/ZPrimeBoostedAnalysis/Output_ZPrimeBoostedAnalysis"
+"../Analysis/TTbarAnalysis/Output_TTbarAnalysis" \
 "../Analysis/TTbarDilepAnalysis/Output_TTbarDilepAnalysis"
 )
 
 # begin
 echo 'WELCOME!! Which analysis you want to plot?'
 echo 'Input your option now (and click <ENTER>):'
-echo '0 = WBosonAnalysis'
-echo '1 = ZBosonAnalysis'
+echo '0 = HWWAnalysis'
+echo '1 = ZTauTauAnalysis'
 echo '2 = TTbarAnalysis'
-echo '3 = SingleTopAnalysis'
-echo '4 = WZDiBosonAnalysis'
-echo '5 = ZZDiBosonAnalysis'
-echo '6 = HWWAnalysis'
-echo '7 = HZZAnalysis'
-echo '8 = ZTauTauAnalysis'
-echo '9 = HyyAnalysis'
-echo '10 = SUSYAnalysis'
-echo '11 = ZPrimeBoostedAnalysis'
-echo '12 = TTbarDilepAnalysis'
+echo '3 = TTbarDilepAnalysis'
 
 read choice
 
 # check choices
-if [ $choice -ge 0 -a $choice -le 12 ]; then
+if [ $choice -ge 0 -a $choice -le 3 ]; then
   analysisName=${analysisCollection[${choice}]}
   echo "Now, choose the location of the ${analysisName} output!"
   echo "If the location corresponds to ${outputpath[${choice}]}: type 0"

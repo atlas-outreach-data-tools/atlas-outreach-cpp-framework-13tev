@@ -11,8 +11,8 @@ echo '1 = create all output directories (do it at the very beginning just once)'
 echo '0 = remove all output directories (in case you want to clean and begin from zero)'
 read choice
 
-# names of 12 analyses
-analysisCollection="WBosonAnalysis ZBosonAnalysis TTbarAnalysis SingleTopAnalysis WZDiBosonAnalysis ZZDiBosonAnalysis HWWAnalysis HZZAnalysis ZTauTauAnalysis HyyAnalysis SUSYAnalysis ZPrimeBoostedAnalysis TTbarDilepAnalysis"
+# names of 4 analyses
+analysisCollection="HWWAnalysis ZTauTauAnalysis TTbarAnalysis TTbarDilepAnalysis"
 
 # creating the output directory for the Analyses codes
 if (( $choice == 1 )) ; then
@@ -39,7 +39,3 @@ else
 fi
 
 ########################
-
-
-
-

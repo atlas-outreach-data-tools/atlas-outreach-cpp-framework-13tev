@@ -296,14 +296,14 @@ void Plotting::readFiles(){
 	  if (DEBUG) std::cout<<"Scaling histogram: "<< fIter->first << " by a factor of: " << scf << std::endl;
 	  fIter->second->Scale(scf);
 
-	  /*
-          // MC overflow
-	  if(std::strstr((fIter->first).c_str(),"four_lep") == NULL ){
-	    if( abs(fIter->second->GetBinContent(fIter->second->GetNbinsX()+1)) > 0){
-	      fIter->second->AddBinContent(fIter->second->GetNbinsX(), fIter->second->GetBinContent(fIter->second->GetNbinsX()+1));
-	    }
-	  }
-	  */
+	  
+    // // MC overflow
+	  // if(std::strstr((fIter->first).c_str(),"four_lep") == NULL ){
+	  //   if( abs(fIter->second->GetBinContent(fIter->second->GetNbinsX()+1)) > 0){
+	  //     fIter->second->AddBinContent(fIter->second->GetNbinsX(), fIter->second->GetBinContent(fIter->second->GetNbinsX()+1));
+	  //   }
+	  // }
+	  
         }
       }
     }
@@ -1044,14 +1044,14 @@ void Plotting::makePlots(){
       histstack->Add(tt_others);
     }
 
-    /*
-    // data overflow
-    if(std::strstr((fIter->first).c_str(),"four_lep") == NULL ){
-      if( abs(fIter->second->GetBinContent(fIter->second->GetNbinsX()+1)) > 0){
-	fIter->second->AddBinContent(fIter->second->GetNbinsX(), fIter->second->GetBinContent(fIter->second->GetNbinsX()+1));
-      }
-    }
-    */
+    
+  //   // data overflow
+  //   if(std::strstr((fIter->first).c_str(),"four_lep") == NULL ){
+  //     if( abs(fIter->second->GetBinContent(fIter->second->GetNbinsX()+1)) > 0){
+	// fIter->second->AddBinContent(fIter->second->GetNbinsX(), fIter->second->GetBinContent(fIter->second->GetNbinsX()+1));
+  //     }
+  //   }
+    
     /////////////////////////////////////////////////////////////////////////////
     // BEGIN PLOTTING //
 
@@ -1085,7 +1085,6 @@ void Plotting::makePlots(){
     
     // set Yaxis maximum
     float yMaxScale = 2.0;
-    //fIter->second->SetMaximum(yMaxScale*TMath::Max( TMath::Max(fIter->second->GetMaximum(),histstack->GetMaximum()), Higgs_normsig->GetMaximum() ) );
     fIter->second->SetMaximum(yMaxScale*TMath::Max(fIter->second->GetMaximum(),histstack->GetMaximum()));
         
     // latex options 
@@ -1143,11 +1142,7 @@ void Plotting::makePlots(){
       leg-> AddEntry(stop, "Single top", "f");
       leg-> AddEntry(diboson , "Diboson", "f");
       leg-> AddEntry(histstack,"Stat. unc.","f");
-      /*
-      if(option.find("ZPrimeBoostedAnalysis") != option.npos && NORMSIG){
-	if(fIter->first.find("LR") != option.npos) leg-> AddEntry(ZPrime_normsig, "m_{Z'}=1 TeV" ,"l");
-      }
-      */
+    
       if(YIELDS){
 	cout << "Yields:" << "Data: " << data[fIter->first]->Integral() <<
 	  ",  single top: " <<  stop->Integral()  <<
@@ -1232,11 +1227,7 @@ void Plotting::makePlots(){
 
     // draw the normalised signal in the plots
     if(NORMSIG){
-      //if(option.find("HZZAnalysis")          != option.npos){Higgs_normsig->Draw("HISTsame");}
       if(option.find("HWWAnalysis")          != option.npos){if(fIter->first.find("histI") != option.npos)Higgs_normsig->Draw("HISTsame");}
-      //if(option.find("SingleTopAnalysis")    != option.npos){stop_normsig->Draw("HISTsame");}
-      //if(option.find("SUSYAnalysis")         != option.npos){slep600DM300_normsig->Draw("HISTsame"); leg2->Draw("same");}
-      //if(option.find("ZPrimeBoostedAnalysis")!= option.npos){if(fIter->first.find("LR") != option.npos) ZPrime_normsig->Draw("HISTsame"); }
     }
     
     leg->Draw("same");
