@@ -25,6 +25,27 @@ The framework consists of **two main parts**:
 + the **plotting** part, located within the `Plotting` directory: it makes the final Data / Prediction plots.
 
 ---
+## First-time setup
+
+If you are able to run natively on your computer, you are free to do so. If you would prefer, you can run in a docker container:
+
+```
+# Start the docker container
+docker run -it -p 8888:8888 ghcr.io/atlas-outreach-data-tools/notebooks-collection-opendata:latest /usr/bin/bash
+# This is only necessary if you don’t have a local version of the repository already
+git clone https://github.com/atlas-outreach-data-tools/atlas-outreach-cpp-framework-13tev.git
+cd atlas-outreach-cpp-framework-13tev/Analysis/TTbarAnalysis
+# If you need to make any changes to e.g. where the files are stored, do that now
+./run.sh
+```
+
+In addition, if there are local files you’d like to use, for example to mount the directory `/path/to/directory` so that it’s available in the Docker container as `/something`, run:
+
+```
+docker run -it -p 8888:8888 --mount type=bind,src=/path/to/directory,dst=/something ghcr.io/atlas-outreach-data-tools/notebooks-collection-opendata:latest /usr/bin/bash
+```
+
+You can use multiple `--mount` options to mount multiple directories, for example if one area holds code, another area holds input files, and a third area is where you would like to store your output files.
 
 ## The analysis part
 
@@ -43,8 +64,9 @@ Each analysis sub-folder contains the following files:
 
 As an example, in the case of the HWWAnalysis, the sub-folder looks like this (Output_HWWAnalysis was not created yet):
 
-
-
+```
+HWWAnalysis.C  HWWAnalysis.h  HWWAnalysisHistograms.h  main_HWWAnalysis.C  run.sh
+```
 
 ### Hands-on analysing!
 
@@ -74,15 +96,11 @@ or
 ```
 source run.sh
 ```
-The script will interactively ask you for **two options** which you can type directly (0, 1,..) in the terminal and hit "ENTER": 
+The script will interactively ask you if you want to run over *all the samples* one-by-one, or to run over *only data* or *only simulated samples*; you can type directly (0, 1,..) in the terminal and hit "ENTER" to answer. The latter options can help you to speed up the analysis, as you can run several samples in several terminals. 
 
-+ The **first option** will ask you: do you want to run over *all the samples* one-by-one, or to run over *only data* or *only simulated samples*? The latter options can help you to speed up the analysis, as you can run several samples in several terminals. 
-+ The **second option** will ask you: do you want to use the [Parallel ROOT Facility](https://root.cern.ch/proof) (PROOF), a ROOT-integrated tool that enables the analysis of the input samples in *parallel on a many-core machine*? If your ROOT version has PROOF integrated, it will speed up the analysis by a *factor of roughly 5*.
-
-After you choose the options, the code will compile and create the needed ROOT shared libraries, and the analysis selection will begin: it will run over each input sample defined in **main_NNAnalysis.C**.
+After you choose the analysis, the code will compile and create the needed ROOT shared libraries, and the analysis selection will begin: it will run over each input sample defined in **main_NNAnalysis.C**.
 
 If everything was successful, the code will create in the output directory (**Output_NNAnalysis**) a new file with the name of the corresponding sample (data, ttbar,...).
-
 
 To clean all shared and linked libraries after running, you can use a script called *clean.sh* located in the main directory.
 
