@@ -74,10 +74,7 @@ or
 ```
 source run.sh
 ```
-The script will interactively ask you for **two options** which you can type directly (0, 1,..) in the terminal and hit "ENTER": 
-
-+ The **first option** will ask you: do you want to run over *all the samples* one-by-one, or to run over *only data* or *only simulated samples*? The latter options can help you to speed up the analysis, as you can run several samples in several terminals. 
-+ The **second option** will ask you: do you want to use the [Parallel ROOT Facility](https://root.cern.ch/proof) (PROOF), a ROOT-integrated tool that enables the analysis of the input samples in *parallel on a many-core machine*? If your ROOT version has PROOF integrated, it will speed up the analysis by a *factor of roughly 5*.
+The script will interactively ask you for **a few options** which you can type directly (0, 1,..) in the terminal and hit "ENTER". These options will ask you: do you want to run over *all the samples* one-by-one, or to run over *only data* or *only simulated samples*? The latter options can help you to speed up the analysis, as you can run several samples in several terminals. 
 
 After you choose the options, the code will compile and create the needed ROOT shared libraries, and the analysis selection will begin: it will run over each input sample defined in **main_NNAnalysis.C**.
 
