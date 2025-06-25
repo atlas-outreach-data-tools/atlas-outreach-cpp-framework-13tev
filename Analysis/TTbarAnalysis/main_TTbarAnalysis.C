@@ -44,7 +44,6 @@ void main_TTbarAnalysis(int proof = 0, int option= 0){
     chain_data->AddFile(prefix+"data16_periodK."+skim+".root");
     chain_data->AddFile(prefix+"data16_periodL."+skim+".root");
     
-    //if (proof == 1)  chain_data->SetProof();
     chain_data->Process("TTbarAnalysis.C+","data");
     
   }
