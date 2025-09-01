@@ -12,7 +12,7 @@ echo '0 = remove all output directories (in case you want to clean and begin fro
 read choice
 
 # names of 4 analyses
-analysisCollection="HWWAnalysis ZTauTauAnalysis TTbarAnalysis TTbarDilepAnalysis"
+analysisCollection="HWWAnalysis ZTauTauAnalysis TTbarAnalysis TTbarDilepAnalysis HTauTauAnalysis"
 
 # creating the output directory for the Analyses codes
 if (( $choice == 1 )) ; then

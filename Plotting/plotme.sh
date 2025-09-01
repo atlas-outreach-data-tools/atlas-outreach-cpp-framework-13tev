@@ -6,13 +6,14 @@
 ########################################
 
 # names of 4 available analyses
-analysisCollection=("HWWAnalysis" "ZTauTauAnalysis" "TTbarAnalysis" "TTbarDilepAnalysis")
+analysisCollection=("HWWAnalysis" "ZTauTauAnalysis" "TTbarAnalysis" "TTbarDilepAnalysis" "HTauTauAnalysis")
 
 # location of their outputs
 outputpath=("../Analysis/HWWAnalysis/Output_HWWAnalysis" \
 "../Analysis/ZTauTauAnalysis/Output_ZTauTauAnalysis" \
 "../Analysis/TTbarAnalysis/Output_TTbarAnalysis" \
-"../Analysis/TTbarDilepAnalysis/Output_TTbarDilepAnalysis"
+"../Analysis/TTbarDilepAnalysis/Output_TTbarDilepAnalysis" \
+"../Analysis/HTauTauAnalysis/Output_HTauTauAnalysis"
 )
 
 # begin
@@ -22,11 +23,12 @@ echo '0 = HWWAnalysis'
 echo '1 = ZTauTauAnalysis'
 echo '2 = TTbarAnalysis'
 echo '3 = TTbarDilepAnalysis'
+echo '4 = HTauTauAnalysis'
 
 read choice
 
 # check choices
-if [ $choice -ge 0 -a $choice -le 3 ]; then
+if [ $choice -ge 0 -a $choice -le 4 ]; then
   analysisName=${analysisCollection[${choice}]}
   echo "Now, choose the location of the ${analysisName} output!"
   echo "If the location corresponds to ${outputpath[${choice}]}: type 0"
