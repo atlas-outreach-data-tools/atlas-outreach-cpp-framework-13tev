@@ -1,17 +1,12 @@
-# C++ framework for the 13 TeV ATLAS Open Data analysis
+# C++ Analysis Framework for 13 TeV ATLAS Open Data
 
 > [!WARNING]
-> ## Migration process to implement the third release samples
-> Some analyses are being migrated due to the third release implementation. At the moment, there are **4 analyses** that have been modified to use the new release:
+> ### Migration process to implement the newest release of ATLAS Open Data
+> Currently some analyses are being migrated due to the publication of the [third release of educational open data](https://opendata.atlas.cern/docs/data/for_education/13TeV25_details). At the moment, **4 analyses** have been modified to use the newly released datasets: `HWWAnalysis`, `ZTauTauAnalysis`, `TTbarAnalysis`, `TTbarDilepAnalysis`.
 >
-> - **HWWAnalysis**
-> - **ZTauTauAnalysis**
-> - **TTbarAnalysis**
-> - **TTbarDilepAnalysis**
->
-> The previous analyses documented in the **second release** are still under the migration process and will be uploaded in the future. If you want to run these analyses now, we recommend you check the tag **[10fb-legacy](https://github.com/atlas-outreach-data-tools/atlas-outreach-cpp-framework-13tev/tags)**, which is the back-up for these analyses in the second release.
+> The previous analyses documented in the **second release** are under migration process and will be uploaded in the future. If you want to run these analyses now, check the tag **[10fb-legacy](https://github.com/atlas-outreach-data-tools/atlas-outreach-cpp-framework-13tev/tags)**, which contains the backup of the second release analyses.
 
-## Introduction
+
 The framework avaible in this repository makes use of the [C++ language](http://www.cplusplus.com/doc/tutorial/) and is interfaced with [ROOT](https://root.cern.ch/). After cloning/downloading the repository, you need: to have the ROOT framework (see [here](https://root.cern/install/) for a quick start on ROOT) and a [gcc compiler](https://gcc.gnu.org/). The current version of the framework was compiled using gcc v6.20 and ROOT v6.10.04.
 
 The framework includes **two steps**: 
@@ -28,10 +23,20 @@ The framework can access the samples in two ways:
 
 This can be configured within the framework.
 
+## Table of Contents:
+
+- [How to use the framework](#how_to)
+  - [First-time setup](#first_time)
+  - [The analysis step](#analysis)
+  - [The plotting step](#plotting)
+  - [How to add a new variable to the analysis](#new_variable)
+- [Contribution guide](#contributing)
+- [License](#license)
+
 ---
 
-## How to use the framework
-### First-time setup
+## How to use the framework <a name="how_to"></a>
+### First-time setup <a name="first_time"></a>
 
 If you are able to run natively on your computer, you are free to do so. If you would prefer, you can run in a docker container:
 
@@ -53,7 +58,9 @@ docker run -it -p 8888:8888 --mount type=bind,src=/path/to/directory,dst=/someth
 
 You can use multiple `--mount` options to mount multiple directories, for example if one area holds code, another area holds input files, and a third area is where you would like to store your output files.
 
-### The analysis step
+---
+
+### The analysis step <a name="analysis"></a>
 
 The analysis code is located in the `analysis` folder, with each sub-folders corresponding to a different physics analysis. The naming of the sub-folders follows a simple rule: "NNAnalysis", where NN can gives an indication of the process that it analyzes.
 
@@ -72,7 +79,7 @@ As an example, in the case of the HWWAnalysis, the sub-folder looks like this (O
 HWWAnalysis.C  HWWAnalysis.h  HWWAnalysisHistograms.h  main_HWWAnalysis.C  run.sh
 ```
 
-### Hands-on analysing!
+#### Hands-on analysing!
 
 In the main directory, do the first setup of the code by typing in the terminal:
 ```
@@ -109,7 +116,7 @@ To clean all shared and linked libraries after running, you can use a script cal
 
 ---
 
-### The plotting step
+### The plotting step <a name="plotting"></a>
 The plotting code is located in the `plotting` folder and contains the following files:
 
 + Main code (`Plotting.cxx`): it makes all plot magic and controls automatically what to do for each of the analyses;
@@ -120,7 +127,7 @@ The plotting code is located in the `plotting` folder and contains the following
 + a makefile (`Makefile`): a set of directives used by a [make](https://www.gnu.org/software/make/manual/html_node/Introduction.html) build automation tool to generate the output executable;
 + *in case you used the welcome script*, the output directory (**histograms**): it will contain the output plots! Do not forget to rename it in case you run over several analyses!
 
-### Hands-on plotting!
+#### Hands-on plotting!
 
 In the main Plotting directory, execute in the terminal:
 ```
@@ -152,7 +159,7 @@ To clean all shared and linked libraries after running, you can use a script cal
 
 ---
 
-### How to add a completely new variable in the analysis code and then plot it
+### How to add a new variable to the analysis <a name="new_variable"></a>
 
 To add a new variable called *new_variable* (which, as an example, will contain the information of *something*), save it as a new histogram called *h_new* and make a plot of it, follow the instructions below:
 
@@ -197,15 +204,14 @@ where the *weight* is the multiplication of scale factors and Monte Carlo weight
 (5) *Analysis* part is done, go to *Plotting* part and in the *list_histos* directory in `HistoList_ANALYSISNAME.txt` file add one new line:
 ```
 h_new
-``
+```
 (with no empty lines before or after it!). 
 
 (6) Execute the plotting code as usual (no need to change the code itself at all), and you will find the new histogram in *histograms/h_new.png*!
 
-
 ---
 
-## Contribution guide
+## Contribution guide <a name="contributing"></a>
 We appreciate the willingness to participate in the ATLAS Open Data project. Below you can find some steps to help you contribute successfully (inspired by [The Turing Way](https://book.the-turing-way.org) contribution guidelines):
 
 ### 1. Comment on an existing issue or open a new issue referencing your addition
@@ -234,5 +240,9 @@ When submitting your PR you will see a template. It will ask:
 - Tell us what we should focus our review on.
 
 Please give us all the details, this makes it easier for us to review the contribution!
+
+## License
+This software is licensed under the terms of the [European Union Public Licence
+V. 1.1](LICENSE)
 
 @2025
