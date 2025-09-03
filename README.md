@@ -56,7 +56,7 @@ source welcome.sh
 ```
 This will ask you if you want to create automatically all the output directories in all the 12 analysis sub-folders, or to erase their contents in case it is needed.
 
-Then, change to any of the analysis sub-folders and open using your preferred text-editor the analysis main-control code (**main_NNAnalysis.C**): it controls **the location of the input samples**, please find the line:
+Then, change to any of the analysis sub-folders and open using your preferred text-editor the analysis main-control code (`main_NNAnalysis.C`): it controls **the location of the input samples**, please find the line:
 ```
 // path to your local directory *or* URL, please change the default one!
 TString path = "";
@@ -75,21 +75,21 @@ The script will interactively ask you for **a few options** which you can type d
 
 After you choose the options, the code will compile and create the needed ROOT shared libraries, and the analysis selection will begin: it will run over each input sample defined in **main_NNAnalysis.C**.
 
-If everything was successful, the code will create in the output directory (**Output_NNAnalysis**) a new file with the name of the corresponding sample (data, ttbar,...).
+If everything was successful, the code will create in the output directory (`Output_NNAnalysis`) a new file with the name of the corresponding sample (data, ttbar,...).
 
-To clean all shared and linked libraries after running, you can use a script called *clean.sh* located in the main directory.
+To clean all shared and linked libraries after running, you can use a script called `clean.sh` located in the main directory.
 
 ---
 
 ### The plotting step
 The plotting code is located in the `plotting` folder and contains the following files:
 
-+ Main code (**Plotting.cxx**): it makes all plot magic and controls automatically what to do for each of the analyses;
-+ Main header (**Plotting.h**): it defines all the needed bits and pieces for the plotting code;
-+ Helper directory (**list_histos**): inside it you will find control files with names **HistoList_ANALYSISNAME.txt**, each of these controls which histograms are going to be used and plotted for each analysis;
-+ Helper directory (**inputfiles**): inside it you will find control files with names **Files_ANALYSISNAME.txt**, each of these controls which input samples exactly are going to be used for this particular analysis, their cross-section and sum of weights. DO NOT CHANGE!!!
-+ bash script (**plotme.sh**): helps you in running the plotting code interactively, please use it!
-+ a makefile (**Makefile**): a set of directives used by a [make](https://www.gnu.org/software/make/manual/html_node/Introduction.html) build automation tool to generate the output executable;
++ Main code (`Plotting.cxx`): it makes all plot magic and controls automatically what to do for each of the analyses;
++ Main header (`Plotting.h`): it defines all the needed bits and pieces for the plotting code;
++ Helper directory (`list_histos`): inside it you will find control files with names `HistoList_ANALYSISNAME.txt`, each of these controls which histograms are going to be used and plotted for each analysis;
++ Helper directory (`inputfiles`): inside it you will find control files with names `Files_ANALYSISNAME.txt`, each of these controls which input samples exactly are going to be used for this particular analysis, their cross-section and sum of weights. DO NOT CHANGE!!!
++ bash script (`plotme.sh`): helps you in running the plotting code interactively, please use it!
++ a makefile (`Makefile`): a set of directives used by a [make](https://www.gnu.org/software/make/manual/html_node/Introduction.html) build automation tool to generate the output executable;
 + *in case you used the welcome script*, the output directory (**histograms**): it will contain the output plots! Do not forget to rename it in case you run over several analyses!
 
 ### Hands-on plotting!
@@ -108,7 +108,7 @@ The script will interactively rompt you  for **two inputs** which you can type d
 + **First input**: asks which analysis out of the available ones you want to plot.
 + **Second input**: asks for the location of the `Output_NNAnalysis` directory that was created by running the Analysis code.
 
-After you input the information, the code will compile and create the needed ROOT shared libraries, and the plotting will begin. If everything was successful, the code will create in the output directory (**histograms**) the corresponding plots defined in **HistoList_ANALYSISNAME.txt**.
+After you input the information, the code will compile and create the needed ROOT shared libraries, and the plotting will begin. If everything was successful, the code will create in the output directory (`histograms`) the corresponding plots defined in `HistoList_ANALYSISNAME.txt`.
 
 To clean all shared and linked libraries after running, you can use a script called *clean.sh* located in the main directory.
 
