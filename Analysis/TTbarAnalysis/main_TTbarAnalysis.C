@@ -7,7 +7,7 @@
 void main_TTbarAnalysis(int proof = 0, int option= 0){
 
   /* The URL to the CERN Open Data portal repository */
-  TString path = "/eos/opendata/atlas/rucio/opendata/";
+  TString path = "root://eospublic.cern.ch//eos/opendata/atlas/rucio/opendata/";
   
   //***************************************************************************************************//
   // adding chains of all MC and data samples
