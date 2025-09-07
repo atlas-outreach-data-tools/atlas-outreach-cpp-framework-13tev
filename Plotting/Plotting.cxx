@@ -458,6 +458,21 @@ void Plotting::makePlots(){
   std::map<std::string, TH1F*> aMcAtNloPythia8EvtGen_MEN30NLO_A14N23LO_ttmumu;
   std::map<std::string, TH1F*> aMcAtNloPythia8EvtGen_MEN30NLO_A14N23LO_tttautau;
 
+  // Signal Higgs
+  std::map<std::string, TH1F*> PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaul13l7;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulm15hp20;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulp15hm20;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautauh30h20;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNLOPS_nnlo_30_ggH125_etau_filt;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaul13l7;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulm15hp20;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulp15hm20;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautauh30h20;
+  std::map<std::string, TH1F*> PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_allhad;
+  std::map<std::string, TH1F*> PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_semilep;
+  std::map<std::string, TH1F*> PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep;
+  std::map<std::string, TH1F*> PhPy8EG_NNPDF3_AZNLO_ggZH125_Htautau_Zinc;
+
   ///////////////////////////////////////////////////////////////////////
   // Actual reading of the input files
   // The names must be the same as in Files_***.txt 
@@ -517,6 +532,20 @@ void Plotting::makePlots(){
   Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto = histo["Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto"];
   Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto = histo["Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto"];
 
+  // Higgs
+  PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaul13l7 = histo["PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaul13l7"];
+  PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulm15hp20 = histo["PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulm15hp20"];
+  PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulp15hm20 = histo["PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulp15hm20"];
+  PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautauh30h20 = histo["PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautauh30h20"];
+  PowhegPy8EG_NNLOPS_nnlo_30_ggH125_etau_filt = histo["PowhegPy8EG_NNLOPS_nnlo_30_ggH125_etau_filt"];
+  PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaul13l7 = histo["PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaul13l7"];
+  PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulm15hp20 = histo["PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulm15hp20"];
+  PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulp15hm20 = histo["PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulp15hm20"];
+  PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautauh30h20 = histo["PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautauh30h20"];
+  PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_allhad = histo["PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_allhad"];
+  PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_semilep = histo["PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_semilep"];
+  PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep = histo["PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep"];
+  PhPy8EG_NNPDF3_AZNLO_ggZH125_Htautau_Zinc  = histo["PhPy8EG_NNPDF3_AZNLO_ggZH125_Htautau_Zinc"];
   
   // reading HWW samples used
   if(option.find("HWWAnalysis") != option.npos){
@@ -586,6 +615,7 @@ void Plotting::makePlots(){
     TH1F* ZVV = new TH1F();
     TH1F* ZPrime = new TH1F();
     TH1F* tt_others = new TH1F();
+    TH1F* Hsig = new TH1F();
 
     // merge for HWW _Analysis
     if(option.find("HWWAnalysis") != option.npos){
@@ -1005,7 +1035,7 @@ void Plotting::makePlots(){
       Hsig->Add(PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaul13l7[fIter->first]);
       Hsig->Add(PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulm15hp20[fIter->first]);
       Hsig->Add(PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulp15hm20[fIter->first]);
-      Hsig->Add(PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautauh30h20[fIter->first]);
+      Hsig->Add(PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautauh30h20[fIter->first]);    
       Hsig->Add(PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_allhad[fIter->first]);
       Hsig->Add(PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_semilep[fIter->first]);
       Hsig->Add(PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep[fIter->first]);
@@ -1032,8 +1062,8 @@ void Plotting::makePlots(){
 
       stop = (TH1F*)PhPy8EG_A14_tchan_BW50_lept_top[fIter->first]->Clone();
       stop->Add(PhPy8EG_A14_tchan_BW50_lept_antitop[fIter->first]);
-      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_top[fIter->first]);
-      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop[fIter->first]);
+    //  stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_top[fIter->first]);
+    //  stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop[fIter->first]);
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
 
@@ -1078,7 +1108,6 @@ void Plotting::makePlots(){
       Z_tautau->Add(Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto[fIter->first]);
       Z_tautau->SetFillColor(kAzure+7);
       Z_tautau->SetLineWidth(0);
-      Z_tautau->Scale(0.8);
      
      }
     
@@ -1231,7 +1260,7 @@ void Plotting::makePlots(){
     l2.SetNDC();
     l2.SetTextSize(0.04);  
     l2.SetTextColor(kBlack);
-    l2.DrawLatex(0.18,0.79, Form("#sqrt{s} = 13 TeV, 36 fb^{-1}")); 
+    l2.DrawLatex(0.18,0.76, Form("#sqrt{s} = 13 TeV, 36 fb^{-1}")); 
     
     
     //create legend
@@ -1354,7 +1383,7 @@ void Plotting::makePlots(){
 	  ",  Z->ee,mumu: " << Z->Integral()  <<
 	  ",  W+jets: " << W->Integral()  <<
 	  ",  ttbar, single top, diboson: " <<  topV->Integral()  <<
-	  ",  Total pred.: "<< Z->Integral() + Z_tautau->Integral() + W->Integral() + topV->Integral() <<
+	  ",  Total pred.: "<< Hsig->Integral() + Z->Integral() + Z_tautau->Integral() + W->Integral() + topV->Integral() <<
 	  endl;
       }
     }

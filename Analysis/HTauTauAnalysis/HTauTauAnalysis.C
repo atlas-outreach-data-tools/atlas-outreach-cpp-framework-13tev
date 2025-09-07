@@ -19,7 +19,6 @@
 #include <math.h>
 #include <algorithm>    // std::sort
 #include <vector>       // std::vector
-
 #include <TH1.h>
 #include <TH2.h>
 #include <TStyle.h>
@@ -30,6 +29,7 @@ string name;
 #include <TMatrixD.h>
 
 //  mass collinear definition 
+// based on the description from https://arxiv.org/pdf/1012.4686
 bool MassCollinearCore(const TLorentzVector &k1,
                        const TLorentzVector &k2,
                        const double met_x,
@@ -106,7 +106,7 @@ Bool_t HTauTauAnalysis::Process(Long64_t entry)
   if(fChain->GetTree()->GetEntries()>0){
 
     // ******************************************************************************************************************
-    //  Begin simplified selection based on: ATLAS Collaboration, Eur. Phys. J. C 78 (2018) 163 and Phys. Rev. D 99, 072001 (2019) 
+    //  Begin simplified selection based on: ATLAS Collaboration  https://arxiv.org/pdf/2407.16320 
     // ******************************************************************************************************************
     
     //Scale factors (adding the one for tau)
@@ -156,10 +156,9 @@ Bool_t HTauTauAnalysis::Process(Long64_t entry)
 	
 	TLorentzVector leptemp;  leptemp.SetPtEtaPhiE(lep_pt->at(i), lep_eta->at(i), lep_phi->at(i), lep_e->at(i));
 	
-	// Lepton is Medium, ISo is tight for muon and loose for electron
+	// Lepton identification  is Medium, isolation is tight for muon and loose for electron
 	if( (lep_isMediumID->at(i)==true) && ((lep_isTightIso->at(i)==true && lep_type->at(i)==13) || (lep_isLooseIso->at(i)==true && lep_type->at(i)==11 )) && (lep_isTrigMatched->at(i)==true) ){
-
-	  if( (lep_pt->at(i)>21. && lep_type->at(i)==11) || (lep_pt->at(i)>27.3 && lep_type->at(i)==13) ){
+ 	  if( (lep_pt->at(i)>21. && lep_type->at(i)==11) || (lep_pt->at(i)>27.3 && lep_type->at(i)==13) ){
 	    // electron selection in fiducial region excluding candidates in the transition region between the barrel and endcap electromagnetic calorimeters
 	    if( (lep_type->at(i)==11) && (TMath::Abs(lep_eta->at(i))<2.47) && (TMath::Abs(lep_eta->at(i))<1.37 || TMath::Abs(lep_eta->at(i)) > 1.52) ){
 	      goodlep_n = goodlep_n + 1;
@@ -183,7 +182,6 @@ Bool_t HTauTauAnalysis::Process(Long64_t entry)
       int tau_index =0;
       
       for(Int_t i=0; i< tau_n ; i++){
-	// tau istau_RNNJetScore->at(i)<0.2  Tight tau_isTight->at(i)==true
 	if(tau_isTight->at(i)==true ){   // hadronic tau
 	  // tau pT and eta requirements
 	  if( (tau_pt->at(i)>30.) && (TMath::Abs(tau_eta->at(i))<2.5) ){
@@ -221,27 +219,17 @@ Bool_t HTauTauAnalysis::Process(Long64_t entry)
           double m_col = -1;
           double x1_col = -1;
           double x2_col = -1;
-
-          //double met_x = met * TMath::Cos(met_phi);
-          //double met_y = met * TMath::Sin(met_phi);
           double met_x = met_mpx;
           double met_y = met_mpy;
           bool hasColMass = MassCollinearCore(Lepton, HadTau, met_x, met_y, m_col, x1_col, x2_col);
 
-	  //**************
-	  //There is no a branch with ditau_m computed through the missing-mass calculator in the third release of data.
-	  
-	  //float MMC_mass = ditau_m; // The ditau invariant mass is determined using the missing-mass calculator (MMC) [Nucl. Instrum. Meth. A 654 (2011) 481,]
-	  //**************
-
-	  float dPhi_tau_MET  = TMath::Abs(tau_phi->at(goodtau_index) - MeT.Phi() );
+          float dPhi_tau_MET  = TMath::Abs(tau_phi->at(goodtau_index) - MeT.Phi() );
 	  dPhi_tau_MET        = dPhi_tau_MET < TMath::Pi() ? dPhi_tau_MET : 2*TMath::Pi() - dPhi_tau_MET;
 	  
 	  float dPhi_lep_MET = TMath::Abs( Lepton.Phi() - MeT.Phi() );
 	  dPhi_lep_MET       = dPhi_lep_MET < TMath::Pi() ? dPhi_lep_MET : 2*TMath::Pi() - dPhi_lep_MET;
 	  
-	  float sum_dPhi = dPhi_tau_MET  + dPhi_lep_MET;
-	  
+	  float sum_dPhi = dPhi_tau_MET  + dPhi_lep_MET;	  
 	  //Preselection of good jets
 	  int goodjet_n = 0;
 	  int goodjet_index = 0;
@@ -261,18 +249,22 @@ Bool_t HTauTauAnalysis::Process(Long64_t entry)
 	    }
 	  }
           float deltaR = Lepton.DeltaR(HadTau);
-	  // transverse mass less than 30 GeV, suppresses the W + jets background
-	  // dPhi requirement suppresses event topologies in which the MET lies outside of the angle spanned by the tau candidate and the lepton, which are common for W+jets processes and rare for signal events. 
-	  // visible mass window of 35 - 75 GeV cut applied to increase the Z->tautau signal purity and maximize the separation from Z->ll background
-          TLorentzVector total_system = Lepton + HadTau + MeT;
-          double m_total = total_system.M();	  
-          if ( deltaR<2.5 && mt<70 && (VisibleMass_LepTau>35) && (VisibleMass_LepTau<175) &&(sum_dPhi<3.5) ) {
+          float deltaEta = std::abs(Lepton.Eta() - HadTau.Eta());
+          // lephad cuts selection
+          // Missing tranverse energy > 20 GeV
+          // Delta R between lepton and tau 
+          // Transverse mass of electron  or muon
+          // Invariant mass 
+          // Pseudorapidity of the lepton and tau
+          if (met>20 && deltaR<2.5 && mt<70 && (VisibleMass_LepTau>35) && (VisibleMass_LepTau<180) && deltaEta<1.5) {
+
             if (!hasColMass) return kTRUE; 
-            if (x1_col <= 0.1 || x1_col >= 1.2) return kTRUE;
-            if (x2_col <= 0.1 || x2_col >= 1.4) return kTRUE;
+            if (x1_col <= 0.1 || x1_col >= 1.4) return kTRUE;
+            if (x2_col <= 0.1 || x2_col >= 1.2) return kTRUE;
+
 	    //Start to fill histograms: definitions of variables
-	    double names_of_global_variable[]      = { VisibleMass_LepTau, m_col, met,  mt_etau, mt_mutau, sum_dPhi, (double)jet_n, m_total };
-	    TString histonames_of_global_variable[]= {"hist_mLL","hist_m_col", "hist_etmiss", "hist_mt_etau", "hist_mt_mutau", "hist_sum_dPhi", "hist_n_jets", "hist_m_total"};
+	    double names_of_global_variable[]      = { VisibleMass_LepTau, m_col, met,  mt_etau, mt_mutau, sum_dPhi, (double)jet_n };
+	    TString histonames_of_global_variable[]= {"hist_mLL","hist_m_col", "hist_etmiss", "hist_mt_etau", "hist_mt_mutau", "hist_sum_dPhi", "hist_n_jets"};
 	    double names_of_leadlep_variable[]     = {Lepton.Pt(), Lepton.Eta(), Lepton.E(), Lepton.Phi(), (double)lep_charge->at(goodlep_index), (double)lep_type->at(goodlep_index)};
 	    TString histonames_of_leadlep_variable[]={"hist_leadleptpt", "hist_leadlepteta", "hist_leadleptE", "hist_leadleptphi", "hist_leadleptch", "hist_leadleptID"};
 

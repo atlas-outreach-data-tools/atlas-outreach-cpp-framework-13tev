@@ -17,7 +17,6 @@ void HTauTauAnalysis::define_histograms()
   hist_mt_mutau     = new TH1F("hist_mt_mutau",     "Transverse Mass; m_{T}(#mu,E_{T}^{miss}) [GeV];Events / bin", 30, 1, 150);
   hist_sum_dPhi     = new TH1F("hist_sum_dPhi",     "sum dPhi; #Sigma#Delta#phi;Events / bin", 30, 0, 6.3);
   hist_etmiss       = new TH1F("hist_etmiss",      "Missing Transverse Momentum;E_{T}^{miss} [GeV];Events / bin", 20, 0, 150);
-  hist_m_total      = new TH1F("hist_m_total",   "Total Invariant Mass; m_{Tot} [GeV]; Events / bin", 25, 20, 200);
   // Jet variables histograms
   hist_n_jets           = new TH1F("hist_n_jets",          "Number of Jets;N_{jets};Events", 6, -0.5, 5.5);
   hist_leadjet_pt       = new TH1F("hist_leadjet_pt",      "Leading Jet Transverse Momentum;p_{T}^{leadjet} [GeV];Jets", 15, 0, 150);
@@ -64,7 +63,6 @@ void HTauTauAnalysis::FillOutputList()
   GetOutputList()->Add(hist_m_col);
   GetOutputList()->Add(hist_mt_etau);
   GetOutputList()->Add(hist_mt_mutau);
-  GetOutputList()->Add(hist_m_total);
   // Add Leading Lepton histograms
   GetOutputList()->Add(hist_leadleptpt);
   GetOutputList()->Add(hist_leadlepteta);
@@ -112,7 +110,6 @@ void HTauTauAnalysis::WriteHistograms()
   hist_m_col->Write();
   hist_mt_etau->Write();
   hist_mt_mutau->Write();
-  hist_m_total->Write();
 
   //Write Leading Lepton histograms
   hist_leadleptpt->Write();
@@ -160,7 +157,6 @@ void HTauTauAnalysis::FillHistogramsGlobal( double m, float w , TString s)
   if (s.Contains("hist_mt_etau")) hist_mt_etau->Fill(m,w);
   if (s.Contains("hist_mt_mutau")) hist_mt_mutau->Fill(m,w);
   if (s.Contains("hist_n_jets")) hist_n_jets->Fill(m,w);
-  if (s.Contains("hist_m_total")) hist_m_total->Fill(m,w);
 }
 
 void HTauTauAnalysis::FillHistogramsLeadlept( double m, float w , TString s)

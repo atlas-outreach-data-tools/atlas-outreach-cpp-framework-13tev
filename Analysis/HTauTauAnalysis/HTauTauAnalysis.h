@@ -32,7 +32,6 @@ public :
   TH1F *hist_mt_etau    = 0;
   TH1F *hist_mt_mutau    = 0;
   TH1F *hist_sum_dPhi   = 0;
-  TH1F *hist_m_total = 0;
   // Leading Lepton histograms
   TH1F *hist_leadleptpt   = 0;
   TH1F *hist_leadlepteta  = 0;
