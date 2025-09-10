@@ -331,7 +331,7 @@ void HTauTauAnalysis::Terminate()
   cout << "--------------------------------------------------------------------------------------" << endl;
   
   TString filename_option = GetOption();
-  printf("Writting with name option: %s \n", filename_option.Data());
+  std::cout << "Writing with name option: " << filename_option.Data() << std::endl;
   TString output_name="Output_HTauTauAnalysis/"+filename_option+".root";
   const char* filename = output_name;
 
