@@ -1062,8 +1062,8 @@ void Plotting::makePlots(){
 
       stop = (TH1F*)PhPy8EG_A14_tchan_BW50_lept_top[fIter->first]->Clone();
       stop->Add(PhPy8EG_A14_tchan_BW50_lept_antitop[fIter->first]);
-    //  stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_top[fIter->first]);
-    //  stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop[fIter->first]);
+      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_top[fIter->first]);
+      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop[fIter->first]);
       stop->SetFillColor(kAzure+8);
       stop->SetLineWidth(0);
 

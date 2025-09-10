@@ -263,39 +263,32 @@ Bool_t HTauTauAnalysis::Process(Long64_t entry)
             if (x2_col <= 0.1 || x2_col >= 1.2) return kTRUE;
 
 	    //Start to fill histograms: definitions of variables
-	    double names_of_global_variable[]      = { VisibleMass_LepTau, m_col, met,  mt_etau, mt_mutau, sum_dPhi, (double)jet_n };
-	    TString histonames_of_global_variable[]= {"hist_mLL","hist_m_col", "hist_etmiss", "hist_mt_etau", "hist_mt_mutau", "hist_sum_dPhi", "hist_n_jets"};
-	    double names_of_leadlep_variable[]     = {Lepton.Pt(), Lepton.Eta(), Lepton.E(), Lepton.Phi(), (double)lep_charge->at(goodlep_index), (double)lep_type->at(goodlep_index)};
-	    TString histonames_of_leadlep_variable[]={"hist_leadleptpt", "hist_leadlepteta", "hist_leadleptE", "hist_leadleptphi", "hist_leadleptch", "hist_leadleptID"};
+	    std::vector<double> names_of_global_variable      = { VisibleMass_LepTau, m_col, met,  mt_etau, mt_mutau, sum_dPhi, static_cast<double>(jet_n) };
+	    std::vector<TString> histonames_of_global_variable= {"hist_mLL","hist_m_col", "hist_etmiss", "hist_mt_etau", "hist_mt_mutau", "hist_sum_dPhi", "hist_n_jets"};
+	    std::vector<double> names_of_leadlep_variable     = {Lepton.Pt(), Lepton.Eta(), Lepton.E(), Lepton.Phi(),  static_cast<double>(lep_charge->at(goodlep_index)),  static_cast<double>(lep_type->at(goodlep_index))};
+	    std::vector<TString> histonames_of_leadlep_variable={"hist_leadleptpt", "hist_leadlepteta", "hist_leadleptE", "hist_leadleptphi", "hist_leadleptch", "hist_leadleptID"};
 
-	    double names_of_tau_variable[] ={ HadTau.Pt(), HadTau.Eta(), HadTau.E(), HadTau.Phi(), (double)tau_nTracks->at(goodtau_index) };
-	    TString histonames_of_tau_variable[]={"hist_taupt", "hist_taueta", "hist_tauE", "hist_tauphi", "hist_tau_nTracks" };
-	     
-	    //Start to fill histograms : find the histogram array length
-	    int length_global = sizeof(names_of_global_variable)/sizeof(names_of_global_variable[0]);
-	    int length_leadlep = sizeof(names_of_leadlep_variable)/sizeof(names_of_leadlep_variable[0]);
-	    int length_tau = sizeof(names_of_tau_variable)/sizeof(names_of_tau_variable[0]);
-	    
-	    //Fill histograms
-	    for (int i=0; i<length_global; i++){
-	      FillHistogramsGlobal( names_of_global_variable[i], weight, histonames_of_global_variable[i]);
-	    }
-	    
-	    for (int i=0; i<length_leadlep; i++){
-	      FillHistogramsLeadlept( names_of_leadlep_variable[i], weight, histonames_of_leadlep_variable[i]);
-	    }
-		    
-	    for (int i=0; i<length_tau; i++){
-	      FillHistogramsTau( names_of_tau_variable[i], weight, histonames_of_tau_variable[i]);
-	    }
-		    	    
-	    // fill jets
-	    if (jet_n > 0){
-	      double names_of_jet_variable[]={jet_pt->at(goodjet_index), jet_eta->at(goodjet_index)};
-	      TString histonames_of_jet_variable[]={"hist_leadjet_pt","hist_leadjet_eta"};
-	      int length_leadjet = sizeof(names_of_jet_variable)/sizeof(names_of_jet_variable[0]);
-	      for (int i=0; i<length_leadjet; i++){
-		FillHistogramsLeadJet( names_of_jet_variable[i], weight, histonames_of_jet_variable[i]);
+	    std::vector<double> names_of_tau_variable ={ HadTau.Pt(), HadTau.Eta(), HadTau.E(), HadTau.Phi(), static_cast<double>(tau_nTracks->at(goodtau_index)) };
+	    std::vector<TString> histonames_of_tau_variable={"hist_taupt", "hist_taueta", "hist_tauE", "hist_tauphi", "hist_tau_nTracks" };
+            // Fill histograms
+            for (size_t i=0; i<names_of_global_variable.size(); i++) {
+                FillHistogramsGlobal(names_of_global_variable[i], weight, histonames_of_global_variable[i]);
+            }
+
+            for (size_t i=0; i<names_of_leadlep_variable.size(); i++) {
+                FillHistogramsLeadlept(names_of_leadlep_variable[i], weight, histonames_of_leadlep_variable[i]);
+            }
+
+            for (size_t i=0; i<names_of_tau_variable.size(); i++) {
+                FillHistogramsTau(names_of_tau_variable[i], weight, histonames_of_tau_variable[i]);
+            }
+
+            // Jets
+            if (jet_n > 0) { 
+              std::vector<double> names_of_jet_variable = { jet_pt->at(goodjet_index), jet_eta->at(goodjet_index) };
+              std::vector<TString> histonames_of_jet_variable = { "hist_leadjet_pt", "hist_leadjet_eta" };
+              for (size_t i=0; i<names_of_jet_variable.size(); i++) {
+                  FillHistogramsLeadJet(names_of_jet_variable[i], weight, histonames_of_jet_variable[i]);	     
 	      }
 	    } // jet_n 
 	  } //loop
