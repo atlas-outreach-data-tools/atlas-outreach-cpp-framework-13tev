@@ -1260,8 +1260,11 @@ void Plotting::makePlots(){
     l2.SetNDC();
     l2.SetTextSize(0.04);  
     l2.SetTextColor(kBlack);
-    l2.DrawLatex(0.18,0.76, Form("#sqrt{s} = 13 TeV, 36 fb^{-1}")); 
-    
+    if(option.find("HTauTauAnalysis")   != option.npos){
+      l2.DrawLatex(0.18,0.76, Form("#sqrt{s} = 13 TeV, 36 fb^{-1}")); 
+    } else {
+      l2.DrawLatex(0.18,0.79, Form("#sqrt{s} = 13 TeV, 36 fb^{-1}")); 
+    }    
     
     //create legend
     TLegend* leg;
