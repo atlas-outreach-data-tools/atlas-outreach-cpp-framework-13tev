@@ -69,7 +69,7 @@
 int main(int argc, char *argv[]){
   
   if(argc < 3){
-    std::cout<<"usage: ./plot [ WBosonAnalysis, ZBosonAnalysis, TTbarAnalysis, SingleTopAnalysis, WZDiBosonAnalysis, ZZDiBosonAnalysis, HWWAnalysis, HZZAnalysis, ZTauTauAnalysis, HyyAnalysis, SUSYAnalysis, ZPrimeBoostedAnalysis, TTbarDilepAnalysis]  [ location of OutputDir_AnalysisName ]"<<std::endl;
+    std::cout<<"usage: ./plot [ WBosonAnalysis, ZBosonAnalysis, TTbarAnalysis, SingleTopAnalysis, WZDiBosonAnalysis, ZZDiBosonAnalysis, HWWAnalysis, HZZAnalysis, ZTauTauAnalysis, HyyAnalysis, SUSYAnalysis, ZPrimeBoostedAnalysis, TTbarDilepAnalysis, HTauTauAnalysis]  [ location of OutputDir_AnalysisName ]"<<std::endl;
     std::cout<<"output stored in a directory \'histograms\' " <<std::endl;
     exit(1);
   }
@@ -220,7 +220,8 @@ void Plotting::WhichFiles(){
   if(option.find("HWWAnalysis")           != option.npos){   ifile = "inputfiles/Files_HWW.txt";}
   if(option.find("TTbarDilepAnalysis")    != option.npos){   ifile = "inputfiles/Files_TTbarDilep.txt";}
   if(option.find("ZTauTauAnalysis")       != option.npos){   ifile = "inputfiles/Files_ZTauTau.txt";}
-  
+  if(option.find("HTauTauAnalysis")       != option.npos){   ifile = "inputfiles/Files_HTauTau.txt";}
+
   std::cout << "Analysis: " << option << ", reading input from: " << ifile.c_str() << " \n " << std::endl;
 
   ifstream input(ifile.c_str());
@@ -269,6 +270,9 @@ void Plotting::readFiles(){
   }
   if (option.find("TTbarDilepAnalysis") != option.npos){
     std::cout<<"=====processing TTbarDilepAnalysis====="<<std::endl;
+  }
+  if (option.find("HTauTauAnalysis") != option.npos){
+    std::cout<<"=====processing HTauTauAnalysis====="<<std::endl;
   }
  
   std::cout << "\n" << std::endl;
@@ -454,6 +458,21 @@ void Plotting::makePlots(){
   std::map<std::string, TH1F*> aMcAtNloPythia8EvtGen_MEN30NLO_A14N23LO_ttmumu;
   std::map<std::string, TH1F*> aMcAtNloPythia8EvtGen_MEN30NLO_A14N23LO_tttautau;
 
+  // Signal Higgs
+  std::map<std::string, TH1F*> PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaul13l7;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulm15hp20;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulp15hm20;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautauh30h20;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNLOPS_nnlo_30_ggH125_etau_filt;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaul13l7;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulm15hp20;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulp15hm20;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautauh30h20;
+  std::map<std::string, TH1F*> PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_allhad;
+  std::map<std::string, TH1F*> PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_semilep;
+  std::map<std::string, TH1F*> PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep;
+  std::map<std::string, TH1F*> PhPy8EG_NNPDF3_AZNLO_ggZH125_Htautau_Zinc;
+
   ///////////////////////////////////////////////////////////////////////
   // Actual reading of the input files
   // The names must be the same as in Files_***.txt 
@@ -513,6 +532,20 @@ void Plotting::makePlots(){
   Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto = histo["Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto"];
   Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto = histo["Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto"];
 
+  // Higgs
+  PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaul13l7 = histo["PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaul13l7"];
+  PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulm15hp20 = histo["PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulm15hp20"];
+  PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulp15hm20 = histo["PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulp15hm20"];
+  PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautauh30h20 = histo["PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautauh30h20"];
+  PowhegPy8EG_NNLOPS_nnlo_30_ggH125_etau_filt = histo["PowhegPy8EG_NNLOPS_nnlo_30_ggH125_etau_filt"];
+  PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaul13l7 = histo["PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaul13l7"];
+  PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulm15hp20 = histo["PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulm15hp20"];
+  PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulp15hm20 = histo["PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulp15hm20"];
+  PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautauh30h20 = histo["PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautauh30h20"];
+  PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_allhad = histo["PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_allhad"];
+  PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_semilep = histo["PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_semilep"];
+  PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep = histo["PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep"];
+  PhPy8EG_NNPDF3_AZNLO_ggZH125_Htautau_Zinc  = histo["PhPy8EG_NNPDF3_AZNLO_ggZH125_Htautau_Zinc"];
   
   // reading HWW samples used
   if(option.find("HWWAnalysis") != option.npos){
@@ -582,6 +615,7 @@ void Plotting::makePlots(){
     TH1F* ZVV = new TH1F();
     TH1F* ZPrime = new TH1F();
     TH1F* tt_others = new TH1F();
+    TH1F* Hsig = new TH1F();
 
     // merge for HWW _Analysis
     if(option.find("HWWAnalysis") != option.npos){
@@ -981,6 +1015,101 @@ void Plotting::makePlots(){
       
     }
     
+    // merge for HTauTauAnalysis
+    if(option.find("HTauTauAnalysis") != option.npos){
+
+      // ttbar
+
+      ttbar = (TH1F*)PhPy8EG_A14_ttbar_hdamp258p75_nonallhad[fIter->first]->Clone();
+      ttbar->Add(PhPy8EG_A14_ttbar_hdamp258p75_allhad[fIter->first]);
+      ttbar->SetFillColor(kOrange-3);
+      ttbar->SetLineWidth(0);
+
+      // Higgs 
+
+      Hsig = (TH1F*)PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaul13l7[fIter->first]->Clone();
+      Hsig->Add(PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulm15hp20[fIter->first]);
+      Hsig->Add(PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulp15hm20[fIter->first]);
+      Hsig->Add(PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautauh30h20[fIter->first]);
+      Hsig->Add(PowhegPy8EG_NNLOPS_nnlo_30_ggH125_etau_filt[fIter->first]);
+      Hsig->Add(PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaul13l7[fIter->first]);
+      Hsig->Add(PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulm15hp20[fIter->first]);
+      Hsig->Add(PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautaulp15hm20[fIter->first]);
+      Hsig->Add(PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_tautauh30h20[fIter->first]);    
+      Hsig->Add(PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_allhad[fIter->first]);
+      Hsig->Add(PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_semilep[fIter->first]);
+      Hsig->Add(PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep[fIter->first]);
+      Hsig->Add(PhPy8EG_NNPDF3_AZNLO_ggZH125_Htautau_Zinc[fIter->first]);
+      Hsig->SetFillColor(kRed);
+      Hsig->SetLineWidth(0);
+
+      // all diboson
+
+      diboson = (TH1F*)Sh_2212_llll[fIter->first]->Clone();
+      diboson->Add(Sh_2212_lllv[fIter->first]);
+      diboson->Add(Sh_2212_llvv_os[fIter->first]);
+      diboson->Add(Sh_2212_llvv_ss[fIter->first]);
+      diboson->Add(Sh_2212_lvvv[fIter->first]);
+      diboson->Add(Sh_2212_vvvv[fIter->first]);
+      diboson->Add(Sh_2211_WlvWqq[fIter->first]);
+      diboson->Add(Sh_2211_WlvZqq[fIter->first]);
+      diboson->Add(Sh_2211_ZqqZll[fIter->first]);
+      diboson->Add(Sh_2211_ZqqZvv[fIter->first]);
+      diboson->SetFillColor(kBlue-6);
+      diboson->SetLineWidth(0);
+
+      // single top
+
+      stop = (TH1F*)PhPy8EG_A14_tchan_BW50_lept_top[fIter->first]->Clone();
+      stop->Add(PhPy8EG_A14_tchan_BW50_lept_antitop[fIter->first]);
+      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_top[fIter->first]);
+      stop->Add(PowhegPythia8EvtGen_A14_singletop_schan_lept_antitop[fIter->first]);
+      stop->SetFillColor(kAzure+8);
+      stop->SetLineWidth(0);
+
+      // merge minor bkgs
+      
+      topV = (TH1F*)ttbar->Clone();
+      topV->Add(stop);
+      topV->Add(diboson);
+      topV->SetFillColor(kOrange-3);
+      topV->SetLineWidth(0);
+
+      // sliced Sherpa W+jets samples
+
+      W = (TH1F*)Sh_2211_Wenu_maxHTpTV2_BFilter[fIter->first]->Clone();
+      W->Add(Sh_2211_Wenu_maxHTpTV2_CFilterBVeto[fIter->first]);
+      W->Add(Sh_2211_Wenu_maxHTpTV2_CVetoBVeto[fIter->first]);
+      W->Add(Sh_2211_Wmunu_maxHTpTV2_BFilter[fIter->first]);
+      W->Add(Sh_2211_Wmunu_maxHTpTV2_CFilterBVeto[fIter->first]);
+      W->Add(Sh_2211_Wmunu_maxHTpTV2_CVetoBVeto[fIter->first]);
+      W->Add(Sh_2211_Wtaunu_L_maxHTpTV2_BFilter[fIter->first]);
+      W->Add(Sh_2211_Wtaunu_L_maxHTpTV2_CFilterBVeto[fIter->first]);
+      W->Add(Sh_2211_Wtaunu_L_maxHTpTV2_CVetoBVeto[fIter->first]);
+      W->SetFillColor(kGreen-3);
+      W->SetLineWidth(0);
+
+      // sliced Sherpa Z+jets samples
+      // merge Z->ee and Z->mumu
+
+      Z = (TH1F*)Sh_2211_Zee_maxHTpTV2_BFilter[fIter->first]->Clone();
+      Z->Add(Sh_2211_Zee_maxHTpTV2_CFilterBVeto[fIter->first]);
+      Z->Add(Sh_2211_Zee_maxHTpTV2_CVetoBVeto[fIter->first]);
+      Z->Add(Sh_2211_Zmumu_maxHTpTV2_BFilter[fIter->first]);
+      Z->Add(Sh_2211_Zmumu_maxHTpTV2_CFilterBVeto[fIter->first]);
+      Z->Add(Sh_2211_Zmumu_maxHTpTV2_CVetoBVeto[fIter->first]);
+      Z->SetFillColor(kPink+9);
+      Z->SetLineWidth(0);
+
+      // Z->tau tau      
+
+      Z_tautau = (TH1F*)Sh_2214_Ztautau_maxHTpTV2_BFilter[fIter->first]->Clone();
+      Z_tautau->Add(Sh_2214_Ztautau_maxHTpTV2_CFilterBVeto[fIter->first]);
+      Z_tautau->Add(Sh_2214_Ztautau_maxHTpTV2_CVetoBVeto[fIter->first]);
+      Z_tautau->SetFillColor(kAzure+7);
+      Z_tautau->SetLineWidth(0);
+     
+     }
     
     ////////////////////////////////////////////////////////////////////////////////////////////////
     
@@ -1044,6 +1173,18 @@ void Plotting::makePlots(){
       histstack->Add(tt_others);
     }
 
+    if(option.find("HTauTauAnalysis") != option.npos){
+      stack->Add(topV);
+      stack->Add(W);
+      stack->Add(Z);
+      stack->Add(Z_tautau);
+      stack->Add(Hsig);
+      histstack = (TH1F*)topV->Clone();
+      histstack->Add(W);
+      histstack->Add(Z);
+      histstack->Add(Z_tautau);
+      histstack->Add(Hsig);
+    }
     
   //   // data overflow
   //   if(std::strstr((fIter->first).c_str(),"four_lep") == NULL ){
@@ -1110,13 +1251,20 @@ void Plotting::makePlots(){
       l.DrawLatex(0.18,0.66,"t#bar{t} #rightarrow W^{-}W^{+}b#bar{b} #rightarrow e#nu #mu#nu b#bar{b}");
       l.DrawLatex(0.18,0.71,"Work in Progress");
     }
+    if(option.find("HTauTauAnalysis")   != option.npos){
+      l.DrawLatex(0.18,0.66,"H #rightarrow #tau_{lep}#tau_{had}");
+      l.DrawLatex(0.18,0.71,"Work in Progress");
+    }
 
     TLatex l2;
     l2.SetNDC();
     l2.SetTextSize(0.04);  
     l2.SetTextColor(kBlack);
-    l2.DrawLatex(0.18,0.79, Form("#sqrt{s} = 13 TeV, 36 fb^{-1}")); 
-    
+    if(option.find("HTauTauAnalysis")   != option.npos){
+      l2.DrawLatex(0.18,0.76, Form("#sqrt{s} = 13 TeV, 36 fb^{-1}")); 
+    } else {
+      l2.DrawLatex(0.18,0.79, Form("#sqrt{s} = 13 TeV, 36 fb^{-1}")); 
+    }    
     
     //create legend
     TLegend* leg;
@@ -1220,6 +1368,29 @@ void Plotting::makePlots(){
       }
     }
     
+    // ------------------------------------------------------- //    
+
+    if(option.find("HTauTauAnalysis") != option.npos){
+      leg-> AddEntry(data[fIter->first] , "Data" ,"lep");
+      leg-> AddEntry(Hsig,  "H #rightarrow #tau#tau", "f");
+      leg-> AddEntry(Z_tautau,  "Z #rightarrow #tau#tau", "f");
+      leg-> AddEntry(Z,  "Z #rightarrow ee, #mu#mu", "f");
+      leg-> AddEntry(W,  "W+jets", "f");
+      leg-> AddEntry(topV , "Other", "f");
+      leg-> AddEntry(histstack,"Stat. unc.","f");
+      
+      if(YIELDS){
+	cout << "Yields:" << "Data: " << data[fIter->first]->Integral() <<
+          ",  H->tautau: " << Hsig->Integral()  << 
+	  ",  Z->tautau: " << Z_tautau->Integral()  <<             
+	  ",  Z->ee,mumu: " << Z->Integral()  <<
+	  ",  W+jets: " << W->Integral()  <<
+	  ",  ttbar, single top, diboson: " <<  topV->Integral()  <<
+	  ",  Total pred.: "<< Hsig->Integral() + Z->Integral() + Z_tautau->Integral() + W->Integral() + topV->Integral() <<
+	  endl;
+      }
+    }
+
     // draw everything 
     stack->Draw("HISTsame");
     histstack->Draw("e2same");
@@ -1370,8 +1541,8 @@ void Plotting::PrintCanvas(TCanvas* c1, string title){
 void Plotting::getHistoSettings(){
 
   // we check the naming of the 12 analyses
-  if( option.find("ZPrimeBoostedAnalysis") != option.npos ||  option.find("SingleTopAnalysis") != option.npos || option.find("ZTauTauAnalysis") != option.npos ||  option.find("WBosonAnalysis") != option.npos ||  option.find("ZBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("HyyAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos || option.find("HWWAnalysis") != option.npos || option.find("HZZAnalysis") != option.npos || option.find("SUSYAnalysis") != option.npos  || option.find("TTbarDilepAnalysis") != option.npos ) cout << "Analysis option found, proceeding..." << endl;
-  else { cout << "Analysis option not found! \n usage: ./plot [ WBosonAnalysis, ZBosonAnalysis, TTbarAnalysis, SingleTopAnalysis, WZDiBosonAnalysis, ZZDiBosonAnalysis, HWWAnalysis, HZZAnalysis, ZTauTauAnalysis, HyyAnalysis, SUSYAnalysis, ZPrimeBoostedAnalysis ]  [ location of OutputDir_AnalysisName ] \n " << endl; exit(1);}
+  if( option.find("ZPrimeBoostedAnalysis") != option.npos ||  option.find("SingleTopAnalysis") != option.npos || option.find("ZTauTauAnalysis") != option.npos ||  option.find("WBosonAnalysis") != option.npos ||  option.find("ZBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("HyyAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos || option.find("HWWAnalysis") != option.npos || option.find("HZZAnalysis") != option.npos || option.find("SUSYAnalysis") != option.npos  || option.find("TTbarDilepAnalysis") != option.npos || option.find("HTauTauAnalysis") != option.npos ) cout << "Analysis option found, proceeding..." << endl;
+  else { cout << "Analysis option not found! \n usage: ./plot [ WBosonAnalysis, ZBosonAnalysis, TTbarAnalysis, SingleTopAnalysis, WZDiBosonAnalysis, ZZDiBosonAnalysis, HWWAnalysis, HZZAnalysis, ZTauTauAnalysis, HyyAnalysis, SUSYAnalysis, ZPrimeBoostedAnalysis, HTauTauAnalysis ]  [ location of OutputDir_AnalysisName ] \n " << endl; exit(1);}
 
  
   // save names of the histograms for later  
@@ -1384,6 +1555,7 @@ void Plotting::getHistoSettings(){
   if(option.find("HWWAnalysis")           != option.npos){ifile = "list_histos/HistoList_HWWAnalysis.txt";}
   if(option.find("ZTauTauAnalysis")       != option.npos){ifile = "list_histos/HistoList_ZTauTauAnalysis.txt";}
   if(option.find("TTbarDilepAnalysis")    != option.npos){ifile = "list_histos/HistoList_TTbarDilepAnalysis.txt";}
+  if(option.find("HTauTauAnalysis")       != option.npos){ifile = "list_histos/HistoList_HTauTauAnalysis.txt";}
 
   std::cout << "Reading list of histograms from: " << ifile.c_str() << " \n " << std::endl;
 
