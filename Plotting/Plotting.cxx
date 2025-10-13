@@ -220,6 +220,7 @@ void Plotting::WhichFiles(){
   if(option.find("HWWAnalysis")           != option.npos){   ifile = "inputfiles/Files_HWW.txt";}
   if(option.find("TTbarDilepAnalysis")    != option.npos){   ifile = "inputfiles/Files_TTbarDilep.txt";}
   if(option.find("ZTauTauAnalysis")       != option.npos){   ifile = "inputfiles/Files_ZTauTau.txt";}
+  if(option.find("HyyAnalysis")           != option.npos){   ifile = "inputfiles/Files_Hyy.txt";}
   if(option.find("HTauTauAnalysis")       != option.npos){   ifile = "inputfiles/Files_HTauTau.txt";}
 
   std::cout << "Analysis: " << option << ", reading input from: " << ifile.c_str() << " \n " << std::endl;
@@ -270,6 +271,9 @@ void Plotting::readFiles(){
   }
   if (option.find("TTbarDilepAnalysis") != option.npos){
     std::cout<<"=====processing TTbarDilepAnalysis====="<<std::endl;
+  }
+  if (option.find("HyyAnalysis") != option.npos){
+    std::cout<<"=====processing HyyAnalysis====="<<std::endl;
   }
   if (option.find("HTauTauAnalysis") != option.npos){
     std::cout<<"=====processing HTauTauAnalysis====="<<std::endl;
@@ -458,6 +462,17 @@ void Plotting::makePlots(){
   std::map<std::string, TH1F*> aMcAtNloPythia8EvtGen_MEN30NLO_A14N23LO_ttmumu;
   std::map<std::string, TH1F*> aMcAtNloPythia8EvtGen_MEN30NLO_A14N23LO_tttautau;
 
+  // Higgs to photons
+  // std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam;
+  // std::map<std::string, TH1F*> PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam;
+  // std::map<std::string, TH1F*> PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam;
+  // std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO;
+  // std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO;
+  // std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO;
+  // std::map<std::string, TH1F*> PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam;
+  // std::map<std::string, TH1F*> PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam;
+  // std::map<std::string, TH1F*> aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam;
+  
   // Signal Higgs
   std::map<std::string, TH1F*> PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaul13l7;
   std::map<std::string, TH1F*> PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaulm15hp20;
@@ -547,6 +562,10 @@ void Plotting::makePlots(){
   PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep = histo["PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep"];
   PhPy8EG_NNPDF3_AZNLO_ggZH125_Htautau_Zinc  = histo["PhPy8EG_NNPDF3_AZNLO_ggZH125_Htautau_Zinc"];
   
+  // // H->yy
+  // PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam = histo["PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam"];
+  // PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam = histo["PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam"];
+
   // reading HWW samples used
   if(option.find("HWWAnalysis") != option.npos){
 
@@ -556,6 +575,21 @@ void Plotting::makePlots(){
 
   }
   
+  // read H->yy 
+  if(option.find("HyyAnalysis") != option.npos){
+
+    // PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam = histo["PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam"];
+    // PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam = histo["PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam"];
+    // PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam = histo["PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam"];
+    // PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO = histo["PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO"];
+    // PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO = histo["PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO"];
+    // PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO = histo["PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO"];
+    // PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam = histo["PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam"];
+    // PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam = histo["PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam"];
+    // aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam = histo["aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam"];
+
+  }
+
   // reading TTbarDilep samples used
   if(option.find("TTbarDilepAnalysis") != option.npos){
 
@@ -590,7 +624,15 @@ void Plotting::makePlots(){
     gStyle->SetEndErrorSize(1.); 
     TGaxis::SetMaxDigits(4); // maximum digits in Y axis title
 
+    // some options for Hyy
+    if(option.find("HyyAnalysis") != option.npos) TGaxis::SetMaxDigits(3);
+    fIter->second->GetYaxis()->SetTitleOffset(1.2);
     if(!(option.find("HyyAnalysis") != option.npos))  fIter->second->Draw("E1");
+    if(option.find("HyyAnalysis") != option.npos){
+      fIter->second->Draw("E");
+      gStyle->SetEndErrorSize(0.);
+      gStyle->SetErrorX(0.0);
+    }
     
     // create histograms and merge several MCs into them
     // general
@@ -617,6 +659,13 @@ void Plotting::makePlots(){
     TH1F* tt_others = new TH1F();
     TH1F* Hsig = new TH1F();
 
+    // Hyy
+    TH1F* ggH125_gamgam = new TH1F();
+    TH1F* VBFH125_gamgam = new TH1F();
+    TH1F* WH125_gamgam = new TH1F();
+    TH1F* ZH125_gamgam = new TH1F();
+    TH1F* ttH125_gamgam = new TH1F();
+    
     // merge for HWW _Analysis
     if(option.find("HWWAnalysis") != option.npos){
 
@@ -1109,8 +1158,39 @@ void Plotting::makePlots(){
       Z_tautau->SetFillColor(kAzure+7);
       Z_tautau->SetLineWidth(0);
      
-     }
+    }
     
+    // merge for HyyAnalysis
+    if(option.find("HyyAnalysis") != option.npos){
+      
+      // ggH125_gamgam = (TH1F*)PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam[fIter->first]->Clone();
+      // ggH125_gamgam->Add(PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam[fIter->first]);
+      
+      // VBFH125_gamgam = (TH1F*)PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam[fIter->first]->Clone();
+      
+      // WH125_gamgam = (TH1F*)PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO[fIter->first]->Clone();
+      // WH125_gamgam->Add(PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO[fIter->first]);
+
+      // ZH125_gamgam = (TH1F*)PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO[fIter->first]->Clone();
+      
+      // ttH125_gamgam = (TH1F*)PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam[fIter->first]->Clone();
+      // ttH125_gamgam->Add(PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam[fIter->first]);
+      // ttH125_gamgam->Add(aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam[fIter->first]);
+
+      // Higgs = (TH1F*)PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam[fIter->first]->Clone();
+      // Higgs->Add(PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam[fIter->first]);
+      // Higgs->Add(PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam[fIter->first]);
+      // Higgs->Add(PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO[fIter->first]);
+      // Higgs->Add(PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO[fIter->first]);
+      // Higgs->Add(PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO[fIter->first]);
+      // Higgs->Add(PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam[fIter->first]);
+      // Higgs->Add(PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam[fIter->first]);
+      // Higgs->Add(aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam[fIter->first]);
+      // Higgs->SetLineColor(kBlack);
+      // Higgs->SetLineWidth(2);
+    
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////
     
     // main stack of MCs
@@ -1186,6 +1266,11 @@ void Plotting::makePlots(){
       histstack->Add(Hsig);
     }
     
+    if(option.find("HyyAnalysis") != option.npos){
+      // stack->Add(Higgs);
+      // histstack = (TH1F*)Higgs->Clone();
+    }
+
   //   // data overflow
   //   if(std::strstr((fIter->first).c_str(),"four_lep") == NULL ){
   //     if( abs(fIter->second->GetBinContent(fIter->second->GetNbinsX()+1)) > 0){
@@ -1255,6 +1340,10 @@ void Plotting::makePlots(){
       l.DrawLatex(0.18,0.66,"H #rightarrow #tau_{lep}#tau_{had}");
       l.DrawLatex(0.18,0.71,"Work in Progress");
     }
+    if(option.find("HyyAnalysis")       != option.npos){
+      if(fIter->first.find("_cat_") != option.npos) l.DrawLatex(0.18,0.71,"H #rightarrow #gamma #gamma, unconv. central");
+      else l.DrawLatex(0.18,0.71,"H #rightarrow #gamma #gamma");
+    }
 
     TLatex l2;
     l2.SetNDC();
@@ -1270,7 +1359,7 @@ void Plotting::makePlots(){
     TLegend* leg;
     leg  = new TLegend();
     leg  = new TLegend(0.70,0.55,0.93,0.90);
-
+    if(option.find("HyyAnalysis")       != option.npos) leg  = new TLegend(0.60,0.45,0.93,0.825);
     //0.7, 0.55, 0.85, 0.90
     leg->SetFillStyle(0);
     leg->SetBorderSize(0);
@@ -1401,6 +1490,71 @@ void Plotting::makePlots(){
       if(option.find("HWWAnalysis")          != option.npos){if(fIter->first.find("histI") != option.npos)Higgs_normsig->Draw("HISTsame");}
     }
     
+    // for Hyy case, we only have data and Higgs MC
+    if(option.find("HyyAnalysis") != option.npos){
+
+      // print expected yields
+      if(YIELDS){  
+        // cout << "Expected signal events (ggH): " <<   ggH125_gamgam->Integral() <<  endl;
+        // cout << "Expected signal events (VBF): " <<   VBFH125_gamgam->Integral() <<  endl;
+        // cout << "Expected signal events (WH): " <<    WH125_gamgam->Integral() <<  endl;
+        // cout << "Expected signal events (ZH): " <<    ZH125_gamgam->Integral() <<  endl;
+        // cout << "Expected signal events (ttH): " <<   ttH125_gamgam->Integral() <<  endl;
+        // cout << "Expected signal events (all): " <<   Higgs->Integral() <<  endl;
+      }
+
+ 
+      // The signal distribution is empirically modeled as a single Gaussian in the mass window 120 - 130 GeV
+      // In case you want to run this fit, do:
+      //Higgs->Fit("gaus" ,"","",120.,130.);
+
+      // The total fit function is then the sum of Higgs signal (Gauss) and background (polynomial)
+      cout << " === Fitting a 3rd-order polynomial + Gaussian to data == " << endl;
+      fit = new TF1("fit", "([0]+[1]*x+[2]*x^2+[3]*x^3)+[4]*exp(-0.5*((x-[5])/[6])^2)", 100, 160);
+
+      // We set the values of the fitted parameters from Gaussian fit
+      fit->FixParameter(5,125.0); // always fixed to 125 GeV
+
+      if(fIter->first.find("mYY_bin1") != option.npos){
+        fit->FixParameter(4,119.1); // this value was obtained from the Gaussian fit
+        fit->FixParameter(6,2.38);  // this value was obtained from the Gaussian fit
+      }
+      if(fIter->first.find("mYY_cat_bin1") != option.npos){
+        fit->FixParameter(4,23.2); // this value was obtained from the Gaussian fit
+        fit->FixParameter(6,1.83);  // this value was obtained from the Gaussian fit
+      }
+
+      // here we are finally fitting 
+      data[fIter->first]->Fit("fit","","same:e",105.,160.);
+      TF1 *fitresult = data[fIter->first]->GetFunction("fit");
+      cout << "Chi2/NDF: "<< fitresult->GetChisquare() / fitresult->GetNDF() << endl;
+      cout << " ================================ " << endl;
+
+      // The functional form to model the background distribution is chosen to be a third-order polynomial restricted to 105 < m(yy) < 160 GeV
+      bgd = new TF1("bgd", "([0]+[1]*x+[2]*x^2+[3]*x^3)", 100, 160);
+      // we build it using the parameters from the previous fit
+      bgd->SetParameter(0,fit->GetParameter(0));
+      bgd->SetParameter(1,fit->GetParameter(1));
+      bgd->SetParameter(2,fit->GetParameter(2));
+      bgd->SetParameter(3,fit->GetParameter(3));
+
+      // set plots style
+      bgd->SetLineColor(4);
+      bgd->SetLineStyle(2);
+      bgd->SetLineWidth(2);
+      bgd->Draw("same");
+ 
+      fit->SetLineColor(2);
+      fit->SetLineStyle(1);
+      fit->SetLineWidth(2);
+      fit->Draw("same:e");
+
+      leg-> AddEntry(data[fIter->first] , "Data" ,"lep");
+      leg-> AddEntry(bgd ,   "Background", "l");
+      leg-> AddEntry(fit ,   "Signal + bkg", "l");
+      leg-> AddEntry(Higgs , "Signal", "l");
+    }
+
     leg->Draw("same");
 
     ATLASLabel(0.18, 0.87);
@@ -1422,6 +1576,29 @@ void Plotting::makePlots(){
       //      h_ratio->GetYaxis()->SetTitle("Data / Pred      ");
     }
     
+    if(option.find("HyyAnalysis") != option.npos){
+      // create the rest plot
+      h_ratio->Add(bgd,-1);
+      h_ratio->GetYaxis()->SetTitle("Data - bkg      ");
+   
+      float errore;
+      int nbine = data[fIter->first]->GetNbinsX();
+      for(int i_bin=0;i_bin<=nbine;i_bin++){
+        errore = data[fIter->first]->GetBinError(i_bin);
+        h_ratio->SetBinError(i_bin, errore);
+      } 
+
+      TH1F *copy_fit = new TH1F("copy_fit","copy_fit",5500,105,160); //  smooth
+      copy_fit->Eval(fit);
+      copy_fit->SetLineColor(2);
+      copy_fit->SetLineStyle(1);
+      copy_fit->SetLineWidth(2);
+
+      h_ratio2 = (TH1F*)copy_fit->Clone("h_ratio2");
+      h_ratio2->Add(bgd,-1);
+      delete copy_fit;
+    }
+
     // add a line in 1
     TLine *hline;
     hline = new TLine(h_ratio->GetXaxis()->GetXmin(),1,h_ratio->GetXaxis()->GetXmax(),1);
@@ -1429,9 +1606,18 @@ void Plotting::makePlots(){
     hline->SetLineWidth(2);
     hline->SetLineStyle(1);
 
+    if(option.find("HyyAnalysis") != option.npos){
+      hline = new TLine(h_ratio->GetXaxis()->GetXmin(),0,h_ratio->GetXaxis()->GetXmax(),0);
+      hline->SetLineColor(4);
+      hline->SetLineWidth(2);
+      hline->SetLineStyle(2);
+    }
+
     gStyle->SetEndErrorSize(1.);
     h_ratio->GetYaxis()->CenterTitle();
     h_ratio->GetYaxis()->SetNdivisions(504,false);
+
+    if(option.find("HyyAnalysis") != option.npos)     h_ratio->GetYaxis()->SetNdivisions(503,false);
 
     h_ratio->Draw("0E1");
     hline->Draw();
@@ -1439,6 +1625,11 @@ void Plotting::makePlots(){
     // cosmetics
     h_ratio->SetMinimum(0.5);
     h_ratio->SetMaximum(1.5);
+
+    if(option.find("HyyAnalysis") != option.npos){
+        if(fIter->first.find("_cat_") != option.npos){ h_ratio->SetMinimum(-30);      h_ratio->SetMaximum(60); }
+	      else{    h_ratio->SetMinimum(-300);      h_ratio->SetMaximum(300); }
+    }
 
     h_ratio->GetXaxis()->SetTitle(  fIter->second->GetXaxis()->GetTitle()  );
     h_ratio->GetXaxis()->SetTitleSize(0.15);
@@ -1455,7 +1646,8 @@ void Plotting::makePlots(){
     pad1->cd();
 
     if( ! (option.find("HyyAnalysis") != option.npos)) pad1->cd()->SetGridy();
-    
+    if(option.find("HyyAnalysis") != option.npos) h_ratio2->Draw("SAME");
+
     h_ratio->Draw("SAME0E1");
     h_ratio->Draw("SAMEAXIS");
     h_ratio->GetYaxis()->Draw();
@@ -1492,7 +1684,6 @@ void Plotting::makePlots(){
       }
     }
     
-    
     if(option.find("TTbarDilepAnalysis") != option.npos){
       if(fIter->first.find("hist_lep_pt") != option.npos){
         pad0->SetLogy(1);
@@ -1501,6 +1692,17 @@ void Plotting::makePlots(){
       }
       else{
 	pad0->SetLogy(0);
+      }
+    }
+
+    if(option.find("HyyAnalysis") != option.npos){
+      if(fIter->first.find("bin1") != option.npos) { 
+        if(fIter->first.find("_cat_") != option.npos){ fIter->second->SetMaximum(5000);}
+	      else fIter->second->SetMaximum(15e3);
+      }
+      if(fIter->first.find("bin2") != option.npos) {
+	      if(fIter->first.find("_cat_") != option.npos){fIter->second->SetMaximum(500);}
+	      else 	      fIter->second->SetMaximum(4500);
       }
     }
 
@@ -1544,7 +1746,6 @@ void Plotting::getHistoSettings(){
   if( option.find("ZPrimeBoostedAnalysis") != option.npos ||  option.find("SingleTopAnalysis") != option.npos || option.find("ZTauTauAnalysis") != option.npos ||  option.find("WBosonAnalysis") != option.npos ||  option.find("ZBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("HyyAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos || option.find("HWWAnalysis") != option.npos || option.find("HZZAnalysis") != option.npos || option.find("SUSYAnalysis") != option.npos  || option.find("TTbarDilepAnalysis") != option.npos || option.find("HTauTauAnalysis") != option.npos ) cout << "Analysis option found, proceeding..." << endl;
   else { cout << "Analysis option not found! \n usage: ./plot [ WBosonAnalysis, ZBosonAnalysis, TTbarAnalysis, SingleTopAnalysis, WZDiBosonAnalysis, ZZDiBosonAnalysis, HWWAnalysis, HZZAnalysis, ZTauTauAnalysis, HyyAnalysis, SUSYAnalysis, ZPrimeBoostedAnalysis, HTauTauAnalysis ]  [ location of OutputDir_AnalysisName ] \n " << endl; exit(1);}
 
- 
   // save names of the histograms for later  
   hset.clear();
   
@@ -1555,6 +1756,7 @@ void Plotting::getHistoSettings(){
   if(option.find("HWWAnalysis")           != option.npos){ifile = "list_histos/HistoList_HWWAnalysis.txt";}
   if(option.find("ZTauTauAnalysis")       != option.npos){ifile = "list_histos/HistoList_ZTauTauAnalysis.txt";}
   if(option.find("TTbarDilepAnalysis")    != option.npos){ifile = "list_histos/HistoList_TTbarDilepAnalysis.txt";}
+  if(option.find("HyyAnalysis")           != option.npos){ifile = "list_histos/HistoList_HyyAnalysis.txt";}
   if(option.find("HTauTauAnalysis")       != option.npos){ifile = "list_histos/HistoList_HTauTauAnalysis.txt";}
 
   std::cout << "Reading list of histograms from: " << ifile.c_str() << " \n " << std::endl;
