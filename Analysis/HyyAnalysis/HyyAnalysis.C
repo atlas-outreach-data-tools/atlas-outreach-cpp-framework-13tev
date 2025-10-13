@@ -38,6 +38,9 @@ void HyyAnalysis::Begin(TTree * )
 	nEvent3=0;
 	nEvent4=0;
 	nEvent5=0;
+
+	accepted_events = 0;
+	accepted_events_2 = 0;
 }
 
 void HyyAnalysis::SlaveBegin(TTree * )
@@ -56,7 +59,8 @@ void HyyAnalysis::SlaveBegin(TTree * )
 Bool_t HyyAnalysis::Process(Long64_t entry){
 
   fChain->GetTree()->GetEntry(entry);
-  nEvent++; nEvents++;
+//   nEvent++; nEvents++;
+  nEvents++;
   if (nEvents % 50000 == 0) std::cout << "Analysed a total of: " << nEvents << " events out of " << fChain->GetTree()->GetEntries() << " in this sample" << std::endl;
 
 	if(fChain->GetTree()->GetEntries()>0){
@@ -101,19 +105,19 @@ Bool_t HyyAnalysis::Process(Long64_t entry){
 		}
     
 		if(photon_isTightID->at(0)==true && photon_isTightID->at(1)==true){
-			nEvent2++;
+			nEvent++;
 			// Cut: pT cut - photon 1 has pT > 50 GeV and photon 2 has pT > 30 GeV
 			if(photon_pt->at(0) > 50. && photon_pt->at(1) > 30.){
-				nEvent3++;
+				nEvent2++;
 				// Only the events where the calorimeter isolation is less than 5.5% are kept
 				if(photon_ptcone20->at(0)/photon_pt->at(0) < 0.055 && photon_ptcone20->at(1)/photon_pt->at(1) < 0.055){
-					nEvent4++;
+					nEvent3++;
 					// Cut on the pseudorapidity in barrel/end-cap transition region
 					if((TMath::Abs(photon_eta->at(0)) < 2.37) && 
 					(TMath::Abs(photon_eta->at(0)) < 1.37 || TMath::Abs(photon_eta->at(0)) > 1.52)){
 						if((TMath::Abs(photon_eta->at(1)) < 2.37) && 
 						(TMath::Abs(photon_eta->at(1)) < 1.37 || TMath::Abs(photon_eta->at(1)) > 1.52)){
-							nEvent5++;
+							nEvent4++;
 							// TLorentzVector definitions
 							TLorentzVector Photon_1 = TLorentzVector();
 							TLorentzVector Photon_2 = TLorentzVector();
@@ -127,20 +131,23 @@ Bool_t HyyAnalysis::Process(Long64_t entry){
 
 							// Cut on null diphoton invariant mass
 							if(inv_mass_Hyy != 0){
+								nEvent5++;
 								// Cut on mass-window cut
-								if(inv_mass_Hyy > 100. && inv_mass_Hyy < 160.){
-									// Cut on diphoton invariant mass based isolation. Only the events where 
-									// the invididual photon invariant mass based isolation is larger than 35% are kept
-									if((photon_pt->at(0)/inv_mass_Hyy > 0.35) && (photon_pt->at(1)/inv_mass_Hyy > 0.35)){
-										nEvent6++;
-										// Filling with the mass of the gamma-gamma system
-										FillHistogramsGlobal( inv_mass_Hyy, weight, "hist_mYY_bin1"); // 30 bins
-										// unconverted central category 
-										if ( TMath::Abs(photon_eta->at(0)) < 0.75 && TMath::Abs(photon_eta->at(1)) < 0.75 ){
-											FillHistogramsGlobal( inv_mass_Hyy, weight, "hist_mYY_cat_bin1"); // 30 bins
-										}
+								// if(inv_mass_Hyy > 100. && inv_mass_Hyy < 160.){
+								// Cut on diphoton invariant mass based isolation. Only the events where 
+								// the invididual photon invariant mass based isolation is larger than 35% are kept
+								if((photon_pt->at(0)/inv_mass_Hyy > 0.35) && (photon_pt->at(1)/inv_mass_Hyy > 0.35)){
+									nEvent6++;
+									// Filling with the mass of the gamma-gamma system
+									FillHistogramsGlobal( inv_mass_Hyy, weight, "hist_mYY_bin1"); // 30 bins
+									accepted_events++;
+									// unconverted central category 
+									if ( TMath::Abs(photon_eta->at(0)) < 0.75 && TMath::Abs(photon_eta->at(1)) < 0.75 ){
+										FillHistogramsGlobal( inv_mass_Hyy, weight, "hist_mYY_cat_bin1"); // 30 bins
+										accepted_events_2++;
 									}
 								}
+								//}
 							}
 						}
 					}
@@ -161,13 +168,18 @@ void HyyAnalysis::Terminate()
   
   // Print counters (in case of local, not PROOF)
    
-//   cout << "Analyzed a total of               : " << nEvent << " events" << endl;
-//   cout << "Counter after trigger selection   : " << nEvent2/nEvent  << " (fraction from previous) or " << nEvent2 << " events" << endl;
-//   cout << "Counter after 2 good tight photons: " << nEvent3/nEvent2 << " (fraction from previous) or " << nEvent3 << " events" << endl;
-//   cout << "Counter after 2 isolated photons  : " << nEvent4/nEvent3 << " (fraction from previous) or " << nEvent4 << " events" << endl;
-//   cout << "Counter after pT cuts on photons  : " << nEvent5/nEvent4 << " (fraction from previous) or " << nEvent5 << " events" << endl;
-//   cout << "Counter after mass-window cut     : " << nEvent6/nEvent5 << " (fraction from previous) or " << nEvent6 << " events" << endl;
-  
+	cout << "Counter after tightID selection: " << nEvent << " events" << endl;
+	cout << "Counter after photon pt cut: " << nEvent2 << " events" << endl;
+	cout << "Counter after calorimeter isolation cut: " << nEvent3 << " events" << endl;
+	cout << "Counter after end-cap transition cut: " << nEvent4 << " events" << endl;
+	cout << "Counter after non null myy cut: " << nEvent5 << " events" << endl;
+	cout << "Counter after invariant mass isolation cut: " << nEvent6 << " events" << endl;
+
+	cout << "Total events in this group of samples: " << nEvents << " events" << endl;
+	cout << "Events passing the basic selection: " << accepted_events << " events" << endl;
+	cout << "Events passing the tight selection: " << accepted_events_2 << " events" << endl;
+	
+
   // Save output
   TString filename_option = GetOption();
   printf("Writting with name option: %s \n", filename_option.Data());

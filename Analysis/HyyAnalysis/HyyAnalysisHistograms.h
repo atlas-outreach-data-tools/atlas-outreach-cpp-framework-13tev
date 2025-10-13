@@ -7,8 +7,8 @@
 
 void HyyAnalysis::define_histograms()
 {
-  hist_mYY_bin1   = new TH1F("hist_mYY_bin1","Diphoton invariant mass; m_{#gamma#gamma} [GeV];Events / bin", 30, 100, 160.);
-  hist_mYY_cat_bin1   = new TH1F("hist_mYY_cat_bin1","Diphoton invariant mass unconv. central; m_{#gamma#gamma} [GeV];Events / bin", 30, 100, 160.);
+  hist_mYY_bin1   = new TH1F("hist_mYY_bin1","Diphoton invariant mass; m_{#gamma#gamma} [GeV];Events / bin", 60, 100, 160.);
+  hist_mYY_cat_bin1   = new TH1F("hist_mYY_cat_bin1","Diphoton invariant mass unconv. central; m_{#gamma#gamma} [GeV];Events / bin", 60, 100, 160.);
 }
 ////////////////////////////////////////////////////////////////////////////////
 void HyyAnalysis::FillOutputList()

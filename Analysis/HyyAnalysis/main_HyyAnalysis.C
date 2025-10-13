@@ -46,46 +46,48 @@ void main_HyyAnalysis(int proof = 0, int option= 0)
 
   if (option==2 || option==0){
 
-    //Higgs samples (H->WW)
-    
-    // ggH
-    TChain* chain_ggH125_WW = new TChain("analysis");
-    chain_ggH125_WW->AddFile(prefix+"mc_345324.PowhegPythia8EvtGen_NNLOPS_NN30_ggH125_WWlvlv_EF_15_5."+skim+".root");
-    chain_ggH125_WW->Process("HyyAnalysis.C+","PowhegPythia8EvtGen_NNLOPS_NN30_ggH125_WWlvlv_EF_15_5");
-   
-    // VBF
-    TChain* chain_VBFH125_WW = new TChain("analysis");
-    chain_VBFH125_WW->AddFile(prefix+"mc_345948.PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_WWlvlv."+skim+".root");
-    chain_VBFH125_WW->Process("HyyAnalysis.C+","PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_WWlvlv");
+    // Higgs MC, ggH production
+    TChain* chain_ggH125_PowhegPythia = new TChain("analysis");
+    chain_ggH125_PowhegPythia->AddFile(prefix+"mc_343981.PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam."+skim+".root");
+    chain_ggH125_PowhegPythia->Process("HyyAnalysis.C+","PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam");
 
-    // // Higgs MC, ggH production
-    // TChain* chain_ggH125 = new TChain("mini");
-    // chain_ggH125->AddFile(path+"MC/mc_343981.ggH125_gamgam.GamGam.root");
-    // if (proof == 1)  chain_ggH125->SetProof();
-    // chain_ggH125->Process("HyyAnalysis.C+","ggH125_gamgam");
+    TChain* chain_ggH125_PhH7EG = new TChain("analysis");
+    chain_ggH125_PhH7EG->AddFile(prefix+"mc_346797.PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam."+skim+".root");
+    chain_ggH125_PhH7EG->Process("HyyAnalysis.C+","PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam");
 
-    // // VBF Higgs production
-    // TChain* chain_VBFH125 = new TChain("mini");
-    // chain_VBFH125->AddFile(path+"MC/mc_345041.VBFH125_gamgam.GamGam.root");
-    // if (proof == 1)  chain_VBFH125->SetProof();
-    // chain_VBFH125->Process("HyyAnalysis.C+","VBFH125_gamgam");
+    // VBF Higgs production
+    TChain* chain_VBFH125 = new TChain("analysis");
+    chain_VBFH125->AddFile(prefix+"mc_346214.PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam."+skim+".root");
+    chain_VBFH125->Process("HyyAnalysis.C+","PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam");
 
-    // // WH production
-    // TChain* chain_WH125 = new TChain("mini");
-    // chain_WH125->AddFile(path+"MC/mc_345318.WpH125J_Wincl_gamgam.GamGam.root");
-    // if (proof == 1)  chain_WH125->SetProof();
-    // chain_WH125->Process("HyyAnalysis.C+","WH125_gamgam");
+    // WH production
+    TChain* chain_WmH125 = new TChain("analysis");
+    chain_WmH125->AddFile(prefix+"mc_345317.PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO."+skim+".root");
+    chain_WmH125->Process("HyyAnalysis.C+","PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO");
 
-    // // ZH production
-    // TChain* chain_ZH125 = new TChain("mini");
-    // chain_ZH125->AddFile(path+"MC/mc_345319.ZH125J_Zincl_gamgam.GamGam.root");
-    // if (proof == 1)  chain_ZH125->SetProof();
-    // chain_ZH125->Process("HyyAnalysis.C+","ZH125_gamgam");
+    TChain* chain_WpH125 = new TChain("analysis");
+    chain_WpH125->AddFile(prefix+"mc_345318.PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO."+skim+".root");
+    chain_WpH125->Process("HyyAnalysis.C+","PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO");
 
-    // // ttH production
-    // TChain* chain_ttH125 = new TChain("mini");
-    // chain_ttH125->AddFile(path+"MC/mc_341081.ttH125_gamgam.GamGam.root");
-    // if (proof == 1)  chain_ttH125->SetProof();
-    // chain_ttH125->Process("HyyAnalysis.C+","ttH125_gamgam");
-  }//option 2
+    // ZH production
+    TChain* chain_ZH125 = new TChain("analysis");
+    chain_ZH125->AddFile(prefix+"mc_345319.PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO."+skim+".root");
+    chain_ZH125->Process("HyyAnalysis.C+","PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO");
+
+    // ttH production
+    TChain* chain_ttH125_PowhegPythia = new TChain("analysis");
+    chain_ttH125_PowhegPythia->AddFile(prefix+"mc_346525.PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam."+skim+".root");
+    chain_ttH125_PowhegPythia->Process("HyyAnalysis.C+","PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam");
+
+    TChain* chain_ttH125_PowhegHerwig = new TChain("analysis");
+    chain_ttH125_PowhegHerwig->AddFile(prefix+"mc_346526.PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam."+skim+".root");
+    chain_ttH125_PowhegHerwig->Process("HyyAnalysis.C+","PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam");
+
+    TChain* chain_ttH125_aMcAtNloHerwig = new TChain("analysis");
+    chain_ttH125_aMcAtNloHerwig->AddFile(prefix+"mc_346601.aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam."+skim+".root");
+    chain_ttH125_aMcAtNloHerwig->Process("HyyAnalysis.C+","aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam");
+
+  }
+  //option 2
+
 }

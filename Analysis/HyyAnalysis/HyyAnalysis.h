@@ -116,6 +116,9 @@ class HyyAnalysis : public TSelector {
   float nEvent5;
   float nEvent6;
 
+  int accepted_events;
+  int accepted_events_2;
+
   // std::set<float> uniqueWeights;
 
   Double_t xsec_SF;
