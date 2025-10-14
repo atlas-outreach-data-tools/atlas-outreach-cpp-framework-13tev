@@ -216,7 +216,7 @@ void Plotting::WhichFiles(){
 
   //options
 
-  if( option.find("ZBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos ) { ifile = "inputfiles/Files_base.txt" ;}
+  if(option.find("ZBosonAnalysis") != option.npos || option.find("TTbarAnalysis") != option.npos || option.find("WZDiBosonAnalysis") != option.npos ||  option.find("ZZDiBosonAnalysis") != option.npos ) { ifile = "inputfiles/Files_base.txt" ;}
   if(option.find("HWWAnalysis")           != option.npos){   ifile = "inputfiles/Files_HWW.txt";}
   if(option.find("TTbarDilepAnalysis")    != option.npos){   ifile = "inputfiles/Files_TTbarDilep.txt";}
   if(option.find("ZTauTauAnalysis")       != option.npos){   ifile = "inputfiles/Files_ZTauTau.txt";}
@@ -463,15 +463,15 @@ void Plotting::makePlots(){
   std::map<std::string, TH1F*> aMcAtNloPythia8EvtGen_MEN30NLO_A14N23LO_tttautau;
 
   // Higgs to photons
-  // std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam;
-  // std::map<std::string, TH1F*> PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam;
-  // std::map<std::string, TH1F*> PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam;
-  // std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO;
-  // std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO;
-  // std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO;
-  // std::map<std::string, TH1F*> PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam;
-  // std::map<std::string, TH1F*> PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam;
-  // std::map<std::string, TH1F*> aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam;
+  std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam;
+  std::map<std::string, TH1F*> PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam;
+  std::map<std::string, TH1F*> PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam;
+  std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO;
+  std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO;
+  std::map<std::string, TH1F*> PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO;
+  std::map<std::string, TH1F*> PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam;
+  std::map<std::string, TH1F*> PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam;
+  std::map<std::string, TH1F*> aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam;
   
   // Signal Higgs
   std::map<std::string, TH1F*> PowhegPy8EG_NNLOPS_nnlo_30_ggH125_tautaul13l7;
@@ -562,10 +562,6 @@ void Plotting::makePlots(){
   PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep = histo["PhPy8EG_A14NNPDF23_NNPDF30ME_ttH125_dilep"];
   PhPy8EG_NNPDF3_AZNLO_ggZH125_Htautau_Zinc  = histo["PhPy8EG_NNPDF3_AZNLO_ggZH125_Htautau_Zinc"];
   
-  // // H->yy
-  // PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam = histo["PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam"];
-  // PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam = histo["PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam"];
-
   // reading HWW samples used
   if(option.find("HWWAnalysis") != option.npos){
 
@@ -578,15 +574,15 @@ void Plotting::makePlots(){
   // read H->yy 
   if(option.find("HyyAnalysis") != option.npos){
 
-    // PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam = histo["PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam"];
-    // PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam = histo["PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam"];
-    // PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam = histo["PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam"];
-    // PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO = histo["PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO"];
-    // PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO = histo["PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO"];
-    // PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO = histo["PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO"];
-    // PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam = histo["PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam"];
-    // PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam = histo["PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam"];
-    // aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam = histo["aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam"];
+    PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam = histo["PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam"];
+    PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam = histo["PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam"];
+    PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam = histo["PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam"];
+    PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO = histo["PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO"];
+    PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO = histo["PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO"];
+    PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO = histo["PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO"];
+    PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam = histo["PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam"];
+    PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam = histo["PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam"];
+    aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam = histo["aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam"];
 
   }
 
@@ -1163,31 +1159,31 @@ void Plotting::makePlots(){
     // merge for HyyAnalysis
     if(option.find("HyyAnalysis") != option.npos){
       
-      // ggH125_gamgam = (TH1F*)PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam[fIter->first]->Clone();
-      // ggH125_gamgam->Add(PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam[fIter->first]);
+      ggH125_gamgam = (TH1F*)PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam[fIter->first]->Clone();
+      ggH125_gamgam->Add(PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam[fIter->first]);
       
-      // VBFH125_gamgam = (TH1F*)PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam[fIter->first]->Clone();
+      VBFH125_gamgam = (TH1F*)PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam[fIter->first]->Clone();
       
-      // WH125_gamgam = (TH1F*)PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO[fIter->first]->Clone();
-      // WH125_gamgam->Add(PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO[fIter->first]);
+      WH125_gamgam = (TH1F*)PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO[fIter->first]->Clone();
+      WH125_gamgam->Add(PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO[fIter->first]);
 
-      // ZH125_gamgam = (TH1F*)PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO[fIter->first]->Clone();
+      ZH125_gamgam = (TH1F*)PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO[fIter->first]->Clone();
       
-      // ttH125_gamgam = (TH1F*)PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam[fIter->first]->Clone();
-      // ttH125_gamgam->Add(PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam[fIter->first]);
-      // ttH125_gamgam->Add(aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam[fIter->first]);
+      ttH125_gamgam = (TH1F*)PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam[fIter->first]->Clone();
+      ttH125_gamgam->Add(PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam[fIter->first]);
+      ttH125_gamgam->Add(aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam[fIter->first]);
 
-      // Higgs = (TH1F*)PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam[fIter->first]->Clone();
-      // Higgs->Add(PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam[fIter->first]);
-      // Higgs->Add(PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam[fIter->first]);
-      // Higgs->Add(PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO[fIter->first]);
-      // Higgs->Add(PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO[fIter->first]);
-      // Higgs->Add(PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO[fIter->first]);
-      // Higgs->Add(PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam[fIter->first]);
-      // Higgs->Add(PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam[fIter->first]);
-      // Higgs->Add(aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam[fIter->first]);
-      // Higgs->SetLineColor(kBlack);
-      // Higgs->SetLineWidth(2);
+      Higgs = (TH1F*)PowhegPythia8EvtGen_NNLOPS_nnlo_30_ggH125_gamgam[fIter->first]->Clone();
+      Higgs->Add(PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam[fIter->first]);
+      Higgs->Add(PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam[fIter->first]);
+      Higgs->Add(PowhegPythia8EvtGen_NNPDF30_AZNLO_WmH125J_Hyy_Wincl_MINLO[fIter->first]);
+      Higgs->Add(PowhegPythia8EvtGen_NNPDF30_AZNLO_WpH125J_Hyy_Wincl_MINLO[fIter->first]);
+      Higgs->Add(PowhegPythia8EvtGen_NNPDF30_AZNLO_ZH125J_Hyy_Zincl_MINLO[fIter->first]);
+      Higgs->Add(PowhegPythia8EvtGen_A14NNPDF23_NNPDF30ME_ttH125_gamgam[fIter->first]);
+      Higgs->Add(PowhegHerwig7EvtGen_H7UE_NNPDF30ME_ttH125_gamgam[fIter->first]);
+      Higgs->Add(aMcAtNloHerwig7EvtGen_MEN30NLO_ttH125_gamgam[fIter->first]);
+      Higgs->SetLineColor(kBlack);
+      Higgs->SetLineWidth(2);
     
     }
 
@@ -1267,8 +1263,8 @@ void Plotting::makePlots(){
     }
     
     if(option.find("HyyAnalysis") != option.npos){
-      // stack->Add(Higgs);
-      // histstack = (TH1F*)Higgs->Clone();
+      stack->Add(Higgs);
+      histstack = (TH1F*)Higgs->Clone();
     }
 
   //   // data overflow
@@ -1495,18 +1491,17 @@ void Plotting::makePlots(){
 
       // print expected yields
       if(YIELDS){  
-        // cout << "Expected signal events (ggH): " <<   ggH125_gamgam->Integral() <<  endl;
-        // cout << "Expected signal events (VBF): " <<   VBFH125_gamgam->Integral() <<  endl;
-        // cout << "Expected signal events (WH): " <<    WH125_gamgam->Integral() <<  endl;
-        // cout << "Expected signal events (ZH): " <<    ZH125_gamgam->Integral() <<  endl;
-        // cout << "Expected signal events (ttH): " <<   ttH125_gamgam->Integral() <<  endl;
-        // cout << "Expected signal events (all): " <<   Higgs->Integral() <<  endl;
+        cout << "Expected signal events (ggH): " <<   ggH125_gamgam->Integral() <<  endl;
+        cout << "Expected signal events (VBF): " <<   VBFH125_gamgam->Integral() <<  endl;
+        cout << "Expected signal events (WH): " <<    WH125_gamgam->Integral() <<  endl;
+        cout << "Expected signal events (ZH): " <<    ZH125_gamgam->Integral() <<  endl;
+        cout << "Expected signal events (ttH): " <<   ttH125_gamgam->Integral() <<  endl;
+        cout << "Expected signal events (all): " <<   Higgs->Integral() <<  endl;
       }
 
- 
       // The signal distribution is empirically modeled as a single Gaussian in the mass window 120 - 130 GeV
       // In case you want to run this fit, do:
-      //Higgs->Fit("gaus" ,"","",120.,130.);
+      // Higgs->Fit("gaus" ,"","",120.,130.);
 
       // The total fit function is then the sum of Higgs signal (Gauss) and background (polynomial)
       cout << " === Fitting a 3rd-order polynomial + Gaussian to data == " << endl;
@@ -1525,7 +1520,7 @@ void Plotting::makePlots(){
       }
 
       // here we are finally fitting 
-      data[fIter->first]->Fit("fit","","same:e",105.,160.);
+      data[fIter->first]->Fit("fit","","same:e",100.,160.);
       TF1 *fitresult = data[fIter->first]->GetFunction("fit");
       cout << "Chi2/NDF: "<< fitresult->GetChisquare() / fitresult->GetNDF() << endl;
       cout << " ================================ " << endl;
@@ -1697,12 +1692,12 @@ void Plotting::makePlots(){
 
     if(option.find("HyyAnalysis") != option.npos){
       if(fIter->first.find("bin1") != option.npos) { 
-        if(fIter->first.find("_cat_") != option.npos){ fIter->second->SetMaximum(5000);}
-	      else fIter->second->SetMaximum(15e3);
+        if(fIter->first.find("_cat_") != option.npos){ fIter->second->SetMaximum(3000);}
+	      else fIter->second->SetMaximum(11e3);
       }
       if(fIter->first.find("bin2") != option.npos) {
 	      if(fIter->first.find("_cat_") != option.npos){fIter->second->SetMaximum(500);}
-	      else 	      fIter->second->SetMaximum(4500);
+	      else 	      fIter->second->SetMaximum(3000);
       }
     }
 

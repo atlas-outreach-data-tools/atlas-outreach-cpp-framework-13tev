@@ -9,7 +9,7 @@
     root -l -b << EOF
 	.L Plotting.cxx+
     	Plotting *m=new Plotting();
-	m->SetLumi(10064);
+	m->SetLumi(36000);
 	m->SetOption("HyyAnalysis");
     	m->SetInputLocation("../Analysis/HyyAnalysis/Output_HyyAnalysis")
     	m->run()

@@ -42,7 +42,7 @@ if [ $choice -ge 0 -a $choice -le 5 ]; then
 
     # run main command
     root -l -b << EOF
-	.L Plotting.cxx+
+    .L Plotting.cxx+
     	Plotting *m=new Plotting();
 	m->SetLumi(36000);
 	m->SetOption("$analysisName");
