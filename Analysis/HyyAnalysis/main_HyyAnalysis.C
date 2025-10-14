@@ -8,16 +8,16 @@ void main_HyyAnalysis(int proof = 0, int option= 0)
 {
   /* The URL to the CERN Open Data portal repository */
   TString path = "root://eospublic.cern.ch//eos/opendata/atlas/rucio/opendata/";
-
+  
   //***************************************************************************************************//
   // adding chains of all MC and data samples
   // option==0 will run all one by one
   // Currently 5 options for MC (2,3,4,5,6) and 1 for data (1) which can be run in parallel
   //***************************************************************************************************//
-
+  
   TString skim = "GamGam";
   TString prefix = path+"ODEO_FEB2025_v0_"+skim+"_"; 
-
+  
   if (option==1 || option==0){
 
     //data15
@@ -54,7 +54,7 @@ void main_HyyAnalysis(int proof = 0, int option= 0)
     TChain* chain_ggH125_PhH7EG = new TChain("analysis");
     chain_ggH125_PhH7EG->AddFile(prefix+"mc_346797.PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam."+skim+".root");
     chain_ggH125_PhH7EG->Process("HyyAnalysis.C+","PhH7EG_H7UE_NNLOPS_nnlo_30_ggH125_gamgam");
-
+    
     // VBF Higgs production
     TChain* chain_VBFH125 = new TChain("analysis");
     chain_VBFH125->AddFile(prefix+"mc_346214.PowhegPy8EG_NNPDF30_AZNLOCTEQ6L1_VBFH125_gamgam."+skim+".root");

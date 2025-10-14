@@ -16,13 +16,13 @@
 #include "ROOT/RVec.hxx"
 
 class HyyAnalysis : public TSelector {
-  public :
+public :
   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
-
+  
   // Global variables histograms
   TH1F *hist_mYY_bin1        = 0;
   TH1F *hist_mYY_cat_bin1        = 0;
-
+  
   TH1F *hist_scale_factors  = 0;
   
   //////////////////////////////////////////////////////////
@@ -35,9 +35,9 @@ class HyyAnalysis : public TSelector {
   Double_t kfac;
   
   Bool_t trigP;
-
+  
   Int_t photon_n;
-
+  
   ROOT::VecOps::RVec<float> *photon_pt;
   ROOT::VecOps::RVec<float> *photon_eta;
   ROOT::VecOps::RVec<float> *photon_phi;
@@ -151,7 +151,7 @@ void HyyAnalysis::Init(TTree *tree)
   if (!tree) return;
   fChain = tree;
   fChain->SetMakeClass(1);
-
+  
   fChain->SetBranchAddress("ScaleFactor_PILEUP", &ScaleFactor_PILEUP, &b_ScaleFactor_PILEUP);
   fChain->SetBranchAddress("mcWeight", &mcWeight, &b_mcWeight);
   fChain->SetBranchAddress("xsec", &xsec, &b_xsec);
@@ -159,7 +159,7 @@ void HyyAnalysis::Init(TTree *tree)
   fChain->SetBranchAddress("kfac", &kfac, &b_kfac);
 
   fChain->SetBranchAddress("trigP", &trigP, &b_trigP);
-
+  
   fChain->SetBranchAddress("photon_n", &photon_n, &b_photon_n);
   fChain->SetBranchAddress("photon_pt", &photon_pt, &b_photon_pt);
   fChain->SetBranchAddress("photon_eta", &photon_eta, &b_photon_eta);
