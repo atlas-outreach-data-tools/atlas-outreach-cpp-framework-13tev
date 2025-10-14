@@ -161,6 +161,14 @@ Bool_t HyyAnalysis::Process(Long64_t entry){
 
 void HyyAnalysis::SlaveTerminate()
 {
+  TString option = GetOption();
+  bool is_data = option.Contains("data");
+  
+  hist_scale_factors->SetBinContent(0, xsec_SF);
+  hist_scale_factors->SetBinContent(1, totalSumOfWeights_SF);
+  hist_scale_factors->SetBinContent(2, filteff_SF);
+  hist_scale_factors->SetBinContent(3, kfac_SF);
+
 }
 
 void HyyAnalysis::Terminate()

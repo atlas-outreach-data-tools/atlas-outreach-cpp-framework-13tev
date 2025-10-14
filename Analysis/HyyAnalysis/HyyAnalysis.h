@@ -23,6 +23,8 @@ class HyyAnalysis : public TSelector {
   TH1F *hist_mYY_bin1        = 0;
   TH1F *hist_mYY_cat_bin1        = 0;
 
+  TH1F *hist_scale_factors  = 0;
+  
   //////////////////////////////////////////////////////////
   // Declaration of leaf types
   
