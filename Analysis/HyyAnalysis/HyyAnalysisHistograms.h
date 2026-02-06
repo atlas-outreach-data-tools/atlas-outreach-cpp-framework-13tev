@@ -19,7 +19,7 @@ void HyyAnalysis::FillOutputList()
 {
   GetOutputList()->Add(hist_mYY_bin1);
   GetOutputList()->Add(hist_mYY_cat_bin1);
-
+  
   // Scaling factors histogram
   GetOutputList()->Add(hist_scale_factors);
 }
@@ -28,7 +28,7 @@ void HyyAnalysis::WriteHistograms()
 {
   hist_mYY_bin1->Write();
   hist_mYY_cat_bin1->Write();
-
+  
   // Scaling factors histogram
   hist_scale_factors->Write();
 }

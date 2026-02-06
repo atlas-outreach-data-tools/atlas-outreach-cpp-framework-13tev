@@ -45,7 +45,6 @@ void HyyAnalysis::Begin(TTree * )
 
 void HyyAnalysis::SlaveBegin(TTree * )
 {
-  
   TString option = GetOption();
   printf("Starting analysis with process option: %s \n", option.Data());
 
@@ -59,7 +58,7 @@ void HyyAnalysis::SlaveBegin(TTree * )
 Bool_t HyyAnalysis::Process(Long64_t entry){
   
   fChain->GetTree()->GetEntry(entry);
-  nEvents++;
+  nEvents++; 
   if (nEvents % 50000 == 0) std::cout << "Analysed a total of: " << nEvents << " events out of " << fChain->GetTree()->GetEntries() << " in this sample" << std::endl;
   
   if(fChain->GetTree()->GetEntries()>0){
@@ -67,7 +66,7 @@ Bool_t HyyAnalysis::Process(Long64_t entry){
     // **********************************************************************************************//
     // Begin analysis selection, largely based on: ATLAS Collaboration, PRD 98 (2018) 052005         //
     // **********************************************************************************************//
-
+    
     //Scale factors
     Float_t scaleFactor = ScaleFactor_PHOTON*ScaleFactor_PILEUP;
     
@@ -87,19 +86,19 @@ Bool_t HyyAnalysis::Process(Long64_t entry){
     if( is_data==true ){
       weight = 1.;
       if(entry==0){
-	xsec_SF = 1.;
-	totalSumOfWeights_SF = 1.;
-	filteff_SF = 1.;
-	kfac_SF = 1.;
+        xsec_SF = 1.;
+        totalSumOfWeights_SF = 1.;
+        filteff_SF = 1.;
+        kfac_SF = 1.;
       }
     }
-
+    
     if( is_data==false ){
       if(entry==0){
-	xsec_SF = xsec;
-	filteff_SF = filteff;
-	kfac_SF = kfac;
-	totalSumOfWeights_SF = initial_sum_of_weights;
+        xsec_SF = xsec;
+        filteff_SF = filteff;
+        kfac_SF = kfac;
+        totalSumOfWeights_SF = initial_sum_of_weights;
       }
     }
     
@@ -109,46 +108,48 @@ Bool_t HyyAnalysis::Process(Long64_t entry){
       if(photon_pt->at(0) > 50. && photon_pt->at(1) > 30.){
 	nEvent2++;
 	// Only the events where the calorimeter isolation is less than 5.5% are kept
-	if(photon_ptcone20->at(0)/photon_pt->at(0) < 0.055 && photon_ptcone20->at(1)/photon_pt->at(1) < 0.055){
-	  nEvent3++;
-	  // Cut on the pseudorapidity in barrel/end-cap transition region
-	  if((TMath::Abs(photon_eta->at(0)) < 2.37) && 
-	     (TMath::Abs(photon_eta->at(0)) < 1.37 || TMath::Abs(photon_eta->at(0)) > 1.52)){
+        if(photon_ptcone20->at(0)/photon_pt->at(0) < 0.055 && photon_ptcone20->at(1)/photon_pt->at(1) < 0.055){
+          nEvent3++;
+          // Cut on the pseudorapidity in barrel/end-cap transition region
+          if((TMath::Abs(photon_eta->at(0)) < 2.37) && 
+    	     (TMath::Abs(photon_eta->at(0)) < 1.37 || TMath::Abs(photon_eta->at(0)) > 1.52)){
 	    if((TMath::Abs(photon_eta->at(1)) < 2.37) && 
 	       (TMath::Abs(photon_eta->at(1)) < 1.37 || TMath::Abs(photon_eta->at(1)) > 1.52)){
 	      nEvent4++;
-	      // TLorentzVector definitions
-	      TLorentzVector Photon_1 = TLorentzVector();
-	      TLorentzVector Photon_2 = TLorentzVector();
-	      
-	      Photon_1.SetPtEtaPhiE(photon_pt->at(0), photon_eta->at(0), photon_phi->at(0), photon_e->at(0));
-	      Photon_2.SetPtEtaPhiE(photon_pt->at(1), photon_eta->at(1), photon_phi->at(1), photon_e->at(1));
-	      
-	      // Calculation of the Invariant Mass using TLorentz vectors
-	      TLorentzVector Photon_12 = Photon_1 + Photon_2;
-	      float inv_mass_Hyy = Photon_12.M();
-	      
-	      // Cut on null diphoton invariant mass
-	      if(inv_mass_Hyy != 0){
+              // TLorentzVector definitions
+              TLorentzVector Photon_1 = TLorentzVector();
+              TLorentzVector Photon_2 = TLorentzVector();
+              
+              Photon_1.SetPtEtaPhiE(photon_pt->at(0), photon_eta->at(0), photon_phi->at(0), photon_e->at(0));
+              Photon_2.SetPtEtaPhiE(photon_pt->at(1), photon_eta->at(1), photon_phi->at(1), photon_e->at(1));
+              
+              // Calculation of the Invariant Mass using TLorentz vectors
+              TLorentzVector Photon_12 = Photon_1 + Photon_2;
+              float inv_mass_Hyy = Photon_12.M();
+              
+              // Cut on null diphoton invariant mass
+              if(inv_mass_Hyy != 0){
 		nEvent5++;
-		// Cut on mass-window cut
-		if(inv_mass_Hyy > 100. && inv_mass_Hyy < 160.){
-		  // Cut on diphoton invariant mass based isolation. Only the events where 
-		  // the invididual photon invariant mass based isolation is larger than 35% are kept
-		  if((photon_pt->at(0)/inv_mass_Hyy > 0.35) && (photon_pt->at(1)/inv_mass_Hyy > 0.35)){
-		    nEvent6++;
-		    // Filling with the mass of the gamma-gamma system
-		    FillHistogramsGlobal( inv_mass_Hyy, weight, "hist_mYY_bin1"); // 30 bins
-		    accepted_events++;
-		    // unconverted central category 
-		    if ( TMath::Abs(photon_eta->at(0)) < 0.75 && TMath::Abs(photon_eta->at(1)) < 0.75 ){
-		      FillHistogramsGlobal( inv_mass_Hyy, weight, "hist_mYY_cat_bin1"); // 30 bins
-		      accepted_events_2++;
-		    }
+                // Cut on mass-window cut
+                if(inv_mass_Hyy > 100. && inv_mass_Hyy < 160.){
+                  // Cut on diphoton invariant mass based isolation. Only the events where 
+                  // the invididual photon invariant mass based isolation is larger than 35% are kept
+                  if((photon_pt->at(0)/inv_mass_Hyy > 0.35) && (photon_pt->at(1)/inv_mass_Hyy > 0.35)){
+                    nEvent6++;
+                    // Filling with the mass of the gamma-gamma system
+                    
+                    FillHistogramsGlobal( inv_mass_Hyy, weight, "hist_mYY_bin1"); // 30 bins
+                    
+                    accepted_events++;
+                    // unconverted central category 
+                    if ( TMath::Abs(photon_eta->at(0)) < 0.75 && TMath::Abs(photon_eta->at(1)) < 0.75 ){
+                      FillHistogramsGlobal( inv_mass_Hyy, weight, "hist_mYY_cat_bin1"); // 30 bins
+                      accepted_events_2++;
+                    }
 		  }
 		}
 	      }
-	    }
+      	    }
 	  }
 	}
       }
@@ -185,7 +186,6 @@ void HyyAnalysis::Terminate()
   cout << "Total events in this group of samples: " << nEvents << " events" << endl;
   cout << "Events passing the basic selection: " << accepted_events << " events" << endl;
   cout << "Events passing the tight selection: " << accepted_events_2 << " events" << endl;
-  
   
   // Save output
   TString filename_option = GetOption();
