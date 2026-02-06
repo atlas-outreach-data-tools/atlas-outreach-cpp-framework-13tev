@@ -7,8 +7,7 @@
 void main_HyyAnalysis(int proof = 0, int option = 0)
 {
     /* The URL to the CERN Open Data portal repository */
-    // TString path = "root://eospublic.cern.ch//eos/opendata/atlas/rucio/opendata/";
-    TString path = "atlas_data/";
+    TString path = "root://eospublic.cern.ch//eos/opendata/atlas/rucio/opendata/";
 
     //***************************************************************************************************//
     // adding chains of all MC and data samples

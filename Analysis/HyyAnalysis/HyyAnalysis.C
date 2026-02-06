@@ -153,13 +153,13 @@ Bool_t HyyAnalysis::Process(Long64_t entry)
                                         nEvent6++;
                                         // Filling with the mass of the gamma-gamma system
 
-                                        FillHistogramsGlobal(inv_mass_Hyy, weight, "hist_mYY_bin1"); // 30 bins
+                                        FillHistogramsGlobal(inv_mass_Hyy, weight, "hist_mYY_bin1"); // 60 bins
 
                                         accepted_events++;
                                         // unconverted central category
                                         if (TMath::Abs(photon_eta->at(0)) < 0.75 && TMath::Abs(photon_eta->at(1)) < 0.75)
                                         {
-                                            FillHistogramsGlobal(inv_mass_Hyy, weight, "hist_mYY_cat_bin1"); // 30 bins
+                                            FillHistogramsGlobal(inv_mass_Hyy, weight, "hist_mYY_cat_bin1"); // 60 bins
                                             accepted_events_2++;
                                         }
                                     }
