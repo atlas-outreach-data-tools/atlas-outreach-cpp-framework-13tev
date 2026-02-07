@@ -12,7 +12,7 @@ void main_HyyAnalysis(int proof = 0, int option = 0)
     //***************************************************************************************************//
     // adding chains of all MC and data samples
     // option==0 will run all one by one
-    // Currently 5 options for MC (2,3,4,5,6) and 1 for data (1) which can be run in parallel
+    // Currently 1 option for MC (option number 2) and 1 for data (option number 1)
     //***************************************************************************************************//
 
     TString skim = "GamGam";
