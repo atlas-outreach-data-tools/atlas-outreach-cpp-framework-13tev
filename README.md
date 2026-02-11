@@ -2,7 +2,7 @@
 
 > [!WARNING]
 > ### Migration process to implement the newest release of ATLAS Open Data
-> Currently some analyses are being migrated due to the publication of the [third release of educational open data](https://opendata.atlas.cern/docs/data/for_education/13TeV25_details). At the moment, **4 analyses** have been modified to use the newly released datasets: `HWWAnalysis`, `ZTauTauAnalysis`, `TTbarAnalysis`, `TTbarDilepAnalysis`.
+> Currently some analyses are being migrated due to the publication of the [third release of educational open data](https://opendata.atlas.cern/docs/data/for_education/13TeV25_details). At the moment, **5 analyses** have been modified to use the newly released datasets: `HWWAnalysis`, `ZTauTauAnalysis`, `TTbarAnalysis`, `TTbarDilepAnalysis` and `HyyAnalysis`.
 >
 > The previous analyses documented in the **second release** are under migration process and will be uploaded in the future. If you want to run these analyses now, check the tag **[10fb-legacy](https://github.com/atlas-outreach-data-tools/atlas-outreach-cpp-framework-13tev/tags)**, which contains the backup of the second release analyses.
 
