@@ -34,60 +34,57 @@
 
 using namespace std;
 
+class HistoHandler
+{
 
-class HistoHandler{
-  
- public:
-  HistoHandler();
-  HistoHandler(std::string name);
-  ~HistoHandler();
-  std::string GetName();
+public:
+    HistoHandler();
+    HistoHandler(std::string name);
+    ~HistoHandler();
+    std::string GetName();
 
- private:
-  std::string _name;
-  
+private:
+    std::string _name;
 };
 
-class Plotting{
+class Plotting
+{
 
- public:
-  Plotting();
-  ~Plotting();
-  void run();
-  void SetLumi(double l);
-  void SetOption(std::string analysis);
-  void SetInputLocation(string loc);
+public:
+    Plotting();
+    ~Plotting();
+    void run();
+    void SetLumi(double l);
+    void SetOption(std::string analysis);
+    void SetInputLocation(string loc);
 
+private:
+    void Disclaimer();
+    void getHistoSettings();
+    void AtlasStyle();
+    void ATLASLabel(Double_t x, Double_t y);
+    void WhichFiles();
+    void readFiles();
+    void createHistoSet(TFile *file, std::string proc);
+    void createHistogram(TFile *file, std::string hname, std::string proc);
+    void makePlots();
+    void PrintCanvas(TCanvas *c1, string title);
 
+    std::vector<std::string> filename;
+    std::map<std::string, std::pair<double, double>> SF;
+    std::map<std::string, std::map<std::string, TH1F *>> histo;
 
- private:
-  void Disclaimer();
-  void getHistoSettings();
-  void AtlasStyle();
-  void ATLASLabel(Double_t x,Double_t y);
-  void WhichFiles();
-  void readFiles();
-  void createHistoSet(TFile* file, std::string proc);
-  void createHistogram(TFile* file, std::string hname,  std::string proc);
-  void makePlots();
-  void PrintCanvas(TCanvas* c1, string title);
+    double lumi;
+    std::string option;
+    string readname;
 
-  std::vector<std::string> filename;
-  std::map<std::string,std::pair<double,double> > SF;
-  std::map<std::string,std::map<std::string, TH1F*> > histo;
-  
-  double lumi;
-  std::string option;
-  string readname;
+    // histogram settings
+    std::vector<HistoHandler *> hset;
 
-  // histogram settings
-  std::vector<HistoHandler*> hset;
-
-  // fitting
-  TF1* bgd; 
-  TF1* fit;
-  TH1F* h_ratio2;
-
+    // fitting
+    TF1 *bgd;
+    TF1 *fit;
+    TH1F *h_ratio2;
 };
 
 #endif

@@ -6,13 +6,14 @@
 ########################################
 
 # names of 4 available analyses
-analysisCollection=("HWWAnalysis" "ZTauTauAnalysis" "TTbarAnalysis" "TTbarDilepAnalysis" "HTauTauAnalysis")
+analysisCollection=("HWWAnalysis" "ZTauTauAnalysis" "TTbarAnalysis" "TTbarDilepAnalysis" "HyyAnalysis" "HTauTauAnalysis")
 
 # location of their outputs
 outputpath=("../Analysis/HWWAnalysis/Output_HWWAnalysis" \
 "../Analysis/ZTauTauAnalysis/Output_ZTauTauAnalysis" \
 "../Analysis/TTbarAnalysis/Output_TTbarAnalysis" \
 "../Analysis/TTbarDilepAnalysis/Output_TTbarDilepAnalysis" \
+"../Analysis/HyyAnalysis/Output_HyyAnalysis" \
 "../Analysis/HTauTauAnalysis/Output_HTauTauAnalysis"
 )
 
@@ -23,12 +24,13 @@ echo '0 = HWWAnalysis'
 echo '1 = ZTauTauAnalysis'
 echo '2 = TTbarAnalysis'
 echo '3 = TTbarDilepAnalysis'
-echo '4 = HTauTauAnalysis'
+echo '4 = HyyAnalysis'
+echo '5 = HTauTauAnalysis'
 
 read choice
 
 # check choices
-if [ $choice -ge 0 -a $choice -le 4 ]; then
+if [ $choice -ge 0 -a $choice -le 5 ]; then
   analysisName=${analysisCollection[${choice}]}
   echo "Now, choose the location of the ${analysisName} output!"
   echo "If the location corresponds to ${outputpath[${choice}]}: type 0"
@@ -40,7 +42,7 @@ if [ $choice -ge 0 -a $choice -le 4 ]; then
 
     # run main command
     root -l -b << EOF
-	.L Plotting.cxx+
+    .L Plotting.cxx+
     	Plotting *m=new Plotting();
 	m->SetLumi(36000);
 	m->SetOption("$analysisName");
